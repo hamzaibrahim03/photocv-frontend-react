@@ -1,0 +1,189 @@
+import { useState, useEffect, useRef } from "react";
+import "./assets/css/clubdraw.css";
+import apiClient from "../api/axios";
+
+function CommentsDrawClub({ photo, onClose }) {
+    const [newComment, setNewComment] = useState("");
+    const [comments, setComments] = useState([]);
+    const [exifOpen, setExifOpen] = useState(true);
+    const [commentsOpen, setCommentsOpen] = useState(true);
+    const [posting, setPosting] = useState(false);
+
+    const commentsRef = useRef(null);
+
+    const exif = photo?.exif || {};
+    const like = photo?.likes_count || 0;
+
+    useEffect(() => {
+        setComments(photo?.comments || []);
+    }, [photo]);
+
+    const postComment = async () => {
+        if (!newComment.trim() || posting) return;
+
+        try {
+            setPosting(true);
+
+            const response = await apiClient.post(
+                `/photos/${photo.photo_id}/comments`,
+                {
+                    body: newComment,
+                }
+            );
+
+            console.log("Comment Response:", response.data);
+
+            const comment = response.data?.data || {
+                id: Date.now(),
+                comment: newComment,
+                posted_by: "You",
+                posted_at: new Date().toISOString(),
+            };
+
+            setComments((prev) => [...prev, comment]);
+            setNewComment("");
+
+            setTimeout(() => {
+                commentsRef.current?.scrollTo({
+                    top: commentsRef.current.scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 100);
+        } catch (err) {
+            console.log("Error:", err);
+
+            if (err.response) {
+                console.log("Status:", err.response.status);
+                console.log("Response:", err.response.data);
+            } else {
+                console.log(err.message);
+            }
+        } finally {
+            setPosting(false);
+        }
+    };
+
+    const time = (date) =>
+        date ? new Date(date).toLocaleDateString() : "";
+
+    return (
+        <div className="cd-drawer-overlay">
+            <div className="cd-drawer">
+
+                <div className="cd-top">
+                    <span className="cd-title"></span>
+
+                    <button className="cd-close" onClick={onClose}>
+                        ×
+                    </button>
+                </div>
+
+                {/* EXIF DETAILS */}
+
+                <div className="cd-block">
+
+                    <div className="cd-block-head" onClick={() => setExifOpen(!exifOpen)}>
+                        <span>EXIF Details</span>
+                        <span>{exifOpen ? "⌃" : "⌄"}</span>
+                    </div>
+
+                    {exifOpen && (
+                        <div className="cd-exif-grid">
+
+                            <div className="cd-exif-item">
+                                <label>Camera</label>
+                                <span>{exif.camera_model}</span>
+                            </div>
+
+                            <div className="cd-exif-item">
+                                <label>Focal Length</label>
+                                <span>{exif.focal_length}</span>
+                            </div>
+
+                            <div className="cd-exif-item">
+                                <label>Lens</label>
+                                <span>{exif.lens}</span>
+                            </div>
+
+                            <div className="cd-exif-item">
+                                <label>Aperture</label>
+                                <span>{exif.aperture}</span>
+                            </div>
+
+                            <div className="cd-exif-item">
+                                <label>Shutter Speed</label>
+                                <span>{exif.shutter_speed}</span>
+                            </div>
+
+                            <div className="cd-exif-item">
+                                <label>ISO</label>
+                                <span>{exif.iso}</span>
+                            </div>
+
+                        </div>
+                    )}
+
+                </div>
+
+                {/* COMMENTS */}
+
+                <div className="cd-block cd-comments-block">
+
+                    <div className="cd-block-head" onClick={() => setCommentsOpen(!commentsOpen)}>
+                        <span>Comments</span>
+                        <span>{commentsOpen ? "⌃" : "⌄"}</span>
+                    </div>
+
+                    {commentsOpen && (
+                        <>
+                            <div className="cd-comments" ref={commentsRef}>
+
+                                {comments.length > 0 ? (
+                                    comments.map((c) => (
+                                        <div className="cd-comment" key={c.id}>
+                                            <strong>{c.posted_by || "User"}</strong>
+                                            <p>{c.comment}</p>
+                                            <small>{time(c.posted_at)}</small>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="cd-empty">
+                                        No comments yet
+                                    </p>
+                                )}
+
+                            </div>
+
+                            <div className="cd-input-bar">
+
+                                <input type="text" value={newComment} placeholder="Add a comment..." onChange={(e) => setNewComment(e.target.value)} onKeyDown={(e) => e.key === "Enter" && postComment()}/>
+
+                                <button onClick={postComment} disabled={posting}>{posting ? "..." : "➤"}</button>
+
+                            </div>
+
+                            <div className="cd-comment-stats">
+
+                                <div className="cd-stat">
+                                    <span className="cd-icon heart">♥</span>
+                                    <span>{like}</span>
+                                </div>
+
+                                <div className="cd-stat">
+                                    <span className="cd-icon comment">💬</span>
+                                    <span>{comments.length}</span>
+                                </div>
+
+                            </div>
+
+                        </>
+                    )}
+
+                </div>
+
+            </div>
+        </div>
+    );
+}
+
+export default CommentsDrawClub;

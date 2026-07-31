@@ -1,0 +1,476 @@
+.cp-heading {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+#cp-cluboff {
+    margin-bottom: 70px;
+}
+.cp-list {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    line-height: 36px;
+    letter-spacing: 0%;
+}
+.cp-main{
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+.cp-email {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0% 
+}
+#cp-overall {
+    padding: 80px 70px 50px 100px;
+}
+#cp-heads {
+    padding: 60px 70px 20px 90px;
+}
+.cp-divider4 {
+    width: 1100px;
+    height: 1px;
+    background-color: rgba(217, 217, 217, 1);
+    margin-top: 75px;
+    margin-bottom: 70px;
+    border-bottom: 1px solid rgba(217, 217, 217, 1);
+}
+.cp-head {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    width: 100%;
+    max-width: 1150px;
+}
+.cp-events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+.cp-events-title {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin: 0;
+}
+.cp-search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 6px 10px;
+    width: 470px;
+    height: 60px;
+    transition: border-color 0.2s ease;
+}
+.cp-search-bar:hover, .cp-search-bar:focus-within {
+    border-color: #d1d5db;
+}
+.cp-search-bar i {
+    color: #c0c0c0;
+    font-size: 14px;
+    margin-right: 8px;
+}
+.cp-search-input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    flex: 1;
+    background: transparent;
+}
+.cp-search-input::placeholder {
+    color: #c0c0c0;
+}
+.cp-site-footer {
+    padding-top: 25px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+}
+.cp-site-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+.cp-site-footer a:hover {
+    text-decoration: underline;
+}
+.cp-icon-circles .cp-flickr-dots i, .cp-flickr-dots i{
+    font-size: 8px;
+    margin: 1px;
+}
+#cp-footer-heading {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 500;
+    font-family: Inter;
+    font-style: Regular;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.cp-container {
+    max-width: 1820px;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.cp-card {
+    background: white;
+    border-radius: 10px;
+    flex: 1;
+    margin: 20px 0 10px 17px;
+    width: 97.4%;
+    height: auto;
+    padding-bottom: 15px;
+    border: none;
+}
+
+#cp-joincontainer {
+    padding: 25px 0px 20px;
+}
+
+#cp-cls {
+    align-items: center !important;
+}
+
+.cp-join {
+    border-radius: 15px;
+    padding: 45px 60px 35px;
+    height: 180px;
+}
+
+#cp-joincontainer #cp-clubheading {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 36px;
+    line-height: 42px;
+    letter-spacing: 0%;
+    margin-bottom: 9px;
+}
+
+.cp-join .cp-heading {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+#cp-joincontainer #cp-clubsub {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 24px;
+    line-height: 42px;
+    letter-spacing: 0%;
+}
+
+.cp-head {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+#cp-join-club {
+    width: 200px;
+    height: 60px;
+    padding: 8px 16px;
+    border-radius: 7px;
+    background-color: #99816b;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    font-family: Inter;
+    color: white;
+    margin-bottom: 20px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+#cp-footer-heading {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 500;
+    line-height: 36px
+}
+
+#cp-footer-description {
+    font-weight: 400;
+    text-align: center;
+    font-family: Inter;
+    font-size: 24px;
+    line-height: 36px;
+    letter-spacing: 0%;
+}
+
+.cp-contact-col,
+.cp-social-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cp-contact-col {
+    margin-right: 60px;
+}
+
+.cp-social-col {
+    margin-left: 60px;
+}
+
+.cp-contact-item {
+    padding-bottom: 4px;
+}
+
+.cp-contact-item:last-child {
+    padding-bottom: 0px;
+}
+
+.cp-social-item {
+    padding-bottom: 10px;
+}
+
+.cp-social-item:last-child {
+    padding-bottom: 0px;
+}
+
+.cp-icon-circles,
+.cp-ficon-circles {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.cp-footer-img {
+    max-width: 440px;
+    height: 350px;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cp-site-footer {
+    padding-top: 25px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+}
+
+.cp-site-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.cp-site-footer a:hover {
+    text-decoration: underline;
+}
+
+.cp-memtext {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000;
+}
+
+.cp-hero-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    width: 100%;
+    height: 70vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.cp-hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.46);
+    z-index: 1;
+}
+
+.cp-hero-overlay {
+    position: relative;
+    z-index: 2;
+    background: rgba(76, 64, 54, 0.5);
+    padding: 53px 42px;
+    width: 825px;
+    height: 558px;
+    margin-left: 2%;
+    border-radius: 10px;
+    color: #fff;
+}
+
+#cp-view {
+    width: 100%;
+    max-width: 187px;
+    height: 60px;
+    border-radius: 7px;
+    background-color: #99816b;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    font-family: Inter;
+    color: white;
+}
+
+.cp-hero-overlay .cp-icon-circles {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    width: 34px;
+    height: 34px;
+    margin-right: 10px;
+}
+
+.cp-hero-overlay h1 {
+    font-size: 72px;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    line-height: 1.2;
+    letter-spacing: 0%;
+}
+
+.cp-hero-overlay .cp-prehead {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+#cp-overlay-button {
+    width: 280px;
+    height: 60px;
+    padding: 8px 16px;
+    border-radius: 7px;
+    background-color: #99816b;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 100%;
+    font-family: Inter;
+    color: white;
+    border: none;
+    margin-top: 12px;
+    margin-left: 5px;
+}
+
+.cp-card-section {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.cp-stat-card {
+    background: #cc445e;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 219px;
+    font-family: Inter;
+    font-size: 1.2rem;
+    height: 148px;
+}
+
+.cp-event-card {
+    background: #755840;
+    color: white;
+    padding: 20px;
+    height: 148px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.2rem;
+    width: 219px;
+}
+
+.cp-number {
+    font-weight: 500;
+    font-size: 48px;
+    font-family: Inter;
+    line-height: 100%;
+    color: white;
+    margin-top: 30px;
+}
+
+.cp-ca-details {
+    font-weight: 400;
+    font-size: 20px;
+    font-family: Inter;
+    line-height: 100%;
+}
+
+
+.cp-days {
+    margin-top: 35px;
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 100%;
+}
+@media only screen and (max-width: 991px) {
+    .cp-right-header .cp-profile-mobile, .cp-right-header .cp-divider, .cp-notification-desktop, .cp-down {
+        display: none !important;
+   }
+    .cp-notification-mobile {
+        display: inline-flex !important;
+        margin-right: 10px;
+   }
+    #cp-login {
+        padding: 0px 15px 20px 45px;
+        display: flex;
+        font-size: 18px;
+        font-family: Inter;
+        font-weight: 400;
+   }
+    .cp-navbar .cp-right-header {
+        margin-left: 0;
+   }
+}
