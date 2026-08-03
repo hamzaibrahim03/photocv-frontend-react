@@ -406,7 +406,6 @@
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
-    border-radius: 20px;
 }
 
 .np-hero-section::before {

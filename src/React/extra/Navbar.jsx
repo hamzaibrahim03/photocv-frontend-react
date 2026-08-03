@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AdminDropdown from './AdminDropdown'
 import { NavLink, Outlet } from "react-router"
 import "../assets/css/navbar.css"
+import NotificationBell from "./NotificationBell";
 function Navbar() {
     const [homeData, sethomeData] = useState([]);
     useEffect(() => {
@@ -25,7 +26,7 @@ function Navbar() {
 
                 <div className="container d-flex justify-content-between align-items-center" style={{ maxWidth: '1820px' }}>
                     <a className="navbar-brand d-flex align-items-center" href="/">
-                        <img src={homeData?.clubSettings?.original?.data?.settings?.logo_url} className="img-fluid" id="logo" alt="Ryton" style={{ maxHeight: '60px', marginLeft: '10px' }} />
+                        <img src={homeData?.clubSettings?.original?.data?.settings?.logo_url} id="logo" alt="Ryton" />
                     </a>
 
                     <button className="navbar-toggler me-2" type="button">
@@ -33,7 +34,7 @@ function Navbar() {
                     </button>
 
                     <div className="collapse navbar-collapse custom-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav mb-2 mb-lg-0 custom-nav">
+                        <ul className="navbar-nav mb-2 mb-lg-0 custom-nav" style={{ gap: '10px' }}>
 
                             <div>
                                 <li className="nav-item active">
@@ -74,10 +75,14 @@ function Navbar() {
                             </li>
                         </ul>
 
-                        <div className="right-header d-flex align-items-center" style={{ marginLeft: '315px' }}>
+                        <div className="right-header d-flex align-items-center" style={{ marginLeft: '160px' }}>
                             <a className="icon notification-desktop">
+                                <NotificationBell />
                             </a>
                             <div className="divider"></div>
+                            <a className="icon notification-desktop">
+                            </a>
+                            <div id="notification-divider"></div>
                             <AdminDropdown />
 
                         </div>

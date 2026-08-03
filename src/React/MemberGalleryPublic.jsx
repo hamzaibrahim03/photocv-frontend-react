@@ -93,7 +93,7 @@ function MemberGalleryPublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -175,10 +175,10 @@ function MemberGalleryPublic() {
                             </section>
 
                             <section>
-                                <div className="mgp-container" style={{ maxWidth: '1820px', width: '1820px' }} id="mgp-overall">
+                                <div className="mgp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }} id="mgp-overall">
 
                                     <section id="mgp-galcontainer">
-                                        <div className="mgp-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                        <div className="mgp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                             <div style={{ height: 'auto', border: 'none', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
 
                                                 <div className="mgp-clubpics">
@@ -203,7 +203,7 @@ function MemberGalleryPublic() {
 
                             <section>
                                 <div className="mgp-container" style={{ maxWidth: '1650px', width: '1650px' }}>
-                                    <div className="mgp-suggestion-header d-flex justify-content-between align-items-center">
+                                    <div className="mgp-suggestion-header d-flex justify-content-between align-items-center mb-4">
                                         <h3 className="mgp-heading" style={{ fontWeight: '500' }}>More from Club Galleries</h3>
 
                                         <button id="mgp-view" onClick={() => navigate('/rytongal/club')} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
@@ -224,7 +224,7 @@ function MemberGalleryPublic() {
 
 
                             <section id="mgp-joincontainer">
-                                <div className="mgp-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="mgp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="mgp-cls" className="mgp-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="mgp-clubheading" className="mgp-heading" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -243,7 +243,7 @@ function MemberGalleryPublic() {
                             </section>
 
                             <section>
-                                <div className="mgp-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="mgp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="mgp-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="mgp-footer-heading" className="mgp-heading mgp-footer-heading" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.text_color }}> {membergallerydata?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="mgp-footer-description" className="mgp-head mgp-footer-description mx-auto" style={{ maxWidth: '1145px', color: membergallerydata?.clubSettings?.original?.data?.settings?.text_color }}> {membergallerydata?.clubSettings?.original?.data?.settings?.footer_description} </p>

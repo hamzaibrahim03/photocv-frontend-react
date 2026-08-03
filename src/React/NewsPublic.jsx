@@ -206,7 +206,7 @@ function NewsPublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: newsData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: newsData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -444,7 +444,7 @@ function NewsPublic() {
                             </section>
 
                             <section id="np-joincontainer">
-                                <div className="np-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="np-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="np-cls" className="np-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: newsData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="np-clubheading" className="np-heading" style={{ color: newsData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -463,7 +463,7 @@ function NewsPublic() {
                             </section>
 
                             <section>
-                                <div className="np-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="np-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="np-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="np-footer-heading" className="np-heading np-footer-heading" style={{ color: newsData?.clubSettings?.original?.data?.settings?.text_color }}> {newsData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="np-footer-description" className="np-head np-footer-description mx-auto" style={{ maxWidth: '1145px', color: newsData?.clubSettings?.original?.data?.settings?.text_color }}> {newsData?.clubSettings?.original?.data?.settings?.footer_description} </p>

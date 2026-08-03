@@ -82,7 +82,7 @@ function NewsSinglePublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: sinnewsData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: sinnewsData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -289,7 +289,7 @@ function NewsSinglePublic() {
                             </section>
 
                             <section id="sne-joincontainer">
-                                <div className="sne-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="sne-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="sne-cls" className="sne-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: sinnewsData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="sne-clubheading" className="sne-heading" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -308,7 +308,7 @@ function NewsSinglePublic() {
                             </section>
 
                             <section>
-                                <div className="sne-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="sne-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="sne-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="sne-footer-heading" className="sne-heading sne-footer-heading" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}> {sinnewsData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="sne-footer-description" className="sne-head sne-footer-description mx-auto" style={{ maxWidth: '1145px', color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}> {sinnewsData?.clubSettings?.original?.data?.settings?.footer_description} </p>

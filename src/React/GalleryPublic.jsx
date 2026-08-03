@@ -58,7 +58,7 @@ function GalleryPublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: galleryData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: galleryData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -198,7 +198,7 @@ function GalleryPublic() {
 
 
                             <section id="gp-joincontainer">
-                                <div className="gp-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="gp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="gp-cls" className="gp-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: galleryData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="gp-clubheading" className="gp-heading" style={{ color: galleryData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -217,7 +217,7 @@ function GalleryPublic() {
                             </section>
 
                             <section>
-                                <div className="gp-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="gp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="gp-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="gp-footer-heading" className="gp-heading gp-footer-heading" style={{ color: galleryData?.clubSettings?.original?.data?.settings?.text_color }}> {galleryData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="gp-footer-description" className="gp-head gp-footer-description mx-auto" style={{ maxWidth: '1145px', color: galleryData?.clubSettings?.original?.data?.settings?.text_color }}> {galleryData?.clubSettings?.original?.data?.settings?.footer_description} </p>

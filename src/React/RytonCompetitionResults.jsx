@@ -233,7 +233,7 @@ function RytonCompetitionResults() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -411,8 +411,8 @@ function RytonCompetitionResults() {
                                                             <img className="results-thumb" src={entry.entry_image_url} alt="" />
 
                                                             <div className="results-info">
-                                                                <h6 className="results-entry-titles" style={{marginBottom: '0px'}}>{entry.entry_image_title}</h6>
-                                                                <span className="results-authors" style={{marginTop: '0px'}}>by {entry.member_name}</span>
+                                                                <h6 className="results-entry-titles" style={{ marginBottom: '0px' }}>{entry.entry_image_title}</h6>
+                                                                <span className="results-authors" style={{ marginTop: '0px' }}>by {entry.member_name}</span>
                                                             </div>
 
                                                             {getMedalIcon(index + 2) && (
@@ -428,7 +428,7 @@ function RytonCompetitionResults() {
                             </section >
 
                             <section id="results-eventcontainer">
-                                <div className="results-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="results-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="results-events" id="results-events" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, width: '1820px' }}>
                                         <h5 id="results-clubheading" className="results-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Events & Competitions</h5>
                                         <h6 id="results-clubsub" className="results-subhead" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingTop: '6px' }}>Latest and upcoming events and competitions on the club calendar</h6>
@@ -545,7 +545,7 @@ function RytonCompetitionResults() {
                             </section>
 
                             <section id="results-joincontainer">
-                                <div className="results-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="results-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="results-cls" className="results-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="results-clubheading" className="results-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -564,7 +564,7 @@ function RytonCompetitionResults() {
                             </section>
 
                             <section>
-                                <div className="results-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="results-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="results-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="results-footer-heading" className="results-heading results-footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="results-footer-description" className="results-head results-footer-description mx-auto" style={{ maxWidth: '1145px', color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>

@@ -418,7 +418,12 @@ p {
     text-align: center;
     margin-bottom: 30px;
     font-weight: 500;
-    line-height: 36px
+    line-height: 36px;
+    font-family: Inter;
+    font-style: Regular;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
 
 #results-footer-description {
@@ -520,7 +525,6 @@ p {
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
-    border-radius: 20px;
 }
 
 .results-hero-section::before {

@@ -207,7 +207,7 @@ function EventPublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: eventData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: eventData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -405,9 +405,9 @@ function EventPublic() {
                                                                                 {formatedDate(seas.start_date)} - {formatedDate(seas.end_date)}
                                                                             </h3>
 
-                                                                            <span className={`ep-status ${seas.status?.toLowerCase()}`}>
-                                                                                <span className="ep-dot" style={{ backgroundColor: eventData?.clubSettings?.original?.data?.settings?.primary_color}}></span>
-                                                                                {seas.status}
+                                                                            <span className={`ep-status ${seas.status?.charAt(0).toUpperCase() + seas.status?.slice(1).toLowerCase()}`}>
+                                                                                <span className="ep-dot" style={{ backgroundColor: eventData?.clubSettings?.original?.data?.settings?.primary_color }}></span>
+                                                                                {seas.status?.charAt(0).toUpperCase() + seas.status?.slice(1).toLowerCase()}
                                                                             </span>
                                                                         </div>
 
@@ -446,7 +446,7 @@ function EventPublic() {
                             </section >
 
                             <section id="ep-joincontainer">
-                                <div className="ep-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="ep-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="ep-cls" className="ep-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: eventData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="ep-clubheading" className="ep-heading" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -465,7 +465,7 @@ function EventPublic() {
                             </section>
 
                             <section>
-                                <div className="ep-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="ep-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="ep-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="ep-footer-heading" className="ep-heading ep-footer-heading" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}> {eventData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="ep-footer-description" className="ep-head ep-footer-description mx-auto" style={{ maxWidth: '1145px', color: eventData?.clubSettings?.original?.data?.settings?.text_color }}> {eventData?.clubSettings?.original?.data?.settings?.footer_description} </p>

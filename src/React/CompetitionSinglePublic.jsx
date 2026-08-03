@@ -155,7 +155,7 @@ function CompetitionSinglePublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: sincompData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: sincompData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -507,7 +507,7 @@ function CompetitionSinglePublic() {
 
                                                                             <span className={`sco-status ${seas.status?.toLowerCase()}`}>
                                                                                 <span className="sco-dot" style={{ backgroundColor: sincompData?.clubSettings?.original?.data?.settings?.accent_color }}></span>
-                                                                                {seas.status}
+                                                                                {seas.status?.charAt(0).toUpperCase() + seas.status?.slice(1).toLowerCase()}
                                                                             </span>
                                                                         </div>
 
@@ -546,7 +546,7 @@ function CompetitionSinglePublic() {
                             </section >
 
                             <section id="sco-joincontainer">
-                                <div className="sco-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="sco-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="sco-cls" className="sco-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: sincompData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="sco-clubheading" className="sco-heading" style={{ color: sincompData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -565,7 +565,7 @@ function CompetitionSinglePublic() {
                             </section>
 
                             <section>
-                                <div className="sco-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="sco-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="sco-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="sco-footer-heading" className="sco-heading sco-footer-heading" style={{ color: sincompData?.clubSettings?.original?.data?.settings?.text_color }}> {sincompData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="sco-footer-description" className="sco-head sco-footer-description mx-auto" style={{ maxWidth: '1145px', color: sincompData?.clubSettings?.original?.data?.settings?.text_color }}> {sincompData?.clubSettings?.original?.data?.settings?.footer_description} </p>

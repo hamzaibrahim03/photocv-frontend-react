@@ -95,7 +95,7 @@ function RytonClubSlide() {
 
 
     const openFullscreen = () => {
-        const el = document.querySelector(".main-image");
+        const el = document.querySelector(".csl-main-image");
 
         if (el?.requestFullscreen) {
             el.requestFullscreen();

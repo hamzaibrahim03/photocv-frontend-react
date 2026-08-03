@@ -341,7 +341,7 @@ function ClubPublic() {
                             </section >
 
                             <section id="cp-joincontainer">
-                                <div className="cp-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="cp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="cp-cls" className="cp-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: clubData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="cp-clubheading" className="cp-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -360,7 +360,7 @@ function ClubPublic() {
                             </section>
 
                             <section>
-                                <div className="cp-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="cp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="cp-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="cp-footer-heading" className="cp-heading cp-footer-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="cp-footer-description" className="cp-head cp-footer-description mx-auto" style={{ maxWidth: '1145px', color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_description} </p>

@@ -15,7 +15,6 @@
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
-    border-radius: 20px;
 }
 
 .ep-hero-section::before {
@@ -542,7 +541,7 @@
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
-    font-size: 11.ep-85px;
+    font-size: 11.85px;
     line-height: 100%;
     letter-spacing: 0%;
 }

@@ -377,11 +377,11 @@
 }
 
 #herocontainer {
-  padding: 80px 0px 44px;
+  padding: 80px 10px 44px 16px;
 }
 
 #clubcontainer {
-  padding: 20px 0px;
+  padding: 20px 10px 20px 16px;
 }
 
 #eventcontainer {
@@ -401,7 +401,7 @@
 }
 
 #galcontainer {
-  padding: 55px 0px 30px;
+  padding: 35px 0px 30px;
 }
 
 #latest-interaction {
@@ -438,7 +438,6 @@
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
-  border-radius: 20px;
 }
 
 .hero-section::before {
@@ -505,8 +504,8 @@
 }
 
 .club-banners .icon-circles {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   margin-right: 4px;
 }
 
@@ -553,7 +552,7 @@
 }
 
 .hero-image img {
-  width: 100%;
+  width: 540px;
   height: 460px;
   border-radius: 20px;
   object-fit: cover;
@@ -586,7 +585,7 @@
   font-style: Regular;
   font-size: 18px;
   line-height: 36px;
-  letter-spacing: 0%;
+  letter-spacing: 1%;
 }
 
 .hero-content #clubsub {
@@ -845,7 +844,7 @@
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 30% 65.5%;
+  grid-template-columns: 30% 62.5%;
   gap: 80px;
   align-items: start;
 }
@@ -1313,10 +1312,24 @@
   line-height: 100%;
 }
 
+.club-banners {
+  max-width: 1776px;
+  width: 1776px;
+}
+
+.home-comments-cards {
+  width: 868px;
+}
+
 /* 1399px and below */
 @media only screen and (max-width: 1399px) {
   .custom-nav {
     margin-left: 35px;
+  }
+
+  .club-banners {
+    max-width: 100%;
+    width: 100%;
   }
 
   .custom-nav .nav-item {
@@ -1438,6 +1451,7 @@
     border-radius: 15px;
     padding: 25px 50px;
     height: auto;
+    width: 1355px;
   }
 
   #join-club {
@@ -1592,8 +1606,12 @@
   }
 
   .cardddd {
-    width: 47% !important;
+    width: 35% !important;
     margin: 0;
+  }
+
+  .home-comments-card, .home-comments-cards {
+    width: 100% !important;
   }
 
   .cardddd:last-child {
@@ -2491,15 +2509,15 @@
   }
 
   #herocontainer {
-    padding: 70px 0px 34px;
+    padding: 70px 10px 34px 16px;
   }
 
   #clubcontainer {
-    padding: 10px 0px;
+    padding: 10px 10px 10px 16px;
   }
 
   #eventcontainer {
-    padding: 38px 0px 10px;
+    padding: 38px 10px 10px 16px;
   }
 
   #membercontainer {
@@ -2519,7 +2537,7 @@
   }
 
   #galcontainer {
-    padding: 45px 0px 20px;
+    padding: 25px 0px 20px;
   }
 
   .cardddd {
@@ -2887,7 +2905,7 @@
   }
 
   #galcontainer {
-    padding: 35px 0px 10px;
+    padding: 15px 0px 10px;
   }
 
   #member-gallery,

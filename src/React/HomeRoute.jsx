@@ -116,7 +116,7 @@ function HomeRoute() {
             classes.push("bottom-right");
         }
 
-        return classes.join();
+        return classes.join(" ");
     }
 
     return (
@@ -125,7 +125,7 @@ function HomeRoute() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -236,36 +236,38 @@ function HomeRoute() {
                                 </div>
 
                                 <div className="carousel-item">
-                                    <div className="hero-section" style={{ backgroundImage: `url(${homeData?.clubSettings?.original?.data?.settings?.cover_images?.[2]?.image_medium_url})` }} >
-                                        <div className="hero-overlay">
-                                            {homeData?.singleEvent?.map((event) => (
-                                                <>
-                                                    <div key={event.id}>
-                                                        <div className="events-card">
-                                                            <p className="date">
-                                                                Upcoming Event | {formatDate(event.event_date)}
-                                                            </p>
+                                    {
+                                        homeData?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
+                                            <div className="hero-section" style={{ backgroundImage: `url(${homeData?.clubSettings?.original?.data?.settings?.cover_images?.[2]?.image_medium_url})` }} >
+                                                <div className="hero-overlay" >
+                                                    {homeData?.singleEvent?.map((event) => (
+                                                        <>
+                                                            <div key={event.id} style={{ padding: '53px 42px 42px 53px' }}>
+                                                                <div className="events-card">
+                                                                    <p className="date">
+                                                                        Upcoming Event | {formatDate(event.event_date)}
+                                                                    </p>
 
-                                                            <h5 style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, marginBottom: '20px', width: '1000px' }} >
-                                                                {event.name}
-                                                            </h5>
+                                                                    <h5 style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, marginBottom: '20px', width: '1000px' }} >
+                                                                        {event.name}
+                                                                    </h5>
+                                                                </div>
+                                                                <p className="text-secondaryy">
+                                                                    {event.description}
+                                                                </p>
+                                                            </div>
 
-                                                            <p className="text-secondaryy">
-                                                                {event.description}
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                            <div className="button-group mt-3 d-flex" style={{ padding: '0px 0px 0px 53px' }} >
+                                                                <button id="view" className="btn me-2" onClick={() => navigate(`/rytonevent/${event.id}`)} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                                    View Details
+                                                                </button>
+                                                            </div>
+                                                        </>
+                                                    ))}
 
-                                                    <div className="button-group mt-3 d-flex">
-                                                        <button id="view" className="btn me-2" onClick={() => navigate(`/rytonevent/${event.id}`)} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.accent_color }}>
-                                                            View Details
-                                                        </button>
-                                                    </div>
-                                                </>
-                                            ))}
-
-                                        </div>
-                                    </div>
+                                                </div >
+                                            </div>
+                                        )}
                                 </div>
 
                                 <div className="carousel-item">
@@ -337,7 +339,7 @@ function HomeRoute() {
 
                         <div className="contents">
                             <section id="herocontainer">
-                                <div className="container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     {
                                         <div style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, paddingBottom: '15px', height: 'auto', border: 'none' }}>
                                             <div className="hero-grid" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, alignItems: 'center' }}>
@@ -349,7 +351,11 @@ function HomeRoute() {
                                                     <h1 id="clubheading" className="heading" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: '400' }}>
                                                         {homeData?.clubSettings?.original?.data?.settings?.header_title}
                                                     </h1>
-                                                    <p id="home-clubsub" className="home-subhead" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>{homeData?.clubSettings?.original?.data?.settings?.header_description}</p>
+                                                    <p id="home-clubsub" className="home-subhead" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, }}>
+                                                        {homeData?.clubSettings?.original?.data?.settings?.header_description?.split("\n").map((text, index) => (
+                                                            <span key={index}>{text}<br /></span>
+                                                        ))}
+                                                    </p>
                                                     <button id="learn-more" className="btn" onClick={() => navigate('/rytonclub')} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.accent_color }}>Learn More</button>
                                                 </div>
                                             </div>
@@ -359,8 +365,8 @@ function HomeRoute() {
                             </section>
 
                             <section id="clubcontainer">
-                                <div className="container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
-                                    <div className="club-banners d-flex justify-content-between align-items-center px-4 py-2" style={{ maxWidth: '1785px', width: '1785px', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
+                                    <div className="club-banners d-flex justify-content-between align-items-center px-4 py-2" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color }}>
                                         {
                                             <div style={{ marginLeft: '5px' }}>
                                                 <div id="bhead" className="head" style={{ textAlign: 'left', color: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
@@ -389,7 +395,7 @@ function HomeRoute() {
                             </section>
 
                             <section id="galcontainer">
-                                <div className="container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div style={{ height: 'auto', border: 'none', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
                                         <div id="cl" className="d-flex justify-content-between align-items-end mb-3" style={{ marginRight: '5px' }}>
                                             <div style={{ alignItems: 'flex-end' }}>
@@ -420,7 +426,7 @@ function HomeRoute() {
                             </section>
 
                             <section id="eventcontainer">
-                                <div className="container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="events" id="events" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, width: '1820px' }}>
                                         <h5 id="clubheading" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>Events & Competitions</h5>
                                         <h6 id="clubsub" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, paddingTop: '6px' }}>Latest and upcoming events and competitions on the club calendar</h6>
@@ -541,7 +547,7 @@ function HomeRoute() {
                             </section>
 
                             <section id="membercontainer">
-                                <div className="container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div id="gal" style={{ marginBottom: '10px', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
                                         <div id="cl" className="d-flex justify-content-between align-items-end mb-3" style={{ marginRight: '0', paddingTop: '20px' }}>
                                             <div>
@@ -593,10 +599,10 @@ function HomeRoute() {
                             </section>
 
                             <section id="latest-interaction" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.secondary_color }}>
-                                <div className="container" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.secondary_color, maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="container" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.secondary_color, maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <h5 id="clubheading" className="heading" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '12px' }}>Latest interactions</h5>
                                     <h6 id="clubsub" className="subhead" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>A preview of comments and reactions on the photos other posts on the club website</h6>
-                                    <div className="row" style={{ marginTop: '30px' }}>
+                                    <div className="row" style={{ marginTop: '30px' }} id="laint">
                                         <div className="col-12 col-md-6 mb-4">
                                             <div className="card home-comments-card shadow-sm" style={{ height: '330px', borderRadius: '10px', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, margin: '0px' }}>
                                                 <div className="card-header border-0" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
@@ -638,7 +644,7 @@ function HomeRoute() {
                                         </div>
 
                                         <div className="col-12 col-md-6">
-                                            <div className="card home-comments-cards shadow-sm p-4" style={{ width: '868px', marginTop: '0px', borderRadius: '10px', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
+                                            <div className="card home-comments-cards shadow-sm p-4" style={{ marginTop: '0px', borderRadius: '10px', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
                                                 <div className="card-header border-0" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
                                                     <h5 className="mb-0" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, paddingLeft: '-25px' }}>Recent Likes</h5>
                                                 </div>
@@ -665,7 +671,7 @@ function HomeRoute() {
                             </section>
 
                             <section id="newscontainer">
-                                <div className="container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="events d-flex justify-content-between align-items-end mb-3" id="cl" style={{ marginRight: '0', backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color }}>
                                         <div>
                                             <h5 id="clubheading" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '15px' }}>Latest Updates</h5>
@@ -731,7 +737,7 @@ function HomeRoute() {
                                         </div>
 
                                         <div className="card" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px', marginTop: '13px' }}>
-                                            <div className="resultpics" style={{ marginTop: '-12px', gridTemplateColumns: 'repeat(5,1fr)' }}>
+                                            <div className="resultpics" style={{ marginTop: '-12px'}}>
                                                 {resultData.map((result, index) => (
                                                     <div key={result.id || index} className={`resultpics-items ${getPositionClass(index, resultData.length)}`} >
                                                         <img src={result?.competition_members?.[0]?.entries?.[0]?.entry_image_thumb} alt={result.name} style={{ width: '100%', height: '195px', objectFit: "cover", objectPosition: "top", }} />
@@ -749,7 +755,7 @@ function HomeRoute() {
                             </section>
 
                             <section id="joincontainer">
-                                <div className="container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="cls" className="join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="clubheading" className="heading" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -768,7 +774,7 @@ function HomeRoute() {
                             </section>
 
                             <section>
-                                <div className="container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="footer-heading" className="heading footer-heading" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}> {homeData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="footer-description" className="head footer-description mx-auto" style={{ maxWidth: '1145px', color: homeData?.clubSettings?.original?.data?.settings?.text_color }}> {homeData?.clubSettings?.original?.data?.settings?.footer_description} </p>

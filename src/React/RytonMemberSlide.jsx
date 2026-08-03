@@ -104,22 +104,22 @@ function RytonMemberSlide() {
     };
 
     useEffect(() => {
-    const storedImages = localStorage.getItem("selectedImages");
-    const storedIndex = localStorage.getItem("startIndex");
+        const storedImages = localStorage.getItem("selectedImages");
+        const storedIndex = localStorage.getItem("startIndex");
 
-    if (storedImages) {
-        setMemberData(prev => ({
-            ...prev,
-            galleryImages: JSON.parse(storedImages),
-        }));
+        if (storedImages) {
+            setMemberData(prev => ({
+                ...prev,
+                galleryImages: JSON.parse(storedImages),
+            }));
 
-        setCurrentIndex(Number(storedIndex) || 0);
+            setCurrentIndex(Number(storedIndex) || 0);
 
-        setIsLoading(false);   // <-- add this
-    } else {
-        getMemberData();
-    }
-}, []);
+            setIsLoading(false);   // <-- add this
+        } else {
+            getMemberData();
+        }
+    }, []);
 
     useEffect(() => {
         const activeThumb = thumbRefs.current[currentIndex];

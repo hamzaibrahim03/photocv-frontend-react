@@ -175,7 +175,7 @@ function RytonMemberGallerySingle() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -272,8 +272,8 @@ function RytonMemberGallerySingle() {
                                             {groupedImages.map((group, gIndex) => (
                                                 <>
                                                     {gIndex === 1 && (
-                                                        <div className="sm-suggestion-section" style={{ maxWidth: '1820px', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color }}>
-                                                            <div className="sm-suggestions-header d-flex justify-content-between align-items-center" style={{ padding: '0px' }}>
+                                                        <div className="sm-suggestion-section" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color }}>
+                                                            <div className="sm-suggestions-header d-flex justify-content-between align-items-center mb-4" style={{ padding: '0px' }}>
                                                                 <h3 className="sm-heading" style={{ fontWeight: '500' }}>You may also like</h3>
                                                                 <button id="sm-view" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                                             </div>
@@ -421,7 +421,7 @@ function RytonMemberGallerySingle() {
 
                             <section>
                                 <div className="sm-container" style={{ maxWidth: '1650px', width: '1650px' }}>
-                                    <div className="sm-suggestion-header d-flex justify-content-between align-items-center">
+                                    <div className="sm-suggestion-header d-flex justify-content-between align-items-center mb-4">
                                         <h3 className="sm-heading" style={{ fontWeight: '500' }}>More from Club Galleries</h3>
 
                                         <button id="sm-view" onClick={() => navigate(`/rytongal/club`)} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>

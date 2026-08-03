@@ -233,7 +233,7 @@ function CompetitionPublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -489,7 +489,7 @@ function CompetitionPublic() {
 
                                                                             <span className={`co-status ${seas.status?.toLowerCase()}`}>
                                                                                 <span className="co-dot" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }}></span>
-                                                                                {seas.status}
+                                                                                {seas.status?.charAt(0).toUpperCase() + seas.status?.slice(1).toLowerCase()}
                                                                             </span>
                                                                         </div>
 
@@ -528,7 +528,7 @@ function CompetitionPublic() {
                             </section >
 
                             <section id="co-joincontainer">
-                                <div className="co-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="co-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="co-cls" className="co-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="co-clubheading" className="co-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -547,7 +547,7 @@ function CompetitionPublic() {
                             </section>
 
                             <section>
-                                <div className="co-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="co-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="co-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="co-footer-heading" className="co-heading co-footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="co-footer-description" className="co-head co-footer-description mx-auto" style={{ maxWidth: '1145px', color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>

@@ -85,7 +85,7 @@ function EventSinglePublic() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: sineventData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: sineventData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -139,7 +139,7 @@ function EventSinglePublic() {
                                                 &gt;
                                             </span>
 
-                                            <span className="se-events-title se-breadcrumb-item active">
+                                            <span className="se-events-title se-breadcrumb-item se-active">
                                                 {sineventData?.event?.original?.data?.name}
                                             </span>
                                         </nav>
@@ -426,8 +426,8 @@ function EventSinglePublic() {
                                                                             </h3>
 
                                                                             <span className={`se-status ${seas.status?.toLowerCase()}`}>
-                                                                                <span className="se-dot" style={{ backgroundColor: sineventData?.clubSettings?.original?.data?.settings?.primary_color}}></span>
-                                                                                {seas.status}
+                                                                                <span className="se-dot" style={{ backgroundColor: sineventData?.clubSettings?.original?.data?.settings?.primary_color }}></span>
+                                                                                {seas.status?.charAt(0).toUpperCase() + seas.status?.slice(1).toLowerCase()}
                                                                             </span>
                                                                         </div>
 
@@ -466,7 +466,7 @@ function EventSinglePublic() {
                             </section >
 
                             <section id="se-joincontainer">
-                                <div className="se-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="se-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="se-cls" className="se-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: sineventData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="se-clubheading" className="se-heading" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -485,7 +485,7 @@ function EventSinglePublic() {
                             </section>
 
                             <section>
-                                <div className="se-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="se-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="se-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="se-footer-heading" className="se-heading se-footer-heading" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}> {sineventData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="se-footer-description" className="se-head se-footer-description mx-auto" style={{ maxWidth: '1145px', color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}> {sineventData?.clubSettings?.original?.data?.settings?.footer_description} </p>

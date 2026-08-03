@@ -188,7 +188,7 @@
     align-items: left;
     justify-content: left;
     height: 60px;
-    padding: 14px 28px;
+    padding: 6px 28px;
 }
 
 .sco-resultpics-infos #sco-medal-inline {
@@ -751,7 +751,6 @@
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
-    border-radius: 20px;
 }
 
 .sco-hero-section::before {

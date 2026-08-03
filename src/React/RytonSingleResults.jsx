@@ -319,6 +319,40 @@ function RytonSingleResults() {
         });
     }, [compData?.clubGalleries]);
 
+    const columns = 5;
+
+    function getPositionClass(index, total) {
+        const row = Math.floor(index / columns);
+        const col = index % columns;
+
+        const lastIndex = total - 1;
+
+        let classes = [];
+
+        if (index === 0) classes.push("top-left");
+
+        if (row === 0 && col === columns - 1) {
+            classes.push("top-right");
+
+            if (total >= 6 && total <= 9) {
+                classes.push("special-radius");
+            }
+        }
+
+        if (
+            row === Math.floor(lastIndex / columns) &&
+            col === 0
+        ) {
+            classes.push("bottom-left");
+        }
+
+        if (index === lastIndex) {
+            classes.push("bottom-right");
+        }
+
+        return classes.join(" ");
+    }
+
 
     return (
         <>
@@ -326,7 +360,7 @@ function RytonSingleResults() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -469,18 +503,24 @@ function RytonSingleResults() {
 
                             <section>
                                 <div className="sre-container">
-                                    <div className="sre-suggestion-header d-flex justify-content-between align-items-center">
-                                        <h3 className="sre-heading" style={{ fontWeight: '500' }}>More from Club Galleries</h3>
-
+                                    <div className="sre-suggestion-header d-flex justify-content-between align-items-center mb-4">
+                                        <div>
+                                            <h3 className="sre-heading" style={{ fontWeight: '500', color: compData?.clubSettings?.original?.data?.settings?.text_color }}>More from Club Galleries</h3>
+                                            <p className="sre-clubsub" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                A preview of galleries made up of amazing photographs from club members
+                                            </p>
+                                        </div>
                                         <button id="sre-view" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                     </div>
 
                                     <div className="sre-suggestion-gallery">
                                         {suggestion.slice(0, 10).map((item, index) => (
-                                            <div key={item.id || index} className={`sre-suggestion-card`}>
-                                                <img src={item.image} alt={item.title} />
-                                                <div className={`sre-img-overlay`} style={{ backgroundColor: hexToRgba(compData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), textAlign: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                                                    <p className="sre-photo-title">{item.title}</p>
+                                            <div key={item.id} className={`sre-suggestion-card ${getPositionClass(index, suggestion.length)}`}>
+                                                <img src={item.image} alt={item.title} style={{ objectFit: "cover", objectPosition: "top", }} />
+                                                <div className={`sre-img-overlay ${getPositionClass(index, suggestion.length)}`} style={{ backgroundColor: hexToRgba(compData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), }} >
+                                                    <span style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
+                                                        {item.title}
+                                                    </span>
                                                 </div>
                                             </div>
                                         ))}
@@ -489,7 +529,7 @@ function RytonSingleResults() {
                             </section>
 
                             <section id="sre-joincontainer">
-                                <div className="sre-container" style={{ maxWidth: '1820px', width: '1820px' }}>
+                                <div className="sre-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
                                     <div id="sre-cls" className="sre-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
                                             <h5 id="sre-clubheading" className="sre-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
@@ -508,7 +548,7 @@ function RytonSingleResults() {
                             </section>
 
                             <section>
-                                <div className="sre-container" style={{ maxWidth: '1820px', flexDirection: 'column' }}>
+                                <div className="sre-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
                                     <div className="sre-footer-section" style={{ paddingTop: '30px' }}>
                                         <h5 id="sre-footer-heading" className="sre-heading sre-footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="sre-footer-description" className="sre-head sre-footer-description mx-auto" style={{ maxWidth: '1145px', color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>

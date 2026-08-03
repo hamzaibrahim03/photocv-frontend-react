@@ -160,7 +160,7 @@ function RytonClubGallerySingle() {
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
-                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: clubgallerydata?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
+                        <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: clubgallerydata?.clubSettings?.original?.data?.settings?.background_color, height: '100px' }}>
                             <Navbar />
                         </nav>
 
@@ -382,7 +382,7 @@ function RytonClubGallerySingle() {
 
                             <section>
                                 <div className="sc-container" style={{ maxWidth: '1820px' }}>
-                                    <div className="sc-suggestions-header d-flex justify-content-between align-items-center">
+                                    <div className="sc-suggestions-header d-flex justify-content-between align-items-center mb-4">
                                         <h3>More from Member Galleries</h3>
 
                                         <button id="sc-view" onClick={() => navigate(`/rytongal/member`)} style={{ color: clubgallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubgallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: "none" }}>View All</button>
