@@ -246,35 +246,35 @@ function RytonCompetitionResults() {
                                 <div className="carousel-item active">
                                     {
                                         compData?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
-                                            <div className="results-hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
-                                                <div className="results-hero-overlay">
+                                            <div className="hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
+                                                <div className="hero-overlay">
                                                     {
                                                         <div>
                                                             <h1 style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '400' }}>
                                                                 {compData?.clubSettings?.original?.data?.club?.club_name}
                                                             </h1>
 
-                                                            <p className="results-cabout" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
+                                                            <p className="cabout" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
                                                                 {compData?.clubSettings?.original?.data?.club?.about}
                                                             </p>
 
-                                                            <button id="results-overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                                            <button id="overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                                 Join Our Club
                                                             </button>
 
-                                                            <p className="results-prehead" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
+                                                            <p className="prehead" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
                                                                 An NYCE Club based in Apps, North East England
                                                             </p>
 
                                                             <div className="d-flex">
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="results-icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-facebook-f"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="results-icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-instagram"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="results-icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
-                                                                    <span className="results-flickr-dots">
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                    <span className="flickr-dots">
                                                                         <i className="fa fa-circle"></i>
                                                                         <i className="fa fa-circle"></i>
                                                                     </span>
@@ -289,29 +289,29 @@ function RytonCompetitionResults() {
                                 <div className="carousel-item">
                                     {
                                         compData?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
-                                            <div className="results-hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[1]?.image_medium_url})` }} >
-                                                <div className="results-hero-overlay" style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-                                                    <div className="results-card-section" style={{ width: '100%' }} >
-                                                        <div className="results-stat-card" style={{ width: '50%', backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
-                                                            <small className="results-ca-details">Members</small>
+                                            <div className="hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[1]?.image_medium_url})` }} >
+                                                <div className="hero-overlay" style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
+                                                    <div className="card-section" style={{ width: '100%' }} >
+                                                        <div className="stat-card" style={{ width: '50%', backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
+                                                            <small className="ca-details">Members</small>
                                                             {
-                                                                <h3 className="results-number" style={{ marginTop: '30px' }}>
+                                                                <h3 className="number" style={{ marginTop: '30px' }}>
                                                                     {compData?.clubSettings?.original?.data?.total_members}
                                                                 </h3>
                                                             }
                                                         </div>
 
-                                                        <div className="results-event-card" style={{ width: "50%", backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
+                                                        <div className="up-event-card" style={{ width: "50%", backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
                                                             {compData?.clubSettings?.original?.data?.upcoming_event_days_count?.remaining_days !== undefined &&
                                                                 compData?.clubSettings?.original?.data?.upcoming_event_days_count?.remaining_days !== null ? (
                                                                 <>
-                                                                    <small className="results-ca-details">Next Event</small>
+                                                                    <small className="ca-details">Next Event</small>
 
                                                                     <div className="row">
-                                                                        <h3 className="results-number" style={{ marginTop: '30px' }}>
+                                                                        <h3 className="number" style={{ marginTop: '30px' }}>
                                                                             {String(compData?.clubSettings?.original?.data?.upcoming_event_days_count?.remaining_days).padStart(2, "0")}
                                                                             &nbsp;
-                                                                            <span className="results-days">days to go</span>
+                                                                            <span className="days">days to go</span>
                                                                         </h3>
                                                                     </div>
                                                                 </>
@@ -325,7 +325,7 @@ function RytonCompetitionResults() {
                                                                         <path d="M42 20H31" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                                         <path d="M4 4L44 44" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                                     </svg>
-                                                                    <h3 className="results-days" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
+                                                                    <h3 className="days" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
                                                                         No upcoming events
                                                                     </h3>
                                                                 </div>
@@ -339,29 +339,29 @@ function RytonCompetitionResults() {
                             </div>
                         </div>
 
-                        <div className="results-contents">
+                        <div className="contents">
                             <section>
-                                <div className="results-container" style={{ maxWidth: '1820px' }} id="results-heads">
-                                    <div className="results-events-header">
-                                        <h2 className="results-events-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Competition Results</h2>
-                                        <div className="results-search-bar">
+                                <div className="container" style={{ maxWidth: '1820px' }} id="heads">
+                                    <div className="events-header">
+                                        <h2 className="events-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Competition Results</h2>
+                                        <div className="search-bar">
                                             <i className="fas fa-search"></i>
-                                            <input type="search" className="results-search-input" id="results-dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                            <input type="search" className="search-input" id="dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
                             </section>
 
                             <section>
-                                <div className="results-container" style={{ maxWidth: '1820px' }} id="results-season-heads">
-                                    <div className="results-season-header">
-                                        <h2 className="results-season-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                <div className="container" style={{ maxWidth: '1820px' }} id="season-heads">
+                                    <div className="season-header">
+                                        <h2 className="season-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                             {selectedSeasonLabel}
                                         </h2>
 
-                                        <div className="results-custom-filter">
-                                            <label className="results-filter-label">Season</label>
-                                            <select className="results-search-bars" value={searchSeason} onChange={(e) => setSearchSeason(e.target.value)}>
+                                        <div className="custom-filter">
+                                            <label className="filter-label">Season</label>
+                                            <select className="search-bars" value={searchSeason} onChange={(e) => setSearchSeason(e.target.value)}>
                                                 <option value="">- Select -</option>
 
                                                 {compData?.clubSettings?.original?.data?.club?.seasons?.map((opt) => (
@@ -376,47 +376,47 @@ function RytonCompetitionResults() {
                                 </div>
                             </section>
 
-                            <section className="results-competition-wrapper" style={{ maxWidth: '1820px' }}>
-                                <div className="results-container results-competition-grid" style={{ maxWidth: '1820px' }}>
+                            <section className="competition-wrapper" style={{ maxWidth: '1820px' }}>
+                                <div className="container competition-grid" style={{ maxWidth: '1820px' }}>
                                     {compData?.competitionResults?.original?.data?.map((competition) => {
                                         const topEntries = getTopEntries(competition);
 
                                         return (
-                                            <div key={competition.id} className="results-competition-card" onClick={() => goToSingleResult(competition.id)}>
-                                                <div className="results-covers">
+                                            <div key={competition.id} className="competition-card" onClick={() => goToSingleResult(competition.id)}>
+                                                <div className="covers">
                                                     <img src={topEntries[0]?.entry_image_url} alt={topEntries[0]?.entry_image_title} />
 
-                                                    <div className="results-resultpics-infos d-flex justify-content-between">
-                                                        <div className="results-winner">
-                                                            <h5 className="results-entry-title">{topEntries[0]?.entry_image_title}</h5>
-                                                            <span className="results-author">by {topEntries[0]?.member_name}</span>
+                                                    <div className="resultpics-infos d-flex justify-content-between">
+                                                        <div className="winner">
+                                                            <h5 className="entry-title">{topEntries[0]?.entry_image_title}</h5>
+                                                            <span className="author">by {topEntries[0]?.member_name}</span>
                                                         </div>
 
                                                         {getMedalIcon(1) && (
-                                                            <img className="results-medal" src={getMedalIcon(1).src} alt="" style={{ width: '25.23px', height: '30.16px', position: 'relative', textAlign: 'right' }} />
+                                                            <img className="medal" src={getMedalIcon(1).src} alt="" style={{ width: '25.23px', height: '30.16px', position: 'relative', textAlign: 'right' }} />
                                                         )}
                                                     </div>
                                                 </div>
 
-                                                <div className="results-card-body" style={{ padding: '0px 10px 10px 20px' }}>
-                                                    <h3 className="results-title">{competition.name}</h3>
+                                                <div className="card-body" style={{ padding: '0px 10px 10px 20px' }}>
+                                                    <h3 className="title">{competition.name}</h3>
 
-                                                    <p className="results-date">
+                                                    <p className="date">
                                                         {formatDate(competition.start_date)},
                                                         {formatTime(competition.start_date)}
                                                     </p>
 
                                                     {topEntries.slice(1).map((entry, index) => (
-                                                        <div className="results-entry-row" key={entry.id}>
-                                                            <img className="results-thumb" src={entry.entry_image_url} alt="" />
+                                                        <div className="entry-row" key={entry.id}>
+                                                            <img className="thumb" src={entry.entry_image_url} alt="" />
 
-                                                            <div className="results-info">
-                                                                <h6 className="results-entry-titles" style={{ marginBottom: '0px' }}>{entry.entry_image_title}</h6>
-                                                                <span className="results-authors" style={{ marginTop: '0px' }}>by {entry.member_name}</span>
+                                                            <div className="info">
+                                                                <h6 className="entry-titles" style={{ marginBottom: '0px' }}>{entry.entry_image_title}</h6>
+                                                                <span className="authors" style={{ marginTop: '0px' }}>by {entry.member_name}</span>
                                                             </div>
 
                                                             {getMedalIcon(index + 2) && (
-                                                                <img className="results-medal" src={getMedalIcon(index + 2).src} alt="" />
+                                                                <img className="medal" src={getMedalIcon(index + 2).src} alt="" />
                                                             )}
                                                         </div>
                                                     ))}
@@ -427,34 +427,34 @@ function RytonCompetitionResults() {
                                 </div>
                             </section >
 
-                            <section id="results-eventcontainer">
-                                <div className="results-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
-                                    <div className="results-events" id="results-events" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, width: '1820px' }}>
-                                        <h5 id="results-clubheading" className="results-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Events & Competitions</h5>
-                                        <h6 id="results-clubsub" className="results-subhead" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingTop: '6px' }}>Latest and upcoming events and competitions on the club calendar</h6>
-                                        <div className="results-upcoming-sections" style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <div className="results-cardddd d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color, padding: '20px' }}>
-                                                <h5 className="results-head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Upcoming Events</h5>
+                            <section id="eventcontainer">
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="events" id="events" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, width: '1820px' }}>
+                                        <h5 id="clubheading" className="heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Events & Competitions</h5>
+                                        <h6 id="clubsub" className="subhead" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingTop: '6px' }}>Latest and upcoming events and competitions on the club calendar</h6>
+                                        <div className="upcoming-sections" style={{ display: 'flex', flexDirection: 'row' }}>
+                                            <div className="cardddd d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color, padding: '20px' }}>
+                                                <h5 className="head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Upcoming Events</h5>
                                                 {compData?.upcomingEvents?.length > 0 ? (
                                                     <>
                                                         {compData.upcomingEvents.slice(0, 3).map((event) => (
-                                                            <div className="results-event-list">
-                                                                <div className="results-home-event-item" style={{ marginBottom: '10px' }}>
-                                                                    <img className="results-img-fluid results-home-event-img" src={event.featured_thumb_url} alt="Event" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }} />
-                                                                    <div className="results-event-details">
-                                                                        <div className="results-event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                            <span id="results-ename" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>{event.name}</span>
-                                                                            <span id="results-espeaker" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color }}>Speaker:{" " + event.speaker}</span>
+                                                            <div className="event-list">
+                                                                <div className="home-event-item" style={{ marginBottom: '10px' }}>
+                                                                    <img className="img-fluid home-event-img" src={event.featured_thumb_url} alt="Event" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }} />
+                                                                    <div className="event-details">
+                                                                        <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                            <span id="ename" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>{event.name}</span>
+                                                                            <span id="espeaker" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color }}>Speaker:{" " + event.speaker}</span>
                                                                         </div>
-                                                                        <div className="results-galtext" id="results-edate">
-                                                                            <small className="results-galtext" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>{formatDate(event.event_date)}</small><br />
+                                                                        <div className="galtext" id="edate">
+                                                                            <small className="galtext" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>{formatDate(event.event_date)}</small><br />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         ))}
-                                                        <div className="results-button-group mt-auto">
-                                                            <button className="results-btn btn-sm" id="results-view-all" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }}>
+                                                        <div className="button-group mt-auto">
+                                                            <button className="btn btn-sm" id="view-all" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }}>
                                                                 View All
                                                             </button>
                                                         </div>
@@ -475,25 +475,25 @@ function RytonCompetitionResults() {
                                                 )}
                                             </div>
 
-                                            <div className="results-cardddd" id="results-calendar" style={{ border: '1px solid #7FA483', padding: '0px', height: 'auto' }}>
+                                            <div className="cardddd" id="calendar" style={{ border: '1px solid #7FA483', padding: '0px', height: 'auto' }}>
                                                 <Calendar />
                                             </div>
 
-                                            <div className="results-cardddd d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color, padding: '20px' }}>
-                                                <h5 className="results-head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Upcoming Competitions</h5>
+                                            <div className="cardddd d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color, padding: '20px' }}>
+                                                <h5 className="head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Upcoming Competitions</h5>
                                                 {compData?.upcomingCompetitions?.length > 0 ? (
                                                     <>
                                                         {compData.upcomingCompetitions.slice(0, 3).map((competition) => (
-                                                            <div key={competition.id} className="results-event-list">
-                                                                <div className="results-home-event-item" style={{ marginBottom: "10px" }}>
-                                                                    <img className="results-img-fluid results-home-event-img" src={competition.featured_thumb_url} alt="Comp" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} />
+                                                            <div key={competition.id} className="event-list">
+                                                                <div className="home-event-item" style={{ marginBottom: "10px" }}>
+                                                                    <img className="img-fluid home-event-img" src={competition.featured_thumb_url} alt="Comp" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} />
 
-                                                                    <div className="results-event-details">
-                                                                        <div className="results-event-info" style={{ display: "flex", flexDirection: "column" }} >
-                                                                            <span id="results-ename" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, }} >
+                                                                    <div className="event-details">
+                                                                        <div className="event-info" style={{ display: "flex", flexDirection: "column" }} >
+                                                                            <span id="ename" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, }} >
                                                                                 {competition.name}
                                                                             </span>
-                                                                            <span id="results-espeaker" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
+                                                                            <span id="espeaker" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
                                                                                 Judge: {" "}
                                                                                 {competition.judges?.map((judge, index) => (
                                                                                     <span key={judge.id}>
@@ -504,8 +504,8 @@ function RytonCompetitionResults() {
                                                                             </span>
                                                                         </div>
 
-                                                                        <div className="results-galtext" id="results-edate">
-                                                                            <small className="results-galtext" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, }} >
+                                                                        <div className="galtext" id="edate">
+                                                                            <small className="galtext" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, }} >
                                                                                 {formatDate(competition.start_date)}
                                                                             </small>
                                                                         </div>
@@ -514,8 +514,8 @@ function RytonCompetitionResults() {
                                                             </div>
                                                         ))}
 
-                                                        <div className="results-button-group mt-auto">
-                                                            <button className="results-btn btn-sm" id="results-view-all" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
+                                                        <div className="button-group mt-auto">
+                                                            <button className="btn btn-sm" id="view-all" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
                                                                 View All
                                                             </button>
                                                         </div>
@@ -544,19 +544,19 @@ function RytonCompetitionResults() {
                                 </div>
                             </section>
 
-                            <section id="results-joincontainer">
-                                <div className="results-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
-                                    <div id="results-cls" className="results-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
+                            <section id="joincontainer">
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div id="cls" className="join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
-                                            <h5 id="results-clubheading" className="results-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                            <h5 id="clubheading" className="heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                 Ready to join the club & work on something exciting?
                                             </h5>
-                                            <p id="results-clubsub" className="results-head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '0px' }}>
+                                            <p id="clubsub" className="head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '0px' }}>
                                                 Join the club and let’s create something amazing.
                                             </p>
                                         </div>
 
-                                        <button className="results-btn" id="results-join-club" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                        <button className="btn" id="join-club" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                             Join Club
                                         </button>
                                     </div>
@@ -564,81 +564,81 @@ function RytonCompetitionResults() {
                             </section>
 
                             <section>
-                                <div className="results-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
-                                    <div className="results-footer-section" style={{ paddingTop: '30px' }}>
-                                        <h5 id="results-footer-heading" className="results-heading results-footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
-                                        <p id="results-footer-description" className="results-head results-footer-description mx-auto" style={{ maxWidth: '1145px', color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                        <h5 id="footer-heading" className="heading footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
+                                        <p id="footer-description" className="head footer-description mx-auto" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
                             <section>
-                                <div className="results-container results-footer-section">
+                                <div className="container footer-section">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
-                                            <div className="results-contact-col">
-                                                <h5 className="results-head mb-4" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                            <div className="contact-col">
+                                                <h5 className="head mb-4" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
 
-                                                <div className="results-contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="results-cla" style={{ paddingBottom: '10px' }}>
-                                                    <p className="results-footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.address} </p>
-                                                    <div className="results-icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
+                                                    <p className="footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.address} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-map-marker-alt"></i>
                                                     </div>
                                                 </div>
 
-                                                <div className="results-contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="results-cla" style={{ paddingBottom: '10px' }}>
-                                                    <p className="results-footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.phone} </p>
-                                                    <div className="results-icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
+                                                    <p className="footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.phone} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-phone"></i>
                                                     </div>
                                                 </div>
 
-                                                <div className="results-contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="results-cla">
-                                                    <p className="results-footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.email} </p>
-                                                    <div className="results-icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
+                                                    <p className="footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.email} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-envelope"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-center" style={{ paddingTop: '-10px' }}>
-                                            <img src={compData?.clubSettings?.original?.data?.settings?.footer_img_url} alt="sample" className="results-footer-img" />
+                                            <img src={compData?.clubSettings?.original?.data?.settings?.footer_img_url} alt="sample" className="footer-img" />
                                         </div>
                                         <div className="col-12 col-md-4">
-                                            <div className="results-social-col">
-                                                <h5 className="results-head mb-4 text-md-start text-center" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Social Links</h5>
+                                            <div className="social-col">
+                                                <h5 className="head mb-4 text-md-start text-center" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Social Links</h5>
 
-                                                <div className="results-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="results-cle">
-                                                    <div className="results-ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
-                                                    <div id="results-facebook">
-                                                        <p className="results-footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
-                                                        <a href="fb_link" target="_blank" className="results-footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <a href="fb_link" target="_blank" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <div className="results-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="results-cle">
-                                                    <div className="results-ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
-                                                    <div id="results-facebook">
-                                                        <p className="results-footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
-                                                        <a href="insta_link" target="_blank" className="results-footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <a href="insta_link" target="_blank" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <div className="results-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="results-cle">
-                                                    <div className="results-ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
-                                                        <span className="results-flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                        <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
-                                                    <div id="results-facebook">
-                                                        <p className="results-footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
-                                                        <a href="flickr_link" className="results-footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <a href="flickr_link" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>
                                                     </div>
@@ -649,10 +649,10 @@ function RytonCompetitionResults() {
                                 </div>
                             </section>
 
-                            <footer className="results-site-footer">
-                                <div className="results-footer-content">
-                                    <p className="results-memtext" id="results-fcopy">Copyright &copy; 2025 – {compData?.clubSettings?.original?.data?.club.club_name} </p>
-                                    <p className="results-memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – {compData?.clubSettings?.original?.data?.club.club_name} </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div >

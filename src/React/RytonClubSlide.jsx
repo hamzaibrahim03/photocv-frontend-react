@@ -95,7 +95,7 @@ function RytonClubSlide() {
 
 
     const openFullscreen = () => {
-        const el = document.querySelector(".csl-main-image");
+        const el = document.querySelector(".main-image");
 
         if (el?.requestFullscreen) {
             el.requestFullscreen();
@@ -149,60 +149,60 @@ function RytonClubSlide() {
 
                 {!isLoading && (
                     <div>
-                        <div className={`csl-viewer ${showComments ? "csl-drawer-open" : ""}`}>
+                        <div className={`viewer ${showComments ? "drawer-open" : ""}`}>
                             <section>
-                                <div className="csl-top-bar">
-                                    <button className="csl-back-btn" onClick={() => navigate(-1)}>
+                                <div className="top-bar">
+                                    <button className="back-btn" onClick={() => navigate(-1)}>
                                         ❮ &nbsp; Back
                                     </button>
                                 </div>
 
-                                <div className="csl-image-section">
-                                    <button className="csl-nav-arrow csl-left" onClick={prev}>
+                                <div className="image-section">
+                                    <button className="nav-arrow left" onClick={prev}>
                                         ‹
                                     </button>
 
-                                    <div className="csl-image-wrapper">
+                                    <div className="image-wrapper">
                                         {current && (
-                                            <img src={current.image} alt="" className="csl-main-image" onClick={openLightbox} />
+                                            <img src={current.image} alt="" className="main-image" onClick={openLightbox} />
                                         )}
 
-                                        <button className="csl-expand-btn" onClick={openFullscreen}>
+                                        <button className="expand-btn" onClick={openFullscreen}>
                                             ⤢
                                         </button>
                                     </div>
 
-                                    <button className="csl-nav-arrow csl-right" onClick={next}>
+                                    <button className="nav-arrow right" onClick={next}>
                                         ›
                                     </button>
 
-                                    <button className="csl-open-comments" onClick={() => setShowComments(true)}>
+                                    <button className="open-comments" onClick={() => setShowComments(true)}>
                                         ❮
                                     </button>
                                 </div>
 
                                 {current && (
-                                    <div className="d-flex csl-image-info">
+                                    <div className="d-flex image-info">
                                         {profileImage && (
-                                            <img src={profileImage} alt="" className="csl-profile-img" />
+                                            <img src={profileImage} alt="" className="profile-img" />
                                         )}
 
-                                        <div className="csl-text">
-                                            <h3 className="csl-title">
+                                        <div className="text">
+                                            <h3 className="title">
                                                 {current.title}
                                             </h3>
 
-                                            <span className="csl-meta">
+                                            <span className="meta">
                                                 by {fullName}
                                             </span>
                                         </div>
                                     </div>
                                 )}
 
-                                <div className="csl-thumbs-wrapper">
-                                    <div className="csl-thumbnails" ref={thumbContainer}>
+                                <div className="thumbs-wrapper">
+                                    <div className="thumbnails" ref={thumbContainer}>
                                         {images.map((img, i) => (
-                                            <div key={img.id} className={`csl-thumb ${i === currentIndex ? "active" : ""}`} onClick={() => goTo(i)} ref={(el) => (thumbRefs.current[i] = el)}>
+                                            <div key={img.id} className={`thumb ${i === currentIndex ? "active" : ""}`} onClick={() => goTo(i)} ref={(el) => (thumbRefs.current[i] = el)}>
                                                 <img src={img.image} alt="" />
                                             </div>
                                         ))}
@@ -216,12 +216,12 @@ function RytonClubSlide() {
                                 <Lightbox open={lightboxVisible} close={closeLightbox} slides={lightboxImages} index={currentIndex} />
                             </section>
 
-                            <footer className="csl-site-footer">
-                                <div className="csl-footer-content">
-                                    <p className="csl-memtext" id="csl-fcopy">
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">
                                         Copyright &copy; 2025 – {clubData?.clubSettings?.original?.data?.club.club_name}
                                     </p>
-                                    <p className="csl-memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div>

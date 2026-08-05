@@ -187,35 +187,35 @@ function RytonMemberGallerySingle() {
                                 <div className="carousel-item active">
                                     {
                                         membergallerydata?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
-                                            <div className="sm-hero-section" style={{ backgroundImage: `url(${membergallerydata?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
-                                                <div className="sm-hero-overlay">
+                                            <div className="hero-section" style={{ backgroundImage: `url(${membergallerydata?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
+                                                <div className="hero-overlay">
                                                     {
                                                         <div>
                                                             <h1 style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '400' }}>
                                                                 {membergallerydata?.clubSettings?.original?.data?.club?.club_name}
                                                             </h1>
 
-                                                            <p className="sm-cabout" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
+                                                            <p className="cabout" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
                                                                 {membergallerydata?.clubSettings?.original?.data?.club?.about}
                                                             </p>
 
-                                                            <button id="sm-overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                                            <button id="overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                                 Join Our Club
                                                             </button>
 
-                                                            <p className="sm-prehead" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
+                                                            <p className="prehead" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
                                                                 An NYCE Club based in Apps, North East England
                                                             </p>
 
                                                             <div className="d-flex">
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="sm-icon-circles" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-facebook-f"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="sm-icon-circles" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-instagram"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="sm-icon-circles" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
-                                                                    <span className="sm-flickr-dots">
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                    <span className="flickr-dots">
                                                                         <i className="fa fa-circle"></i>
                                                                         <i className="fa fa-circle"></i>
                                                                     </span>
@@ -231,70 +231,70 @@ function RytonMemberGallerySingle() {
                         </div>
 
 
-                        <div className="sm-contents">
+                        <div className="contents">
                             <section>
-                                <div className="sm-container" style={{ maxWidth: '1820px' }} id="sm-heads">
-                                    <div className="sm-events-header">
-                                        <nav className="sm-breadcrumb">
-                                            <NavLink to="/rytongal" className="sm-events-title sm-breadcrumb-item" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                <div className="container" style={{ maxWidth: '1820px' }} id="heads">
+                                    <div className="events-header">
+                                        <nav className="breadcrumb">
+                                            <NavLink to="/rytongal" className="events-title breadcrumb-item" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                 Galleries
                                             </NavLink>
 
-                                            <span className="sm-events-title sm-breadcrumb-separator" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                            <span className="events-title breadcrumb-separator" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                 &gt;
                                             </span>
 
-                                            <NavLink to="/rytongal/member" className="sm-events-title sm-breadcrumb-item" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                            <NavLink to="/rytongal/member" className="events-title breadcrumb-item" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                 Members
                                             </NavLink>
 
-                                            <span className="sm-events-title sm-breadcrumb-separator" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                            <span className="events-title breadcrumb-separator" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                 &gt;
                                             </span>
 
-                                            <span className="sm-events-title sm-breadcrumb-item sm-active">
+                                            <span className="events-title breadcrumb-item active">
                                                 {membergallerydata?.memberGalleries?.original?.data?.galleries[0]?.gallery_name}
                                             </span>
                                         </nav>
-                                        <div className="sm-search-bar">
+                                        <div className="search-bar">
                                             <i className="fas fa-search"></i>
-                                            <input type="search" className="sm-search-input" id="sm-dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                            <input type="search" className="search-input" id="dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
                             </section>
 
                             <section>
-                                <div className="sm-container" style={{ maxWidth: '1820px' }} id="sm-overall">
-                                    <section className="sm-gallery-wrapper">
+                                <div className="container" style={{ maxWidth: '1820px' }} id="overall">
+                                    <section className="gallery-wrapper">
 
-                                        <div className="sm-gallery-grid">
+                                        <div className="gallery-grid">
                                             {groupedImages.map((group, gIndex) => (
                                                 <>
                                                     {gIndex === 1 && (
-                                                        <div className="sm-suggestion-section" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color }}>
-                                                            <div className="sm-suggestions-header d-flex justify-content-between align-items-center mb-4" style={{ padding: '0px' }}>
-                                                                <h3 className="sm-heading" style={{ fontWeight: '500' }}>You may also like</h3>
-                                                                <button id="sm-view" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
+                                                        <div className="suggestion-section" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color }}>
+                                                            <div className="suggestions-header d-flex justify-content-between align-items-center mb-4" style={{ padding: '0px' }}>
+                                                                <h3 className="heading" style={{ fontWeight: '500' }}>You may also like</h3>
+                                                                <button id="view" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                                             </div>
 
-                                                            <div className="sm-suggestions-gallery" style={{ padding: '0px' }}>
+                                                            <div className="suggestions-gallery" style={{ padding: '0px' }}>
                                                                 {suggestions.slice(0, 4).map((item) => (
                                                                     <>
-                                                                        <div className="sm-suggestions-card">
+                                                                        <div className="suggestions-card">
                                                                             <img src={item.image} alt={item.title} />
-                                                                            <div className="sm-img-overlay" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
+                                                                            <div className="img-overlay" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
                                                                                 {item.profile_image ? (
-                                                                                    <img className="sm-event-img" style={{ borderRadius: '50%', height: '50px', width: '50px' }} src={item.profile_image} alt="Uploader" />
+                                                                                    <img className="event-img" style={{ borderRadius: '50%', height: '50px', width: '50px' }} src={item.profile_image} alt="Uploader" />
                                                                                 ) : (
-                                                                                    <div className="sm-fallback-box d-flex justify-content-center align-items-center" style={{ borderRadius: '50%' }}><i className="fa-regular fa-user-circle" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, fontSize: '44px' }}></i></div>
+                                                                                    <div className="fallback-box d-flex justify-content-center align-items-center" style={{ borderRadius: '50%' }}><i className="fa-regular fa-user-circle" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, fontSize: '44px' }}></i></div>
                                                                                 )}
 
                                                                                 <div className="d-flex flex-column">
-                                                                                    <span className="sm-names" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
+                                                                                    <span className="names" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
                                                                                         {item.member_name}
                                                                                     </span>
-                                                                                    <span className="sm-role" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
+                                                                                    <span className="role" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
                                                                                         {item.role}
                                                                                     </span>
                                                                                 </div>
@@ -306,21 +306,21 @@ function RytonMemberGallerySingle() {
                                                         </div>
                                                     )}
 
-                                                    <div className="sm-gallery-row">
+                                                    <div className="gallery-row">
                                                         {group[0] && (
-                                                            <div className="sm-gallery-big">
+                                                            <div className="gallery-big">
                                                                 <img src={group[0].image} alt={group[0].title} onClick={() => openSlide(group[0])} />
-                                                                <div className="sm-overlay justify-content-between" style={{ flexDirection: 'row', display: 'flex', backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
+                                                                <div className="overlay justify-content-between" style={{ flexDirection: 'row', display: 'flex', backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
                                                                     <div style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, flexDirection: 'column', display: 'flex' }}>
-                                                                        <h4 className="sm-title" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }} >{group[0].title}</h4>
-                                                                        <span className="sm-name" style={{ color: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color, 0.5) }}>{formatDate(group[0].created_at)}</span>
+                                                                        <h4 className="title" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }} >{group[0].title}</h4>
+                                                                        <span className="name" style={{ color: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color, 0.5) }}>{formatDate(group[0].created_at)}</span>
                                                                     </div >
-                                                                    <div className="sm-profile-icon d-flex justify-content-between flex-column gap-4">
-                                                                        <div className="sm-icons">
+                                                                    <div className="profile-icon d-flex justify-content-between flex-column gap-4">
+                                                                        <div className="icons">
                                                                             <span>{group[0].likes_count}</span>
                                                                             <img src={Hea} alt="icon" style={{ width: '26px', height: '22px' }} />
                                                                         </div>
-                                                                        <div className="sm-icons">
+                                                                        <div className="icons">
                                                                             <span>{group[0].comments_count}</span>
                                                                             <img src={Com} alt="icon" style={{ width: '26px', height: '22px' }} />
                                                                         </div>
@@ -329,21 +329,21 @@ function RytonMemberGallerySingle() {
                                                             </div>
                                                         )}
 
-                                                        <div className="sm-gallery-column">
+                                                        <div className="gallery-column">
                                                             {group.slice(1, 3).map((img) => (
-                                                                <div className="sm-gallery-small" key={img.photo_id} >
+                                                                <div className="gallery-small" key={img.photo_id} >
                                                                     <img src={img.image} alt={img.title} onClick={() => openSlide(img)} />
-                                                                    <div className="sm-overlay justify-content-between" style={{ flexDirection: 'row', display: 'flex', backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
+                                                                    <div className="overlay justify-content-between" style={{ flexDirection: 'row', display: 'flex', backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
                                                                         <div style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, flexDirection: 'column', display: 'flex' }}>
-                                                                            <h4 className="sm-title" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }} >{img.title}</h4>
-                                                                            <span className="sm-name" style={{ color: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color, 0.5) }}>{formatDate(img.created_at)}</span>
+                                                                            <h4 className="title" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }} >{img.title}</h4>
+                                                                            <span className="name" style={{ color: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color, 0.5) }}>{formatDate(img.created_at)}</span>
                                                                         </div >
-                                                                        <div className="sm-profile-icon d-flex justify-content-between flex-column gap-4">
-                                                                            <div className="sm-icons">
+                                                                        <div className="profile-icon d-flex justify-content-between flex-column gap-4">
+                                                                            <div className="icons">
                                                                                 <span>{img.likes_count}</span>
                                                                                 <img src={Hea} alt="icon" style={{ width: '26px', height: '22px' }} />
                                                                             </div>
-                                                                            <div className="sm-icons">
+                                                                            <div className="icons">
                                                                                 <span>{img.comments_count}</span>
                                                                                 <img src={Com} alt="icon" style={{ width: '26px', height: '22px' }} />
                                                                             </div>
@@ -355,21 +355,21 @@ function RytonMemberGallerySingle() {
                                                         </div>
                                                     </div>
 
-                                                    <div className="sm-gallery-row-bottom">
+                                                    <div className="gallery-row-bottom">
                                                         {group.slice(3, 5).map((img) => (
-                                                            <div className="sm-gallery-half" key={img.photo_id} >
+                                                            <div className="gallery-half" key={img.photo_id} >
                                                                 <img src={img.image} alt={img.title} onClick={() => openSlide(img)} />
-                                                                <div className="sm-overlay justify-content-between" style={{ flexDirection: 'row', display: 'flex', backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
+                                                                <div className="overlay justify-content-between" style={{ flexDirection: 'row', display: 'flex', backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
                                                                     <div style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, flexDirection: 'column', display: 'flex' }}>
-                                                                        <h4 className="sm-title" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }} >{img.title}</h4>
-                                                                        <span className="sm-name" style={{ color: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color, 0.5) }}>{formatDate(img.created_at)}</span>
+                                                                        <h4 className="title" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }} >{img.title}</h4>
+                                                                        <span className="name" style={{ color: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color, 0.5) }}>{formatDate(img.created_at)}</span>
                                                                     </div >
-                                                                    <div className="sm-profile-icon d-flex justify-content-between flex-column gap-4">
-                                                                        <div className="sm-icons">
+                                                                    <div className="profile-icon d-flex justify-content-between flex-column gap-4">
+                                                                        <div className="icons">
                                                                             <span>{img.likes_count}</span>
                                                                             <img src={Hea} alt="icon" style={{ width: '26px', height: '22px' }} />
                                                                         </div>
-                                                                        <div className="sm-icons">
+                                                                        <div className="icons">
                                                                             <span>{img.comments_count}</span>
                                                                             <img src={Com} alt="icon" style={{ width: '26px', height: '22px' }} />
                                                                         </div>
@@ -386,7 +386,7 @@ function RytonMemberGallerySingle() {
                                 </div >
                             </section >
                             <section className="w-full bg-white py-14">
-                                <div className="sm-container mx-auto max-w-[600px] text-center">
+                                <div className="container mx-auto max-w-[600px] text-center">
                                     <div className="flex justify-center mb-4">
                                         <img src={membergallerydata?.memberGalleries?.original?.data?.member?.profile_image} style={{ borderRadius: '50%', width: '120px', height: '120px' }} />
                                     </div>
@@ -407,7 +407,7 @@ function RytonMemberGallerySingle() {
                                                 ) : link.platform === 'instagram' ? (
                                                     <i className="fab fa-instagram"></i>
                                                 ) : link.platform === 'flickr' ? (
-                                                    <span className="sm-flickr-dots">
+                                                    <span className="flickr-dots">
                                                         <i className="fa fa-circle"></i><i className="fa fa-circle"></i>
                                                     </span>
                                                 ) : null}
@@ -420,19 +420,19 @@ function RytonMemberGallerySingle() {
 
 
                             <section>
-                                <div className="sm-container" style={{ maxWidth: '1650px', width: '1650px' }}>
-                                    <div className="sm-suggestion-header d-flex justify-content-between align-items-center mb-4">
-                                        <h3 className="sm-heading" style={{ fontWeight: '500' }}>More from Club Galleries</h3>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="suggestion-header d-flex justify-content-between align-items-center mb-4">
+                                        <h3 className="heading" style={{ fontWeight: '500' }}>More from Club Galleries</h3>
 
-                                        <button id="sm-view" onClick={() => navigate(`/rytongal/club`)} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
+                                        <button id="view" onClick={() => navigate(`/rytongal/club`)} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                     </div>
 
-                                    <div className="sm-suggestion-gallery" style={{ padding: 0 }}>
+                                    <div className="suggestion-gallery" style={{ padding: 0 }}>
                                         {suggestion.slice(0, 4).map((item, index) => (
-                                            <div key={index} className="sm-suggestion-card">
+                                            <div key={index} className="suggestion-card">
                                                 <img src={item.image} alt={item.title} />
-                                                <div className="sm-img-overlay" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7), textAlign: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                                                    <p className="sm-photo-title">{item.title}</p>
+                                                <div className="img-overlay" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7), textAlign: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
+                                                    <p className="photo-title">{item.title}</p>
                                                 </div>
                                             </div>
                                         ))}
@@ -440,10 +440,10 @@ function RytonMemberGallerySingle() {
                                 </div>
                             </section>
 
-                            <footer className="sm-site-footer">
-                                <div className="sm-footer-content">
-                                    <p className="sm-memtext" id="sm-fcopy">Copyright &copy; 2025 – {membergallerydata?.clubSettings?.original?.data?.club.club_name} </p>
-                                    <p className="sm-memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – {membergallerydata?.clubSettings?.original?.data?.club.club_name} </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div >

@@ -105,7 +105,7 @@ function RytonResultSlide() {
 
 
     const openFullscreen = () => {
-        const el = document.querySelector(".msl-main-image");
+        const el = document.querySelector(".main-image");
 
         if (el?.requestFullscreen) {
             el.requestFullscreen();
@@ -160,56 +160,56 @@ function RytonResultSlide() {
                 <Loader show={isLoading} />
 
                 {!isLoading && (
-                    <div className={`msl-viewer ${showComments ? "msl-drawer-open" : ""}`}>
+                    <div className={`viewer ${showComments ? "drawer-open" : ""}`}>
                         <section>
-                            <div className="msl-top-bar">
-                                <button className="msl-back-btn" onClick={() => navigate(-1)}>
+                            <div className="top-bar">
+                                <button className="back-btn" onClick={() => navigate(-1)}>
                                     ❮ &nbsp; Back
                                 </button>
                             </div>
 
-                            <div className="msl-image-section">
-                                <button className="msl-nav-arrow msl-left" onClick={prev}>
+                            <div className="image-section">
+                                <button className="nav-arrow left" onClick={prev}>
                                     ‹
                                 </button>
 
-                                <div className="msl-image-wrapper">
+                                <div className="image-wrapper">
                                     {current && (
-                                        <img src={current.entry_image || current.entry_image_url} alt="" className="msl-main-image" onClick={openLightbox} />
+                                        <img src={current.entry_image || current.entry_image_url} alt="" className="main-image" onClick={openLightbox} />
                                     )}
 
-                                    <button className="msl-expand-btn" onClick={openFullscreen}>
+                                    <button className="expand-btn" onClick={openFullscreen}>
                                         ⤢
                                     </button>
                                 </div>
 
-                                <button className="msl-nav-arrow msl-right" onClick={next}>
+                                <button className="nav-arrow right" onClick={next}>
                                     ›
                                 </button>
 
-                                <button className="msl-open-comments" onClick={() => setShowComments(true)}>
+                                <button className="open-comments" onClick={() => setShowComments(true)}>
                                     ❮
                                 </button>
                             </div>
 
                             {current && (
-                                <div className="d-flex msl-image-info">
-                                    <div className="msl-text">
-                                        <h3 className="msl-title">
+                                <div className="d-flex image-info">
+                                    <div className="text">
+                                        <h3 className="title">
                                             {current.entry_image_title || current.entry_title}
                                         </h3>
 
-                                        <span className="msl-meta">
+                                        <span className="meta">
                                             by {fullName}
                                         </span>
                                     </div>
                                 </div>
                             )}
 
-                            <div className="msl-thumbs-wrapper">
-                                <div className="msl-thumbnails" ref={thumbContainer}>
+                            <div className="thumbs-wrapper">
+                                <div className="thumbnails" ref={thumbContainer}>
                                     {images.map((img, i) => (
-                                        <div key={img.id || i} className={`msl-thumb ${i === currentIndex ? "msl-active" : ""}`} onClick={() => goTo(i)} ref={(el) => (thumbRefs.current[i] = el)}>
+                                        <div key={img.id || i} className={`thumb ${i === currentIndex ? "active" : ""}`} onClick={() => goTo(i)} ref={(el) => (thumbRefs.current[i] = el)}>
                                             <img src={img.entry_image || img.entry_image_url} alt="" />
                                         </div>
                                     ))}
@@ -223,13 +223,13 @@ function RytonResultSlide() {
                             <Lightbox open={lightboxVisible} close={closeLightbox} slides={lightboxImages} index={currentIndex} />
                         </section>
 
-                        <footer className="msl-site-footer">
-                            <div className="msl-footer-content">
-                                <p className="msl-memtext" id="msl-fcopy">
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">
                                     Copyright &copy; 2025 – {Club.club_name}
                                 </p>
 
-                                <p className="msl-memtext">
+                                <p className="memtext">
                                     Powered by{" "}
                                     <a href="https://cameraclub.website" target="_blank" rel="noreferrer" style={{ color: Color.text_color, fontWeight: "bold", }}>
                                         {Club.domain_name}

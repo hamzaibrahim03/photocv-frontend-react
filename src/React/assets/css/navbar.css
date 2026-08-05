@@ -178,15 +178,7 @@
      border-top: 1px solid #ccc;
      border-top-width: 100% 
 }
- .date {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 9.49px;
-     line-height: 100%;
-     letter-spacing: 0px;
-     color: #787878;
-}
+
 
 #logo {
   width: 211.0194854736328px;
@@ -293,9 +285,10 @@
 }
 
 .container {
-  max-width: 1820px;
+  width: 1820px;
   padding: 0 15px;
   margin: 0 auto;
+  max-width: 1820px;
 }
 
 .navbar .right-header {

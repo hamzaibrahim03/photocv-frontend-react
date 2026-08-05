@@ -67,43 +67,43 @@ function CommentsDrawMember({ photo, onClose }) {
         date ? new Date(date).toLocaleDateString() : "";
 
     return (
-        <div className="md-drawer-overlay">
-            <div className="md-drawer">
-                <div className="md-top">
-                    <span className="md-title">Details</span>
-                    <button className="md-close" onClick={onClose}>×</button>
+        <div className="drawer-overlay">
+            <div className="drawer">
+                <div className="top">
+                    <span className="title">Details</span>
+                    <button className="close" onClick={onClose}>×</button>
                 </div>
-                <div className="md-block">
-                    <div className="md-block-head" onClick={() => setExifOpen(!exifOpen)}>
+                <div className="block">
+                    <div className="block-head" onClick={() => setExifOpen(!exifOpen)}>
                         <span>EXIF Details</span>
-                        <span className="md-chev">{exifOpen ? "⌃" : "⌄"}</span>
+                        <span className="chev">{exifOpen ? "⌃" : "⌄"}</span>
                     </div>
 
                     {exifOpen && (
-                        <div className="md-exif-grid">
-                            <div className="md-exif-item">
+                        <div className="exif-grid">
+                            <div className="exif-item">
                                 <label>Camera</label><br />
                                 <span>{exif?.camera_model}</span>
                             </div>
-                            <div className="md-exif-item">
+                            <div className="exif-item">
                                 <label>Focal Length</label><br />
                                 <span>{exif?.focal_length}</span>
                             </div>
 
-                            <div className="md-exif-item">
+                            <div className="exif-item">
                                 <label>Lens</label><br />
                                 <span>{exif?.lens}</span>
                             </div>
-                            <div className="md-exif-item">
+                            <div className="exif-item">
                                 <label>Aperture</label><br />
                                 <span>{exif?.aperture}</span>
                             </div>
 
-                            <div className="md-exif-item">
+                            <div className="exif-item">
                                 <label>Shutter Speed</label><br />
                                 <span>{exif?.shutter_speed}</span>
                             </div>
-                            <div className="md-exif-item">
+                            <div className="exif-item">
                                 <label>ISO</label><br />
                                 <span>{exif?.iso}</span>
                             </div>
@@ -111,48 +111,48 @@ function CommentsDrawMember({ photo, onClose }) {
                     )}
                 </div>
 
-                <div className="md-block md-comments-block">
-                    <div className="md-block-head" onClick={() => setCommentsOpen(!commentsOpen)}>
+                <div className="block comments-block">
+                    <div className="block-head" onClick={() => setCommentsOpen(!commentsOpen)}>
                         <span>Comments</span>
-                        <span className="md-chev"> {commentsOpen ? "⌃" : "⌄"}</span>
+                        <span className="chev"> {commentsOpen ? "⌃" : "⌄"}</span>
                     </div>
 
 
                     {commentsOpen && (
                         <>
-                            <div className="cd-comments" ref={commentsRef}>
+                            <div className="comments" ref={commentsRef}>
 
                                 {comments.length > 0 ? (
                                     comments.map((c) => (
-                                        <div className="md-comment" key={c.id}>
+                                        <div className="comment" key={c.id}>
                                             <strong>{c.posted_by || "User"}</strong>
                                             <p>{c.comment}</p>
                                             <small>{time(c.posted_at)}</small>
                                         </div>
                                     ))
                                 ) : (
-                                    <p className="md-empty">No comments yet</p>
+                                    <p className="empty">No comments yet</p>
                                 )}
                             </div>
 
 
 
-                            <div className="md-input-bar">
+                            <div className="input-bar">
 
                                 <input type="text" value={newComment} placeholder="Add a comment..." onChange={(e) => setNewComment(e.target.value)} onKeyDown={(e) => e.key === "Enter" && postComment()} />
 
                                 <button onClick={postComment} disabled={posting}>{posting ? "..." : "➤"}</button>
 
                             </div>
-                            <div className="md-comment-stats">
-                                <div className="md-stat">
-                                    <span className="md-icon heart">♥</span>
-                                    <span className="md-count">{like}</span>
+                            <div className="comment-stats">
+                                <div className="stat">
+                                    <span className="icon heart">♥</span>
+                                    <span className="count">{like}</span>
                                 </div>
 
-                                <div className="md-stat">
-                                    <span className="md-icon comment">💬</span>
-                                    <span className="md-count">{comments.length}</span>
+                                <div className="stat">
+                                    <span className="icon comment">💬</span>
+                                    <span className="count">{comments.length}</span>
                                 </div>
                             </div>
                         </>

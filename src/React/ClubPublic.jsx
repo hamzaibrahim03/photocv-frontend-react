@@ -73,35 +73,35 @@ function ClubPublic() {
                                 <div className="carousel-item active">
                                     {
                                         clubData?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
-                                            <div className="cp-hero-section" style={{ backgroundImage: `url(${clubData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
-                                                <div className="cp-hero-overlay">
+                                            <div className="hero-section" style={{ backgroundImage: `url(${clubData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
+                                                <div className="hero-overlay">
                                                     {
                                                         <div>
                                                             <h1 style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '400' }}>
                                                                 {clubData?.clubSettings?.original?.data?.club?.club_name}
                                                             </h1>
 
-                                                            <p className="cp-cabout" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
+                                                            <p className="cabout" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
                                                                 {clubData?.clubSettings?.original?.data?.club?.about}
                                                             </p>
 
-                                                            <button id="cp-overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                                            <button id="overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                                 Join Our Club
                                                             </button>
 
-                                                            <p className="cp-prehead" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
+                                                            <p className="prehead" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
                                                                 An NYCE Club based in Apps, North East England
                                                             </p>
 
                                                             <div className="d-flex">
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="cp-icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-facebook-f"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="cp-icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-instagram"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="cp-icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
-                                                                    <span className="cp-flickr-dots">
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                    <span className="flickr-dots">
                                                                         <i className="fa fa-circle"></i>
                                                                         <i className="fa fa-circle"></i>
                                                                     </span>
@@ -116,213 +116,213 @@ function ClubPublic() {
                             </div>
                         </div>
 
-                        <div className="cp-contents">
+                        <div className="contents">
                             <section>
-                                <div className="cp-container" style={{ maxWidth: '1820px' }} id="cp-heads">
-                                    <div className="cp-events-header">
-                                        <h2 className="cp-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>{clubData?.aboutUs?.title}</h2>
-                                        <div className="cp-search-bar">
+                                <div className="container" style={{ maxWidth: '1820px' }} id="heads">
+                                    <div className="events-header">
+                                        <h2 className="heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>{clubData?.aboutUs?.title}</h2>
+                                        <div className="search-bar">
                                             <i className="fas fa-search"></i>
-                                            <input type="search" className="cp-search-input" id="cp-dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                            <input type="search" className="search-input" id="dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
                             </section>
 
                             <section>
-                                <div className="cp-container" style={{ maxWidth: '1820px' }} id="cp-overall">
-                                    <p className="cp-memtext">{he.decode(clubData?.aboutUs?.description)}</p>
+                                <div className="container" style={{ maxWidth: '1820px' }} id="overall">
+                                    <p className="memtext">{he.decode(clubData?.aboutUs?.description)}</p>
 
-                                    <div className="cp-divider4"></div>
+                                    <div className="divider4"></div>
                                     <section>
-                                        <div className="cp-container" style={{ maxWidth: '1820px' }}>
-                                            <h5 className="cp-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Club Officials</h5>
+                                        <div className="container" style={{ maxWidth: '1820px' }}>
+                                            <h5 className="heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Club Officials</h5>
 
                                             <div className="row">
                                                 <div className="col-md-4">
-                                                    <h2 className="cp-main">Executive Committee</h2>
+                                                    <h2 className="main">Executive Committee</h2>
                                                     {getByRole("President").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 President
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("super_admin").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Chairman
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("club-admin").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Vice-Chair
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("Publicity & Events Officer").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Secretary
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Programme Secretary
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Treasurer
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
                                                 </div>
                                                 <div className="col-md-4">
-                                                    <h2 className="cp-main">Competition Secretaries</h2>
+                                                    <h2 className="main">Competition Secretaries</h2>
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Prints
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 PDI
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("General Members").map((person) => (
-                                                        <div v-for="person in getByRole('')" key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div v-for="person in getByRole('')" key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 External
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
                                                 </div >
                                                 <div className="col-md-4">
-                                                    <h2 className="cp-main">Technical & Committee</h2>
+                                                    <h2 className="main">Technical & Committee</h2>
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Webmaster
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("Internal Comp Secretary").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 IT Co-ordinator
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     {getByRole("Social Secretary").map((person) => (
-                                                        <div key={person.email} className="cp-official" >
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <div key={person.email} className="official" >
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Social Secretary
                                                             </h1>
-                                                            <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
 
                                                     <div>
-                                                        <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                        <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                             Committee Members
                                                         </h1>
                                                         {getByRole("member").slice(0, 3).map((person) => (
-                                                            <div key={person.email} className="cp-official">
-                                                                <h1 className="cp-list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <div key={person.email} className="official">
+                                                                <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                     {person.first_name} {person.last_name}
                                                                 </h1>
-                                                                <small className="cp-email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                                <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                     <i className="fa fa-envelope"></i> {person.email}
                                                                 </small>
                                                             </div>
@@ -332,27 +332,27 @@ function ClubPublic() {
                                             </div >
                                         </div >
                                     </section >
-                                    <div className="cp-divider4"></div>
+                                    <div className="divider4"></div>
 
-                                    <h5 className="cp-head">Selection Committee</h5>
+                                    <h5 className="head">Selection Committee</h5>
                                     <p>It had previously been agreed that henceforth the External Competition committee should comprise the three competition secretaries plus any competition NCPF judges that are members of the club.</p>
 
                                 </div >
                             </section >
 
-                            <section id="cp-joincontainer">
-                                <div className="cp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
-                                    <div id="cp-cls" className="cp-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: clubData?.clubSettings?.original?.data?.settings?.secondary_color }}>
+                            <section id="joincontainer">
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div id="cls" className="join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: clubData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
-                                            <h5 id="cp-clubheading" className="cp-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                            <h5 id="clubheading" className="heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                 Ready to join the club & work on something exciting?
                                             </h5>
-                                            <p id="cp-clubsub" className="cp-head" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '0px' }}>
+                                            <p id="clubsub" className="head" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '0px' }}>
                                                 Join the club and let’s create something amazing.
                                             </p>
                                         </div>
 
-                                        <button className="cp-btn" id="cp-join-club" onClick={() => navigate('/rytonclub')} style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                        <button className="btn" id="join-club" onClick={() => navigate('/rytonclub')} style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                             Join Club
                                         </button>
                                     </div>
@@ -360,81 +360,81 @@ function ClubPublic() {
                             </section>
 
                             <section>
-                                <div className="cp-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
-                                    <div className="cp-footer-section" style={{ paddingTop: '30px' }}>
-                                        <h5 id="cp-footer-heading" className="cp-heading cp-footer-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
-                                        <p id="cp-footer-description" className="cp-head cp-footer-description mx-auto" style={{ maxWidth: '1145px', color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_description} </p>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                        <h5 id="footer-heading" className="heading footer-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
+                                        <p id="footer-description" className="head footer-description mx-auto" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
                             <section>
-                                <div className="cp-container cp-footer-section">
+                                <div className="container footer-section">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
-                                            <div className="cp-contact-col">
-                                                <h5 className="cp-head mb-4" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                            <div className="contact-col">
+                                                <h5 className="head mb-4" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
 
-                                                <div className="cp-contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cp-cla" style={{ paddingBottom: '10px' }}>
-                                                    <p className="cp-footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.address} </p>
-                                                    <div className="cp-icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
+                                                    <p className="footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.address} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-map-marker-alt"></i>
                                                     </div>
                                                 </div>
 
-                                                <div className="cp-contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cp-cla" style={{ paddingBottom: '10px' }}>
-                                                    <p className="cp-footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.phone} </p>
-                                                    <div className="cp-icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
+                                                    <p className="footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.phone} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-phone"></i>
                                                     </div>
                                                 </div>
 
-                                                <div className="cp-contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cp-cla">
-                                                    <p className="cp-footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.email} </p>
-                                                    <div className="cp-icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
+                                                    <p className="footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.email} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-envelope"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-center" style={{ paddingTop: '-10px' }}>
-                                            <img src={clubData?.clubSettings?.original?.data?.settings?.footer_img_url} alt="sample" className="cp-footer-img" />
+                                            <img src={clubData?.clubSettings?.original?.data?.settings?.footer_img_url} alt="sample" className="footer-img" />
                                         </div>
                                         <div className="col-12 col-md-4">
-                                            <div className="cp-social-col">
-                                                <h5 className="cp-head mb-4 text-md-start text-center" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Social Links</h5>
+                                            <div className="social-col">
+                                                <h5 className="head mb-4 text-md-start text-center" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Social Links</h5>
 
-                                                <div className="cp-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cp-cle">
-                                                    <div className="cp-ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
-                                                    <div id="cp-facebook">
-                                                        <p className="cp-footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
-                                                        <a href="fb_link" target="_blank" className="cp-footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <a href="fb_link" target="_blank" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <div className="cp-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cp-cle">
-                                                    <div className="cp-ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
-                                                    <div id="cp-facebook">
-                                                        <p className="cp-footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
-                                                        <a href="insta_link" target="_blank" className="cp-footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <a href="insta_link" target="_blank" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <div className="cp-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cp-cle">
-                                                    <div className="cp-ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
-                                                        <span className="cp-flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                        <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
-                                                    <div id="cp-facebook">
-                                                        <p className="cp-footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
-                                                        <a href="flickr_link" className="cp-footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <a href="flickr_link" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>
                                                     </div>
@@ -445,10 +445,10 @@ function ClubPublic() {
                                 </div>
                             </section>
 
-                            <footer className="cp-site-footer">
-                                <div className="cp-footer-content">
-                                    <p className="cp-memtext" id="cp-fcopy">Copyright &copy; 2025 – {clubData?.clubSettings?.original?.data?.club.club_name} </p>
-                                    <p className="cp-memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – {clubData?.clubSettings?.original?.data?.club.club_name} </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div >

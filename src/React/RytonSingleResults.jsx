@@ -373,35 +373,35 @@ function RytonSingleResults() {
                                 <div className="carousel-item active">
                                     {
                                         compData?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
-                                            <div className="sre-hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
-                                                <div className="sre-hero-overlay">
+                                            <div className="hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
+                                                <div className="hero-overlay">
                                                     {
                                                         <div>
                                                             <h1 style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '400' }}>
                                                                 {compData?.clubSettings?.original?.data?.club?.club_name}
                                                             </h1>
 
-                                                            <p className="sre-cabout" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
+                                                            <p className="cabout" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
                                                                 {compData?.clubSettings?.original?.data?.club?.about}
                                                             </p>
 
-                                                            <button id="sre-overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                                            <button id="overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, }} >
                                                                 Join Our Club
                                                             </button>
 
-                                                            <p className="sre-prehead" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
+                                                            <p className="prehead" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
                                                                 An NYCE Club based in Apps, North East England
                                                             </p>
 
                                                             <div className="d-flex">
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="sre-icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-facebook-f"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="sre-icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
                                                                     <i className="fab fa-instagram"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="sre-icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
-                                                                    <span className="sre-flickr-dots">
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: compData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                    <span className="flickr-dots">
                                                                         <i className="fa fa-circle"></i>
                                                                         <i className="fa fa-circle"></i>
                                                                     </span>
@@ -416,29 +416,29 @@ function RytonSingleResults() {
                                 <div className="carousel-item">
                                     {
                                         compData?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
-                                            <div className="sre-hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[1]?.image_medium_url})` }} >
-                                                <div className="sre-hero-overlay" style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-                                                    <div className="sre-card-section" style={{ width: '100%' }} >
-                                                        <div className="sre-stat-card" style={{ width: '50%', backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
-                                                            <small className="sre-ca-details">Members</small>
+                                            <div className="hero-section" style={{ backgroundImage: `url(${compData?.clubSettings?.original?.data?.settings?.cover_images[1]?.image_medium_url})` }} >
+                                                <div className="hero-overlay" style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
+                                                    <div className="card-section" style={{ width: '100%' }} >
+                                                        <div className="stat-card" style={{ width: '50%', backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
+                                                            <small className="ca-details">Members</small>
                                                             {
-                                                                <h3 className="sre-number" style={{ marginTop: '30px' }}>
+                                                                <h3 className="number" style={{ marginTop: '30px' }}>
                                                                     {compData?.clubSettings?.original?.data?.total_members}
                                                                 </h3>
                                                             }
                                                         </div>
 
-                                                        <div className="sre-event-card" style={{ width: "50%", backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
+                                                        <div className="up-event-card" style={{ width: "50%", backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} >
                                                             {compData?.clubSettings?.original?.data?.upcoming_event_days_count?.remaining_days !== undefined &&
                                                                 compData?.clubSettings?.original?.data?.upcoming_event_days_count?.remaining_days !== null ? (
                                                                 <>
-                                                                    <small className="sre-ca-details">Next Event</small>
+                                                                    <small className="ca-details">Next Event</small>
 
                                                                     <div className="row">
-                                                                        <h3 className="sre-number" style={{ marginTop: '30px' }}>
+                                                                        <h3 className="number" style={{ marginTop: '30px' }}>
                                                                             {String(compData?.clubSettings?.original?.data?.upcoming_event_days_count?.remaining_days).padStart(2, "0")}
                                                                             &nbsp;
-                                                                            <span className="sre-days">days to go</span>
+                                                                            <span className="days">days to go</span>
                                                                         </h3>
                                                                     </div>
                                                                 </>
@@ -452,7 +452,7 @@ function RytonSingleResults() {
                                                                         <path d="M42 20H31" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                                         <path d="M4 4L44 44" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                                     </svg>
-                                                                    <h3 className="sre-days" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
+                                                                    <h3 className="days" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
                                                                         No upcoming events
                                                                     </h3>
                                                                 </div>
@@ -466,34 +466,34 @@ function RytonSingleResults() {
                             </div>
                         </div>
 
-                        <div className="sre-contents">
+                        <div className="contents">
                             <section>
-                                <div className="sre-container" id="sre-heads">
-                                    <div className="sre-events-header">
-                                        <h2 className="sre-events-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Results</h2>
-                                        <div className="sre-search-bar">
+                                <div className="container" style={{ maxWidth: '1820px' }} id="heads">
+                                    <div className="events-header">
+                                        <h2 className="events-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Results</h2>
+                                        <div className="search-bar">
                                             <i className="fas fa-search"></i>
-                                            <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" className="sre-search-input" id="sre-dt-search-1" placeholder="Search" aria-controls="example1" />
+                                            <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" className="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                                         </div>
                                     </div>
                                 </div>
                             </section>
 
-                            <section className="sre-competition-section">
-                                <div className="sre-container">
-                                    <h2 className="sre-heading">
+                            <section className="competition-section">
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <h2 className="heading">
                                         {competitionTitle()} - {competitionSeason()}
                                     </h2>
-                                    <div className="sre-gallery-grid">
+                                    <div className="gallery-grid">
                                         {entries.map((item, index) => (
-                                            <div key={item.id || index} className="sre-gallery-card" onClick={() => openSlide(item)}>
-                                                <img src={item.entry_image} className="sre-gallery-img" />
-                                                <div className="sre-overlay">
-                                                    <div className="sre-text">
-                                                        <p className="sre-title">{item.entry_image_title}</p>
-                                                        <span className="sre-author">by {item.member_name}</span>
+                                            <div key={item.id || index} className="gallery-card" onClick={() => openSlide(item)}>
+                                                <img src={item.entry_image} className="gallery-img" />
+                                                <div className="overlay">
+                                                    <div className="text">
+                                                        <p className="title">{item.entry_image_title}</p>
+                                                        <span className="author">by {item.member_name}</span>
                                                     </div>
-                                                    <img src={getMedalIcon(item.position).src} alt={getMedalIcon(item.position).name} id="sre-badge" />
+                                                    <img src={getMedalIcon(item.position).src} alt={getMedalIcon(item.position).name} id="badge" />
                                                 </div>
                                             </div>
                                         ))}
@@ -502,22 +502,22 @@ function RytonSingleResults() {
                             </section>
 
                             <section>
-                                <div className="sre-container">
-                                    <div className="sre-suggestion-header d-flex justify-content-between align-items-center mb-4">
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="suggestion-header d-flex justify-content-between align-items-center mb-4">
                                         <div>
-                                            <h3 className="sre-heading" style={{ fontWeight: '500', color: compData?.clubSettings?.original?.data?.settings?.text_color }}>More from Club Galleries</h3>
-                                            <p className="sre-clubsub" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                            <h3 className="heading" style={{ fontWeight: '500', color: compData?.clubSettings?.original?.data?.settings?.text_color }}>More from Club Galleries</h3>
+                                            <p className="clubsub" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                 A preview of galleries made up of amazing photographs from club members
                                             </p>
                                         </div>
-                                        <button id="sre-view" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
+                                        <button id="view" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                     </div>
 
-                                    <div className="sre-suggestion-gallery">
+                                    <div className="suggestion-gallery">
                                         {suggestion.slice(0, 10).map((item, index) => (
-                                            <div key={item.id} className={`sre-suggestion-card ${getPositionClass(index, suggestion.length)}`}>
+                                            <div key={item.id} className={`suggestion-card ${getPositionClass(index, suggestion.length)}`}>
                                                 <img src={item.image} alt={item.title} style={{ objectFit: "cover", objectPosition: "top", }} />
-                                                <div className={`sre-img-overlay ${getPositionClass(index, suggestion.length)}`} style={{ backgroundColor: hexToRgba(compData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), }} >
+                                                <div className={`img-overlay ${getPositionClass(index, suggestion.length)}`} style={{ backgroundColor: hexToRgba(compData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), }} >
                                                     <span style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
                                                         {item.title}
                                                     </span>
@@ -528,19 +528,19 @@ function RytonSingleResults() {
                                 </div>
                             </section>
 
-                            <section id="sre-joincontainer">
-                                <div className="sre-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', width: '1820px' }}>
-                                    <div id="sre-cls" className="sre-join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
+                            <section id="joincontainer">
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div id="cls" className="join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                         <div>
-                                            <h5 id="sre-clubheading" className="sre-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                            <h5 id="clubheading" className="heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                 Ready to join the club & work on something exciting?
                                             </h5>
-                                            <p id="sre-clubsub" className="sre-head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '0px' }}>
+                                            <p id="clubsub" className="head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '0px' }}>
                                                 Join the club and let’s create something amazing.
                                             </p>
                                         </div>
 
-                                        <button className="sre-btn" id="sre-join-club" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                        <button className="btn" id="join-club" onClick={() => navigate('/rytonclub')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                             Join Club
                                         </button>
                                     </div>
@@ -548,81 +548,81 @@ function RytonSingleResults() {
                             </section>
 
                             <section>
-                                <div className="sre-container" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', flexDirection: 'column' }}>
-                                    <div className="sre-footer-section" style={{ paddingTop: '30px' }}>
-                                        <h5 id="sre-footer-heading" className="sre-heading sre-footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
-                                        <p id="sre-footer-description" className="sre-head sre-footer-description mx-auto" style={{ maxWidth: '1145px', color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                        <h5 id="footer-heading" className="heading footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
+                                        <p id="footer-description" className="head footer-description mx-auto" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
                             <section>
-                                <div className="sre-container sre-footer-section">
+                                <div className="container footer-section">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
-                                            <div className="sre-contact-col">
-                                                <h5 className="sre-head mb-4" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                            <div className="contact-col">
+                                                <h5 className="head mb-4" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
 
-                                                <div className="sre-contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="sre-cla" style={{ paddingBottom: '10px' }}>
-                                                    <p className="sre-footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.address} </p>
-                                                    <div className="sre-icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
+                                                    <p className="footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.address} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-map-marker-alt"></i>
                                                     </div>
                                                 </div>
 
-                                                <div className="sre-contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="sre-cla" style={{ paddingBottom: '10px' }}>
-                                                    <p className="sre-footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.phone} </p>
-                                                    <div className="sre-icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
+                                                    <p className="footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.phone} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-phone"></i>
                                                     </div>
                                                 </div>
 
-                                                <div className="sre-contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="sre-cla">
-                                                    <p className="sre-footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.email} </p>
-                                                    <div className="sre-icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
+                                                <div className="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
+                                                    <p className="footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.email} </p>
+                                                    <div className="icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-envelope"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-center" style={{ paddingTop: '-10px' }}>
-                                            <img src={compData?.clubSettings?.original?.data?.settings?.footer_img_url} alt="sample" className="sre-footer-img" />
+                                            <img src={compData?.clubSettings?.original?.data?.settings?.footer_img_url} alt="sample" className="footer-img" />
                                         </div>
                                         <div className="col-12 col-md-4">
-                                            <div className="sre-social-col">
-                                                <h5 className="sre-head mb-4 text-md-start text-center" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Social Links</h5>
+                                            <div className="social-col">
+                                                <h5 className="head mb-4 text-md-start text-center" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Social Links</h5>
 
-                                                <div className="sre-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="sre-cle">
-                                                    <div className="sre-ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
-                                                    <div id="sre-facebook">
-                                                        <p className="sre-footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
-                                                        <a href="fb_link" target="_blank" className="sre-footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <a href="fb_link" target="_blank" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <div className="sre-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="sre-cle">
-                                                    <div className="sre-ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
-                                                    <div id="sre-facebook">
-                                                        <p className="sre-footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
-                                                        <a href="insta_link" target="_blank" className="sre-footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <a href="insta_link" target="_blank" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <div className="sre-social-item d-flex align-items-center justify-content-md-start justify-content-center" id="sre-cle">
-                                                    <div className="sre-ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
-                                                        <span className="sre-flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
+                                                <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                                    <div className="ficon-circles me-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                        <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
-                                                    <div id="sre-facebook">
-                                                        <p className="sre-footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
-                                                        <a href="flickr_link" className="sre-footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    <div id="facebook">
+                                                        <p className="footer-text fw-bold mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <a href="flickr_link" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>
                                                     </div>
@@ -633,10 +633,10 @@ function RytonSingleResults() {
                                 </div>
                             </section>
 
-                            <footer className="sre-site-footer">
-                                <div className="sre-footer-content">
-                                    <p className="sre-memtext" id="sre-fcopy">Copyright &copy; 2025 – {compData?.clubSettings?.original?.data?.club.club_name} </p>
-                                    <p className="sre-memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – {compData?.clubSettings?.original?.data?.club.club_name} </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div >
