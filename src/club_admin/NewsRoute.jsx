@@ -16,7 +16,7 @@
                                     <p class="role">{{CurrentMonthCount}} News posted this month</p>
                                 </div>
                             </div>
-                            <div class="dt-search mx-auto">
+                            <div class="search-bar">
                                 <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                             </div>
                             <div class="quick-filter text-end">

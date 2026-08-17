@@ -5,7 +5,7 @@ const getSubdomain = () => {
   return hostParts[0] || "default";
 };
 
-const BASE_URL = `${import.meta.env.VITE_API_PROTOCOL}://${getSubdomain()}${import.meta.env.VITE_API_SUFFIX}`;
+const BASE_URL = import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_PROTOCOL}://${getSubdomain()}${import.meta.env.VITE_API_SUFFIX}`;
 
 const apiClient = axios.create({
   baseURL: BASE_URL,

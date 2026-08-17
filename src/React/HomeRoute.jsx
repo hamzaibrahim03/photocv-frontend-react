@@ -1,4 +1,4 @@
-import './assets/css/clubstyle.css'
+import './assets/css/rytonstyle.css'
 import logo from './images/clubs/logo/logo.svg'
 import heart from './images/Heart.svg'
 

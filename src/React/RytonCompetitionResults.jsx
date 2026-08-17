@@ -2,9 +2,7 @@ import Navbar from "./extra/Navbar";
 import apiClient from "../api/axios";
 import Loader from './extra/LoaderAll';
 import Calendar from './extra/CalendarRyton'
-import "./assets/css/results.css"
-import Event from "./assets/icons/navigation/events.svg"
-import Competition from "./assets/icons/navigation/competition.svg"
+import "./assets/css/rytonstyle.css"
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router"
 import he from "he";
@@ -353,15 +351,15 @@ function RytonCompetitionResults() {
                             </section>
 
                             <section>
-                                <div className="container" style={{ maxWidth: '1820px' }} id="season-heads">
-                                    <div className="season-header">
-                                        <h2 className="season-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                <div className="container" style={{ maxWidth: '1820px' }} id="heads">
+                                    <div className="events-header">
+                                        <h2 className="events-title" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                             {selectedSeasonLabel}
                                         </h2>
 
                                         <div className="custom-filter">
                                             <label className="filter-label">Season</label>
-                                            <select className="search-bars" value={searchSeason} onChange={(e) => setSearchSeason(e.target.value)}>
+                                            <select className="search-bar" value={searchSeason} onChange={(e) => setSearchSeason(e.target.value)}>
                                                 <option value="">- Select -</option>
 
                                                 {compData?.clubSettings?.original?.data?.club?.seasons?.map((opt) => (
@@ -382,7 +380,7 @@ function RytonCompetitionResults() {
                                         const topEntries = getTopEntries(competition);
 
                                         return (
-                                            <div key={competition.id} className="competition-card" onClick={() => goToSingleResult(competition.id)}>
+                                            <div key={competition.id} className="competition-result-card" onClick={() => goToSingleResult(competition.id)}>
                                                 <div className="covers">
                                                     <img src={topEntries[0]?.entry_image_url} alt={topEntries[0]?.entry_image_title} />
 
@@ -398,17 +396,17 @@ function RytonCompetitionResults() {
                                                     </div>
                                                 </div>
 
-                                                <div className="card-body" style={{ padding: '0px 10px 10px 20px' }}>
+                                                <div className="card-body" style={{ padding: '0px 10px 10px 40px' }}>
                                                     <h3 className="title">{competition.name}</h3>
 
-                                                    <p className="date">
+                                                    <p className="entry-date">
                                                         {formatDate(competition.start_date)},
                                                         {formatTime(competition.start_date)}
                                                     </p>
 
                                                     {topEntries.slice(1).map((entry, index) => (
                                                         <div className="entry-row" key={entry.id}>
-                                                            <img className="thumb" src={entry.entry_image_url} alt="" />
+                                                            <img className="entry-thumb" src={entry.entry_image_url} alt="" />
 
                                                             <div className="info">
                                                                 <h6 className="entry-titles" style={{ marginBottom: '0px' }}>{entry.entry_image_title}</h6>
@@ -433,14 +431,14 @@ function RytonCompetitionResults() {
                                         <h5 id="clubheading" className="heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Events & Competitions</h5>
                                         <h6 id="clubsub" className="subhead" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingTop: '6px' }}>Latest and upcoming events and competitions on the club calendar</h6>
                                         <div className="upcoming-sections" style={{ display: 'flex', flexDirection: 'row' }}>
-                                            <div className="cardddd d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color, padding: '20px' }}>
+                                            <div className="event-card d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color, padding: '20px' }}>
                                                 <h5 className="head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Upcoming Events</h5>
                                                 {compData?.upcomingEvents?.length > 0 ? (
                                                     <>
                                                         {compData.upcomingEvents.slice(0, 3).map((event) => (
                                                             <div className="event-list">
-                                                                <div className="home-event-item" style={{ marginBottom: '10px' }}>
-                                                                    <img className="img-fluid home-event-img" src={event.featured_thumb_url} alt="Event" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }} />
+                                                                <div className="event-item" style={{ marginBottom: '10px' }}>
+                                                                    <img className="img-fluid event-img" src={event.featured_thumb_url} alt="Event" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }} />
                                                                     <div className="event-details">
                                                                         <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
                                                                             <span id="ename" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>{event.name}</span>
@@ -475,18 +473,18 @@ function RytonCompetitionResults() {
                                                 )}
                                             </div>
 
-                                            <div className="cardddd" id="calendar" style={{ border: '1px solid #7FA483', padding: '0px', height: 'auto' }}>
+                                            <div className="calendar-card" id="calendar" style={{ border: '1px solid #7FA483' }}>
                                                 <Calendar />
                                             </div>
 
-                                            <div className="cardddd d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color, padding: '20px' }}>
+                                            <div className="competition-card d-flex flex-column" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                                 <h5 className="head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Upcoming Competitions</h5>
                                                 {compData?.upcomingCompetitions?.length > 0 ? (
                                                     <>
                                                         {compData.upcomingCompetitions.slice(0, 3).map((competition) => (
                                                             <div key={competition.id} className="event-list">
-                                                                <div className="home-event-item" style={{ marginBottom: "10px" }}>
-                                                                    <img className="img-fluid home-event-img" src={competition.featured_thumb_url} alt="Comp" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} />
+                                                                <div className="event-item" style={{ marginBottom: "10px" }}>
+                                                                    <img className="img-fluid event-img" src={competition.featured_thumb_url} alt="Comp" style={{ backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }} />
 
                                                                     <div className="event-details">
                                                                         <div className="event-info" style={{ display: "flex", flexDirection: "column" }} >
@@ -563,17 +561,17 @@ function RytonCompetitionResults() {
                                 </div>
                             </section>
 
-                            <section>
+                            <section id="footer-section">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                    <div>
                                         <h5 id="footer-heading" className="heading footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="footer-description" className="head footer-description mx-auto" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
-                            <section>
-                                <div className="container footer-section">
+                            <section id="footer-section">
+                                <div className="container">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">

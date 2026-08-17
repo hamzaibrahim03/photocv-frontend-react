@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "./assets/css/memberdraw.css";
+import "./assets/css/rytonstyle.css";
 import apiClient from "../api/axios";
 
 function CommentsDrawMember({ photo, onClose }) {

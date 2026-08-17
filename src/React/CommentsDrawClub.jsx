@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "./assets/css/clubdraw.css";
+import "./assets/css/rytonstyle.css";
 import apiClient from "../api/axios";
 
 function CommentsDrawClub({ photo, onClose }) {
@@ -156,7 +156,7 @@ function CommentsDrawClub({ photo, onClose }) {
 
                             <div className="input-bar">
 
-                                <input type="text" value={newComment} placeholder="Add a comment..." onChange={(e) => setNewComment(e.target.value)} onKeyDown={(e) => e.key === "Enter" && postComment()}/>
+                                <input type="text" value={newComment} placeholder="Add a comment..." onChange={(e) => setNewComment(e.target.value)} onKeyDown={(e) => e.key === "Enter" && postComment()} />
 
                                 <button onClick={postComment} disabled={posting}>{posting ? "..." : "➤"}</button>
 

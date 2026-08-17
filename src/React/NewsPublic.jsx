@@ -1,7 +1,7 @@
 import Navbar from "./extra/Navbar";
 import apiClient from "../api/axios";
 import Loader from './extra/LoaderAll';
-import "./assets/css/clubstyle.css"
+import "./assets/css/rytonstyle.css"
 import { useState, useEffect, useMemo, useCallback } from "react";
 import he from "he";
 import { useNavigate } from "react-router";
@@ -227,7 +227,7 @@ function NewsPublic() {
                                                         </h5>
                                                     </div>
                                                     <p className="text-secondaryy" style={{ color: newsData?.clubSettings?.original?.data?.settings?.background_color, marginBottom: "30px", }} >
-                                                        {newsData.clubNews?.original?.data?.original?.data[0]?.description}
+                                                        {he.decode(newsData.clubNews?.original?.data?.original?.data[0]?.description)}
                                                     </p>
                                                 </div>
                                             )}
@@ -459,17 +459,17 @@ function NewsPublic() {
                                 </div>
                             </section>
 
-                            <section>
+                            <section id="footer-section">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                    <div>
                                         <h5 id="footer-heading" className="heading footer-heading" style={{ color: newsData?.clubSettings?.original?.data?.settings?.text_color }}> {newsData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="footer-description" className="head footer-description mx-auto" style={{ color: newsData?.clubSettings?.original?.data?.settings?.text_color }}> {newsData?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
-                            <section>
-                                <div className="container footer-section">
+                            <section id="footer-section">
+                                <div className="container">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">

@@ -1,54 +1,54 @@
 <template>
-<NavigationRoute />
-<HeaderRoute title="Competitions" />
-<section class="content">
-    <div class="dashboard-card">
-        <div class="profile-card">
-            <div class="profile-left">
-                <div class="profile-info">
-                    <small class="greeting">Planned and regular club competition</small>
-                    <h2 class="name">2024 - 2025 Season</h2>
-                </div>
-            </div>
-            <div class="dt-search mx-auto">
-                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
-            </div>
-            <div class="quick-filter text-end">
-                <strong>Quick Filter</strong>
-                <small class="d-block">(Click icons to filter)</small>
-                <div class="d-flex gap-2 justify-content-end">
-                    <i class="bi bi-calendar-event"></i>
-                    <i class="bi bi-camera"></i>
-                    <i class="bi bi-newspaper"></i>
-                </div>
-                <div class="d-flex gap-2 justify-content-end mt-2">
-                    <i class="bi bi-trophy"></i>
-                    <i class="bi bi-info"></i>
-                    <i class="bi bi-bell"></i>
-                </div>
-            </div>
-        </div>
-        <div class="card-section">
-            <div class="event-card" style="width: 100%">
-                <small class="ca-details">Next Competition</small>
-                <div class="row">
-                    <div class="col-md-5">
-                        <h3 class="number">{{EventDay}}</h3>
+    <NavigationRoute />
+    <HeaderRoute title="Competitions" />
+    <section class="content">
+        <div class="dashboard-card">
+            <div class="profile-card">
+                <div class="profile-left">
+                    <div class="profile-info">
+                        <small class="greeting">Planned and regular club competition</small>
+                        <h2 class="name">2024 - 2025 Season</h2>
                     </div>
-                    <div class="days col-md-7">
-                        <span>days to go</span>
+                </div>
+                <div class="search-bar">
+                    <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
+                </div>
+                <div class="quick-filter text-end">
+                    <strong>Quick Filter</strong>
+                    <small class="d-block">(Click icons to filter)</small>
+                    <div class="d-flex gap-2 justify-content-end">
+                        <i class="bi bi-calendar-event"></i>
+                        <i class="bi bi-camera"></i>
+                        <i class="bi bi-newspaper"></i>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-end mt-2">
+                        <i class="bi bi-trophy"></i>
+                        <i class="bi bi-info"></i>
+                        <i class="bi bi-bell"></i>
                     </div>
                 </div>
             </div>
+            <div class="card-section">
+                <div class="event-card" style="width: 100%">
+                    <small class="ca-details">Next Competition</small>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h3 class="number">{{ EventDay }}</h3>
+                        </div>
+                        <div class="days col-md-7">
+                            <span>days to go</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="container mt-4">
-                <div v-if="filteredCompetitions.length">
-                    <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="container mt-4">
+                    <div v-if="filteredCompetitions.length">
+                        <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
                         <div class="d-flex gap-3">
-                            <img :src="competition.featured_image" alt="Competition Image" />
+                            <img:src="competition.featured_image" alt="Competition Image" />
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>{{ competition.name || 'Untitled Competition' }}</h5>
@@ -59,16 +59,16 @@
                                     </div>
                                 </div>
                                 <p style="margin: 5px 0; font-size: 14px; columns: 2">
-                                    <strong style="color: red">Open:</strong>{{formatDate(competition.start_date)}}
+                                    <strong style="color: red">Open:</strong>{{ formatDate(competition.start_date)}}
                                     <br />
-                                    <strong style="color: brown">Result:</strong> {{formatDate(competition.result_announcement_date)}}
+                                    <strong style="color: brown">Result:</strong> {{ formatDate(competition.result_announcement_date)}}
                                     <br />
-                                    <strong style="color: brown">Theme:</strong>{{competition.theme_id}}<br />
-                                    <strong style="color: red">Close:</strong>{{formatDate(competition.submission_deadline)}}
+                                    <strong style="color: brown">Theme:</strong>{{ competition.theme_id }}<br />
+                                    <strong style="color: red">Close:</strong>{{ formatDate(competition.submission_deadline)}}
                                     <br />
-                                    <strong style="color: brown">Max:</strong>{{competition.max_entries_print}}
+                                    <strong style="color: brown">Max:</strong>{{ competition.max_entries_print }}
                                     <br />
-                                    <strong style="color: brown">Format:</strong> {{competition.allowed_image_formats}}
+                                    <strong style="color: brown">Format:</strong> {{ competition.allowed_image_formats }}
                                 </p>
                                 <p class="text-secondary">
                                     {{ competition.description || 'No description provided.' }}
@@ -76,46 +76,46 @@
                                 <div>
                                     <router-link to="/competitionsingle" custom v-slot="{ navigate }">
                                         <button class="btn me-2" id="view" @click="navigate">View</button>
-                                    </router-link>
-                                    <router-link to="/comp_edit" custom v-slot="{ navigate }">
-                                        <button class="btn me-2" id="edit" @click="navigate">Edit</button>
-                                    </router-link>
-                                </div>
-                            </div>
+                                </router-link>
+                                <router-link to="/comp_edit" custom v-slot="{ navigate }">
+                                    <button class="btn me-2" id="edit" @click="navigate">Edit</button>
+                            </router-link>
                         </div>
                     </div>
                 </div>
-
-                <div v-else class="text-center text-muted">No competitions found.</div>
-                <nav v-if="filteredCompetitions.length">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                            <button class="page-link" @click="prevPage">Previous</button>
-                        </li>
-                        <li class="page-item disabled">
-                            <span class="page-link">
-                                Page {{ currentPage }} of {{ totalPages }}
-                            </span>
-                        </li>
-                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                            <button class="page-link" @click="nextPage">Next</button>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="calen">
-                <CalendarDashboard />
-            </div>
-            <div id="news">
-                <RecentSubmissions />
-                <MoreCompetitions />
-            </div>
+
+        <div v-else class="text-center text-muted">No competitions found.</div>
+        <nav v-if="filteredCompetitions.length">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" :class="{disabled: currentPage === 1 }">
+                <button class="page-link" @click="prevPage">Previous</button>
+        </li>
+        <li class="page-item disabled">
+            <span class="page-link">
+                Page {{ currentPage }} of {{ totalPages }}
+            </span>
+        </li>
+        <li class="page-item" :class="{disabled: currentPage === totalPages }">
+        <button class="page-link" @click="nextPage">Next</button>
+</li>
+                    </ul >
+                </nav >
+            </div >
+        </div >
+    <div class="col-md-4">
+        <div class="calen">
+            <CalendarDashboard />
+        </div>
+        <div id="news">
+            <RecentSubmissions />
+            <MoreCompetitions />
         </div>
     </div>
-</section>
-</template>
+    </div >
+</section >
+</template >
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'

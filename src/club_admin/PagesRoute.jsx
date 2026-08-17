@@ -1,6 +1,6 @@
 <template>
-<div :style="{ backgroundColor: 'white' }">
-    <Loader :show="isLoading" />
+    <div:style="{backgroundColor: 'white' }">
+    <Loader:show="isLoading" />
     <div v-if="!isLoading">
         <NavigationRoute />
         <HeaderRoute title="Pages" />
@@ -13,24 +13,24 @@
                                 <div class="profile-info">
                                     <small class="greeting">Live and Draft Club Website Pages</small>
                                     <h2 class="name">Club Website Pages</h2>
-                                    <p class="role">{{CurrentMonthCount}} Live Pages</p>
+                                    <p class="role">{{ CurrentMonthCount }} Live Pages</p>
                                 </div>
                             </div>
-                            <div class="dt-search mx-auto">
+                            <div class="search-bar">
                                 <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                             </div>
                             <div class="quick-filter text-end">
                                 <strong>Quick Filter</strong>
                                 <small class="d-block">(Click icons to filter)</small>
                                 <div class="d-flex gap-2 justify-content-end">
-                                    <img :src="Com" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Cale" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Book" alt="icon" style="width: 20px; height: 20px" />
+                                    <img:src="Com" alt="icon" style="width: 20px; height: 20px" />
+                                    <img:src="Cale" alt="icon" style="width: 20px; height: 20px" />
+                                    <img:src="Book" alt="icon" style="width: 20px; height: 20px" />
                                 </div>
                                 <div class="d-flex gap-2 justify-content-end mt-2">
-                                    <img :src="Cup" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Hand" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Note" alt="icon" style="width: 20px; height: 20px" />
+                                    <img:src="Cup" alt="icon" style="width: 20px; height: 20px" />
+                                    <img:src="Hand" alt="icon" style="width: 20px; height: 20px" />
+                                    <img:src="Note" alt="icon" style="width: 20px; height: 20px" />
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                                 <small class="ca-details">Latest Change</small>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <h3 class="number">{{EventDay}}</h3>
+                                        <h3 class="number">{{ EventDay }}</h3>
                                     </div>
                                     <div class="days col-md-7">
                                         <span>days to go</span>
@@ -61,65 +61,65 @@
                             <div class="mt-4">
                                 <div v-if="filteredPages.length">
                                     <div v-for="page in filteredPages" :key="page.id" class="custom-card mb-3 p-3">
-                                        <div class="d-flex gap-3" style="flex: 1">
-                                            <img :src="page.featured_image" alt="Page Image" />
-                                            <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <h5>{{ page.title || 'Untitled Page' }}</h5>
-                                                    <div class="icon-container ms-3">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
-                                                    </div>
+                                    <div class="d-flex gap-3" style="flex: 1">
+                                        <img:src="page.featured_image" alt="Page Image" />
+                                        <div class="flex-grow-1 d-flex flex-column justify-content-between">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h5>{{ page.title || 'Untitled Page' }}</h5>
+                                                <div class="icon-container ms-3">
+                                                    <img:src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                                    <img:src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                                    <img:src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                                    <img:src="Cal" alt="icon" style="width: 20px; height: 20px" />
                                                 </div>
-                                                <p class="date"> {{ formatDate(page.publish_date) || 'Date Not Available' }}
-                                                </p>
-                                                <p class="text-secondary">
-                                                    {{ page.description || 'No description provided.' }}
-                                                </p>
-                                                <div class="button-group mt-3 d-flex">
-                                                    <button class="btn me-2" id="view">View</button>
-                                                    <button class="btn" id="edit">Edit</button>
-                                                </div>
+                                            </div>
+                                            <p class="date"> {{ formatDate(page.publish_date) || 'Date Not Available' }}
+                                            </p>
+                                            <p class="text-secondary">
+                                                {{ page.description || 'No description provided.' }}
+                                            </p>
+                                            <div class="button-group mt-3 d-flex">
+                                                <button class="btn me-2" id="view">View</button>
+                                                <button class="btn" id="edit">Edit</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-else class="text-center text-muted">No pages found.</div>
-
-                                <nav v-if="filteredPages.length">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                            <button class="page-link" @click="prevPage">Previous</button>
-                                        </li>
-                                        <li class="page-item disabled">
-                                            <span class="page-link">
-                                                Page {{ currentPage }} of {{ totalPages }}
-                                            </span>
-                                        </li>
-                                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                            <button class="page-link" @click="nextPage">Next</button>
-                                        </li>
-                                    </ul>
-                                </nav>
                             </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-4">
-                    <section>
-                        <div class="container" id="right">
-                            <RecentComments />
-                            <MorePages />
-                        </div>
-                    </section>
-                </div>
-            </div>
+                            <div v-else class="text-center text-muted">No pages found.</div>
+
+                            <nav v-if="filteredPages.length">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item" :class="{disabled: currentPage === 1 }">
+                                    <button class="page-link" @click="prevPage">Previous</button>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    Page {{ currentPage }} of {{ totalPages }}
+                                </span>
+                            </li>
+                            <li class="page-item" :class="{disabled: currentPage === totalPages }">
+                            <button class="page-link" @click="nextPage">Next</button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
-</div>
-</template>
+</section>
+                </div >
+    <div class="col-md-4">
+        <section>
+            <div class="container" id="right">
+                <RecentComments />
+                <MorePages />
+            </div>
+        </section>
+    </div>
+            </div >
+        </div >
+    </div >
+</div >
+</template >
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'

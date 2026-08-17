@@ -1,0 +1,91 @@
+.nav-link {
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.sidebar #side-logo {
+    width: 250px;
+    height: 68.22px;
+}
+
+#eye-logo {
+    display: flex;
+    gap: 10px;
+    width: 250px;
+}
+
+.sidebar #eye-logo img {
+    width: 50px;
+    height: 50px;
+}
+
+#eye-logo h1 {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar {
+  grid-row: 1 / span 2;
+  height: 100vh;
+  width: 100%;
+  max-width: 340px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  padding: 20px;
+  color: black;
+}
+.sidebar .nav-link, .sidebar a {
+  padding: 4px 4px 4px 16px;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  transition: 0.3s;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Inter;
+  margin: 10px;
+  gap: 15px 
+}
+.sidebar .nav-link i, .sidebar a i {
+  margin-right: 10px;
+}
+.sidebar .nav-link.active, .sidebar a.active {
+  color: #CC445E;
+}
+.sidebar img {
+  width: 250px;
+  height: 68px;
+  top: 30px;
+  left: 30px;
+  opacity: 1;
+}
+#side-logo {
+  width: 50px;
+  height: 50px;
+  left: 30px;
+  top: 143px;
+  opacity: 1;
+}
+
+
+.nav-end{
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}

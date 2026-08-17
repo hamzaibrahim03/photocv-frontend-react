@@ -5,7 +5,7 @@ import Loader from './extra/LoaderAll';
 import CommentsDrawMember from "./CommentsDrawMember";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import './assets/css/memberslide.css'
+import './assets/css/rytonstyle.css'
 
 function RytonMemberSlide() {
     const navigate = useNavigate();

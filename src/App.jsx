@@ -2,7 +2,6 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
-import './React/assets/css/style.css'
 import HomeRoute from './React/HomeRoute'
 import EventPublic from './React/EventPublic'
 import { Route, Routes } from "react-router";
@@ -24,12 +23,18 @@ import RytonClubSlide from './React/RytonClubSlide';
 import RytonMemberSlide from './React/RytonMemberSlide';
 import RytonSingleResults from './React/RytonSingleResults';
 import RytonResultSlide from './React/RytonResultSlide';
+import LoginRoute from './club_admin/LoginRoute';
+import DashboardRoute from './club_admin/DashboardRoute';
+import EventRoute from './club_admin/EventRoute';
+import CompetitionsRoute from './club_admin/CompetitionsRoute';
+import NoticeRoute from './club_admin/NoticeRoute';
 // import CommentsDrawClub from './React/CommentsDrawClub';
 // import CommentsDrawMember from './React/CommentsDrawMember';
 function App() {
     return (
         <>
             <Routes>
+                {/* Public Routes */}
                 <Route path="/" element={<HomeRoute />} />
                 <Route path="/rytonevent" element={<EventPublic />} />
                 <Route path="/rytoncomp" element={<CompetitionPublic />} />
@@ -50,6 +55,12 @@ function App() {
                 <Route path="/rytoncomp/results" element={<RytonCompetitionResults />} />
                 <Route path="/rytoncomp/results/:id" element={<RytonSingleResults />} />
                 <Route path="/rytoncomp/result/slide" element={<RytonResultSlide />} />
+                {/* Club Admin */}
+                <Route path="/login" element={<LoginRoute />} />
+                <Route path="/dashboard" element={<DashboardRoute />} />
+                <Route path="/event" element={<EventRoute />} />
+                <Route path="/competitions" element={<CompetitionsRoute />} />
+                <Route path="/notices" element={<NoticeRoute />} />
             </Routes>
         </>
     )

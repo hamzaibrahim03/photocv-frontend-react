@@ -1,5 +1,5 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/clubpublic.css"
+import "./assets/css/rytonstyle.css"
 import { useEffect, useState } from "react";
 import Loader from './extra/LoaderAll';
 import he from "he";
@@ -131,7 +131,7 @@ function ClubPublic() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }} id="overall">
-                                    <p className="memtext">{he.decode(clubData?.aboutUs?.description)}</p>
+                                    <p className="memtext">{clubData?.aboutUs?.description}</p>
 
                                     <div className="divider4"></div>
                                     <section>
@@ -359,17 +359,17 @@ function ClubPublic() {
                                 </div>
                             </section>
 
-                            <section>
+                            <section id="footer-section">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                    <div>
                                         <h5 id="footer-heading" className="heading footer-heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="footer-description" className="head footer-description mx-auto" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
-                            <section>
-                                <div className="container footer-section">
+                            <section id="footer-section">
+                                <div className="container">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">

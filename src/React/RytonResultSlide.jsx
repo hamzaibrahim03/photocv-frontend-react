@@ -5,7 +5,7 @@ import Loader from './extra/LoaderAll';
 // import CommentsDrawer from "./CommentsDrawer";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import './assets/css/memberslide.css'
+import './assets/css/rytonstyle.css'
 
 function RytonResultSlide() {
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ function RytonResultSlide() {
             setIsLoading(false);
         }
     }
-    
+
 
     const memData = useMemo(
         () => resultData?.data?.clubSettings?.original?.data || resultData?.clubSettings?.original?.data || {},
@@ -112,7 +112,7 @@ function RytonResultSlide() {
         }
     };
 
-    
+
     useEffect(() => {
         const storedImages = localStorage.getItem("selectedImages");
         const storedIndex = localStorage.getItem("startIndex");

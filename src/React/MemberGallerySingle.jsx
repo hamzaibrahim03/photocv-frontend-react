@@ -1,5 +1,5 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/singlemember.css"
+import "./assets/css/rytonstyle.css"
 import { useEffect, useMemo, useState } from "react";
 import Loader from './extra/LoaderAll';
 import { NavLink, useNavigate, useParams } from "react-router";
@@ -421,18 +421,18 @@ function RytonMemberGallerySingle() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="suggestion-header d-flex justify-content-between align-items-center mb-4">
+                                    <div className="suggestions-header d-flex justify-content-between align-items-center mb-4">
                                         <h3 className="heading" style={{ fontWeight: '500' }}>More from Club Galleries</h3>
 
                                         <button id="view" onClick={() => navigate(`/rytongal/club`)} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                     </div>
 
-                                    <div className="suggestion-gallery" style={{ padding: 0 }}>
+                                    <div className="suggestions-gallery">
                                         {suggestion.slice(0, 4).map((item, index) => (
-                                            <div key={index} className="suggestion-card">
+                                            <div key={index} className="suggestions-card">
                                                 <img src={item.image} alt={item.title} />
                                                 <div className="img-overlay" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7), textAlign: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                                                    <p className="photo-title">{item.title}</p>
+                                                    <p className="names">{item.title}</p>
                                                 </div>
                                             </div>
                                         ))}

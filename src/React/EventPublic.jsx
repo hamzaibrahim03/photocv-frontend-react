@@ -2,7 +2,7 @@ import Navbar from "./extra/Navbar";
 import apiClient from "../api/axios";
 import Loader from './extra/LoaderAll';
 import Calendar from './extra/CalendarRyton'
-import "./assets/css/clubstyle.css"
+import "./assets/css/rytonstyle.css"
 import Event from "./assets/icons/navigation/events.svg"
 import Competition from "./assets/icons/navigation/competition.svg"
 import { useState, useEffect, useMemo, useCallback } from "react";

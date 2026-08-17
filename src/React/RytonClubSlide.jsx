@@ -4,7 +4,7 @@ import Loader from './extra/LoaderAll';
 
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import './assets/css/clubslide.css'
+import './assets/css/rytonstyle.css'
 import CommentsDrawClub from "./CommentsDrawClub";
 
 function RytonClubSlide() {

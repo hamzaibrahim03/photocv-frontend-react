@@ -2,7 +2,7 @@ import Navbar from "./extra/Navbar";
 import apiClient from "../api/axios";
 import Loader from './extra/LoaderAll';
 import Calendar from './extra/CalendarRyton'
-import "./assets/css/singleresult.css"
+import "./assets/css/rytonstyle.css"
 import Event from "./assets/icons/navigation/events.svg"
 import Competition from "./assets/icons/navigation/competition.svg"
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
@@ -484,7 +484,7 @@ function RytonSingleResults() {
                                     <h2 className="heading">
                                         {competitionTitle()} - {competitionSeason()}
                                     </h2>
-                                    <div className="gallery-grid">
+                                    <div className="result-grid">
                                         {entries.map((item, index) => (
                                             <div key={item.id || index} className="gallery-card" onClick={() => openSlide(item)}>
                                                 <img src={item.entry_image} className="gallery-img" />
@@ -503,27 +503,29 @@ function RytonSingleResults() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="suggestion-header d-flex justify-content-between align-items-center mb-4">
-                                        <div>
-                                            <h3 className="heading" style={{ fontWeight: '500', color: compData?.clubSettings?.original?.data?.settings?.text_color }}>More from Club Galleries</h3>
-                                            <p className="clubsub" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
-                                                A preview of galleries made up of amazing photographs from club members
-                                            </p>
-                                        </div>
-                                        <button id="view" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
-                                    </div>
-
-                                    <div className="suggestion-gallery">
-                                        {suggestion.slice(0, 10).map((item, index) => (
-                                            <div key={item.id} className={`suggestion-card ${getPositionClass(index, suggestion.length)}`}>
-                                                <img src={item.image} alt={item.title} style={{ objectFit: "cover", objectPosition: "top", }} />
-                                                <div className={`img-overlay ${getPositionClass(index, suggestion.length)}`} style={{ backgroundColor: hexToRgba(compData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), }} >
-                                                    <span style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
-                                                        {item.title}
-                                                    </span>
-                                                </div>
+                                    <div style={{ height: 'auto', border: 'none', backgroundColor: compData?.clubSettings?.original?.data?.settings?.background_color }}>
+                                        <div id="cl" className="d-flex justify-content-between align-items-end mb-3" style={{ marginRight: '5px' }}>
+                                            <div style={{ alignItems: 'flex-end' }}>
+                                                <h5 id="clubheading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, marginBottom: '15px' }}>Club Galleries</h5>
+                                                <p id="clubsub" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                    A preview of galleries made up of amazing photographs from club members
+                                                </p>
                                             </div>
-                                        ))}
+                                            <button id="view" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
+                                        </div>
+
+                                        <div className="clubpics">
+                                            {suggestion.slice(0, 10).map((item, index) => (
+                                                <div key={item.id} className={`clubpics-item ${getPositionClass(index, suggestion.length)}`}>
+                                                    <img src={item.image} alt={item.title} style={{ objectFit: "cover", objectPosition: "top", }} />
+                                                    <div className={`clubpics-info ${getPositionClass(index, suggestion.length)}`} style={{ backgroundColor: hexToRgba(compData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), }} >
+                                                        <span style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, }} >
+                                                            {item.title}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -547,17 +549,17 @@ function RytonSingleResults() {
                                 </div>
                             </section>
 
-                            <section>
+                            <section id="footer-section">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                    <div>
                                         <h5 id="footer-heading" className="heading footer-heading" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="footer-description" className="head footer-description mx-auto" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
-                            <section>
-                                <div className="container footer-section">
+                            <section id="footer-section">
+                                <div className="container">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">

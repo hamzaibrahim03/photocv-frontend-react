@@ -1,5 +1,5 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/membergallerypublic.css"
+import "./assets/css/rytonstyle.css"
 import { useEffect, useMemo, useState } from "react";
 import Loader from './extra/LoaderAll';
 import { NavLink, useNavigate } from "react-router";
@@ -177,16 +177,16 @@ function MemberGalleryPublic() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }} id="overall">
 
-                                    <section id="galcontainer">
+                                    <section id="gallery-container">
                                         <div className="container" style={{ maxWidth: '1820px' }}>
                                             <div style={{ height: 'auto', border: 'none', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
 
-                                                <div className="clubpics">
+                                                <div className="gallery-pics">
                                                     {membergallerydata?.memberGalleries?.map((item, index) => (
-                                                        <div className="clubpics-item" onClick={() => goToGallery(item.id)}>
+                                                        <div className="gallery-pics-item" onClick={() => goToGallery(item.id)}>
                                                             <div>
                                                                 <img src={item?.galleries?.[0]?.photos?.[0]?.image_url} alt={item.galleries?.[0]?.gallery_name} style={{ objectFit: 'cover', objectPosition: 'top' }} />
-                                                                <div className="clubpics-info" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
+                                                                <div className="gallery-pics-info" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
                                                                     <div style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
                                                                         {item.galleries?.[0]?.gallery_name}
                                                                     </div>
@@ -203,18 +203,18 @@ function MemberGalleryPublic() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="suggestion-header d-flex justify-content-between align-items-center mb-4">
+                                    <div className="suggestions-header d-flex justify-content-between align-items-center mb-4">
                                         <h3 className="heading" style={{ fontWeight: '500' }}>More from Club Galleries</h3>
 
                                         <button id="view" onClick={() => navigate('/rytongal/club')} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                     </div>
 
-                                    <div className="suggestion-gallery" style={{ padding: 0 }}>
+                                    <div className="suggestions-gallery">
                                         {suggestion.slice(0, 4).map((item, index) => (
-                                            <div key={index} className="suggestion-card">
+                                            <div key={index} className="suggestions-card">
                                                 <img src={item.image} alt={item.title} />
                                                 <div className="img-overlay" style={{ backgroundColor: hexToRgba(membergallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7), textAlign: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                                                    <p className="photo-title">{item.title}</p>
+                                                    <p className="names">{item.title}</p>
                                                 </div>
                                             </div>
                                         ))}
@@ -242,17 +242,17 @@ function MemberGalleryPublic() {
                                 </div>
                             </section>
 
-                            <section>
+                            <section id="footer-section">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                    <div>
                                         <h5 id="footer-heading" className="heading footer-heading" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.text_color }}> {membergallerydata?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="footer-description" className="head footer-description mx-auto" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.text_color }}> {membergallerydata?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
-                            <section>
-                                <div className="container footer-section">
+                            <section id="footer-section">
+                                <div className="container">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">

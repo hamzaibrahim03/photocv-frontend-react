@@ -1,5 +1,5 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/clubgallerypublic.css"
+import "./assets/css/rytonstyle.css"
 import { useEffect, useMemo, useState } from "react";
 import Loader from './extra/LoaderAll';
 import { NavLink, useNavigate } from "react-router";
@@ -182,15 +182,15 @@ function ClubGalleryPublic() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }} id="overall">
-                                    <section id="galcontainer">
+                                    <section id="gallery-container">
                                         <div className="container" style={{ maxWidth: '1820px' }}>
                                             <div style={{ height: "auto", border: "none", backgroundColor: clubgallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
 
-                                                <div className="clubpics">
+                                                <div className="gallery-pics">
                                                     {clubgallerydata?.clubGalleries?.original?.data.map((gallery, index) => (
-                                                        <div className="clubpics-item" onClick={() => goToGallery(gallery.gallery_id)}>
+                                                        <div className="gallery-pics-item" onClick={() => goToGallery(gallery.gallery_id)}>
                                                             <img src={gallery.photos[0].image} alt={gallery.photos[0].title} style={{ objectFit: "cover", objectPosition: "top" }} />
-                                                            <div className="clubpics-info" style={{ backgroundColor: hexToRgba(clubgallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
+                                                            <div className="gallery-pics-info" style={{ backgroundColor: hexToRgba(clubgallerydata?.clubSettings?.original?.data?.settings?.primary_color, 0.7) }}>
                                                                 <span style={{ color: clubgallerydata?.clubSettings?.original?.data?.settings?.background_color }}>
                                                                     {gallery.gallery_name}
                                                                 </span>
@@ -260,17 +260,17 @@ function ClubGalleryPublic() {
                                 </div>
                             </section>
 
-                            <section>
+                            <section id="footer-section">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="footer-section" style={{ paddingTop: '30px' }}>
+                                    <div>
                                         <h5 id="footer-heading" className="heading footer-heading" style={{ color: clubgallerydata?.clubSettings?.original?.data?.settings?.text_color }}> {clubgallerydata?.clubSettings?.original?.data?.settings?.footer_text} </h5>
                                         <p id="footer-description" className="head footer-description mx-auto" style={{ color: clubgallerydata?.clubSettings?.original?.data?.settings?.text_color }}> {clubgallerydata?.clubSettings?.original?.data?.settings?.footer_description} </p>
                                     </div>
                                 </div>
                             </section>
 
-                            <section>
-                                <div className="container footer-section">
+                            <section id="footer-section">
+                                <div className="container">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">

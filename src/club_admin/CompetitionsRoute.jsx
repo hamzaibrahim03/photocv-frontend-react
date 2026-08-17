@@ -1,507 +1,328 @@
-<template>
-<div :style="{ backgroundColor: 'white' }">
-    <Loader :show="isLoading" />
-    <div v-if="!isLoading">
-        <NavigationRoute />
-        <HeaderRoute title="Competitions" />
-        <div class="content">
-            <section>
-                <div class="container">
-                    <div class="dashboard-card">
-                        <div class="profile-card">
-                            <div class="profile-left">
-                                <div class="profile-info">
-                                    <small class="greeting">Planned and regular club competition</small>
-                                    <h2 class="name">2024 - 2025 Season</h2>
-                                    <p class="role">{{CompetitionCount}} Competitions to go</p>
-                                </div>
-                            </div>
-                            <div class="dt-search mx-auto">
-                                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
-                            </div>
-                            <div class="quick-filter text-end">
-                                <strong>Filter</strong>
-                                <small class="d-block">(Click icons to filter)</small>
-                                <div class="d-flex gap-2 justify-content-end">
-                                    <img :src="Pri" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Fax" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Pai" alt="icon" style="width: 20px; height: 20px" />
-                                </div>
-                                <div class="d-flex gap-2 justify-content-end mt-2">
-                                    <img :src="Flo" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Prof" alt="icon" style="width: 20px; height: 20px" />
-                                    <img :src="Ima" alt="icon" style="width: 20px; height: 20px" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-section">
-                            <div class="stat-card">
-                                <small class="ca-details">Competitions</small>
-                                <h3 class="number">{{ MemberCount }}</h3>
-                            </div>
-                            <div class="event-card">
-                                <small class="ca-details">Next Competition</small>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <h3 class="number">{{ String(EventDay).padStart(2, 0) }}</h3>
-                                    </div>
-                                    <div class="days col-md-7">
-                                        <span>days to go</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+import { useNavigate } from "react-router";
+import Calendar from "../React/extra/CalendarRyton"
+import HeaderRoute from "./HeaderRoute"
+import NavigationRoute from "./NavigationRoute"
+import { useEffect, useMemo, useState } from "react";
+import Loader from "../React/extra/LoaderAll";
+import Flo from "./assets/icons/quick_comp/flower.svg"
+import Ima from "./assets/icons/quick_comp/image.svg"
+import Fax from "./assets/icons/quick_comp/fax.svg"
+import Pri from "./assets/icons/quick_comp/print.svg"
+import Pai from "./assets/icons/quick_comp/paint.svg"
+import Prof from "./assets/icons/quick_comp/profile.svg"
+import Pro from "./assets/icons/event_list/pro.svg"
+import Cal from "./assets/icons/event_list/cal.svg"
+import Cam from "./assets/icons/event_list/cam.svg"
+import Mess from "./assets/icons/event_list/mess.svg"
+import Share from "./assets/icons/event_list/share.svg"
+import Book from "./assets/icons/event_list/bookmark.svg"
 
-            <section>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8">
+function CompetitionsRoute() {
+    const navigate = useNavigate();
+    const [competitionData, setCompetitionData] = useState({})
+    const [competitionExtra, setCompetitionExtra] = useState({})
+    const [isLoading, setIsLoading] = useState(true);
+    const [rowsPerPage] = useState(4);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState("");
+
+
+
+    useEffect(() => {
+        getCompetitionData();
+        getCompetitionExtra();
+    }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+    }, []);
+
+
+    async function getCompetitionData() {
+        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/competitions'
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        setCompetitionData(data.data);
+    };
+    console.log(competitionData?.competitions?.original?.data)
+
+    async function getCompetitionExtra() {
+        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/competition-extras'
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        setCompetitionExtra(data.data);
+    };
+    console.log(competitionExtra)
+
+    const formatDate = (date) =>
+        new Date(date).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+        });
+
+    const formatTime = (datetimeStr) => {
+        const date = new Date(datetimeStr);
+        return date.toLocaleTimeString("en-US", {
+            weekday: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    };
+
+    const filteredCompetitions = useMemo(() => {
+        const competitions = competitionData.competitions?.original?.data || [];
+
+        return competitions.filter((competition) =>
+            competition.name?.toLowerCase().includes(search.toLowerCase()) ||
+            competition.start_date?.toLowerCase().includes(search.toLowerCase()) ||
+            competition.end_date?.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [competitionData, search]);
+
+    console.log(filteredCompetitions)
+
+    const totalPages = useMemo(() => {
+        return Math.max(
+            Math.ceil(filteredCompetitions.length / rowsPerPage),
+            1
+        );
+    }, [filteredCompetitions, rowsPerPage]);
+
+    const paginatedCompetitions = useMemo(() => {
+        const start = (currentPage - 1) * rowsPerPage;
+
+        return filteredCompetitions.slice(start, start + rowsPerPage);
+    }, [filteredCompetitions, currentPage, rowsPerPage]);
+
+    const goToPage = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+    return (
+        <>
+            <div style={{ backgroundColor: 'white' }}>
+                <Loader show={isLoading} />
+                {!isLoading && (
+                    <>
+                        <NavigationRoute />
+                        <HeaderRoute title="Competitions" />
+                        <div className="content">
                             <section>
-                                <div class="container">
-                                    <div class="mt-4">
-                                        <div class="d-flex justify-content-end">
-                                            <button class="btn" id="edit" style="max-width: 240px; width: 240px; height: 40px;" @click="navigate">Export Competitions&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="dashboard-card">
+                                        <div className="profile-card">
+                                            <div className="profile-left">
+                                                <div className="profile-info">
+                                                    <small className="greeting">Planned and regular club competition</small>
+                                                    <h2 className="name">2024 - 2025 Season</h2>
+                                                    <p className="role">{competitionExtra.current_month_competition_count} Competitions to go</p>
+                                                </div>
+                                            </div>
+                                            <div className="search-bar d-flex justify-content-space-between">
+                                                <input type="search" className="search-input" id="dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                                <i className="fas fa-search"></i>
+                                            </div>
+                                            <div className="e-quick-filter text-end">
+                                                <strong>Quick Filter</strong>
+                                                <small className="d-block">(Click icons to filter)</small>
+                                                <div className="d-flex gap-2 justify-content-end">
+                                                    <img src={Pri} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                    <img src={Fax} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                    <img src={Pai} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                </div>
+                                                <div className="d-flex gap-2 justify-content-end mt-2">
+                                                    <img src={Flo} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                    <img src={Prof} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                    <img src={Ima} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div v-if="filteredCompetitions.length">
-                                            <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
-                                                <div class="d-flex gap-3" style="flex: 1">
-                                                    <img :src="competition.featured_image" alt="Competition Image" />
-                                                    <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <h5>{{ competition.name || 'Untitled Competition' }}</h5>
-                                                            <div class="icon-container ms-3">
-                                                                <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                                <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                                <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                                <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
-                                                            </div>
-                                                        </div>
-                                                        <p style="margin: 5px 0; font-size: 14px; columns: 2">
-                                                            <strong style="color: red">Open:</strong>{{formatDate(competition.start_date)}}
-                                                            <br />
-                                                            <strong style="color: brown">Result:</strong> {{formatDate(competition.result_announcement_date)}}
-                                                            <br />
-                                                            <strong style="color: brown">Theme:</strong>{{competition.theme_id}}<br />
-                                                            <strong style="color: red">Close:</strong>{{formatDate(competition.submission_deadline)}}
-                                                            <br />
-                                                            <strong style="color: brown">Max:</strong>{{competition.max_entries_print}}
-                                                            <br />
-                                                            <strong style="color: brown">Format:</strong> {{competition.allowed_image_formats}}
-                                                        </p>
-                                                        <p class="text-secondary" v-html=" competition.description || 'No description provided.'">
-                                                        </p>
-                                                        <div class="d-flex justify-content-between align-items-center mt-3 w-100">
-                                                            <div class="button-group d-flex align-items-center gap-2">
-                                                                <router-link :to="{ name: 'competitionsingle', params: { id: competition.id } }" custom v-slot="{ navigate }">
-                                                                    <button class="btn me-2" id="view" @click="navigate">View</button>
-                                                                </router-link>
-                                                                <router-link :to="{ name: 'comp_edit', params: { id: competition.id } }" custom v-slot="{ navigate }">
-                                                                    <button class="btn" id="edit" @click="navigate">Edit</button>
-                                                                </router-link>
-                                                            </div>
-
-                                                            <div class="d-flex align-items-center gap-2">
-                                                                <img :src="Book" alt="icon" style="width:20px; height:20px" />
-                                                                <img :src="Share" alt="icon" style="width:20px; height:20px" />
-                                                            </div>
-                                                        </div>
+                                        <div className="card-section">
+                                            <div className="stat-card">
+                                                <small className="ca-details">Members</small>
+                                                <h3 className="number">{competitionExtra.total_member_count}</h3>
+                                            </div>
+                                            <div className="event-cards">
+                                                <small className="ca-details">Next Competition</small>
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <h3 className="number">{String(competitionExtra.upcoming_competition.remaining_days).padStart(2, 0)}</h3>
+                                                    </div>
+                                                    <div className="days col-md-7">
+                                                        <span>days to go</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div v-else class="text-center text-muted">No competitions found.</div>
-                                        <div class="dt-paging">
-                                            <nav aria-label="pagination">
-                                                <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
-                                                    ‹
-                                                </button>
-
-                                                <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
-                                                    {{ page }}
-                                                </button>
-
-                                                <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
-                                                    ›
-                                                </button>
-                                            </nav>
-                                        </div>
                                     </div>
                                 </div>
                             </section>
-                        </div>
-                        <div class="col-md-4">
+
                             <section>
-                                <div class="container" id="right">
-                                    <div class="cardddd" style="padding: 0; height: auto">
-                                        <CalendarDashboard />
-                                    </div>
-                                    <div id="news">
-                                        <RecentSubmissions />
-                                        <MoreCompetitions style="height: auto" />
-                                    </div>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="row">
+                                        <div className="col-md-8">
+                                            <section>
+                                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                                    <div className="mt-4">
+                                                        <div className="d-flex justify-content-end">
+                                                            <button className="btn" id="edit" style={{ maxWidth: '240px', width: '240px', height: '40px' }}>Export Competitions&nbsp;<i className="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop"></i></button>
+                                                        </div>
+                                                        {paginatedCompetitions?.length > 0 ? (
+                                                            <>
+                                                                {paginatedCompetitions?.map((competition) => (
+                                                                    <div key={competition.id} className="custom-card mb-3 p-3">
+                                                                        <div className="d-flex gap-3" style={{ flex: 1 }}>
+                                                                            <img src={competition.featured_image_url} alt="Competition Image" />
+                                                                            <div className="flex-grow-1 d-flex flex-column justify-content-between">
+                                                                                <div className="d-flex justify-content-between align-items-center">
+                                                                                    <h5>{competition.name || 'Untitled Competition'}</h5>
+                                                                                    <div className="e-icon-container ms-3">
+                                                                                        <img src={Mess} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Cam} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Pro} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Cal} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <p style={{ margin: '5px 0', fontSize: '14px', columns: 2, color: 'black' }}>
+                                                                                    <strong style={{ color: 'red' }}>Open:</strong>{formatDate(competition.start_date)}
+                                                                                    <br />
+                                                                                    <strong style={{ color: 'brown' }}>Result:</strong> {formatDate(competition.result_announcement_date)}
+                                                                                    <br />
+                                                                                    <strong style={{ color: 'brown' }}>Theme:</strong>{competition.theme_id}<br />
+                                                                                    <strong style={{ color: 'red' }}>Close:</strong>{formatDate(competition.submission_deadline)}
+                                                                                    <br />
+                                                                                    <strong style={{ color: 'brown' }}>Max:</strong>{competition.max_entries_print}
+                                                                                    <br />
+                                                                                    <strong style={{ color: 'brown' }}>Format:</strong> {competition.allowed_image_formats}
+                                                                                </p>
+                                                                                <p className="text-secondary" dangerouslySetInnerHTML={{ __html: competition.description || 'No description provided.' }} />
+
+                                                                                <div className="d-flex justify-content-between align-items-center mt-3 w-100">
+                                                                                    <div className="button-group d-flex align-items-center gap-2">
+                                                                                        <button className="btn me-2" id="e-view" onClick={() => navigate('/competitionsingle/' + competition.id)}>View</button>
+                                                                                        <button className="btn" id="e-edit" onClick={() => navigate('/comp_edit/' + competition.id)}>Edit</button>
+                                                                                    </div>
+
+                                                                                    <div className="d-flex align-items-center gap-2">
+                                                                                        <img src={Book} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Share} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </>
+                                                        ) : (
+                                                            <div className="text-center text-muted">No competitions found.</div>
+                                                        )}
+                                                        <div className="dt-paging">
+                                                            <nav aria-label="pagination">
+                                                                <button className={`dt-paging-button previous ${currentPage === 1 ? "disabled" : ""}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous" >
+                                                                    ‹
+                                                                </button>
+
+                                                                {Array.from({ length: totalPages }, (_, index) => {
+                                                                    const page = index + 1;
+
+                                                                    return (
+                                                                        <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)} >
+                                                                            {page}
+                                                                        </button>
+                                                                    );
+                                                                })}
+
+                                                                <button className={`dt-paging-button next ${currentPage === totalPages ? "disabled" : ""}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next" >
+                                                                    ›
+                                                                </button>
+                                                            </nav>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <section>
+                                                <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
+                                                    <div className="calendar-card d-flex flex-column" style={{ width: '100%' }}>
+                                                        <Calendar />
+                                                    </div>
+                                                    <div id="news">
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px', height: 'auto' }}>
+                                                            <h5 className="head">Recent Submissions</h5>
+                                                            {competitionExtra.recent_submissions.length > 0 ? (
+                                                                <>
+                                                                    {competitionExtra.recent_submissions.slice(0, 4).map((co) => (
+                                                                        <div className="event-list" v-if="recentsubmissions.length">
+                                                                            <div className="event-item" v-for="co in recentsubmissions.slice(0, 4)" key="co.id" style={{ marginBottom: '10px' }}>
+                                                                                {co.entry_image ? (
+                                                                                    <img className="img-fluid event-img" src={co.entry_image} alt="Event" />
+                                                                                ) : (
+                                                                                    <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                                    </div>
+                                                                                )}
+                                                                                <div className="event-details" style={{ display: 'flex' }}>
+                                                                                    <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                        <span id="ename">{co.member_username}</span>
+                                                                                        <span id="espeaker"> {co.competition_name}</span>
+                                                                                    </div>
+
+                                                                                    <div className="event-time" id="edate">
+                                                                                        <small className="event-date galtext">{formatDate(co.submitted_at)}</small><br />
+                                                                                        <small className="event-time-details galtext">{formatTime(co.submitted_at)}</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))}
+                                                                </>
+                                                            ) : (
+                                                                <div className="text-center text-muted">No competitions found.</div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div >
+                                </div >
+                            </section >
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    {/* <p className="memtext" id="fcopy">Copyright &copy; 2025 – {dashboardStore?.dashboardData?.data?.user_details?.username}</p> */}
                                 </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                            </footer>
+                        </div >
 
-        </div>
-    </div>
-</div>
-</template>
-
-<script setup>
-import { ref, computed, onMounted, watch } from 'vue'
-import apiClient from 'axios'
-import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
-import NavigationRoute from "@/components/NavigationRoute.vue";
-import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
-import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
-import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
-import Pro from "@/assets/icons/event_list/pro.svg"
-import Cal from "@/assets/icons/event_list/cal.svg"
-import Cam from "@/assets/icons/event_list/cam.svg"
-import Mess from "@/assets/icons/event_list/mess.svg"
-import Flo from "@/assets/icons/quick_comp/flower.svg"
-import Ima from "@/assets/icons/quick_comp/image.svg"
-import Fax from "@/assets/icons/quick_comp/fax.svg"
-import Pri from "@/assets/icons/quick_comp/print.svg"
-import Pai from "@/assets/icons/quick_comp/paint.svg"
-import Prof from "@/assets/icons/quick_comp/profile.svg"
-import Share from "@/assets/icons/event_list/share.svg"
-import Book from "@/assets/icons/event_list/bookmark.svg"
-import Loader from "@/components/LoaderAll.vue";
-
-const {
-    competitions,
-    fetchCompetitions,
-    memberCount,
-    competitionCount,
-    eventDay
-} = useCompetitionStore()
-const CompetitionCount = competitionCount
-const MemberCount = memberCount
-const EventDay = eventDay
-const search = ref('')
-const currentPage = ref(1)
-const isLoading = ref(true);
-const rowsPerPage = 4
-
-let debounceTimeout
-const debounce = (func, delay) => {
-    return (...args) => {
-        clearTimeout(debounceTimeout)
-        debounceTimeout = setTimeout(() => {
-            func(...args)
-        }, delay)
-    }
-}
-
-let lastSearched = ''
-
-const fetchSearchedCompetitions = debounce(async (query) => {
-    if (query.length >= 3 && query !== lastSearched) {
-        lastSearched = query
-        try {
-            const response = await apiClient.get('/competitions', {
-                params: {
-                    search_term: query
+                    </>
+                )
                 }
-            })
-            const result = response?.data?.data?.original?.data || []
-            competitions.value = result
-            currentPage.value = 1
-        } catch (error) {
-            console.error('Error fetching searched competitions:', error)
-            competitions.value = []
-        }
-    }
-}, 400)
-
-const loadCompetitions = async () => {
-    isLoading.value = true
-    try {
-        await fetchCompetitions()
-    } catch (error) {
-        console.error("Error fetching competitions:", error)
-    } finally {
-        isLoading.value = false
-    }
+            </div >
+        </>
+    );
 }
 
-watch(search, (newSearch) => {
-    if (newSearch.length >= 3) {
-        fetchSearchedCompetitions(newSearch)
-    } else {
-        fetchCompetitions()
-    }
-})
-
-onMounted(() => {
-    loadCompetitions()
-})
-
-const filteredCompetitions = computed(() => {
-    let filtered = competitions.value
-
-    if (search.value.trim()) {
-        filtered = filtered.filter(competition =>
-            competition?.name?.toLowerCase().includes(search.value.toLowerCase())
-        )
-    }
-
-    const start = (currentPage.value - 1) * rowsPerPage
-    const end = start + rowsPerPage
-    return filtered.slice(start, end)
-})
-
-const totalPages = computed(() => {
-    const count = competitions.value.filter(competition =>
-        competition?.name?.toLowerCase().includes(search.value.toLowerCase())
-    ).length
-    return Math.max(Math.ceil(count / rowsPerPage), 1)
-})
-
-const formatDate = (date) => {
-    const d = new Date(date)
-    return isNaN(d) ? '' : d.toLocaleDateString(undefined, {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-    })
-}
-
-function goToPage(page) {
-    if (page >= 1 && page <= totalPages.value) {
-        currentPage.value = page
-    }
-}
-</script>
-
-<style scoped>
-.container {
-     max-width: 1810px;
-     padding: 0 15px;
-     margin: 0 auto;
-}
- .content {
-     padding: 0 30px;
-}
- .dashboard-card {
-     gap: 15px;
-     border-radius: 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 20px 0px;
-     width: 100%;
-}
- .profile-card {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     background: white;
-     padding: 15px 25px;
-     border-radius: 12px;
-     width: 65.8%;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     height: 148px;
-}
- .profile-left {
-     display: flex;
-     align-items: left;
-}
- .profile-left img {
-     width: 100%;
-     max-width: 108px;
-     height: 108px;
-     border-radius: 50%;
-}
- .greeting {
-     color: #99816b;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .name {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 100%;
-     color: #4c4036;
-     font-family: Inter;
-}
- .names {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 18.68px;
-     line-height: 20.76px;
-     letter-spacing: 0%;
-}
- .namess {
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: #4c4036;
-     padding-left: 20px;
-     font-family: Inter;
-     text-align: justify;
-}
- .left-header-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-}
- .role {
-     color: #cc445e;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .profile-icons {
-     display: flex;
-     gap: 10px;
-     flex-direction: column;
-}
- .profile-icon {
-     display: flex;
-     flex-direction: column;
-}
- .icons {
-     display: flex;
-     align-items: center;
-     color: white;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon {
-     display: flex;
-     align-items: center;
-     color: #cc445e;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon i {
-     margin-right: 5px;
-}
- .stat-card {
-     background: #cc445e;
-     color: white;
-     padding: 20px;
-     border-radius: 8px;
-     text-align: center;
-     width: 219px;
-     font-family: Inter;
-     font-size: 1.2rem;
-     height: 148px;
-}
- .event-card {
-     background: #755840;
-     color: white;
-     padding: 20px;
-     height: 148px;
-     border-radius: 8px;
-     text-align: center;
-     font-family: Inter;
-     font-size: 1.2rem;
-     width: 219px;
-}
- .number {
-     font-weight: 500;
-     font-size: 48px;
-     font-family: Inter;
-     line-height: 100%;
-     color: white;
-     margin-top: 30px;
-}
- .ca-details {
-     font-weight: 400;
-     font-size: 20px;
-     font-family: Inter;
-     line-height: 100%;
-}
- .days {
-     margin-top: 35px;
-     font-weight: 400;
-     font-family: Inter;
-     font-size: 16px;
-     line-height: 100%;
-}
- .card-section {
-     display: flex;
-     gap: 35px;
-     width: 32%;
-}
- .cardddd:first-child {
-     background: white;
-     width: 95%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     margin-top: 20px;
-}
- .cardddd {
-     background: white;
-     width: 95%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-}
- .custom-card {
-     display: flex;
-     align-items: center;
-     background-color: white;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     margin-bottom: 15px;
-     padding: 30px;
-     border-radius: 10px;
-     width: 100%;
-     height: 310px;
-     margin-right: auto;
-     flex-direction: row;
-     margin-top: 30px;
-}
- .custom-card img {
-     max-width: 300px;
-     height: 250px;
-     width: 300px;
-     border-radius: 7px;
-}
- #view {
-     width: 120px;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #99816b;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     font-family: Inter;
-     color: white;
-}
- #edit {
-     width: 120px;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
-}
- #right {
-     margin-left: 20px;
-}
-</style>
+export default CompetitionsRoute

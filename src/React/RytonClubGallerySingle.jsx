@@ -1,5 +1,5 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/singleclub.css"
+import "./assets/css/rytonstyle.css"
 import { useEffect, useMemo, useState } from "react";
 import Loader from './extra/LoaderAll';
 import { NavLink, useNavigate, useParams } from "react-router";
