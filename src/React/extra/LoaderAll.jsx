@@ -1,6 +1,5 @@
 import React from "react";
 import "../assets/css/Loader.css";
-// if your CSS is in a separate file
 
 function Loader({ show }) {
   if (!show) return null;

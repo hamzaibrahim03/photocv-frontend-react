@@ -5,15 +5,6 @@ import "../assets/css/navbar.css";
 function NotificationBell() {
   const [open, setOpen] = useState(false);
 
-
-  // useEffect(() => {
-  //   if (!store.notifications.length) {
-  //     store.fetchNotifications();
-  //   }
-  // }, []);
-
-  // const unreadCount = unreadCount;
-
   const toggle = () => {
     setOpen((prev) => !prev);
   };

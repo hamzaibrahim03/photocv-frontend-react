@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import Calendar from "../React/extra/CalendarRyton"
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import Loader from "../React/extra/LoaderAll";
 import Pro from "./assets/icons/event_list/pro.svg"
 import Cal from "./assets/icons/event_list/cal.svg"
@@ -26,14 +26,112 @@ function NoticeRoute() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
+    const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
+    const [shareOpenId, setShareOpenId] = useState(null);
+    const popupRef = useRef(null);
+    const [savedLibrary, setSavedLibrary] = useState(() => {
+        return JSON.parse(
+            localStorage.getItem("savedLibrary") || "[]"
+        );
+    });
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (popupRef.current && !popupRef.current.contains(e.target)) {
+                setBookmarkOpenId(null);
+                setShareOpenId(null);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+
+    const toggleBookmark = (item, category) => {
+        const existingLibrary = JSON.parse(
+            localStorage.getItem("savedLibrary") || "[]"
+        );
+
+        const alreadySaved = existingLibrary.some(
+            saved =>
+                saved.id === item.id &&
+                saved.category === category
+        );
+
+        let updatedLibrary;
+
+        if (alreadySaved) {
+
+            updatedLibrary = existingLibrary.filter(
+                saved =>
+                    !(
+                        saved.id === item.id &&
+                        saved.category === category
+                    )
+            );
+
+        } else {
+
+            const libraryItem = {
+                id: item.id,
+                category: category,
+
+                title:
+                    item.name ||
+                    item.title ||
+                    item.event_name ||
+                    item.competition_name ||
+                    "Untitled",
+
+                description:
+                    item.description || "",
+
+                date:
+                    item.event_date ||
+                    item.competition_date ||
+                    item.published_at ||
+                    item.created_at ||
+                    "",
+
+                image:
+                    item.featured_image_url ||
+                    item.image ||
+                    item.image_url ||
+                    item.thumbnail_url ||
+                    "",
+
+                originalData: item,
+
+                savedAt: new Date().toISOString()
+            };
+
+            updatedLibrary = [
+                ...existingLibrary,
+                libraryItem
+            ];
+        }
+
+        localStorage.setItem(
+            "savedLibrary",
+            JSON.stringify(updatedLibrary)
+        );
+
+        setSavedLibrary(updatedLibrary);
+        navigate("/library");
+    };
+
+    const isBookmarked = (id, category) => {
+        return savedLibrary.some(
+            item =>
+                item.id === id &&
+                item.category === category
+        );
+    };
 
 
 
     useEffect(() => {
         getNoticeData();
         getNoticeExtra();
-        // updateColumns();
-        // updatedColumns();
     }, []);
     useEffect(() => {
         setTimeout(() => {
@@ -44,12 +142,6 @@ function NoticeRoute() {
 
     async function getNoticeData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/notices'
-        // let res = await fetch(url, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        //     },
-        // })
         const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json",
@@ -67,12 +159,6 @@ function NoticeRoute() {
 
     async function getNoticeExtra() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/notices-extras'
-        // let res = await fetch(url, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        //     },
-        // })
         const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json",
@@ -136,22 +222,6 @@ function NoticeRoute() {
         }
     };
 
-    const { eventDaysToGo, upcomingEventCount } = useMemo(() => {
-        const today = new Date();
-        const notices = noticeData.original?.data || [];
-        const upcomingNotices = notices.filter(e => new Date(e.event_date) > today);
-        const nearest = upcomingNotices
-            .map(e => new Date(e.event_date))
-            .sort((a, b) => a - b)[0];
-
-        let days = 0;
-        if (nearest) {
-            days = Math.ceil((nearest - today) / (1000 * 60 * 60 * 24));
-        }
-
-        return { eventDaysToGo: days, upcomingEventCount: upcomingNotices.length };
-    }, [noticeData]);
-
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
@@ -159,7 +229,7 @@ function NoticeRoute() {
                 {!isLoading && (
                     <>
                         <NavigationRoute />
-                        <HeaderRoute title="Events" />
+                        <HeaderRoute title="Notices" />
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
@@ -241,12 +311,30 @@ function NoticeRoute() {
                                                                                 </p>
                                                                                 <div className="d-flex justify-content-between align-items-center mt-3 w-100">
                                                                                     <div className="button-group d-flex align-items-center gap-2">
-                                                                                        <button className="btn me-2" id="e-view" onClick={() => navigateTo('/notices')}>View</button>
-                                                                                        <button className="btn me-2" id="e-edit" onClick={() => navigateTo('/notice_single')}>Edit</button>
+                                                                                        <button className="btn me-2" id="e-view" onClick={() => navigate('/notice_single')}>View</button>
+                                                                                        <button className="btn me-2" id="e-edit" onClick={() => navigate('/notice_edit')}>Edit</button>
                                                                                     </div>
 
                                                                                     <div className="d-flex align-items-center gap-2">
-                                                                                        <img src={Book} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <div className="library-bookmark">
+                                                                                            <img src={Books} alt="bookmark" style={{ width: '20px', height: '20px', cursor: 'pointer' }} className={isBookmarked(notice.id, "Notices") ? "bookmark-icon active" : "bookmark-icon"} onClick={() => toggleBookmark(notice, "Notices")} />
+                                                                                        </div>
+                                                                                        <div style={{ position: "relative", display: "inline-block" }}>
+
+                                                                                            {bookmarkOpenId === notice.id && (
+                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }} >
+                                                                                                    <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }} >
+                                                                                                        Save to Library
+                                                                                                    </p>
+
+                                                                                                    {["Events", "Competitions", "Notices", "Galleries", "News"].map((cat) => (
+                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(event, cat); }}>
+                                                                                                            📁 {cat}
+                                                                                                        </div>
+                                                                                                    ))}
+                                                                                                </div>
+                                                                                            )}
+                                                                                        </div>
                                                                                         <img src={Share} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                                                     </div>
                                                                                 </div>
@@ -306,7 +394,7 @@ function NoticeRoute() {
                                                                         )}
                                                                         <div className="event-details">
                                                                             <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                                <span id="espeaker">{comment?.comment}</span>
+                                                                                <span className="text-secondary">{comment?.comment}</span>
                                                                             </div>
                                                                         </div>
                                                                         <div className="event-time" id="edate">
@@ -317,8 +405,8 @@ function NoticeRoute() {
                                                                 </div>
                                                             ))}
                                                         </div>
-                                                        <div class="more-card d-flex flex-column" style={{ padding: '35px' }}>
-                                                            <h5 class="head">More Notices</h5>
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">More Notices</h5>
                                                             {noticeData?.original?.data?.slice(0, 6)?.map((notice) => (
                                                                 <div className="event-list" style={{ marginBottom: '10px' }} key={notice.id}>
                                                                     <div className="event-item">
@@ -331,7 +419,7 @@ function NoticeRoute() {
                                                                         )}
                                                                         <div className="event-details">
                                                                             <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                                <span id="espeaker">{notice?.title}</span>
+                                                                                <span className="text-secondary">{notice?.title}</span>
                                                                             </div>
                                                                         </div>
                                                                         <div className="event-time" id="edate">
@@ -342,11 +430,11 @@ function NoticeRoute() {
                                                                 </div>
                                                             ))}
 
-                                                            <div class="button-group mt-auto">
-                                                                <button class="btn btn-sm" id="e-view" onClick="{() => navigate(/notices)}">
+                                                            <div className="button-group mt-auto">
+                                                                <button className="btn btn-sm" id="e-view" onClick="{() => navigate(/notices)}">
                                                                     View All
                                                                 </button>
-                                                                <button class="btn btn-sm" id="new" onClick="{() => navigate(/notices/create)}">
+                                                                <button className="btn btn-sm" id="new" onClick="{() => navigate(/notices/create)}">
                                                                     Add New
                                                                 </button>
                                                             </div>
@@ -361,7 +449,7 @@ function NoticeRoute() {
                             </section >
                             <footer className="site-footer">
                                 <div className="footer-content">
-                                    {/* <p className="memtext" id="fcopy">Copyright &copy; 2025 – {dashboardStore?.dashboardData?.data?.user_details?.username}</p> */}
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
                                 </div>
                             </footer>
                         </div >

@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router";
 import Loader from './extra/LoaderAll';
 
-// import CommentsDrawer from "./CommentsDrawer";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import './assets/css/rytonstyle.css'
@@ -54,12 +53,10 @@ function RytonResultSlide() {
     const Color = useMemo(() => memData.settings || {}, [memData]);
 
     const images = useMemo(() => {
-        // Images coming from localStorage
         if (Array.isArray(resultData.competitionResult)) {
             return resultData.competitionResult;
         }
 
-        // Images coming from API
         return (
             resultData?.competitionResult?.original?.data?.entries || []
         );
@@ -125,7 +122,7 @@ function RytonResultSlide() {
 
             setCurrentIndex(Number(storedIndex) || 0);
 
-            setIsLoading(false);   // <-- add this
+            setIsLoading(false);
         } else {
             getResultData();
         }

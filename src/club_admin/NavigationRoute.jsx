@@ -19,10 +19,6 @@ import Page from "./assets/icons/navigation/pages.svg"
 import Learn from "./assets/icons/navigation/learn.svg"
 import Gear from "./assets/icons/navigation/gear.svg"
 import Plan from "./assets/icons/navigation/plans.svg"
-// TODO: Add SVG icon imports once the icon files are added to ./assets/icons/navigation/
-// import About from "./assets/icons/navigation/about.svg";
-// import Competition from "./assets/icons/navigation/competition.svg";
-// etc.
 
 function NavigationRoute() {
     const navigate = useNavigate();

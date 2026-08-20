@@ -79,7 +79,7 @@ function CommentsDrawMember({ photo, onClose }) {
                         <span className="chev">{exifOpen ? "⌃" : "⌄"}</span>
                     </div>
 
-                    <div v-if="exifOpen" className="exif-grid">
+                    {exifOpen && <div className="exif-grid">
                         <div className="exif-item">
                             <label>Camera</label><br />
                             <span>{exif?.camera_model}</span>
@@ -106,7 +106,7 @@ function CommentsDrawMember({ photo, onClose }) {
                             <label>ISO</label><br />
                             <span>{exif?.iso}</span>
                         </div>
-                    </div>
+                    </div>}
                 </div >
 
                 <div className="block comments-block">

@@ -32,8 +32,6 @@ function EventRoute() {
     useEffect(() => {
         getEventData();
         getEventExtra();
-        // updateColumns();
-        // updatedColumns();
     }, []);
     useEffect(() => {
         setTimeout(() => {
@@ -44,12 +42,6 @@ function EventRoute() {
 
     async function getEventData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/events'
-        // let res = await fetch(url, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        //     },
-        // })
         const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json",
@@ -67,12 +59,6 @@ function EventRoute() {
 
     async function getEventExtra() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/event-extras'
-        // let res = await fetch(url, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        //     },
-        // })
         const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json",

@@ -16,8 +16,6 @@ function DashboardRoute() {
 
     useEffect(() => {
         getDashboardData();
-        // updateColumns();
-        // updatedColumns();
     }, []);
     useEffect(() => {
         setTimeout(() => {
@@ -28,12 +26,6 @@ function DashboardRoute() {
 
     async function getDashboardData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club/dashboard'
-        // let res = await fetch(url, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        //     },
-        // })
         const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json",
@@ -74,7 +66,7 @@ function DashboardRoute() {
     };
     const upcomingEvents = useMemo(() => {
         const allEvents = dashboardData?.events || [];
-        console.log(Array.isArray(allEvents)); // Should print true
+        console.log(Array.isArray(allEvents)); 
         console.log(allEvents);
         const now = new Date();
 
@@ -165,15 +157,6 @@ function DashboardRoute() {
 
         return `rgba(${r},${g},${b},${alpha})`;
     }
-
-    // useEffect(() => {
-    //     window.addEventListener("resize", updateColumns);
-    //     window.addEventListener("resize", updatedColumns);
-    //     return () => {
-    //         window.removeEventListener("resize", updateColumns);
-    //         window.removeEventListener("resize", updatedColumns);
-    //     };
-    // }, []);
 
     const getPositionClass = (index, total) => {
         const row = Math.floor(index / columns);

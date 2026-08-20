@@ -1,46 +1,46 @@
 <template>
-<ClubSignup title="Let's Start!" subtitle="We just need a few basic details of the club." />
-<div class="form">
-    <h5 class="head">Basic Details</h5>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <label for="names"> Club Name </label>
-            <input type="text" class="form-control" />
+    <ClubSignup title="Let's Start!" subtitle="We just need a few basic details of the club." />
+    <div className="form">
+        <h5 className="head">Basic Details</h5>
+        <div className="row">
+            <div className="col-md-6 mb-3">
+                <label for="names"> Club Name </label>
+                <input type="text" className="form-control" />
+            </div>
+            <div className="col-md-6 mb-3">
+                <label for="tagline"> Club Tagline </label>
+                <input type="text" className="form-control" />
+            </div>
         </div>
-        <div class="col-md-6 mb-3">
-            <label for="tagline"> Club Tagline </label>
-            <input type="text" class="form-control" />
-        </div>
-    </div>
-    <h5 class="fw-semibold mb-3">Domain Type and Name Options</h5>
+        <h5 className="fw-semibold mb-3">Domain Type and Name Options</h5>
 
-    <div class="row">
+        <div className="row">
 
-        <div class="col-md-6">
-            <div class="form-check">
-                <div class="row">
-                    <div class="col-md-4">
-                        <input class="form-check-input" type="radio" name="domain_type" id="subdomain" value="subdomain">
-                        <label class="form-check-label fw-semibold" for="subdomain">
-                            Subdomain
-                        </label>
-                    </div>
-                    <div class="col-md-8">
-                        <span class="small text-muted d-block ms-4 mt-1">
-                            Use our domain, type your name
-                        </span>
+            <div className="col-md-6">
+                <div className="form-check">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <input className="form-check-input" type="radio" name="domain_type" id="subdomain" value="subdomain">
+                                <label className="form-check-label fw-semibold" for="subdomain">
+                                    Subdomain
+                                </label>
+                        </div>
+                        <div className="col-md-8">
+                            <span className="small text-muted d-block ms-4 mt-1">
+                                Use our domain, type your name
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="input-group mt-3">
-                <input type="text" class="form-control" v-model="domainName" placeholder="yourclubname" />
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    {{ selectedDomain }}
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li v-for="item in domainOptions" :key="item">
-                        <a class="dropdown-item" href="#" @click.prevent="selectDomain(item)">
+                <div className="input-group mt-3">
+                    <input type="text" className="form-control" v-model="domainName" placeholder="yourclubname" />
+                    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        {{ selectedDomain }}
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-end">
+                        <li v-for="item in domainOptions" key="item">
+                            <a className="dropdown-item" href="#" @click.prevent="selectDomain(item)">
                             {{ item }}
                         </a>
                     </li>
@@ -48,30 +48,30 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="form-check mb-2">
-                <div class="row">
-                    <div class="col-md-6">
-                        <input class="form-check-input" type="radio" name="domain_type" id="customdomain" value="customdomain">
-                        <label class="form-check-label fw-semibold" for="customdomain">
-                            Custom Domain
-                        </label>
+        <div className="col-md-6">
+            <div className="form-check mb-2">
+                <div className="row">
+                    <div className="col-md-6">
+                        <input className="form-check-input" type="radio" name="domain_type" id="customdomain" value="customdomain">
+                            <label className="form-check-label fw-semibold" for="customdomain">
+                                Custom Domain
+                            </label>
                     </div>
-                    <div class="col-md-6">
-                        <span class="small text-muted d-block ms-4 mt-1">Use your own domain</span>
+                    <div className="col-md-6">
+                        <span className="small text-muted d-block ms-4 mt-1">Use your own domain</span>
                     </div>
                 </div>
             </div>
-            <input type="text" class="form-control mt-3" placeholder="example.com">
+            <input type="text" className="form-control mt-3" placeholder="example.com">
         </div>
 
     </div>
 
-    <div class="button-group" style="justify-content:left">
-        <button class="btn btn-sm" id="edit">Next</button>
-    </div>
+    <div className="button-group" style={{ justify- content:left">
+    <button className="btn btn-sm" id="edit">Next</button>
 </div>
-</template>
+</div >
+</template >
 
 <script setup>
 import { ref } from 'vue';

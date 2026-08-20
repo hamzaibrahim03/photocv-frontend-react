@@ -153,7 +153,6 @@ function NoticePublic() {
     const filteredNotices = useMemo(() => {
         let list = [...noticesList];
 
-        // Filter by notices type
         if (activeFilter !== "All") {
             list = list.filter(
                 (item) => item.notice_type?.name === activeFilter ||
@@ -161,7 +160,6 @@ function NoticePublic() {
             );
         }
 
-        // Search
         if (search.trim() !== "") {
             const term = search.toLowerCase();
 
@@ -192,11 +190,6 @@ function NoticePublic() {
             setCurrentPage(page);
         }
     };
-
-
-    // const setActiveFilter = (filter) => {
-    //     activeFilter = filter.name;
-    // };
     console.log(noticeData.clubNotices)
 
     return (

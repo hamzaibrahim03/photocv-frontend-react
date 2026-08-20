@@ -184,12 +184,6 @@ function RytonSingleResults() {
     }, []);
 
 
-
-    // const setActiveFilter = (filter) => {
-    //     activeFilter = filter.name;
-    // };
-
-
     const selectedSeasonLabel = useMemo(() => {
         const seasons =
             compData?.clubSettings?.original?.data?.club?.seasons || [];

@@ -54,7 +54,6 @@ function NotificationDropdown({ onClose }) {
       store.markAsRead(item.id);
     }
 
-    // navigate if required
   };
 
   const filteredNotifications = useMemo(() => {

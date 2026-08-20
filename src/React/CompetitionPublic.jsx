@@ -175,14 +175,12 @@ function CompetitionPublic() {
     const filteredComps = useMemo(() => {
         let list = [...compsList];
 
-        // Filter by competition type
         if (activeFilter !== "All") {
             list = list.filter(
                 (item) => item.competition_type?.name === activeFilter
             );
         }
 
-        // Search - only filter locally if we did not perform a server-side search
         if (search.trim() !== "" && search.length < 3) {
             const term = search.toLowerCase();
 
@@ -222,10 +220,6 @@ function CompetitionPublic() {
         }
     };
     console.log(paginatedComps);
-
-    // const setActiveFilter = (filter) => {
-    //     activeFilter = filter.name;
-    // };
 
     return (
         <>

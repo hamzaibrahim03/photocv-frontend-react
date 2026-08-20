@@ -152,14 +152,12 @@ function NewsPublic() {
     const filteredNews = useMemo(() => {
         let list = [...newsList];
 
-        // Filter by news type
         if (activeFilter !== "All") {
             list = list.filter(
                 (item) => item.club_news_type?.name === activeFilter
             );
         }
 
-        // Search
         if (search.trim() !== "") {
             const term = search.toLowerCase();
 
@@ -190,11 +188,6 @@ function NewsPublic() {
             setCurrentPage(page);
         }
     };
-
-
-    // const setActiveFilter = (filter) => {
-    //     activeFilter = filter.name;
-    // };
     console.log(newsData?.clubNews)
 
     return (

@@ -140,7 +140,6 @@ function EventPublic() {
         setEventsList(events);
         const allTypes = events.flatMap((event) => event.types || []);
 
-        // Remove duplicate filter names
         const uniqueFilters = [
             { name: "All" },
             ...Array.from(
@@ -149,7 +148,7 @@ function EventPublic() {
                         type.name,
                         {
                             name: type.name,
-                            icon: type.icon_url, // if available
+                            icon: type.icon_url, 
                         },
                     ])
                 ).values(),
@@ -194,11 +193,6 @@ function EventPublic() {
             setCurrentPage(page);
         }
     };
-
-
-    // const setActiveFilter = (filter) => {
-    //     activeFilter = filter.name;
-    // };
 
 
     return (

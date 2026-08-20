@@ -1,6 +1,4 @@
-// import { createElement, useState, useEffect, useRef, useTransition, useActionState, useId } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+
 import './App.css'
 import HomeRoute from './React/HomeRoute'
 import EventPublic from './React/EventPublic'
@@ -28,8 +26,9 @@ import DashboardRoute from './club_admin/DashboardRoute';
 import EventRoute from './club_admin/EventRoute';
 import CompetitionsRoute from './club_admin/CompetitionsRoute';
 import NoticeRoute from './club_admin/NoticeRoute';
-// import CommentsDrawClub from './React/CommentsDrawClub';
-// import CommentsDrawMember from './React/CommentsDrawMember';
+import NewsRoute from './club_admin/NewsRoute';
+import PageRoute from './club_admin/PagesRoute';
+import Library from './club_admin/Library';
 function App() {
     return (
         <>
@@ -61,6 +60,9 @@ function App() {
                 <Route path="/event" element={<EventRoute />} />
                 <Route path="/competitions" element={<CompetitionsRoute />} />
                 <Route path="/notices" element={<NoticeRoute />} />
+                <Route path="/news" element={<NewsRoute />} />
+                <Route path="/pages" element={<PageRoute />} />
+                <Route path="/library" element={<Library />} />
             </Routes>
         </>
     )

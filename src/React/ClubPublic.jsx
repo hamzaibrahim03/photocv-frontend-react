@@ -256,7 +256,7 @@ function ClubPublic() {
                                                     ))}
 
                                                     {getByRole("General Members").map((person) => (
-                                                        <div v-for="person in getByRole('')" key={person.email} className="official" >
+                                                        <div key={person.email} className="official" >
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 External
                                                             </h1>

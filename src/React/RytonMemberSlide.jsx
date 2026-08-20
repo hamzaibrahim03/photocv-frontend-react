@@ -115,7 +115,7 @@ function RytonMemberSlide() {
 
             setCurrentIndex(Number(storedIndex) || 0);
 
-            setIsLoading(false);   // <-- add this
+            setIsLoading(false);
         } else {
             getMemberData();
         }
