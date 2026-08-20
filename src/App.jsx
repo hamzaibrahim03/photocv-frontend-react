@@ -25,10 +25,19 @@ import LoginRoute from './club_admin/LoginRoute';
 import DashboardRoute from './club_admin/DashboardRoute';
 import EventRoute from './club_admin/EventRoute';
 import CompetitionsRoute from './club_admin/CompetitionsRoute';
+import MembersRoute from './club_admin/MembersRoute';
+import GalleryRoute from './club_admin/GalleryRoute';
 import NoticeRoute from './club_admin/NoticeRoute';
 import NewsRoute from './club_admin/NewsRoute';
 import PageRoute from './club_admin/PagesRoute';
+import ClubRoute from './club_admin/ClubRoute';
 import Library from './club_admin/Library';
+import ProfileDashboard from './photographer/ProfileDashboard';
+import PhotographerPortfolio from './photographer/PhotographerPortfolio';
+import PhotographerGear from './photographer/PhotographerGear';
+import PhotographerLearning from './photographer/PhotographerLearning';
+import PostView from './photographer/PostView';
+import PhotographerPlans from './photographer/PhotographerPlans';
 function App() {
     return (
         <>
@@ -59,10 +68,20 @@ function App() {
                 <Route path="/dashboard" element={<DashboardRoute />} />
                 <Route path="/event" element={<EventRoute />} />
                 <Route path="/competitions" element={<CompetitionsRoute />} />
+                <Route path="/members" element={<MembersRoute />} />
+                <Route path="/gallery" element={<GalleryRoute />} />
                 <Route path="/notices" element={<NoticeRoute />} />
                 <Route path="/news" element={<NewsRoute />} />
                 <Route path="/pages" element={<PageRoute />} />
+                <Route path="/club" element={<ClubRoute />} />
                 <Route path="/library" element={<Library />} />
+                {/* Member */}
+                <Route path="/about" element={<ProfileDashboard />} />
+                <Route path="/portfolio" element={<PhotographerPortfolio />} />
+                <Route path="/gear" element={<PhotographerGear />} />
+                <Route path="/learn" element={<PhotographerLearning />} />
+                <Route path="/post" element={<PostView />} />
+                <Route path="/plans" element={<PhotographerPlans />} />
             </Routes>
         </>
     )

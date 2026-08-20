@@ -1,231 +1,212 @@
-<template>
-    <NavigationRoute />
-    <HeaderRoute title="Competitions" />
-    <section class="content">
-        <div class="dashboard-card">
-            <div class="profile-card">
-                <div class="profile-left">
-                    <div class="profile-info">
-                        <small class="greeting">Planned and regular club competition</small>
-                        <h2 class="name">2024 - 2025 Season</h2>
-                    </div>
-                </div>
-                <div class="search-bar">
-                    <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
-                </div>
-                <div class="quick-filter text-end">
-                    <strong>Quick Filter</strong>
-                    <small class="d-block">(Click icons to filter)</small>
-                    <div class="d-flex gap-2 justify-content-end">
-                        <i class="bi bi-calendar-event"></i>
-                        <i class="bi bi-camera"></i>
-                        <i class="bi bi-newspaper"></i>
-                    </div>
-                    <div class="d-flex gap-2 justify-content-end mt-2">
-                        <i class="bi bi-trophy"></i>
-                        <i class="bi bi-info"></i>
-                        <i class="bi bi-bell"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="card-section">
-                <div class="event-card" style="width: 100%">
-                    <small class="ca-details">Next Competition</small>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <h3 class="number">{{ EventDay }}</h3>
-                        </div>
-                        <div class="days col-md-7">
-                            <span>days to go</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="container mt-4">
-                    <div v-if="filteredCompetitions.length">
-                        <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
-                        <div class="d-flex gap-3">
-                            <img:src="competition.featured_image" alt="Competition Image" />
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5>{{ competition.name || 'Untitled Competition' }}</h5>
-                                    <div class="icon-container">
-                                        <i class="fas fa-comment-alt me-2"></i>
-                                        <i class="fas fa-camera me-2"></i>
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
-                                </div>
-                                <p style="margin: 5px 0; font-size: 14px; columns: 2">
-                                    <strong style="color: red">Open:</strong>{{ formatDate(competition.start_date)}}
-                                    <br />
-                                    <strong style="color: brown">Result:</strong> {{ formatDate(competition.result_announcement_date)}}
-                                    <br />
-                                    <strong style="color: brown">Theme:</strong>{{ competition.theme_id }}<br />
-                                    <strong style="color: red">Close:</strong>{{ formatDate(competition.submission_deadline)}}
-                                    <br />
-                                    <strong style="color: brown">Max:</strong>{{ competition.max_entries_print }}
-                                    <br />
-                                    <strong style="color: brown">Format:</strong> {{ competition.allowed_image_formats }}
-                                </p>
-                                <p class="text-secondary">
-                                    {{ competition.description || 'No description provided.' }}
-                                </p>
-                                <div>
-                                    <router-link to="/competitionsingle" custom v-slot="{ navigate }">
-                                        <button class="btn me-2" id="view" @click="navigate">View</button>
-                                </router-link>
-                                <router-link to="/comp_edit" custom v-slot="{ navigate }">
-                                    <button class="btn me-2" id="edit" @click="navigate">Edit</button>
-                            </router-link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router';
+import NavigationRoute from '../club_admin/NavigationRoute';
+import HeaderRoute from '../club_admin/HeaderRoute';
 
-        <div v-else class="text-center text-muted">No competitions found.</div>
-        <nav v-if="filteredCompetitions.length">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" :class="{disabled: currentPage === 1 }">
-                <button class="page-link" @click="prevPage">Previous</button>
-        </li>
-        <li class="page-item disabled">
-            <span class="page-link">
-                Page {{ currentPage }} of {{ totalPages }}
-            </span>
-        </li>
-        <li class="page-item" :class="{disabled: currentPage === totalPages }">
-        <button class="page-link" @click="nextPage">Next</button>
-</li>
-                    </ul >
-                </nav >
-            </div >
-        </div >
-    <div class="col-md-4">
-        <div class="calen">
-            <CalendarDashboard />
-        </div>
-        <div id="news">
-            <RecentSubmissions />
-            <MoreCompetitions />
-        </div>
-    </div>
-    </div >
-</section >
-</template >
+// Mock dependencies
+import CalendarDashboard from '../club_admin/Calendars/CalendarDashboard';
+import RecentSubmissions from '../club_admin/competitions/RecentSubmissions';
+import MoreCompetitions from '../club_admin/competitions/MoreCompetitions';
+import apiClient from '../../api/axios'; // assuming standard location
 
-<script setup>
-import { ref, computed, onMounted, watch } from 'vue'
-import apiClient from 'axios'
-import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
-import NavigationRoute from "@/components/NavigationRoute.vue";
-import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
-import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
-import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
+const PhotographerCompetitions = () => {
+    const navigate = useNavigate();
 
-const { competitions, fetchCompetitions, eventDay } = useCompetitionStore()
-const EventDay = eventDay
-const search = ref('')
-const currentPage = ref(1)
-const rowsPerPage = 4
+    const [competitions, setCompetitions] = useState([]);
+    const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 4;
 
-let debounceTimeout
-const debounce = (func, delay) => {
-    return (...args) => {
-        clearTimeout(debounceTimeout)
-        debounceTimeout = setTimeout(() => {
-            func(...args)
-        }, delay)
-    }
-}
+    // Stats
+    const [eventDay, setEventDay] = useState(25);
 
-let lastSearched = ''
-
-const fetchSearchedCompetitions = debounce(async (query) => {
-    if (query.length >= 3 && query !== lastSearched) {
-        lastSearched = query
+    // Mock API fetch
+    const fetchCompetitions = async () => {
         try {
-            const response = await apiClient.get('/competitions', {
-                params: {
-                    search_term: query
-                }
-            })
-            const result = response?.data?.data?.original?.data || []
-            competitions.value = result
-            currentPage.value = 1
-        } catch (error) {
-            console.error('Error fetching searched competitions:', error)
-            competitions.value = []
+            // const res = await apiClient.get('/competitions');
+            // setCompetitions(res.data.data);
+            setCompetitions([
+                { id: 1, name: 'Spring Contest', start_date: '2024-03-01', result_announcement_date: '2024-04-01', submission_deadline: '2024-03-15', theme_id: 'Nature', max_entries_print: 2, allowed_image_formats: 'JPG, PNG', description: 'Show us nature.', featured_image: '/placeholder.jpg' }
+            ]);
+        } catch (e) {
+            console.error(e);
         }
-    }
-}, 400)
+    };
 
-watch(search, (newSearch) => {
-    if (newSearch.length >= 3) {
-        fetchSearchedCompetitions(newSearch)
-    } else {
-        fetchCompetitions()
-    }
-})
+    useEffect(() => {
+        fetchCompetitions();
+    }, []);
 
-onMounted(() => {
-    fetchCompetitions()
-})
+    const fetchSearchedCompetitions = useCallback(async (query) => {
+        try {
+            /* 
+            const response = await apiClient.get('/competitions', { params: { search_term: query }});
+            setCompetitions(response.data.data);
+            */
+        } catch (error) {
+            console.error(error);
+            setCompetitions([]);
+        }
+        setCurrentPage(1);
+    }, []);
 
-const filteredCompetitions = computed(() => {
-    let filtered = competitions.value
+    // Debounce search effect
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (search.length >= 3) {
+                fetchSearchedCompetitions(search);
+            } else if (search.length === 0) {
+                fetchCompetitions();
+            }
+        }, 400);
 
-    if (search.value.trim()) {
-        filtered = filtered.filter(competition =>
-            competition?.name?.toLowerCase().includes(search.value.toLowerCase())
-        )
-    }
+        return () => clearTimeout(timeout);
+    }, [search, fetchSearchedCompetitions]);
 
-    const start = (currentPage.value - 1) * rowsPerPage
-    const end = start + rowsPerPage
-    return filtered.slice(start, end)
-})
+    const filteredCompetitions = useMemo(() => {
+        let filtered = competitions;
+        if (search.trim()) {
+            filtered = filtered.filter(c => c.name?.toLowerCase().includes(search.toLowerCase()));
+        }
+        const start = (currentPage - 1) * rowsPerPage;
+        return filtered.slice(start, start + rowsPerPage);
+    }, [competitions, search, currentPage]);
 
-const totalPages = computed(() => {
-    const count = competitions.value.filter(competition =>
-        competition?.name?.toLowerCase().includes(search.value.toLowerCase())
-    ).length
-    return Math.max(Math.ceil(count / rowsPerPage), 1)
-})
+    const totalPages = useMemo(() => {
+        const count = competitions.filter(c => c.name?.toLowerCase().includes(search.toLowerCase())).length;
+        return Math.max(Math.ceil(count / rowsPerPage), 1);
+    }, [competitions, search]);
 
-const nextPage = () => {
-    if (currentPage.value < totalPages.value) currentPage.value++
-}
-const prevPage = () => {
-    if (currentPage.value > 1) currentPage.value--
-}
+    const nextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(p => p + 1);
+    };
 
-const formatDate = (date) => {
-    const d = new Date(date)
-    return isNaN(d) ? '' : d.toLocaleDateString(undefined, {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-    })
-}
-</script>
+    const prevPage = () => {
+        if (currentPage > 1) setCurrentPage(p => p - 1);
+    };
 
-<style scoped>
-.calen {
-     margin-top: 15px;
-}
- .icon-container i {
-     color: #666;
-     font-size: 16px;
-}
- .custom-card {
-     margin-left: 1%;
-     width: 103% 
-}
+    const formatDate = (dateStr) => {
+        const d = new Date(dateStr);
+        return isNaN(d) ? '' : d.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+    };
 
-</style>
+    return (
+        <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
+            <NavigationRoute />
+            <HeaderRoute title="Competitions" />
+            <section className="content" style={{ padding: '0 30px' }}>
+                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                        <div className="profile-left">
+                            <div className="profile-info">
+                                <small className="greeting text-muted" style={{ fontSize: '18px' }}>Planned and regular club competition</small>
+                                <h2 className="name m-0 text-dark fw-bold" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
+                            </div>
+                        </div>
+                        <div className="search-bar position-relative" style={{ width: '250px' }}>
+                            <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" className="form-control" placeholder="Search..." />
+                        </div>
+                        <div className="quick-filter text-end">
+                            <strong className="text-dark">Quick Filter</strong>
+                            <small className="d-block text-muted" style={{ fontSize: '12px' }}>(Click icons to filter)</small>
+                            <div className="d-flex gap-2 justify-content-end text-muted mt-2">
+                                <i className="fa-regular fa-calendar" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-solid fa-camera" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-regular fa-newspaper" style={{ cursor: 'pointer' }}></i>
+                            </div>
+                            <div className="d-flex gap-2 justify-content-end text-muted mt-2">
+                                <i className="fa-solid fa-trophy" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-solid fa-circle-info" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-regular fa-bell" style={{ cursor: 'pointer' }}></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card-section d-flex" style={{ width: '32%' }}>
+                        <div className="event-card text-white text-center rounded p-4 w-100" style={{ backgroundColor: '#755840', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>Next Competition</small>
+                            <div className="row mt-4 align-items-center">
+                                <div className="col-md-5">
+                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{eventDay}</h3>
+                                </div>
+                                <div className="days col-md-7 text-start">
+                                    <span>days to go</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row mt-4">
+                    <div className="col-md-8">
+                        <div className="container px-0">
+                            {filteredCompetitions.length > 0 ? (
+                                <div>
+                                    {filteredCompetitions.map(competition => (
+                                        <div key={competition.id} className="custom-card bg-white shadow-sm rounded p-4 mb-4 border border-light">
+                                            <div className="d-flex gap-4">
+                                                <img src={competition.featured_image || '/placeholder.jpg'} alt="Competition" className="rounded" style={{ width: '200px', height: '150px', objectFit: 'cover' }} onError={(e) => { e.target.src = '/placeholder.jpg'; }} />
+                                                <div className="flex-grow-1">
+                                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                                        <h5 className="m-0 fw-bold">{competition.name || 'Untitled Competition'}</h5>
+                                                        <div className="icon-container text-muted d-flex gap-3">
+                                                            <i className="fa-regular fa-comment"></i>
+                                                            <i className="fa-solid fa-camera"></i>
+                                                            <i className="fa-regular fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row m-0 mb-3" style={{ fontSize: '14px' }}>
+                                                        <div className="col-6 p-0 mb-2"><strong className="text-danger me-2">Open:</strong> {formatDate(competition.start_date)}</div>
+                                                        <div className="col-6 p-0 mb-2"><strong className="text-secondary me-2" style={{ color: 'brown' }}>Result:</strong> {formatDate(competition.result_announcement_date)}</div>
+                                                        <div className="col-6 p-0 mb-2"><strong className="text-secondary me-2" style={{ color: 'brown' }}>Theme:</strong> {competition.theme_id}</div>
+                                                        <div className="col-6 p-0 mb-2"><strong className="text-danger me-2">Close:</strong> {formatDate(competition.submission_deadline)}</div>
+                                                        <div className="col-6 p-0 mb-2"><strong className="text-secondary me-2" style={{ color: 'brown' }}>Max:</strong> {competition.max_entries_print}</div>
+                                                        <div className="col-6 p-0 mb-2"><strong className="text-secondary me-2" style={{ color: 'brown' }}>Format:</strong> {competition.allowed_image_formats}</div>
+                                                    </div>
+                                                    <p className="text-muted small mb-4">{competition.description || 'No description provided.'}</p>
+                                                    <div className="d-flex gap-2">
+                                                        <button className="btn text-white px-4" style={{ backgroundColor: '#99816b' }} onClick={() => navigate('/competitionsingle')}>View</button>
+                                                        <button className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }} onClick={() => navigate('/comp_edit')}>Edit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    <nav className="mt-5">
+                                        <ul className="pagination justify-content-center">
+                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <button className="page-link text-dark shadow-none" onClick={prevPage}>Previous</button>
+                                            </li>
+                                            <li className="page-item disabled">
+                                                <span className="page-link text-muted">Page {currentPage} of {totalPages}</span>
+                                            </li>
+                                            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                                <button className="page-link text-dark shadow-none" onClick={nextPage}>Next</button>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            ) : (
+                                <div className="text-center py-5 text-muted bg-white rounded shadow-sm">No competitions found.</div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <section className="d-flex flex-column gap-4">
+                            <div className="bg-white rounded shadow-sm">
+                                <CalendarDashboard />
+                            </div>
+                            <div className="d-flex flex-column gap-4">
+                                <RecentSubmissions />
+                                <MoreCompetitions />
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default PhotographerCompetitions;

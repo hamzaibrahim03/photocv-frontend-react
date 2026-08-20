@@ -1,327 +1,157 @@
-<template>
-<NavigationRoute />
-<HeaderRoute title="Galleries" />
-<div class="content">
-    <div class="dashboard-card">
-        <div class="profile-card">
-            <div class="profile-left">
-                <div class="profile-info">
-                    <small class="greeting">Galleries uploaded by Club Members</small>
-                    <h2 class="name">15 Club Galleries</h2>
-                    <small class="role">Average 20 Images</small>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <div class="dt-search">
-                    <input type="search" style="width: 250px" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
-                </div>
-            </div>
-        </div>
-        <div class="card-section">
-            <div class="stat-card">
-                <small class="ca-details">Images</small>
-                <h3 class="number">{{ MemberCount }}</h3>
-            </div>
-            <div class="event-card">
-                <small class="ca-details">Interactions</small>
-                <div class="row">
-                    <div class="col-md-5">
-                        <h3 class="number">{{ EventDay }}</h3>
-                    </div>
-                    <div class="days col-md-7">
-                        <span>Likes & Comments</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+import React, { useState, useEffect, useMemo } from 'react';
+import NavigationRoute from './NavigationRoute';
+import HeaderRoute from './HeaderRoute';
+import Ima from './assets/icons/gallery/image.svg';
+import Hea from './assets/icons/gallery/heart.svg';
+import Com from './assets/icons/gallery/comment.svg';
 
-    <div class="card" style="height: auto">
-        <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
-            <h4>Club Galleries</h4>
-        </div>
+const ClubGallery = () => {
+    const [clubGallery, setClubGallery] = useState([]);
+    const [cards, setCards] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 9;
 
-        <div class="row" style="margin-left:0.1%">
-            <div v-for="(row, rowIndex) in chunkedCards" :key="'row-' + rowIndex" class="row g-0" style="margin-left: 0; margin-right: 0;">
-                <div v-for="(gallery, index) in row" :key="gallery.id" class="galleriy col-4 p-0">
-                    <div class="galleriy-item">
-                        <img :src="gallery.photos[0].image" alt="Gallery Photo" class="img-fluid" />
-                        <div :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
-                            <div class="gal-item">
-                                <span>{{ gallery.photos[0].title }}</span>
+    // Mock data for summary
+    const [memberCount, setMemberCount] = useState(0);
+    const [eventDay, setEventDay] = useState(0);
+
+    const totalPages = useMemo(() => Math.ceil(cards.length / pageSize), [cards.length, pageSize]);
+
+    const paginatedCards = useMemo(() => {
+        const start = (currentPage - 1) * pageSize;
+        return cards.slice(start, start + pageSize);
+    }, [currentPage, cards, pageSize]);
+
+    const chunkedCards = useMemo(() => {
+        const chunkSize = 3;
+        const chunks = [];
+        for (let i = 0; i < paginatedCards.length; i += chunkSize) {
+            chunks.push(paginatedCards.slice(i, i + chunkSize));
+        }
+        return chunks;
+    }, [paginatedCards]);
+
+    const goToPage = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+
+    useEffect(() => {
+        const fetchClubGallery = async () => {
+            setLoading(true);
+            try {
+                // Mock: Replace with actual fetch logic
+                setClubGallery([]);
+                setCards([]);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchClubGallery();
+    }, []);
+
+    return (
+        <div className="content" style={{ padding: '0 30px', backgroundColor: 'white' }}>
+            <NavigationRoute />
+            <HeaderRoute title="Galleries" />
+
+            <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                <div className="dashboard-card d-flex align-items-center justify-content-between" style={{ padding: '20px 0', gap: '15px' }}>
+                    <div className="profile-card d-flex align-items-center justify-content-between shadow-sm bg-white p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                        <div className="profile-left">
+                            <div className="profile-info">
+                                <small className="greeting text-muted" style={{ fontSize: '18px' }}>Galleries uploaded by Club Members</small>
+                                <h2 className="name m-0" style={{ fontSize: '30px', fontWeight: '500', color: '#4c4036' }}>15 Club Galleries</h2>
+                                <small className="role mt-2 d-block" style={{ fontSize: '18px', color: '#cc445e' }}>Average 20 Images</small>
                             </div>
-                            <div class="profile-icon d-flex justify-content-between">
-                                <div class="icons">
-                                    <span>{{ gallery.total_photos }}</span>
-                                    <img :src="Ima" alt="icon" />
+                        </div>
+                        <div className="d-flex justify-content-end">
+                            <div className="dt-search">
+                                <input type="search" style={{ width: '250px' }} className="form-control" placeholder="Search" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
+                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>Images</small>
+                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberCount}</h3>
+                        </div>
+                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
+                            <div className="row mt-4">
+                                <div className="col-md-5">
+                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{eventDay}</h3>
                                 </div>
-                                <div class="icons">
-                                    <span>{{ gallery.photos[0].likes_count }}</span>
-                                    <img :src="Hea" alt="icon" />
-                                </div>
-                                <div class="icons">
-                                    <span>{{ gallery.photos[0].comments_count }}</span>
-                                    <img :src="Com" alt="icon" />
+                                <div className="days col-md-7 text-start">
+                                    <span style={{ fontSize: '16px' }}>Likes & Comments</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div className="card bg-white rounded p-4 mb-4 border-0 h-auto">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <h4>Club Galleries</h4>
+                    </div>
+
+                    <div className="row m-0">
+                        {chunkedCards.length > 0 ? chunkedCards.map((row, rowIndex) => (
+                            <div key={`row-${rowIndex}`} className="row g-0 m-0">
+                                {row.map((gallery, index) => (
+                                    <div key={gallery.id} className="galleriy col-4 p-0">
+                                        <div className="galleriy-item position-relative p-2">
+                                            <img src={gallery.photos?.[0]?.image} alt="Gallery" className="img-fluid w-100" style={{ maxHeight: '370px', objectFit: 'cover' }} />
+                                            <div className={`p-3 text-white ${index % 2 === 0 ? 'bg-secondary' : 'bg-dark'}`} style={{ backgroundColor: index % 2 === 0 ? '#99816b' : '#4c4036' }}>
+                                                <div className="gal-item mb-2">
+                                                    <span>{gallery.photos?.[0]?.title}</span>
+                                                </div>
+                                                <div className="profile-icon d-flex justify-content-between mt-2">
+                                                    <div className="icons d-flex align-items-center gap-1">
+                                                        <span>{gallery.total_photos}</span>
+                                                        <img src={Ima} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                    </div>
+                                                    <div className="icons d-flex align-items-center gap-1">
+                                                        <span>{gallery.photos?.[0]?.likes_count}</span>
+                                                        <img src={Hea} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                    </div>
+                                                    <div className="icons d-flex align-items-center gap-1">
+                                                        <span>{gallery.photos?.[0]?.comments_count}</span>
+                                                        <img src={Com} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )) : (
+                            <p className="text-muted">No galleries found.</p>
+                        )}
+                    </div>
+                </div>
+
+                <div className="dt-paging d-flex justify-content-center py-4">
+                    <nav aria-label="pagination">
+                        <button className={`btn btn-light mx-1 ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(1)}>«</button>
+                        <button className={`btn btn-light mx-1 ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>‹</button>
+                        {[...Array(totalPages)].map((_, i) => (
+                            <button key={i + 1} className={`btn mx-1 ${i + 1 === currentPage ? 'btn-primary' : 'btn-light'}`} onClick={() => goToPage(i + 1)}>
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button className={`btn btn-light mx-1 ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>›</button>
+                        <button className={`btn btn-light mx-1 ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}`} disabled={currentPage === totalPages || totalPages === 0} onClick={() => goToPage(totalPages)}>»</button>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
+    );
+};
 
-    <div class="dt-paging">
-        <nav aria-label="pagination">
-            <button class="dt-paging-button first" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(1)" aria-label="First">
-                «
-            </button>
-
-            <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
-                ‹
-            </button>
-
-            <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
-                {{ page }}
-            </button>
-
-            <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
-                ›
-            </button>
-
-            <button class="dt-paging-button last" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(totalPages)" aria-label="Last">
-                »
-            </button>
-        </nav>
-    </div>
-</div>
-</template>
-
-<script setup>
-import { onMounted, ref, computed } from 'vue'
-import NavigationRoute from "@/components/NavigationRoute.vue";
-import HeaderRoute from "@/components/HeaderRoute.vue";
-import { useClubGallery } from '@/stores/club_admin/ClubGallery'
-import Ima from "@/assets/icons/gallery/image.svg"
-import Hea from "@/assets/icons/gallery/heart.svg"
-import Com from "@/assets/icons/gallery/comment.svg"
-const {
-    club_gallery,
-    fetchClubGallery
-} = useClubGallery()
-
-const cards = ref([])
-const loading = ref(true)
-const currentPage = ref(1)
-const pageSize = 9
-
-const totalPages = computed(() => {
-    return Math.ceil(cards.value.length / pageSize)
-})
-
-const paginatedCards = computed(() => {
-    const start = (currentPage.value - 1) * pageSize
-    return cards.value.slice(start, start + pageSize)
-})
-
-const chunkedCards = computed(() => {
-    const chunkSize = 3
-    const chunks = []
-    const currentCards = paginatedCards.value
-    for (let i = 0; i < currentCards.length; i += chunkSize) {
-        chunks.push(currentCards.slice(i, i + chunkSize))
-    }
-    return chunks
-})
-
-function goToPage(page) {
-    if (page >= 1 && page <= totalPages.value) {
-        currentPage.value = page
-    }
-}
-
-onMounted(async () => {
-    await fetchClubGallery()
-    cards.value = club_gallery.value
-    loading.value = false
-})
-</script>
-
-<style scoped>
-.container {
-     max-width: 1810px;
-     padding: 0 15px;
-     margin: 0 auto;
-}
- .content {
-     padding: 0 30px;
-}
- .dashboard-card {
-     gap: 15px;
-     border-radius: 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 20px 0px;
-     width: 100%;
-}
- .profile-card {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     background: white;
-     padding: 15px 25px;
-     border-radius: 12px;
-     width: 65.8%;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     height: 148px;
-}
- .profile-left {
-     display: flex;
-     align-items: left;
-}
- .profile-left img {
-     width: 100%;
-     max-width: 108px;
-     height: 108px;
-     border-radius: 50%;
-}
- .greeting {
-     color: #99816b;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .name {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 100%;
-     color: #4c4036;
-     font-family: Inter;
-}
- .names {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 18.68px;
-     line-height: 20.76px;
-     letter-spacing: 0%;
-}
- .namess {
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: #4c4036;
-     padding-left: 20px;
-     font-family: Inter;
-     text-align: justify;
-}
- .left-header-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-}
- .role {
-     color: #cc445e;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .profile-icons {
-     display: flex;
-     gap: 10px;
-     flex-direction: column;
-}
- .profile-icon {
-     display: flex;
-     flex-direction: column;
-}
- .icons {
-     display: flex;
-     align-items: center;
-     color: white;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon {
-     display: flex;
-     align-items: center;
-     color: #cc445e;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon i {
-     margin-right: 5px;
-}
- .stat-card {
-     background: #cc445e;
-     color: white;
-     padding: 20px;
-     border-radius: 8px;
-     text-align: center;
-     width: 219px;
-     font-family: Inter;
-     font-size: 1.2rem;
-     height: 148px;
-}
- .event-card {
-     background: #755840;
-     color: white;
-     padding: 20px;
-     height: 148px;
-     border-radius: 8px;
-     text-align: center;
-     font-family: Inter;
-     font-size: 1.2rem;
-     width: 219px;
-}
- .number {
-     font-weight: 500;
-     font-size: 48px;
-     font-family: Inter;
-     line-height: 100%;
-     color: white;
-     margin-top: 30px;
-}
- .ca-details {
-     font-weight: 400;
-     font-size: 20px;
-     font-family: Inter;
-     line-height: 100%;
-}
- .days {
-     margin-top: 35px;
-     font-weight: 400;
-     font-family: Inter;
-     font-size: 16px;
-     line-height: 100%;
-}
- .card-section {
-     display: flex;
-     gap: 35px;
-     width: 32%;
-}
- .row-wrapper {
-     display: flex;
-}
- .odd-info {
-     background-color: #99816b !important;
-}
- .even-info {
-     background-color: #4c4036 !important;
-}
-.galleriy-item img {
-     border-radius:0px; 
-     max-width: 493px; 
-     max-height: 370px; 
-     object-fit: cover;
-}
-.galleriy-infos {
-     border-radius: 0px;
-}
-.profile-icon .icons img  {
-     width:14px; 
-     height: 14px;
-}
-</style>
+export default ClubGallery;

@@ -1,246 +1,194 @@
-<template>
-<NavigationRoute />
-<HeaderRoute title="Profile" />
-<section class="content">
-    <div class="dashboard-card">
-        <div class="profile-card">
-            <div class="profile-left" style="align-items: center">
-                <img class="img-fluid" :src="user.profile_image" alt="Profile Picture" />
-                <div class="profile-info">
-                    <h2 class="name">{{ user.first_name }}</h2>
-                </div>
-            </div>
-            <div class="profile-icons">
-                <div class="icon">
-                    <span>20</span>
-                    <i class="fas fa-comments"></i>
-                </div>
-                <div class="icon">
-                    <span>53</span>
-                    <i class="fas fa-desktop"></i>
-                </div>
-                <div class="icon">
-                    <span>39</span>
-                    <i class="fas fa-users"></i>
-                </div>
-            </div>
-        </div>
-        <div class="card-section">
-            <div class="stat-card">
-                <small class="ca-details">My Photos</small>
-                <h3 class="number">21</h3>
-            </div>
-            <div class="event-card">
-                <small class="ca-details">Interactions</small>
-                <div class="row">
-                    <div class="col-md-5">
-                        <h3 class="number">99</h3>
-                    </div>
-                    <div class="days col-md-7">
-                        <span>Likes & Coments</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+import React, { useState } from 'react';
+import NavigationRoute from '../club_admin/NavigationRoute';
+import HeaderRoute from '../club_admin/HeaderRoute';
 
-    <div class="card" style="height: auto; padding: 15px;">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="dt-search">
-                <div class="input-group">
-                    <span class="input-group-text" style="background-color: #fff; border: 1px solid #a0846c;">
-                        <i class="fas fa-search" style="color: #a0846c;"></i>
-                    </span>
-                    <input v-model="search" type="search" class="form-control" placeholder="Search" aria-label="Search" style="border: 1px solid #a0846c;" />
-                </div>
-            </div>
+// Mock dependencies
+import icon1 from '../assets/images/profile/icon.png';
+import c1 from '../assets/images/dashboard/c1.jpg';
 
-            <div class="button-group d-flex align-items-center gap-2">
-                <button class="btn d-flex align-items-center gap-2 px-3 py-2 text-white" style="background-color: #99816B;">
-                    <i class="fas fa-sticky-note"></i> Note
-                </button>
-                <button class="btn d-flex align-items-center gap-2 px-3 py-2 text-white" style="background-color: #99816B;">
-                    <i class="fas fa-list"></i> Add List
-                </button>
-                <button class="btn d-flex justify-center align-items-center" style="width: 43px; height: 43px; border-radius: 8px; background-color: #EBE6E1; color: #99816B;">
-                    <i class="fas fa-ellipsis-h"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="notes-app d-flex">
-        <aside class="sidebars p-3">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0">My Notes</h5>
-                <span class="text-muted small">{{ notes.length }} Notes</span>
-            </div>
-            <div v-for="(note, index) in notes" :key="index" class="note-preview p-3 rounded mb-3" :class="{ 'active-note': note.title === selectedNote.title }">
-                <h6 class="fw-bold mb-1">{{ note.title }}</h6>
-                <p class="text-secondary small mb-2">{{ note.description }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge bg-light text-dark small">{{ note.time }}</span>
-                    <div class="d-flex gap-2">
-                        <button class="icon-btn"><i class="fas fa-trash-alt"></i></button>
-                        <button class="icon-btn"><i class="fas fa-edit"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="note-preview p-3 rounded" style="text-align: center">
-                <img src="@/assets/images/profile/icon.png" alt="Create Note" class="note-icon" />
-                <p class="note-label">Create New Note</p>
-            </div>
+const LearningNotes = () => {
+    // Mock user
+    const [user] = useState({
+        first_name: 'Photographer',
+        profile_image: '/placeholder.jpg'
+    });
 
-        </aside>
+    const [search, setSearch] = useState('');
 
-        <main class="editor p-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <span class="small text-muted">Last edited on Feb 7, 2025</span>
-                </div>
-                <button class="btn me-2" id="view" >Share</button>
-            </div>
+    const [notes, setNotes] = useState([
+        {
+            title: 'Camera Focus',
+            description: 'Lorem ipsum dolor sit amet...',
+            time: '20 mins ago'
+        },
+        {
+            title: 'Shutter Speed in Photography',
+            description: 'Lorem ipsum...',
+            time: '30 mins ago'
+        },
+        {
+            title: 'Exposure in Photography',
+            description: 'Lorem ipsum...',
+            time: '50 mins ago'
+        },
+        {
+            title: 'Camera Lenses and Focal Length',
+            description: 'Lorem ipsum...',
+            time: '4 hours ago'
+        },
+        {
+            title: 'Understanding Light',
+            description: 'Lorem ipsum...',
+            time: '1 day ago'
+        }
+    ]);
 
-            <input class="form-control form-control-lg fw-bold border-0 mb-3" v-model="selectedNote.title" placeholder="Note Title" />
-
-            <input type="hidden" name="description" id="description">
-            <div class="editor-container" aria-rowspan="5">
-                <div id="toolbar">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                    <button class="ql-strike"></button>
-                    <button class="ql-align" value=""></button>
-                    <button class="ql-align" value="center"></button>
-                    <button class="ql-align" value="right"></button>
-                    <button class="ql-align" value="justify"></button>
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                    <button class="ql-script" value="sub"></button>
-                    <button class="ql-script" value="super"></button>
-                    <button class="ql-blockquote"></button>
-                    <button class="ql-link"></button>
-                    <button class="ql-image"></button>
-                    <button class="ql-code-block"></button>
-                </div>
-                <div id="editor"></div>
-            </div>
-
-            <textarea class="form-control border-0 mb-3" rows="8" v-model="selectedNote.content" placeholder="Start writing your note..."></textarea>
-
-            <div class="note-image my-3">
-                <img :src="selectedNote.image" alt="Note Image" class="img-fluid rounded w-100" />
-            </div>
-
-            <div class="d-flex gap-2">
-                <span class="badge bg-secondary">{{ selectedNote.tag }}</span>
-            </div>
-        </main>
-    </div>
-</section>
-</template>
-
-<script setup>
-import NavigationRoute from "@/components/NavigationRoute.vue"
-import HeaderRoute from "@/components/HeaderRoute.vue"
-import {
-    useUserStore
-} from "@/stores/club_admin/UserStore";
-
-const user = useUserStore();
-import {
-    ref
-} from 'vue';
-
-const notes = ref([{
-        title: 'Camera Focus',
-        description: 'Lorem ipsum dolor sit amet...',
-        time: '20 mins ago'
-    },
-    {
-        title: 'Shutter Speed in Photography',
-        description: 'Lorem ipsum...',
-        time: '30 mins ago'
-    },
-    {
+    const [selectedNote, setSelectedNote] = useState({
         title: 'Exposure in Photography',
-        description: 'Lorem ipsum...',
-        time: '50 mins ago'
-    },
-    {
-        title: 'Camera Lenses and Focal Length',
-        description: 'Lorem ipsum...',
-        time: '4 hours ago'
-    },
-    {
-        title: 'Understanding Light',
-        description: 'Lorem ipsum...',
-        time: '1 day ago'
-    }
-]);
+        content: 'Exposure in photography refers to the amount of light...',
+        image: c1,
+        tag: 'Exposure'
+    });
 
+    return (
+        <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
+            <NavigationRoute />
+            <HeaderRoute title="Profile" />
+            <section className="content" style={{ padding: '0 30px' }}>
+                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                        <div className="profile-left d-flex align-items-center gap-3">
+                            <img className="img-fluid rounded-circle" style={{ width: '108px', height: '108px', objectFit: 'cover' }} src={user.profile_image} alt="Profile" onError={(e) => e.target.src = '/placeholder.jpg'} />
+                            <div className="profile-info">
+                                <h2 className="name m-0 text-dark fw-bold">{user.first_name}</h2>
+                            </div>
+                        </div>
+                        <div className="profile-icons d-flex flex-column gap-2 text-danger">
+                            <div className="icon d-flex align-items-center gap-2"><span>20</span><i className="fas fa-comments"></i></div>
+                            <div className="icon d-flex align-items-center gap-2"><span>53</span><i className="fas fa-desktop"></i></div>
+                            <div className="icon d-flex align-items-center gap-2"><span>39</span><i className="fas fa-users"></i></div>
+                        </div>
+                    </div>
+                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
+                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>My Photos</small>
+                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>21</h3>
+                        </div>
+                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
+                            <div className="row mt-4 align-items-center">
+                                <div className="col-md-5">
+                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>99</h3>
+                                </div>
+                                <div className="days col-md-7 text-start">
+                                    <span>Likes & Comments</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-const selectedNote = ref({
-    title: 'Exposure in Photography',
-    content: 'Exposure in photography refers to the amount of light...',
-    image: require('@/assets/images/dashboard/c1.jpg'),
-    tag: 'Exposure'
-});
-</script>
+                <div className="card bg-white mt-4 border-0 p-3 rounded shadow-sm">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div className="dt-search" style={{ width: '300px' }}>
+                            <div className="input-group">
+                                <span className="input-group-text bg-white border-end-0" style={{ borderColor: '#a0846c' }}><i className="fas fa-search" style={{ color: '#a0846c' }}></i></span>
+                                <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" className="form-control border-start-0 shadow-none" placeholder="Search" style={{ borderColor: '#a0846c' }} />
+                            </div>
+                        </div>
 
-<style scoped>
-.notes-app {
-    display: flex;
-    height: 100vh;
-}
+                        <div className="button-group d-flex align-items-center gap-2">
+                            <button className="btn d-flex align-items-center gap-2 px-3 py-2 text-white border-0" style={{ backgroundColor: '#99816B' }}>
+                                <i className="fas fa-sticky-note"></i> Note
+                            </button>
+                            <button className="btn d-flex align-items-center gap-2 px-3 py-2 text-white border-0" style={{ backgroundColor: '#99816B' }}>
+                                <i className="fas fa-list"></i> Add List
+                            </button>
+                            <button className="btn d-flex justify-content-center align-items-center border-0" style={{ width: '43px', height: '43px', borderRadius: '8px', backgroundColor: '#EBE6E1', color: '#99816B' }}>
+                                <i className="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-.sidebars {
-    width: 400px;
-    background-color: #ede5dd;
-    border-right: 1px solid #ddd;
-    overflow-y: auto;
-}
+                <div className="notes-app d-flex mt-4 bg-white rounded shadow-sm overflow-hidden" style={{ height: '70vh' }}>
+                    <aside className="sidebars overflow-auto" style={{ width: '400px', backgroundColor: '#ede5dd', borderRight: '1px solid #ddd' }}>
+                        <div className="p-3">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h5 className="mb-0">My Notes</h5>
+                                <span className="text-muted small">{notes.length} Notes</span>
+                            </div>
+                            {notes.map((note, index) => (
+                                <div key={index} className={`note-preview p-3 rounded mb-3 bg-white position-relative ${note.title === selectedNote.title ? 'shadow' : ''}`} style={{ borderLeft: '3px solid #a0846c', cursor: 'pointer' }} onClick={() => setSelectedNote({ ...note, image: c1, tag: 'Other' })}>
+                                    <h6 className="fw-bold mb-1">{note.title}</h6>
+                                    <p className="text-secondary small mb-2">{note.description}</p>
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        <span className="badge bg-light text-dark small border">{note.time}</span>
+                                        <div className="d-flex gap-2">
+                                            <button className="btn btn-sm btn-link text-secondary p-0"><i className="fas fa-trash-alt"></i></button>
+                                            <button className="btn btn-sm btn-link text-secondary p-0"><i className="fas fa-edit"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            <div className="note-preview p-4 rounded text-center bg-white" style={{ borderLeft: '3px solid #a0846c', cursor: 'pointer' }}>
+                                <img src={icon1} alt="Create Note" className="mb-2" style={{ width: '32px' }} />
+                                <p className="m-0 text-muted">Create New Note</p>
+                            </div>
+                        </div>
+                    </aside>
 
-.note-preview {
-    background-color: #fff;
-    border-left: 3px solid #a0846c;
-    cursor: pointer;
-    transition: background 0.3s, box-shadow 0.3s;
-}
+                    <main className="editor flex-grow-1 p-4 overflow-auto bg-white">
+                        <div className="d-flex justify-content-between align-items-center mb-4">
+                            <span className="small text-muted">Last edited on Feb 7, 2025</span>
+                            <button className="btn text-white px-4" style={{ backgroundColor: '#99816b' }}>Share</button>
+                        </div>
 
-.note-preview:hover,
-.note-preview.active-note {
-    background-color: #f5f2ef;
-    box-shadow: 0 0 0 2px #a0846c33;
-}
+                        <input
+                            className="form-control form-control-lg fw-bold border-0 bg-transparent px-0 mb-3 fs-3 shadow-none"
+                            style={{ color: '#333' }}
+                            value={selectedNote.title}
+                            onChange={(e) => setSelectedNote({ ...selectedNote, title: e.target.value })}
+                            placeholder="Note Title"
+                        />
 
-.icon-btn {
-    background: none;
-    border: none;
-    color: #a0846c;
-    cursor: pointer;
-}
+                        {/* Mock Quill Toolbar */}
+                        <div className="editor-container border rounded mb-3">
+                            <div id="toolbar" className="bg-light p-2 border-bottom d-flex gap-2 flex-wrap text-secondary">
+                                <i className="fas fa-bold cursor-pointer p-1"></i>
+                                <i className="fas fa-italic cursor-pointer p-1"></i>
+                                <i className="fas fa-underline cursor-pointer p-1"></i>
+                                <i className="fas fa-strikethrough cursor-pointer p-1"></i>
+                                <div className="border-end mx-1"></div>
+                                <i className="fas fa-align-left cursor-pointer p-1"></i>
+                                <i className="fas fa-align-center cursor-pointer p-1"></i>
+                                <i className="fas fa-align-right cursor-pointer p-1"></i>
+                                <div className="border-end mx-1"></div>
+                                <i className="fas fa-list-ol cursor-pointer p-1"></i>
+                                <i className="fas fa-list-ul cursor-pointer p-1"></i>
+                            </div>
+                            <textarea
+                                className="form-control border-0 p-3 shadow-none"
+                                rows="8"
+                                value={selectedNote.content}
+                                onChange={(e) => setSelectedNote({ ...selectedNote, content: e.target.value })}
+                                placeholder="Start writing your note..."
+                                style={{ resize: 'none' }}
+                            ></textarea>
+                        </div>
 
-.create-note-btn {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    right: 30px;
-}
+                        <div className="note-image my-4">
+                            <img src={selectedNote.image} alt="Note Attachment" className="img-fluid rounded w-100" style={{ maxHeight: '300px', objectFit: 'cover' }} />
+                        </div>
 
-.editor {
-    background-color: #FFFFFF;
-    overflow-y: auto;
-    width: 70%;
-    border-radius: 10px;
-}
+                        <div className="d-flex gap-2 mt-4">
+                            <span className="badge bg-secondary px-3 py-2">{selectedNote.tag}</span>
+                        </div>
+                    </main>
+                </div>
+            </section>
+        </div>
+    );
+};
 
-.toolbar i {
-    cursor: pointer;
-    color: #7a6451;
-}
-
-.note-image img {
-    max-height: 300px;
-    object-fit: cover;
-}
-</style>
+export default LearningNotes;

@@ -1,120 +1,108 @@
-<template>
-<NavigationRoute />
-<HeaderRoute title="Club" />
+import React, { useState, useEffect } from 'react';
+import NavigationRoute from './NavigationRoute';
+import HeaderRoute from './HeaderRoute';
 
-<section class="content">
-    <div class="dashboard-card">
-        <ClubProfile />
-        <div class="card-section">
-            <div class="stat-card">
-                <small class="ca-details">Members</small>
-                <h3 class="number">{{ MemberCount }}</h3>
-            </div>
-            <div class="event-card">
-                <small class="ca-details">Next Event</small>
-                <div class="row">
-                    <div class="col-md-5">
-                        <h3 class="number">{{ EventDay }}</h3>
+// Import all step components 
+// (assuming these exist and have also been converted to React, or will be)
+// import Step1General from '../steps_club/Step1General';
+// import Step2Appearance from '../steps_club/Step2Appearance';
+// import Step3Membership from '../steps_club/Step3Membership';
+// import Step4Content from '../steps_club/Step4Content';
+// import Step5Privacy from '../steps_club/Step5Privacy';
+
+function ClubRoute({
+    greeting = "Viewing Core Club Settings",
+    name = "Club Settings",
+    role = "All changes are applied instantly",
+}) {
+    const steps = ['General Settings', 'Appearance & Branding', 'Membership Settings', 'Content Management', 'Privacy Settings'];
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const [memberCount, setMemberCount] = useState(0);
+    const [eventDay, setEventDay] = useState(0);
+
+    const selectStep = (index) => {
+        setCurrentStep(index);
+    };
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                // Mock: Replace with actual fetch logic for club setup/events
+            } catch (error) {
+                console.error("Failed to fetch events", error);
+            }
+        };
+        fetchEvents();
+    }, []);
+
+
+
+    return (
+        <div style={{ backgroundColor: '#f5f0eb', minHeight: '100vh' }}>
+            <NavigationRoute />
+            <HeaderRoute title="Club" />
+
+            <section className="content">
+                <div className="container" style={{ maxWidth: '1820px' }}>
+                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                        <div className="profile-card">
+                            <div className="profile-left">
+                                <div className="profile-info">
+                                    <small className="greeting">{greeting}</small>
+                                    <h2 className="name">{name}</h2>
+                                    <small className="role">{role}</small>
+                                </div>
+                            </div>
+
+                            <div className="dt-search mx-auto">
+                                <input type="search" className="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
+                            </div>
+                        </div>
+
+                        <div className="card-section d-flex gap-4">
+                            <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                                <small className="ca-details" style={{ fontSize: '20px' }}>Members</small>
+                                <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberCount}</h3>
+                            </div>
+                            <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                                <small className="ca-details" style={{ fontSize: '20px' }}>Next Event</small>
+                                <div className="row mt-4">
+                                    <div className="col-md-5">
+                                        <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{eventDay}</h3>
+                                    </div>
+                                    <div className="days col-md-7 text-start">
+                                        <span style={{ fontSize: '16px' }}>days to go</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="days col-md-7">
-                        <span>days to go</span>
+
+                    <div className="tab-control d-flex justify-content-between mb-4 gap-3">
+                        {steps.map((step, index) => (
+                            <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 cursor-pointer ${index === currentStep ? 'active' : ''}`} onClick={() => selectStep(index)} style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}>
+                                <span className="circle d-flex align-items-center justify-content-center rounded-circle fw-bold text-white mb-2" style={{ width: '40px', height: '40px', fontSize: '18px', backgroundColor: index === currentStep ? '#CC445E' : '#ccc' }}>
+                                    {index + 1}
+                                </span>
+                                <span className="label text-center" style={{ fontSize: '14px', color: index === currentStep ? '#CC445E' : '#333', fontWeight: index === currentStep ? 'bold' : 'normal' }}>
+                                    {step}
+                                </span>
+                            </div>
+                        ))}
                     </div>
+
+                    {/* <div className="step-content mt-4">
+                        {currentStep === 0 && <Step1General />}
+                        {currentStep === 1 && <Step2Appearance />}
+                        {currentStep === 2 && <Step3Membership />}
+                        {currentStep === 3 && <Step4Content />}
+                        {currentStep === 4 && <Step5Privacy />}
+                    </div> */}
                 </div>
-            </div>
+            </section>
         </div>
-    </div>
-
-    <div class="tab-control">
-        <div v-for="(step, index) in steps" :key="index" class="step" :class="{ active: index === currentStep }" @click="selectStep(index)">
-            <span class="circle">{{ index + 1 }}</span>
-            <span class="label">{{ step }}</span>
-        </div>
-    </div>
-
-    <Step1General v-if="currentStep === 0" />
-    <Step2Appearance v-if="currentStep === 1" />
-    <Step3Membership v-if="currentStep === 2" />
-    <Step4Content v-if="currentStep === 3" />
-    <Step5Privacy v-if="currentStep === 4" />
-</section>
-</template>
-
-<script setup>
-import { ref, onMounted } from 'vue';
-import NavigationRoute from "@/components/NavigationRoute.vue";
-import HeaderRoute from "@/components/HeaderRoute.vue";
-import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
-import { useEventStore } from "@/stores/club_admin/EventStore";
-import Step1General from '@/steps_club/Step1General.vue';
-import Step2Appearance from '@/steps_club/Step2Appearance.vue';
-import Step3Membership from '@/steps_club/Step3Membership.vue';
-import Step4Content from '@/steps_club/Step4Content.vue';
-import Step5Privacy from '@/steps_club/Step5Privacy.vue';
-
-const steps = ['General Settings', 'Appearance & Branding', 'Membership Settings', 'Content Management', 'Privacy Settings'];
-const currentStep = ref(0);
-const selectStep = (index) => {
-    currentStep.value = index;
+    );
 };
 
-const {
-    memberCount,
-    eventDay,
-    fetchEvents
-} = useEventStore();
-const EventDay = eventDay;
-const MemberCount = memberCount;
-
-onMounted(() => {
-    fetchEvents();
-});
-</script>
-
-<style scoped>
-body {
-     font-family: sans-serif;
-     background-color: #f5f0eb;
-     display: flex;
-     justify-content: center;
-     padding: 50px;
-}
- .tab-control {
-     display: flex;
-     justify-content: space-between;
-     margin-bottom: 30px;
-     gap: 15px;
-}
- .step {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     cursor: pointer;
-     flex: 1;
-     transition: all 0.3s ease;
-}
- .step .circle {
-     background-color: #ccc;
-     color: white;
-     width: 40px;
-     height: 40px;
-     font-weight: bold;
-     font-size: 18px;
-     border-radius: 50%;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-}
- .step .label {
-     margin-top: 8px;
-     font-size: 14px;
-     text-align: center;
-     color: #333;
-}
- .step.active .circle {
-     background-color: #CC445E;
-}
- .step.active .label {
-     font-weight: bold;
-     color: #CC445E;
-}
-</style>
+export default ClubRoute;

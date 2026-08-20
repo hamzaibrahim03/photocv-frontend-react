@@ -1,359 +1,177 @@
-<template>
-<div :style="{ backgroundColor: 'white' }">
-    <Loader :show="isLoading" />
-    <div v-if="!isLoading">
-        <NavigationRoute />
-        <HeaderRoute title="Galleries" />
-        <div class="content">
-            <section>
-                <div class="container">
-                    <div class="dashboard-card">
-                        <div class="profile-card">
-                            <div class="profile-left">
-                                <div class="profile-info">
-                                    <small class="greeting">Features Members & Club Galleries</small>
-                                    <h2 class="name">24 Club Galleries</h2>
-                                    <small class="role">15 Member Galleries</small>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <div class="dt-search">
-                                    <input type="search" style="width: 250px" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-section">
-                            <div class="stat-card">
-                                <small class="ca-details">Images</small>
-                                <h3 class="number">{{ MemberCount }}</h3>
-                            </div>
-                            <div class="event-card">
-                                <small class="ca-details">Interactions</small>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <h3 class="number">{{ EventDay }}</h3>
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router';
+import NavigationRoute from './NavigationRoute';
+import HeaderRoute from './HeaderRoute';
+import Loader from '../React/extra/LoaderAll';
+import Ima from './assets/icons/gallery/image.svg';
+import Hea from './assets/icons/gallery/heart.svg';
+import Com from './assets/icons/gallery/comment.svg';
+
+const GalleryRoute = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [memberGallery, setMemberGallery] = useState([]);
+    const [clubGallery, setClubGallery] = useState([]);
+    const [memberCount, setMemberCount] = useState(0);
+    const [eventDay, setEventDay] = useState(0);
+
+    useEffect(() => {
+        const loadGalleries = async () => {
+            setIsLoading(true);
+            try {
+                // MOCK: Replace with actual fetched data from the API
+                setMemberGallery([]);
+                setClubGallery([]);
+            } catch (error) {
+                console.error("Error fetching galleries:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadGalleries();
+    }, []);
+
+    if (isLoading) return <Loader show={isLoading} />;
+
+    return (
+        <div style={{ backgroundColor: 'white' }}>
+            <NavigationRoute />
+            <HeaderRoute title="Galleries" />
+            <div className="content">
+                <section>
+                    <div className="container" style={{ maxWidth: '1820px' }}>
+                        <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                            <div className="profile-card bg-white shadow-sm rounded p-4 d-flex align-items-center justify-content-between" style={{ height: '148px', width: '65.8%' }}>
+                                <div className="profile-left">
+                                    <div className="profile-info">
+                                        <small className="greeting text-muted" style={{ fontSize: '18px' }}>Features Members & Club Galleries</small>
+                                        <h2 className="name m-0" style={{ fontSize: '30px', fontWeight: '500', color: '#4c4036' }}>24 Club Galleries</h2>
+                                        <small className="role mt-2 d-block" style={{ fontSize: '18px', color: '#cc445e' }}>15 Member Galleries</small>
                                     </div>
-                                    <div class="days col-md-7">
-                                        <span>Likes & Comments</span>
+                                </div>
+                                <div className="d-flex justify-content-end">
+                                    <div className="dt-search">
+                                        <input type="search" style={{ width: '250px' }} className="form-control" placeholder="Search" />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section>
-                <div class="container">
-                    <div class="card">
-                        <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
-                            <h4>Member Galleries</h4>
-                            <router-link to="/mem_gallery" custom v-slot="{ navigate }">
-                                <button class="btn btn-sm" id="view" @click="navigate">View All</button>
-                            </router-link>
-                        </div>
-
-                        <div class="row g-0" style="margin-left: 0; margin-right: 0;">
-                            <div v-for="(gallery, index) in member_gallery" :key="gallery.id" class="col-3 p-0">
-                                <div class="galleriy" v-if="gallery.galleries.length && gallery.galleries[0].photos.length">
-                                    <div class="galleriy-item">
-                                        <img :src="gallery.galleries[0].photos[0].image_url" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px; object-fit: cover;" />
-                                        <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
-                                            <div class="gal-item">
-                                                <img v-if="gallery.profile_image_url" class="img-fluid event-img" :src="gallery.profile_image_url" alt="Event" @error="gallery.profile_image_url = null" />
-                                                <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
-                                                </div>
-                                                <div class="gal-details">
-                                                    <span>{{ gallery.galleries[0].gallery_name }}</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="profile-icon d-flex justify-content-between mt-2">
-                                                <div class="icons">
-                                                    <span>{{ gallery.gallery_total_photos }}</span>
-                                                    <img :src="Ima" alt="icon" style="width:14px; height:14px;" />
-                                                </div>
-                                                <div class="icons">
-                                                    <span>{{ gallery.gallery_total_likes }}</span>
-                                                    <img :src="Hea" alt="icon" style="width:14px; height:14px;" />
-                                                </div>
-                                                <div class="icons">
-                                                    <span>{{ gallery.gallery_total_comments }}</span>
-                                                    <img :src="Com" alt="icon" style="width:14px; height:14px;" />
-                                                </div>
-                                            </div>
+                            <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
+                                <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                                    <small className="ca-details" style={{ fontSize: '20px' }}>Images</small>
+                                    <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberCount}</h3>
+                                </div>
+                                <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                                    <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
+                                    <div className="row mt-4">
+                                        <div className="col-md-5">
+                                            <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{eventDay}</h3>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <div class="container">
-                    <div class="card">
-                        <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
-                            <h4>Club Galleries</h4>
-                            <router-link to="/club_gallery" custom v-slot="{ navigate }">
-                                <button class="btn btn-sm" id="view" @click="navigate">View All</button>
-                            </router-link>
-                        </div>
-
-                        <div class="row" style="margin-left:0.1%">
-                            <div v-for="(gallery, index) in club_gallery" :key="gallery.gallery_id" style="width:24.8%; padding-left: 0; padding-right: 0;">
-                                <div class="galleriy" v-if="gallery.photos && gallery.photos.length">
-                                    <div class="galleriy-item">
-                                        <img :src="gallery.photos[0].image" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px;" />
-                                        <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
-                                            <div class="gal-item">
-                                                <span>{{ gallery.photos[0].title }}</span>
-                                            </div>
-                                            <div class="profile-icon d-flex justify-content-between">
-                                                <div class="icons">
-                                                    <span>{{ gallery.total_photos }}</span>
-                                                    <img :src="Ima" alt="icon" style="width:14px; height: 14px;" />
-                                                </div>
-                                                <div class="icons">
-                                                    <span>{{ gallery.photos[0].likes_count }}</span>
-                                                    <img :src="Hea" alt="icon" style="width:14px; height: 14px;" />
-                                                </div>
-                                                <div class="icons">
-                                                    <span>{{ gallery.photos[0].comments_count }}</span>
-                                                    <img :src="Com" alt="icon" style="width:14px; height: 14px;" />
-                                                </div>
-                                            </div>
+                                        <div className="days col-md-7 text-start">
+                                            <span style={{ fontSize: '16px' }}>Likes & Comments</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+                <section>
+                    <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                        <div className="card bg-white rounded p-4 mb-4 border-0">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h4>Member Galleries</h4>
+                                <button className="btn me-2" id="e-view" onClick={() => navigate('/mem_gallery')} >View All</button>
+                            </div>
+
+                            <div className="row g-0 m-0">
+                                {memberGallery.map((gallery, index) => (
+                                    gallery.galleries?.length > 0 && gallery.galleries[0]?.photos?.length > 0 && (
+                                        <div key={gallery.id} className="col-3 p-0">
+                                            <div className="galleriy">
+                                                <div className="galleriy-item position-relative p-2">
+                                                    <img src={gallery.galleries[0].photos[0].image_url} alt="Gallery" className="img-fluid w-100" style={{ maxHeight: '370px', objectFit: 'cover' }} />
+                                                    <div className={`p-3 text-white ${index % 2 === 0 ? 'bg-secondary' : 'bg-dark'}`} style={{ backgroundColor: index % 2 === 0 ? '#99816b' : '#4c4036' }}>
+                                                        <div className="gal-item d-flex align-items-center gap-2">
+                                                            {gallery.profile_image_url ? (
+                                                                <img className="img-fluid rounded-circle" style={{ width: '40px', height: '40px' }} src={gallery.profile_image_url} alt="Profile" />
+                                                            ) : (
+                                                                <div className="fallback-box bg-light rounded-circle" style={{ width: '40px', height: '40px' }}></div>
+                                                            )}
+                                                            <span>{gallery.galleries[0].gallery_name}</span>
+                                                        </div>
+                                                        <div className="profile-icon d-flex justify-content-between mt-3">
+                                                            <div className="icons d-flex align-items-center gap-1">
+                                                                <span>{gallery.gallery_total_photos}</span>
+                                                                <img src={Ima} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                            </div>
+                                                            <div className="icons d-flex align-items-center gap-1">
+                                                                <span>{gallery.gallery_total_likes}</span>
+                                                                <img src={Hea} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                            </div>
+                                                            <div className="icons d-flex align-items-center gap-1">
+                                                                <span>{gallery.gallery_total_comments}</span>
+                                                                <img src={Com} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                        <div className="card bg-white rounded p-4 mb-4 border-0">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h4>Club Galleries</h4>
+                                <button className="btn me-2" id="e-view" onClick={() => navigate('/club_gallery')} >View All</button>
+                            </div>
+
+                            <div className="row g-0 m-0">
+                                {clubGallery.map((gallery, index) => (
+                                    gallery.photos?.length > 0 && (
+                                        <div key={gallery.gallery_id} className="col-3 p-0">
+                                            <div className="galleriy">
+                                                <div className="galleriy-item position-relative p-2">
+                                                    <img src={gallery.photos[0].image} alt="Gallery" className="img-fluid w-100" style={{ maxHeight: '370px', objectFit: 'cover' }} />
+                                                    <div className={`p-3 text-white ${index % 2 === 0 ? 'bg-secondary' : 'bg-dark'}`} style={{ backgroundColor: index % 2 === 0 ? '#99816b' : '#4c4036' }}>
+                                                        <div className="gal-item d-flex align-items-center gap-2">
+                                                            <span>{gallery.photos[0].title}</span>
+                                                        </div>
+                                                        <div className="profile-icon d-flex justify-content-between mt-3">
+                                                            <div className="icons d-flex align-items-center gap-1">
+                                                                <span>{gallery.total_photos}</span>
+                                                                <img src={Ima} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                            </div>
+                                                            <div className="icons d-flex align-items-center gap-1">
+                                                                <span>{gallery.photos[0].likes_count}</span>
+                                                                <img src={Hea} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                            </div>
+                                                            <div className="icons d-flex align-items-center gap-1">
+                                                                <span>{gallery.photos[0].comments_count}</span>
+                                                                <img src={Com} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
+    );
+};
 
-</div>
-</template>
-
-<script setup>
-import { onMounted, ref } from 'vue'
-import NavigationRoute from "@/components/NavigationRoute.vue"
-import HeaderRoute from "@/components/HeaderRoute.vue"
-import Ima from "@/assets/icons/gallery/image.svg"
-import Hea from "@/assets/icons/gallery/heart.svg"
-import Com from "@/assets/icons/gallery/comment.svg"
-import Loader from "@/components/LoaderAll.vue";
-import { useMemberGallery } from '@/stores/club_admin/MemberGallery'
-import { useClubGallery } from '@/stores/club_admin/ClubGallery'
-
-const isLoading = ref(true);
-
-const {
-    member_gallery,
-    fetchMemberGallery
-} = useMemberGallery()
-
-const {
-    club_gallery,
-    fetchClubGallery
-} = useClubGallery()
-
-const loadGalleries = async () => {
-    isLoading.value = true
-    try {
-        await fetchMemberGallery();
-        await fetchClubGallery();
-    } catch (error) {
-        console.error("Error fetching galleries:", error)
-    } finally {
-        isLoading.value = false
-    }
-}
-
-onMounted(() => {
-    loadGalleries()
-})
-</script>
-
-<style scoped>
-.container {
-     max-width: 1810px;
-     padding: 0 15px;
-     margin: 0 auto;
-}
- .content {
-     padding: 0 30px;
-}
- .dashboard-card {
-     gap: 15px;
-     border-radius: 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 20px 0px;
-     width: 100%;
-}
- .profile-card {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     background: white;
-     padding: 15px 25px;
-     border-radius: 12px;
-     width: 65.8%;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     height: 148px;
-}
- .profile-left {
-     display: flex;
-     align-items: left;
-}
- .profile-left img {
-     width: 100%;
-     max-width: 108px;
-     height: 108px;
-     border-radius: 50%;
-}
- .greeting {
-     color: #99816b;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .name {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 100%;
-     color: #4c4036;
-     font-family: Inter;
-}
- .names {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 18.68px;
-     line-height: 20.76px;
-     letter-spacing: 0%;
-}
- .namess {
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: #4c4036;
-     padding-left: 20px;
-     font-family: Inter;
-     text-align: justify;
-}
- .left-header-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-}
- .role {
-     color: #cc445e;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .profile-icons {
-     display: flex;
-     gap: 10px;
-     flex-direction: column;
-}
- .profile-icon {
-     display: flex;
-     flex-direction: column;
-}
- .icons {
-     display: flex;
-     align-items: center;
-     color: white;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon {
-     display: flex;
-     align-items: center;
-     color: #cc445e;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon i {
-     margin-right: 5px;
-}
- .stat-card {
-     background: #cc445e;
-     color: white;
-     padding: 20px;
-     border-radius: 8px;
-     text-align: center;
-     width: 219px;
-     font-family: Inter;
-     font-size: 1.2rem;
-     height: 148px;
-}
- .event-card {
-     background: #755840;
-     color: white;
-     padding: 20px;
-     height: 148px;
-     border-radius: 8px;
-     text-align: center;
-     font-family: Inter;
-     font-size: 1.2rem;
-     width: 219px;
-}
- .number {
-     font-weight: 500;
-     font-size: 48px;
-     font-family: Inter;
-     line-height: 100%;
-     color: white;
-     margin-top: 30px;
-}
- .ca-details {
-     font-weight: 400;
-     font-size: 20px;
-     font-family: Inter;
-     line-height: 100%;
-}
- .days {
-     margin-top: 35px;
-     font-weight: 400;
-     font-family: Inter;
-     font-size: 16px;
-     line-height: 100%;
-}
- .card-section {
-     display: flex;
-     gap: 35px;
-     width: 32%;
-}
- .event-img, .fallback-box {
-     width: 100%;
-     max-width: 30px;
-     height: 30px;
-     border-radius: 5px;
-     object-fit: cover;
-     background-color: #f0f0f0;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
- .fallback-box {
-     font-size: 14px;
-     color: #888;
-}
- .row-wrapper {
-     display: flex;
-}
- .even-info {
-     background-color: #99816b !important;
-}
- .odd-info {
-     background-color: #4c4036 !important;
-}
-</style>
+export default GalleryRoute;

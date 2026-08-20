@@ -230,49 +230,49 @@ function NewsRoute() {
                     <>
                         <NavigationRoute />
                         <HeaderRoute title="News" />
-                        <div class="content">
+                        <div className="content">
                             <section>
-                                <div class="container" style={{ maxWidth: '1820px' }}>
-                                    <div class="dashboard-card">
-                                        <div class="profile-card">
-                                            <div class="profile-left">
-                                                <div class="profile-info">
-                                                    <small class="greeting">News from the club admins</small>
-                                                    <h2 class="name">Club News</h2>
-                                                    <p class="role">{newsExtra?.current_month_news_count} News posted this month</p>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="dashboard-card">
+                                        <div className="profile-card">
+                                            <div className="profile-left">
+                                                <div className="profile-info">
+                                                    <small className="greeting">News from the club admins</small>
+                                                    <h2 className="name">Club News</h2>
+                                                    <p className="role">{newsExtra?.current_month_news_count} News posted this month</p>
                                                 </div>
                                             </div>
                                             <div className="search-bar d-flex justify-content-space-between">
                                                 <input type="search" className="search-input" id="dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                                                 <i className="fas fa-search"></i>
                                             </div>
-                                            <div class="e-quick-filter text-end">
+                                            <div className="e-quick-filter text-end">
                                                 <strong>Quick Filter</strong>
-                                                <small class="d-block">(Click icons to filter)</small>
-                                                <div class="d-flex gap-2 justify-content-end">
+                                                <small className="d-block">(Click icons to filter)</small>
+                                                <div className="d-flex gap-2 justify-content-end">
                                                     <img src={Com} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                     <img src={Cale} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                     <img src={Book} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                 </div>
-                                                <div class="d-flex gap-2 justify-content-end mt-2">
+                                                <div className="d-flex gap-2 justify-content-end mt-2">
                                                     <img src={Cup} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                     <img src={Hand} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                     <img src={Note} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-section">
-                                            <div class="stat-card">
-                                                <small class="ca-details">News</small>
-                                                <h3 class="number">{newsExtra?.total_news}</h3>
+                                        <div className="card-section">
+                                            <div className="stat-card">
+                                                <small className="ca-details">News</small>
+                                                <h3 className="number">{newsExtra?.total_news}</h3>
                                             </div>
-                                            <div class="event-cards">
-                                                <small class="ca-details">Latest News</small>
-                                                <div class="row">
-                                                    <div class="col-md-5">
-                                                        <h3 class="number">{newsExtra?.last_news_days_ago}</h3>
+                                            <div className="event-cards">
+                                                <small className="ca-details">Latest News</small>
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <h3 className="number">{newsExtra?.last_news_days_ago}</h3>
                                                     </div>
-                                                    <div class="days col-md-7">
+                                                    <div className="days col-md-7">
                                                         <span>days ago</span>
                                                     </div>
                                                 </div>
@@ -285,36 +285,36 @@ function NewsRoute() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="row">
-                                        <div class="col-md-8">
+                                        <div className="col-md-8">
                                             <section>
-                                                <div class="container" style={{ maxWidth: '1820px' }}>
-                                                    <div class="mt-4">
+                                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                                    <div className="mt-4">
                                                         {filteredNews.length > 0 ? (
                                                             filteredNews.map((news) => (
-                                                                <div key={news.id} class="custom-card mb-3 p-3">
-                                                                    <div class="d-flex gap-3" style={{ flex: 1 }}>
+                                                                <div key={news.id} className="custom-card mb-3 p-3">
+                                                                    <div className="d-flex gap-3" style={{ flex: 1 }}>
                                                                         {news.club_news_type.icon && (
                                                                             <img src={news.featured_image} alt="News Image" />
                                                                         )}
-                                                                        <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                        <div className="flex-grow-1 d-flex flex-column justify-content-between">
+                                                                            <div className="d-flex justify-content-between align-items-center">
                                                                                 <h5>{news.title || 'Untitled News'}</h5>
-                                                                                <div class="e-icon-container ms-3">
+                                                                                <div className="e-icon-container ms-3">
                                                                                     <img src={Mess} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                                                     <img src={Cam} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                                                     <img src={Pro} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                                                     <img src={Cal} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                                                 </div>
                                                                             </div>
-                                                                            <p class="date">
+                                                                            <p className="date">
                                                                                 {formatDate(news.publish_date) || 'Date Not Available'}
                                                                             </p>
-                                                                            <p class="text-secondary" dangerouslySetInnerHTML={{ __html: news.description || 'No description provided.' }}>
+                                                                            <p className="text-secondary" dangerouslySetInnerHTML={{ __html: news.description || 'No description provided.' }}>
                                                                             </p>
-                                                                            <div class="d-flex justify-content-between align-items-center mt-3 w-100">
-                                                                                <div class="button-group d-flex align-items-center gap-2">
-                                                                                    <button class="btn me-2" id="e-view" onClick={() => navigate('/news/view')} >View</button>
-                                                                                    <button class="btn" id="e-edit" onClick={() => navigate('/news/edit')} >Edit</button>
+                                                                            <div className="d-flex justify-content-between align-items-center mt-3 w-100">
+                                                                                <div className="button-group d-flex align-items-center gap-2">
+                                                                                    <button className="btn me-2" id="e-view" onClick={() => navigate('/news/view')} >View</button>
+                                                                                    <button className="btn" id="e-edit" onClick={() => navigate('/news/edit')} >Edit</button>
                                                                                 </div>
 
                                                                                 <div className="d-flex align-items-center gap-2">
@@ -345,7 +345,7 @@ function NewsRoute() {
                                                                 </div>
                                                             ))
                                                         ) : (
-                                                            <div class="text-center text-muted">No news found.</div>
+                                                            <div className="text-center text-muted">No news found.</div>
                                                         )}
                                                     </div>
 
@@ -373,10 +373,10 @@ function NewsRoute() {
                                                 </div>
                                             </section>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div className="col-md-4">
                                             <section>
-                                                <div class="container" style={{ maxWidth: '1820px' }} id="e-right">
-                                                    <div class="calendar-card" style={{ width: '100%' }}>
+                                                <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
+                                                    <div className="calendar-card" style={{ width: '100%' }}>
                                                         <Calendar />
                                                     </div>
                                                     <div id="news">

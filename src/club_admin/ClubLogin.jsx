@@ -1,218 +1,97 @@
-<template>
-<div class="login-container">
-    <img src="@/assets/images/club.png" alt="Logo" class="top-logo" />
+import React, { useState } from 'react';
 
-    <div class="login-box">
-        <div class="left-box">
-            <h2>Login</h2>
+const ClubLogin = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [remember, setRemember] = useState(false);
 
-            <p class="text-secondary">Log in to access your club dashboard.</p>
+    const handleLogin = (e) => {
+        e.preventDefault();
+        console.log({
+            email,
+            password,
+            remember
+        });
+    };
 
-            <form @submit.prevent="login">
-                <div class="inputBox mb-3">
-                    <input type="text" v-model="username" class="form-control" required />
+    return (
+        <div className="login-container d-flex flex-column bg-white shadow-sm rounded mx-auto overflow-hidden align-items-center" style={{ minHeight: '100vh', maxWidth: '1500px', width: '100%' }}>
+            <img src="/assets/images/club.png" alt="Logo" className="top-logo mb-4" />
+
+            <div className="login-box d-flex w-100 overflow-hidden" style={{ maxWidth: '1500px' }}>
+                <div className="left-box d-flex flex-column justify-content-center p-5" style={{ flex: 1 }}>
+                    <h2 className="text-center mb-3" style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: '48px', color: '#4C4036' }}>Login</h2>
+
+                    <p className="text-secondary text-center mb-4">Log in to access your club dashboard.</p>
+
+                    <form onSubmit={handleLogin} className="mx-auto" style={{ width: '600px', maxWidth: '100%' }}>
+                        <div className="inputBox mb-4 position-relative">
+                            <input
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="form-control"
+                                placeholder="Username/Email"
+                                required
+                                style={{ width: '100%', height: '50px', padding: '10px 14px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '14px' }}
+                            />
+                        </div>
+                        <div className="inputBox mb-3 position-relative">
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="form-control"
+                                placeholder="Password"
+                                required
+                                style={{ width: '100%', height: '50px', padding: '10px 14px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '14px' }}
+                            />
+                        </div>
+
+                        <div className="remember-forgot d-flex justify-content-between align-items-center mb-4" style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px' }}>
+                            <div className="remember-left d-flex align-items-center gap-2" style={{ fontSize: '16px' }}>
+                                <input type="checkbox" id="remember" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+                                <label htmlFor="remember" style={{ cursor: 'pointer', margin: 0 }}>Remember me</label>
+                            </div>
+                            <a href="change_password.html" style={{ color: '#cc445e', textDecoration: 'none' }}>Forgot Password</a>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="btn text-white w-100 fw-bold border-0"
+                            style={{ backgroundColor: '#3d302b', height: '60px', fontSize: '1.5rem', borderRadius: '5px' }}
+                            onMouseOver={(e) => e.target.style.backgroundColor = '#2b1e19'}
+                            onMouseOut={(e) => e.target.style.backgroundColor = '#3d302b'}
+                        >
+                            Login
+                        </button>
+                    </form>
+
                 </div>
-                <div class="inputBox mb-3">
-                    <input type="password" v-model="password" class="form-control" required />
+                <div className="or-divider d-flex align-items-center justify-content-center text-muted" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                    <span className="fw-medium px-2" style={{ fontSize: '13px' }}>OR</span>
                 </div>
 
-                <div class="remember-forgot">
-                    <div class="remember-left">
-                        <input type="checkbox" id="remember" />
-                        <span for="remember">Remember me</span>
-                    </div>
-                    <a href="change_password.html">Forgot Password</a>
+                <div className="right-box d-flex flex-column justify-content-center align-items-center p-5" style={{ flex: 1 }}>
+                    <h3 className="mb-4" style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: '48px', textAlign: 'center' }}>Create your club website in minutes... Honestly!</h3>
+                    <p className="text-center mb-5" style={{ width: '500px', maxWidth: '100%' }}>
+                        No tech headaches, no long forms. Just pick a name, choose a look,
+                        and you're live. Perfect for clubs that want to make an impact
+                        without the hassle.
+                    </p>
+                    <a href="/signup">
+                        <button className="start-btn border-0 text-white" style={{ fontFamily: 'Inter', fontWeight: 500, fontSize: '18px', width: '500px', maxWidth: '100%', height: '60px', borderRadius: '7px', backgroundColor: '#CC445E' }}>
+                            Let's Get Started
+                        </button>
+                    </a>
                 </div>
+            </div>
 
-                <button type="submit" class="btn btn-dark">Login</button>
-            </form>
-
+            <footer className="w-100 text-center py-4 text-muted" style={{ fontSize: '12px' }}>
+                <p className="mb-0">Powered by PhotoCV</p>
+            </footer>
         </div>
-        <div class="or-divider">
-            <span>OR</span>
-        </div>
-
-        <div class="right-box">
-            <h3>Create your club website in minutes... Honestly!</h3>
-            <p>
-                No tech headaches, no long forms. Just pick a name, choose a look,
-                and you're live. Perfect for clubs that want to make an impact
-                without the hassle.
-            </p>
-            <a href="/signup"><button class="start-btn">Let's Get Started</button></a>
-        </div>
-    </div>
-</div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-
-const email = ref('');
-const password = ref('');
-const remember = ref(false);
-
-const login = () => {
-    console.log({
-        email: email.value,
-        password: password.value,
-        remember: remember.value
-    });
+    );
 };
-</script>
 
-<style scoped>
-.login-container {
-     min-height: 100vh;
-     display: flex;
-     max-width: 1500px;
-     width: 100%;
-     flex-direction: column;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-     border-radius: 8px;
-     overflow: hidden;
-     background-color: white;
-     align-items: center;
-}
- .login-box {
-     display: flex;
-     max-width: 1500px;
-     width: 100%;
-     overflow: hidden;
-}
- .left-box, .right-box {
-     flex: 1;
-     padding: 40px;
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-}
-.left-box h2 {
-     font-family: Inter; 
-     font-weight: 600; 
-     font-style: Semi Bold; 
-     font-size: 48px; 
-     text-align: center; 
-     color: #4C4036;
-}
-.left-box p {
-     text-align: center;
-}
-.right-box p {
-     text-align: center; 
-     width: 500px
-}
- .logo-wrapper {
-     display: flex;
-     justify-content: center;
-     margin-bottom: 20px;
-}
- .logo {
-     width: 150px;
-}
- .or-divider {
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     justify-content: center;
-     margin: 20px 0;
-     rotate: 270deg;
-}
- .or-divider::before, .or-divider::after {
-     content: '';
-     height: 1px;
-     width: 10px;
-     background-color: #ccc;
-}
- .or-divider span {
-     color: #666;
-     font-size: 13px;
-     font-weight: 500;
-}
- .inputBox {
-     position: relative 
-}
- .inputBox input {
-     width: 600px;
-     height: 50px;
-     padding: 10px 14px;
-     margin-bottom: 15px;
-     border: 1px solid #ccc;
-     border-radius: 5px;
-     font-size: 14px;
-}
- .inputBox span {
-     position: absolute;
-     top: -18px;
-     left: 15px;
-     padding: 0 5px;
-     font-size: 1.2rem;
-     color: black;
-     pointer-events: none;
-     transition: none;
-}
- .inputBox input:focus~span, .inputBox input:valid~span {
-     transform: translateY(-20px);
-     background: #fff;
-     padding: 0 5px;
-     font-size: 1rem;
-}
- .remember-forgot {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     font-family: Arial, sans-serif;
-     font-size: 14px;
-     margin-top: 10px;
-}
- .remember-left {
-     font-size: 16px;
-     display: flex;
-     align-items: center;
-     gap: 8px;
-}
- .remember-forgot a {
-     text-decoration: none;
-     color: #cc445e
-}
- .remember-forgot a:hover {
-     text-decoration: underline;
-}
- .btn-dark {
-     margin-top: 10px;
-     border-radius: 5px;
-     background-color: #3d302b;
-     border: none;
-     font-size: 1.5rem;
-     width: 600px;
-     height: 60px;
-     color: white;
-}
- .btn-dark:hover {
-     background-color: #2b1e19;
-}
- .right-box h3 {
-     font-family: Inter;
-     font-weight: 600;
-     font-style: Semi Bold;
-     font-size: 48px;
-     text-align: center;
-}
- .right-box .start-btn {
-     font-family: Inter;
-     font-weight: 500;
-     font-size: 18px;
-     width: 500px;
-     height: 60px;
-     opacity: 1;
-     border-radius: 7px;
-     background-color: #CC445E;
-     color: white;
-}
- footer {
-     text-align: center;
-     margin-top: 20px;
-     font-size: 12px;
-     color: #999;
-}
-</style>
+export default ClubLogin;

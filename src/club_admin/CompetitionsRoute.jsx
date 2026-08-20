@@ -276,8 +276,8 @@ function CompetitionsRoute() {
                                                             {competitionExtra.recent_submissions.length > 0 ? (
                                                                 <>
                                                                     {competitionExtra.recent_submissions.slice(0, 4).map((co) => (
-                                                                        <div className="event-list" v-if="recentsubmissions.length">
-                                                                            <div className="event-item" v-for="co in recentsubmissions.slice(0, 4)" key="co.id" style={{ marginBottom: '10px' }}>
+                                                                        <div className="event-list" if="recentsubmissions.length">
+                                                                            <div className="event-item" v-htmlFor="co in recentsubmissions.slice(0, 4)" key="co.id" style={{ marginBottom: '10px' }}>
                                                                                 {co.entry_image ? (
                                                                                     <img className="img-fluid event-img" src={co.entry_image} alt="Event" />
                                                                                 ) : (

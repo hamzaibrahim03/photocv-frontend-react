@@ -79,7 +79,7 @@ function NavigationRoute() {
                         <img src={Page} style={{ width: '20px', height: '20px' }} /> Pages
                     </NavLink>
 
-                    <NavLink to="/admin" className="nav-link" href="/admin">
+                    <NavLink to="/club" className="nav-link" href="/club">
                         <img src={Settings} style={{ width: '20px', height: '20px' }} /> Admin
                     </NavLink>
                 </>

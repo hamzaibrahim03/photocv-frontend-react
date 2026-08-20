@@ -1,155 +1,143 @@
-<template>
-<NavigationRoute />
-<HeaderRoute title="Profile" />
-<section class="content">
-    <div class="dashboard-card">
-        <div class="profile-card">
-            <div class="profile-left" style="align-items: center">
-                <img class="img-fluid" src="@/assets/images/dashboard/c1.jpg" alt="Profile Picture" />
-                <div class="profile-info">
-                    <h2 class="name" style="align-content: horizontal-center">{{ user.first_name }}</h2>
-                </div>
-            </div>
-            <div class="profile-icons">
-                <div class="icon">
-                    <span>20</span>
-                    <i class="fas fa-comments"></i>
-                </div>
-                <div class="icon">
-                    <span>53</span>
-                    <i class="fas fa-desktop"></i>
-                </div>
-                <div class="icon">
-                    <span>39</span>
-                    <i class="fas fa-users"></i>
-                </div>
-            </div>
-        </div>
-        <div class="card-section">
-            <div class="stat-card">
-                <small class="ca-details">My Photos</small>
-                <h3 class="number">21</h3>
-            </div>
-            <div class="event-card">
-                <small class="ca-details">Interactions</small>
-                <div class="row">
-                    <div class="col-md-5">
-                        <h3 class="number">99</h3>
-                    </div>
-                    <div class="days col-md-7">
-                        <span>Likes & Coments</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="height: auto">
-        <div class="d-flex justify-content-between align-items-center mb-3" style="padding-left: 15px; padding-top: 15px">
-            <h4>My Portfolio</h4>
-        </div>
-        <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex" class="row-wrapper">
-            <div class="galleriy">
-                <div v-for="(item, index) in row" :key="item.id" class="galleriy-item">
-                    <img :src="item.image" alt="Gallery Image" />
-                    <div :class="[
-              'galleriy-infos',
-              (rowIndex * 4 + index) % 2 === 0 ? 'even-info' : 'odd-info',
-            ]">
-                        <div class="gal-item">
-                            <img :src="item.img" alt="Profile Picture" />
-                            <div class="gal-details">
-                                <span>Kamran Chohdry</span>
+import React, { useState, useEffect, useMemo } from 'react';
+import NavigationRoute from '../club_admin/NavigationRoute';
+import HeaderRoute from '../club_admin/HeaderRoute';
+
+// Mock dependencies
+// import PhotoRequests from '../post/PhotoRequests';
+// import PhotographerGalleries from '../post/PhotographerGalleries';
+// import SalesCards from '../post/SalesCards';
+// import c1 from "../assets/images/dashboard/c1.jpg";
+// import m1 from "../assets/images/dashboard/m1.png";
+// import m2 from "../assets/images/dashboard/m2.jpg";
+// import m3 from "../assets/images/dashboard/m3.jpg";
+// import pro from "../assets/images/dashboard/pro.png";
+// import qrCode from "../assets/images/profile/qr_code.png";
+
+function PhotographerPortfolio() {
+    const [user] = useState({
+        first_name: 'Photographer',
+        profile_image: c1
+    });
+
+    const [cards, setCards] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const chunkedCards = useMemo(() => {
+        const chunkSize = 3;
+        const chunks = [];
+        for (let i = 0; i < cards.length; i += chunkSize) {
+            chunks.push(cards.slice(i, i + chunkSize));
+        }
+        return chunks;
+    }, [cards]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setCards([
+                { id: 1, image: m1, img: pro },
+                { id: 2, image: m2, img: pro },
+                { id: 3, image: m3, img: pro }
+            ]);
+            setLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    return (
+        <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
+            <NavigationRoute />
+            <HeaderRoute title="Profile" />
+            <section className="content" style={{ padding: '0 30px' }}>
+                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                        <div className="profile-left d-flex align-items-center gap-3">
+                            <img className="img-fluid rounded-circle" style={{ width: '108px', height: '108px', objectFit: 'cover' }} src={user.profile_image} alt="Profile" onError={(e) => e.target.src = '/placeholder.jpg'} />
+                            <div className="profile-info">
+                                <h2 className="name m-0 text-dark fw-bold">{user.first_name}</h2>
                             </div>
                         </div>
-                        <div class="profile-icon">
-                            <div class="icons">
-                                <span>20</span>
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <div class="icons">
-                                <span>53</span>
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="icons">
-                                <span>39</span>
-                                <i class="fas fa-comment"></i>
+                        <div className="profile-icons d-flex flex-column gap-2 text-danger">
+                            <div className="icon d-flex align-items-center gap-2"><span>20</span><i className="fas fa-comments"></i></div>
+                            <div className="icon d-flex align-items-center gap-2"><span>53</span><i className="fas fa-desktop"></i></div>
+                            <div className="icon d-flex align-items-center gap-2"><span>39</span><i className="fas fa-users"></i></div>
+                        </div>
+                    </div>
+                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
+                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>My Photos</small>
+                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>21</h3>
+                        </div>
+                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
+                            <div className="row mt-4 align-items-center">
+                                <div className="col-md-5">
+                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>99</h3>
+                                </div>
+                                <div className="days col-md-7 text-start">
+                                    <span>Likes & Comments</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <PhotographerGalleries />
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card" style="width: 95%; height: auto">
-                <SalesCards />
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card" style="width: 95%; height: 1000px">
-                <PhotoRequests />
-            </div>
-            <div class="card" style="width: 95%; height: 340px">
-                <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
-                    <h4>My QR Code</h4>
+
+                <div className="card bg-white mt-4 border-0 rounded shadow-sm overflow-hidden p-4">
+                    <h4 className="fw-bold mb-4">My Portfolio</h4>
+                    {loading ? (
+                        <div className="text-center py-5 text-muted">Loading portfolio...</div>
+                    ) : (
+                        <div className="d-flex flex-column gap-4">
+                            {chunkedCards.map((row, rowIndex) => (
+                                <div key={rowIndex} className="row g-4">
+                                    {row.map((item, index) => (
+                                        <div key={item.id} className="col-md-4">
+                                            <div className="position-relative overflow-hidden rounded group" style={{ height: '250px' }}>
+                                                <img src={item.image} alt="Gallery" className="w-100 h-100" style={{ objectFit: 'cover' }} />
+                                                <div className="position-absolute bottom-0 start-0 w-100 p-3 d-flex justify-content-between align-items-center text-white" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.8))' }}>
+                                                    <div className="d-flex align-items-center gap-2">
+                                                        <img src={item.img} alt="Profile" className="rounded-circle" style={{ width: '40px', height: '40px' }} />
+                                                        <span className="fw-medium">Kamran Chohdry</span>
+                                                    </div>
+                                                    <div className="d-flex gap-3">
+                                                        <div className="d-flex align-items-center gap-1"><span>20</span><i className="fas fa-image"></i></div>
+                                                        <div className="d-flex align-items-center gap-1"><span>53</span><i className="fas fa-heart"></i></div>
+                                                        <div className="d-flex align-items-center gap-1"><span>39</span><i className="fas fa-comment"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-                <div style="text-align: center">
-                    <img src="@/assets/images/profile/qr_code.png" alt="QR CODE" />
-                    <div class="divider3"></div>
-                    <p class="text-secondary" style="text-align: center">username.photo.cv</p>
+
+                <div className="mt-4">
+                    <PhotographerGalleries />
                 </div>
-            </div>
+
+                <div className="row mt-4">
+                    <div className="col-md-6">
+                        <div className="bg-white rounded shadow-sm border border-light p-4 h-100">
+                            <SalesCards />
+                        </div>
+                    </div>
+                    <div className="col-md-6 d-flex flex-column gap-4">
+                        <div className="bg-white rounded shadow-sm border border-light p-4" style={{ height: '600px', overflow: 'hidden' }}>
+                            <PhotoRequests />
+                        </div>
+                        <div className="bg-white rounded shadow-sm border border-light p-4 text-center">
+                            <h4 className="fw-bold text-start mb-4">My QR Code</h4>
+                            <img src={qrCode} alt="QR CODE" style={{ width: '200px' }} className="mb-4" />
+                            <hr className="text-muted w-75 mx-auto" />
+                            <p className="text-secondary mb-0 mt-3">username.photo.cv</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
-</section>
-</template>
+    );
+};
 
-<script setup>
-import { ref, computed, onMounted } from 'vue'
-import NavigationRoute from "@/components/NavigationRoute.vue"
-import HeaderRoute from "@/components/HeaderRoute.vue"
-import { useUserStore } from "@/stores/club_admin/UserStore"
-import PhotoRequests from "@/partials/post/PhotoRequests.vue"
-import PhotographerGalleries from "@/partials/post/PhotographerGalleries.vue"
-import SalesCards from "@/partials/post/SalesCards.vue"
-const user = useUserStore()
-
-const cards = ref([])
-const loading = ref(true)
-
-const chunkedCards = computed(() => {
-    const chunkSize = 3
-    const chunks = []
-    for (let i = 0; i < cards.value.length; i += chunkSize) {
-        chunks.push(cards.value.slice(i, i + chunkSize))
-    }
-    return chunks
-})
-
-onMounted(() => {
-    setTimeout(() => {
-        cards.value = [{
-                id: 1,
-                image: require("@/assets/images/dashboard/m1.png"),
-                img: require("@/assets/images/dashboard/pro.png"),
-            },
-            {
-                id: 2,
-                image: require("@/assets/images/dashboard/m2.jpg"),
-                img: require("@/assets/images/dashboard/pro.png"),
-            },
-            {
-                id: 3,
-                image: require("@/assets/images/dashboard/m3.jpg"),
-                img: require("@/assets/images/dashboard/pro.png"),
-            },
-        ]
-        loading.value = false
-    }, 1000)
-})
-</script>
-
-<style scoped>
-</style>
+export default PhotographerPortfolio;

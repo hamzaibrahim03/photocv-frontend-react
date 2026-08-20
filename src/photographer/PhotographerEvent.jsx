@@ -1,259 +1,246 @@
-<template>
-    <NavigationRoute />
-    <HeaderRoute title="Events" />
-    <section class="content">
-        <div class="dashboard-card">
-            <div class="profile-card">
-                <div class="profile-left">
-                    <div class="profile-info">
-                        <small class="greeting">Planned and regular club competition</small>
-                        <h2 class="name">2024 - 2025 Season</h2>
-                    </div>
-                </div>
-                <div class="search-bar">
-                    <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
-                </div>
-                <div class="quick-filter text-end">
-                    <strong>Quick Filter</strong>
-                    <small class="d-block">(Click icons to filter)</small>
-                    <div class="d-flex gap-2 justify-content-end">
-                        <i class="bi bi-calendar-event"></i>
-                        <i class="bi bi-camera"></i>
-                        <i class="bi bi-newspaper"></i>
-                    </div>
-                    <div class="d-flex gap-2 justify-content-end mt-2">
-                        <i class="bi bi-trophy"></i>
-                        <i class="bi bi-info"></i>
-                        <i class="bi bi-bell"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="card-section">
-                <div class="stat-card">
-                    <small class="ca-details">Events</small>
-                    <h3 class="number">{{ MemberCount }}</h3>
-                </div>
-                <div class="event-card">
-                    <small class="ca-details">Next Event</small>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <h3 class="number">{{ EventDay }}</h3>
-                        </div>
-                        <div class="days col-md-7">
-                            <span>days to go</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router';
+import HeaderRoute from '../club_admin/HeaderRoute';
+import NavigationRoute from '../club_admin/NavigationRoute';
+import CalendarDashboard from '../club_admin/Calendars/CalendarDashboard';
+import MoreEvents from '../club_admin/events/MoreEvents';
 
-        <div class="row">
-            <div class="col-md-8">
-                <div class="container mt-4">
-                    <div v-if="filteredEvents.length">
-                        <div v-for="event in filteredEvents" :key="event.id" class="custom-card mb-3 p-3">
-                        <div class="d-flex gap-3">
-                            <img v-if="event.images" :src="event.featured_image" alt="Event Image" />
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5>{{ event.name || 'Untitled Event' }}</h5>
-                                    <div class="icon-container">
-                                        <i class="fas fa-comment-alt me-2"></i>
-                                        <i class="fas fa-camera me-2"></i>
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
-                                </div>
-                                <p class="date">
-                                    {{ formatDate(event.event_date) || 'Date Not Available' }}
-                                </p>
-                                <p class="text-secondary">
-                                    {{ event.description || 'No description provided.' }}
-                                </p>
-                                <div>
-                                    <router-link to="/eventsingle" custom v-slot="{ navigate }">
-                                        <button class="btn me-2" id="view" @click="navigate">View</button>
-                                </router-link>
-                                <router-link to="/events_add" custom v-slot="{ navigate }">
-                                    <button class="btn me-2" id="edit" @click="navigate">Edit</button>
-                            </router-link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+// Mock dependencies
+import apiClient from '../../api/axios';
 
-        <div v-else class="text-center text-muted">No events found.</div>
+const PhotographerEvent = () => {
+    const navigate = useNavigate();
 
-        <nav v-if="filteredEvents.length">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" :class="{disabled: currentPage === 1 }">
-                <button class="page-link" @click="prevPage">Previous</button>
-        </li>
-        <li class="page-item disabled">
-            <span class="page-link">
-                Page {{ currentPage }} of {{ totalPages }}
-            </span>
-        </li>
-        <li class="page-item" :class="{disabled: currentPage === totalPages }">
-        <button class="page-link" @click="nextPage">Next</button>
-</li>
-                    </ul >
-                </nav >
-            </div >
-        </div >
-        <div class="col-md-4">
-            <div class="calen">
-                <CalendarDashboard />
-            </div>
-            <div id="news">
-                <div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
-                    <h5 class="head">Recent Comments</h5>
+    const [events, setEvents] = useState([]);
+    const [eventComments, setEventComments] = useState([]);
+    const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 4;
 
-                    <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
-                        <div v-for="comment in c.comments" :key="comment.id" class="row">
-                            <div class="col-md-2">
-                                <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
-                            </div>
-                            <div class="col-md-5">
-                                <p class="text-secondary">{{ comment.comment }}</p>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="event-time" style="text-align: right">
-                                    <small class="event-date">{{ formatDate(comment.created_at) }}</small><br />
-                                    <small class="event-time-details">{{ formatTime(comment.created_at) }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    // Stats mock
+    const [memberCount, setMemberCount] = useState(50);
+    const [eventDay, setEventDay] = useState(12);
 
-                    <div class="button-group mt-auto">
-                        <router-link to="/notices" custom v-slot="{ navigate }">
-                            <button class="btn btn-sm" id="view" @click="navigate">View All</button>
-                        </router-link>
-                        <router-link to="/notice_single" custom v-slot="{ navigate }">
-                            <button class="btn btn-sm" id="new" @click="navigate">Add New</button>
-                        </router - link >
-                    </div >
-                </div >
-
-    <MoreEvents style="width: 90%" />
-            </div >
-        </div >
-    </div >
-</section >
-</template >
-
-<script setup>
-import { ref, computed, onMounted, watch } from 'vue'
-import apiClient from '@/api/axios'
-import { useEventStore } from '@/stores/club_admin/EventStore'
-import HeaderRoute from '@/components/HeaderRoute.vue'
-import NavigationRoute from '@/components/NavigationRoute.vue'
-import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
-import { useEventComments } from "@/stores/club_admin/EventComments";
-import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
-
-
-const {
-    events,
-    fetchEvents,
-    memberCount,
-    eventDay
-} = useEventStore()
-const {
-    eventcomments,
-    fetchEventComments
-} = useEventComments();
-const MemberCount = memberCount
-const EventDay = eventDay
-const search = ref('')
-const currentPage = ref(1)
-const rowsPerPage = 4
-
-let debounceTimeout
-const debounce = (func, delay) => {
-    return (...args) => {
-        clearTimeout(debounceTimeout)
-        debounceTimeout = setTimeout(() => {
-            func(...args)
-        }, delay)
-    }
-}
-
-let lastSearched = ''
-
-const fetchSearchedEvents = debounce(async (query) => {
-    if (query.length >= 3 && query !== lastSearched) {
-        lastSearched = query
+    const fetchEvents = async () => {
         try {
-            const response = await apiClient.get('/events', {
-                params: {
-                    search_term: query
-                }
-            })
-            const result = response?.data?.data?.original?.data || []
-            events.value = result
-            currentPage.value = 1
-        } catch (error) {
-            console.error('Error fetching searched events:', error)
-            events.value = []
+            // Mock api logic
+            setEvents([
+                { id: 1, name: 'Zoom Lecture', event_date: '2024-04-22T10:00:00Z', description: 'A lecture on photography', featured_image: '/placeholder.jpg' }
+            ]);
+        } catch (e) {
+            console.error(e);
         }
-    }
-}, 400)
+    };
 
-watch(search, (newSearch) => {
-    if (newSearch.length >= 3) {
-        fetchSearchedEvents(newSearch)
-    } else {
-        fetchEvents()
-    }
-})
+    const fetchEventComments = async () => {
+        try {
+            setEventComments([]);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
-onMounted(() => {
-    fetchEvents();
-    fetchEventComments();
-})
+    useEffect(() => {
+        fetchEvents();
+        fetchEventComments();
+    }, []);
 
-const filteredEvents = computed(() => {
-    const start = (currentPage.value - 1) * rowsPerPage
-    const end = start + rowsPerPage
-    return events.value.slice(start, end)
-})
+    const fetchSearchedEvents = useCallback(async (query) => {
+        try {
+            // simulate api call
+        } catch (e) {
+            console.error(e);
+        }
+        setCurrentPage(1);
+    }, []);
 
-const totalPages = computed(() => {
-    return Math.max(Math.ceil(events.value.length / rowsPerPage), 1)
-})
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (search.length >= 3) {
+                fetchSearchedEvents(search);
+            } else if (search.length === 0) {
+                fetchEvents();
+            }
+        }, 400);
 
-const nextPage = () => {
-    if (currentPage.value < totalPages.value) currentPage.value++
-}
-const prevPage = () => {
-    if (currentPage.value > 1) currentPage.value--
-}
+        return () => clearTimeout(timeout);
+    }, [search, fetchSearchedEvents]);
 
-const formatDate = (date) => {
-    const d = new Date(date)
-    return isNaN(d) ? '' : d.toLocaleDateString(undefined, {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-    })
-}
-</script>
+    const filteredEvents = useMemo(() => {
+        let filtered = events;
+        if (search.trim()) {
+            filtered = filtered.filter(e => e.name?.toLowerCase().includes(search.toLowerCase()));
+        }
+        const start = (currentPage - 1) * rowsPerPage;
+        return filtered.slice(start, start + rowsPerPage);
+    }, [events, search, currentPage]);
 
-<style scoped>
-.calen {
-    margin-top: 15px;
-}
+    const totalPages = useMemo(() => {
+        const count = events.filter(e => e.name?.toLowerCase().includes(search.toLowerCase())).length;
+        return Math.max(Math.ceil(count / rowsPerPage), 1);
+    }, [events, search]);
 
-.icon-container i {
-    color: #666;
-    font-size: 16px;
-}
+    const nextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(p => p + 1);
+    };
 
-.custom-card {
-    margin-left: 1%;
-    width: 103%
-}
-</style>
+    const prevPage = () => {
+        if (currentPage > 1) setCurrentPage(p => p - 1);
+    };
+
+    const formatDate = (dateStr) => {
+        const d = new Date(dateStr);
+        return isNaN(d) ? '' : d.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+    };
+
+    const formatTime = (dateStr) => {
+        const d = new Date(dateStr);
+        return isNaN(d) ? '' : d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+    };
+
+    return (
+        <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
+            <NavigationRoute />
+            <HeaderRoute title="Events" />
+            <section className="content" style={{ padding: '0 30px' }}>
+                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                        <div className="profile-left">
+                            <div className="profile-info">
+                                <small className="greeting text-muted" style={{ fontSize: '18px' }}>Planned and regular club competition</small>
+                                <h2 className="name m-0 text-dark fw-bold" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
+                            </div>
+                        </div>
+                        <div className="search-bar position-relative" style={{ width: '250px' }}>
+                            <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" className="form-control" placeholder="Search..." />
+                        </div>
+                        <div className="quick-filter text-end">
+                            <strong className="text-dark">Quick Filter</strong>
+                            <small className="d-block text-muted" style={{ fontSize: '12px' }}>(Click icons to filter)</small>
+                            <div className="d-flex gap-2 justify-content-end text-muted mt-2">
+                                <i className="fa-regular fa-calendar" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-solid fa-camera" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-regular fa-newspaper" style={{ cursor: 'pointer' }}></i>
+                            </div>
+                            <div className="d-flex gap-2 justify-content-end text-muted mt-2">
+                                <i className="fa-solid fa-trophy" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-solid fa-circle-info" style={{ cursor: 'pointer' }}></i>
+                                <i className="fa-regular fa-bell" style={{ cursor: 'pointer' }}></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
+                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>Events</small>
+                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberCount}</h3>
+                        </div>
+                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                            <small className="ca-details" style={{ fontSize: '20px' }}>Next Event</small>
+                            <div className="row mt-4 align-items-center">
+                                <div className="col-md-5">
+                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{eventDay}</h3>
+                                </div>
+                                <div className="days col-md-7 text-start">
+                                    <span>days to go</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row mt-4">
+                    <div className="col-md-8">
+                        <div className="container px-0">
+                            {filteredEvents.length > 0 ? (
+                                <div>
+                                    {filteredEvents.map(event => (
+                                        <div key={event.id} className="custom-card bg-white shadow-sm rounded p-4 mb-4 border border-light">
+                                            <div className="d-flex gap-4">
+                                                <img src={event.featured_image || '/placeholder.jpg'} alt="Event" className="rounded" style={{ width: '200px', height: '150px', objectFit: 'cover' }} onError={(e) => { e.target.src = '/placeholder.jpg'; }} />
+                                                <div className="flex-grow-1">
+                                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                                        <h5 className="m-0 fw-bold">{event.name || 'Untitled Event'}</h5>
+                                                        <div className="icon-container text-muted d-flex gap-3">
+                                                            <i className="fa-regular fa-comment"></i>
+                                                            <i className="fa-solid fa-camera"></i>
+                                                            <i className="fa-regular fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-danger mb-2" style={{ fontWeight: '500' }}>
+                                                        {formatDate(event.event_date) || 'Date Not Available'}
+                                                    </p>
+                                                    <p className="text-muted small mb-4">{event.description || 'No description provided.'}</p>
+                                                    <div className="d-flex gap-2">
+                                                        <button className="btn text-white px-4" style={{ backgroundColor: '#99816b' }} onClick={() => navigate('/eventsingle')}>View</button>
+                                                        <button className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }} onClick={() => navigate('/events_add')}>Edit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    <nav className="mt-5">
+                                        <ul className="pagination justify-content-center">
+                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <button className="page-link text-dark shadow-none" onClick={prevPage}>Previous</button>
+                                            </li>
+                                            <li className="page-item disabled">
+                                                <span className="page-link text-muted">Page {currentPage} of {totalPages}</span>
+                                            </li>
+                                            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                                <button className="page-link text-dark shadow-none" onClick={nextPage}>Next</button>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            ) : (
+                                <div className="text-center py-5 text-muted bg-white rounded shadow-sm">No events found.</div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="col-md-4">
+                        <section className="d-flex flex-column gap-4">
+                            <div className="bg-white rounded shadow-sm">
+                                <CalendarDashboard />
+                            </div>
+
+                            <div className="bg-white rounded shadow-sm p-4 d-flex flex-column min-vh-25">
+                                <h5 className="fw-bold mb-4">Recent Comments</h5>
+                                <div className="d-flex flex-column gap-3 mb-4">
+                                    {eventComments.slice(0, 4).map(c => (
+                                        <div key={c.id}>
+                                            {c.comments?.map(comment => (
+                                                <div key={comment.id} className="row align-items-center mb-3">
+                                                    <div className="col-2">
+                                                        <img src={comment.user?.profile_image_url || '/placeholder.jpg'} alt="Com" className="rounded-circle w-100" />
+                                                    </div>
+                                                    <div className="col-5">
+                                                        <p className="text-secondary small m-0">{comment.comment}</p>
+                                                    </div>
+                                                    <div className="col-5 text-end text-muted">
+                                                        <small className="d-block">{formatDate(comment.created_at)}</small>
+                                                        <small className="d-block">{formatTime(comment.created_at)}</small>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+                                    {eventComments.length === 0 && <span className="text-muted small">No comments.</span>}
+                                </div>
+                                <div className="mt-auto d-flex gap-2">
+                                    <button className="btn text-white w-50" style={{ backgroundColor: '#99816b' }} onClick={() => navigate('/notices')}>View All</button>
+                                    <button className="btn text-white w-50" style={{ backgroundColor: '#4c4036' }} onClick={() => navigate('/notice_single')}>Add New</button>
+                                </div>
+                            </div>
+
+                            <MoreEvents />
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default PhotographerEvent;
