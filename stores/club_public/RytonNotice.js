@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytonnotice';
-
 export const useRytonNoticeStore = defineStore('notice', {
   state: () => ({
     noticeData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRytonNoticeData(domain) {
       this.loading = true;

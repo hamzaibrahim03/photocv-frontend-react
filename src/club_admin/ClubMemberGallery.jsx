@@ -1,66 +1,131 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import NavigationRoute from '../../components/NavigationRoute';
-import HeaderRoute from '../../components/HeaderRoute';
-import ClubProfile from '../../partials/club_admin/club/ClubProfile';
-import ClubMemberGalleries from '../../partials/club_admin/clubmembergallery/ClubMemberGalleries';
-
-import c1 from '../../assets/images/dashboard/c1.jpg';
-import c2 from '../../assets/images/dashboard/c2.jpg';
-
-const ClubMemberGallery = () => {
+import Calendar from "../React/extra/CalendarRyton"
+import HeaderRoute from "./HeaderRoute"
+import NavigationRoute from "./NavigationRoute"
+import Loader from "../React/extra/LoaderAll";
+import c1 from '../assets/images/dashboard/c1.jpg';
+import c2 from '../assets/images/dashboard/c2.jpg';
+function ClubMemberGallery() {
     const navigate = useNavigate();
     const [galleryImages] = useState([
         { src: c1, description: "Beautiful landscape" },
         { src: c2, description: "Urban night scene" },
     ]);
-
+    const [isLoading, setIsLoading] = useState(true);
     const handleImageClick = (index) => {
         const imgArray = galleryImages.map(img => img.src);
         const descArray = galleryImages.map(img => img.description || "");
-
         localStorage.setItem("selectedImageIndex", index);
         localStorage.setItem("imageList", JSON.stringify(imgArray));
         localStorage.setItem("imageDescriptions", JSON.stringify(descArray));
-
         setTimeout(() => {
             navigate("/club_gallery_single");
         }, 100);
     };
-
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
     return (
-        <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
-            <NavigationRoute />
-            <HeaderRoute title="Club Gallery" />
-            <section className="content" style={{ padding: '0 30px' }}>
-                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
-                    <ClubProfile greeting="Galleries uploaded by Club" name="Sunset" role="20 Images" />
-
-                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
-                            <small className="ca-details fs-5">Images</small>
-                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>64</h3>
-                        </div>
-                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                            <small className="ca-details fs-5">Interactions</small>
-                            <div className="row mt-4 align-items-center">
-                                <div className="col-md-5">
-                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>1k</h3>
+        <>
+            <div style={{ backgroundColor: 'white' }}>
+                <Loader show={isLoading} />
+                {!isLoading && (
+                    <>
+                        <NavigationRoute />
+                        <HeaderRoute title="Galleries" />
+                        <div className="content">
+                            <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
+                                <div className="profile-card">
+                                    <div className="profile-left">
+                                        <div className="profile-info">
+                                            <small className="greeting">Galleries uploaded by Club</small>
+                                            <h2 className="name">Sunset</h2>
+                                            <small className="role">20 Images</small>
+                                        </div>
+                                    </div>
+                                    <div className="dt-search mx-auto">
+                                        <input type="search" className="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
+                                    </div>
                                 </div>
-                                <div className="days col-md-7 text-start">
-                                    <span>Likes & Comments</span>
+                                <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
+                                    <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                                        <small className="ca-details fs-5">Images</small>
+                                        <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>64</h3>
+                                    </div>
+                                    <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                                        <small className="ca-details fs-5">Interactions</small>
+                                        <div className="row mt-4 align-items-center">
+                                            <div className="col-md-5">
+                                                <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>1k</h3>
+                                            </div>
+                                            <div className="days col-md-7 text-start">
+                                                <span>Likes & Comments</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div className="card">
+                                <div className="d-flex justify-content-between align-items-center mb-3" style={{ padding: '15px' }}>
+                                    <h4>Club Gallery - Food</h4>
+                                </div>
+                                <div className="row-wrapper">
+                                    <div className="galleriy">
+                                        <div className="galleriy-item">
+                                            <img src={mage} alt="Gallery Image" className="gallery-img" />
+                                            <div className="galleriy-infos">
+                                                <div className="gal-item">
+                                                    <div className="gal-details">
+                                                        <span>{item.create}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="profile-icon">
+                                                    <div className="icons">
+                                                        <span>20</span>
+                                                        <i className="fas fa-image"></i>
+                                                    </div>
+                                                    <div className="icons">
+                                                        <span>53</span>
+                                                        <i className="fas fa-heart"></i>
+                                                    </div>
+                                                    <div className="icons">
+                                                        <span>39</span>
+                                                        <i className="fas fa-comment"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="dt-paging">
+                                <nav aria-label="pagination">
+                                    <button className={`dt-paging-button first ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(1)} aria-label="First">
+                                        «
+                                    </button>
+                                    <button className={`dt-paging-button previous ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous">
+                                        ‹
+                                    </button>
+                                    <button className={`dt-paging-button ${currentPage === page ? 'current' : ''}`} onClick={() => goToPage(page)}>
+                                        {page}
+                                    </button>
+                                    <button className={`dt-paging-button next ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next">
+                                        ›
+                                    </button>
+                                    <button className={`dt-paging-button last ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(totalPages)} aria-label="Last">
+                                        »
+                                    </button>
+                                </nav>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                {/* Notice we pass handleImageClick to ClubMemberGalleries if it expects it, or we can just render it */}
-                <ClubMemberGalleries onImageClick={handleImageClick} images={galleryImages} />
-
-            </section>
-        </div>
+                    </>
+                )}
+            </div>
+        </>
     );
 };
-
 export default ClubMemberGallery;

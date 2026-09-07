@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import axios from '@/api/axios'
-
 export const useMemberStore = defineStore('member', {
   state: () => ({
     memberData: [],
@@ -9,7 +8,6 @@ export const useMemberStore = defineStore('member', {
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchMembers() {
       this.loading = true
@@ -20,12 +18,10 @@ export const useMemberStore = defineStore('member', {
         this.memberCount = memberList.length
         let totalComments = 0;
         let totalLikes = 0;
-
         this.memberData.forEach(member => {
           totalComments += member.gallery_total_comments || 0;
           totalLikes += member.gallery_total_likes || 0;
         });
-
         this.eventCount = totalComments + totalLikes;
         this.error = null
       } catch (err) {

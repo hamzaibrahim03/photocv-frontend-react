@@ -16,14 +16,12 @@ import Hand from "./assets/icons/quick_notice/hand.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Books from "./assets/icons/event_list/bookmark.svg"
 import Note from "./assets/icons/quick_notice/note.svg"
-
 function NoticeRoute() {
     const navigate = useNavigate();
     const [noticeData, setNoticeData] = useState({})
     const [noticeExtra, setNoticeExtra] = useState({})
     const [isLoading, setIsLoading] = useState(true);
     const [rowsPerPage] = useState(4);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
@@ -44,23 +42,17 @@ function NoticeRoute() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-
-
     const toggleBookmark = (item, category) => {
         const existingLibrary = JSON.parse(
             localStorage.getItem("savedLibrary") || "[]"
         );
-
         const alreadySaved = existingLibrary.some(
             saved =>
                 saved.id === item.id &&
                 saved.category === category
         );
-
         let updatedLibrary;
-
         if (alreadySaved) {
-
             updatedLibrary = existingLibrary.filter(
                 saved =>
                     !(
@@ -68,57 +60,45 @@ function NoticeRoute() {
                         saved.category === category
                     )
             );
-
         } else {
-
             const libraryItem = {
                 id: item.id,
                 category: category,
-
                 title:
                     item.name ||
                     item.title ||
                     item.event_name ||
                     item.competition_name ||
                     "Untitled",
-
                 description:
                     item.description || "",
-
                 date:
                     item.event_date ||
                     item.competition_date ||
                     item.published_at ||
                     item.created_at ||
                     "",
-
                 image:
                     item.featured_image_url ||
                     item.image ||
                     item.image_url ||
                     item.thumbnail_url ||
                     "",
-
                 originalData: item,
-
                 savedAt: new Date().toISOString()
             };
-
             updatedLibrary = [
                 ...existingLibrary,
                 libraryItem
             ];
         }
-
         localStorage.setItem(
             "savedLibrary",
             JSON.stringify(updatedLibrary)
         );
-
         setSavedLibrary(updatedLibrary);
         navigate("/library");
     };
-
     const isBookmarked = (id, category) => {
         return savedLibrary.some(
             item =>
@@ -126,9 +106,38 @@ function NoticeRoute() {
                 item.category === category
         );
     };
-
-
-
+    const handleShare = async (notices) => {
+        const shareUrl = `${window.location.origin}/notices/${notices.id}`;
+        const shareData = {
+            title: notices.title || "Notice",
+            text: notices.description
+                ? notices.description.replace(/<[^>]*>/g, "").slice(0, 150)
+                : "Check out this notice",
+            url: shareUrl,
+        };
+        try {
+            // Mobile / supported browsers
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                // Desktop fallback
+                await navigator.clipboard.writeText(shareUrl);
+                alert("Notice link copied to clipboard!");
+            }
+        } catch (error) {
+            // User cancelled the share popup
+            if (error.name !== "AbortError") {
+                console.error("Share failed:", error);
+                // Last fallback
+                try {
+                    await navigator.clipboard.writeText(shareUrl);
+                    alert("Notice link copied to clipboard!");
+                } catch (clipboardError) {
+                    console.error("Clipboard failed:", clipboardError);
+                }
+            }
+        }
+    };
     useEffect(() => {
         getNoticeData();
         getNoticeExtra();
@@ -138,8 +147,6 @@ function NoticeRoute() {
             setIsLoading(false);
         }, 2000);
     }, []);
-
-
     async function getNoticeData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/notices'
         const response = await fetch(url, {
@@ -148,15 +155,11 @@ function NoticeRoute() {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
-
         const data = await response.json();
-
         console.log(data);
-
         setNoticeData(data.data);
     };
     console.log(noticeData.original?.data)
-
     async function getNoticeExtra() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/notices-extras'
         const response = await fetch(url, {
@@ -165,25 +168,17 @@ function NoticeRoute() {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
-
         const data = await response.json();
-
         console.log(data);
-
         setNoticeExtra(data.data);
     };
     console.log(noticeExtra)
-
-
-
-
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
             year: "numeric",
         });
-
     const formatTime = (datetimeStr) => {
         const date = new Date(datetimeStr);
         return date.toLocaleTimeString("en-US", {
@@ -192,36 +187,29 @@ function NoticeRoute() {
             minute: "2-digit",
         });
     };
-
     const filteredNotices = useMemo(() => {
         const notices = noticeData.original?.data || [];
-
         return notices.filter((notice) =>
             notice.name?.toLowerCase().includes(search.toLowerCase()) ||
             notice.event_date?.toLowerCase().includes(search.toLowerCase()) ||
             notice.description?.toLowerCase().includes(search.toLowerCase())
         );
     }, [noticeData, search]);
-
     const totalPages = useMemo(() => {
         return Math.max(
             Math.ceil(filteredNotices.length / rowsPerPage),
             1
         );
     }, [filteredNotices, rowsPerPage]);
-
     const paginatedNotices = useMemo(() => {
         const start = (currentPage - 1) * rowsPerPage;
-
         return filteredNotices.slice(start, start + rowsPerPage);
     }, [filteredNotices, currentPage, rowsPerPage]);
-
     const goToPage = (page) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
         }
     };
-
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
@@ -281,7 +269,6 @@ function NoticeRoute() {
                                     </div>
                                 </div>
                             </section>
-
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="row">
@@ -311,31 +298,28 @@ function NoticeRoute() {
                                                                                 </p>
                                                                                 <div className="d-flex justify-content-between align-items-center mt-3 w-100">
                                                                                     <div className="button-group d-flex align-items-center gap-2">
-                                                                                        <button className="btn me-2" id="e-view" onClick={() => navigate('/notice_single')}>View</button>
-                                                                                        <button className="btn me-2" id="e-edit" onClick={() => navigate('/notice_edit')}>Edit</button>
+                                                                                        <button className="btn me-2" id="e-view" onClick={() => navigate(`/notices/${notice.id}`)}>View</button>
+                                                                                        <button className="btn me-2" id="e-edit" onClick={() => navigate(`/notices/${notice.id}/edit`)}>Edit</button>
                                                                                     </div>
-
                                                                                     <div className="d-flex align-items-center gap-2">
                                                                                         <div className="library-bookmark">
                                                                                             <img src={Books} alt="bookmark" style={{ width: '20px', height: '20px', cursor: 'pointer' }} className={isBookmarked(notice.id, "Notices") ? "bookmark-icon active" : "bookmark-icon"} onClick={() => toggleBookmark(notice, "Notices")} />
                                                                                         </div>
                                                                                         <div style={{ position: "relative", display: "inline-block" }}>
-
                                                                                             {bookmarkOpenId === notice.id && (
-                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }} >
-                                                                                                    <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }} >
+                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                                                    <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
                                                                                                         Save to Library
                                                                                                     </p>
-
                                                                                                     {["Events", "Competitions", "Notices", "Galleries", "News"].map((cat) => (
-                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(event, cat); }}>
+                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(notice, cat); }}>
                                                                                                             📁 {cat}
                                                                                                         </div>
                                                                                                     ))}
                                                                                                 </div>
                                                                                             )}
                                                                                         </div>
-                                                                                        <img src={Share} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Share} alt="Share" style={{ width: '20px', height: '20px', cursor: 'pointer' }} onClick={() => handleShare(notice)} />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -348,21 +332,18 @@ function NoticeRoute() {
                                                         )}
                                                         <div className="dt-paging">
                                                             <nav aria-label="pagination">
-                                                                <button className={`dt-paging-button previous ${currentPage === 1 ? "disabled" : ""}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous" >
+                                                                <button className={`dt-paging-button previous ${currentPage === 1 ? "disabled" : ""}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous">
                                                                     ‹
                                                                 </button>
-
                                                                 {Array.from({ length: totalPages }, (_, index) => {
                                                                     const page = index + 1;
-
                                                                     return (
-                                                                        <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)} >
+                                                                        <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)}>
                                                                             {page}
                                                                         </button>
                                                                     );
                                                                 })}
-
-                                                                <button className={`dt-paging-button next ${currentPage === totalPages ? "disabled" : ""}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next" >
+                                                                <button className={`dt-paging-button next ${currentPage === totalPages ? "disabled" : ""}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next">
                                                                     ›
                                                                 </button>
                                                             </nav>
@@ -371,7 +352,6 @@ function NoticeRoute() {
                                                 </div>
                                             </section>
                                         </div>
-
                                         <div className="col-md-4">
                                             <section>
                                                 <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
@@ -381,7 +361,6 @@ function NoticeRoute() {
                                                     <div id="news">
                                                         <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
                                                             <h5 className="head">Recent Comments on Notice</h5>
-
                                                             {noticeData?.original?.data?.flatMap((notice) => notice.comments || [])?.slice(0, 4)?.map((comment) => (
                                                                 <div className="event-list" style={{ marginBottom: '10px' }} key={comment.id}>
                                                                     <div className="event-item">
@@ -429,7 +408,6 @@ function NoticeRoute() {
                                                                     </div>
                                                                 </div>
                                                             ))}
-
                                                             <div className="button-group mt-auto">
                                                                 <button className="btn btn-sm" id="e-view" onClick="{() => navigate(/notices)}">
                                                                     View All
@@ -439,27 +417,24 @@ function NoticeRoute() {
                                                                 </button>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </section>
-                                        </div >
-                                    </div >
-                                </div >
-                            </section >
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
                                     <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
                                 </div>
                             </footer>
-                        </div >
-
+                        </div>
                     </>
                 )
                 }
-            </div >
+            </div>
         </>
     );
 }
-
 export default NoticeRoute;

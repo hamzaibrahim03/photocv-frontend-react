@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_admin/dashboard';
-
 export const useDashboardStore = defineStore('dashboard', {
   state: () => ({
     dashboardData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchDashboardData() {
       this.loading = true;

@@ -4,26 +4,18 @@ import HeaderRoute from '../club_admin/HeaderRoute';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import CalendarDashboard from '../club_admin/Calendars/CalendarDashboard';
 import MoreEvents from '../club_admin/events/MoreEvents';
-
-// Mock dependencies
 import apiClient from '../../api/axios';
-
-const PhotographerEvent = () => {
+function PhotographerEvent() {
     const navigate = useNavigate();
-
     const [events, setEvents] = useState([]);
     const [eventComments, setEventComments] = useState([]);
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 4;
-
-    // Stats mock
     const [memberCount, setMemberCount] = useState(50);
     const [eventDay, setEventDay] = useState(12);
-
     const fetchEvents = async () => {
         try {
-            // Mock api logic
             setEvents([
                 { id: 1, name: 'Zoom Lecture', event_date: '2024-04-22T10:00:00Z', description: 'A lecture on photography', featured_image: '/placeholder.jpg' }
             ]);
@@ -31,7 +23,6 @@ const PhotographerEvent = () => {
             console.error(e);
         }
     };
-
     const fetchEventComments = async () => {
         try {
             setEventComments([]);
@@ -39,21 +30,17 @@ const PhotographerEvent = () => {
             console.error(e);
         }
     };
-
     useEffect(() => {
         fetchEvents();
         fetchEventComments();
     }, []);
-
     const fetchSearchedEvents = useCallback(async (query) => {
         try {
-            // simulate api call
         } catch (e) {
             console.error(e);
         }
         setCurrentPage(1);
     }, []);
-
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (search.length >= 3) {
@@ -62,10 +49,8 @@ const PhotographerEvent = () => {
                 fetchEvents();
             }
         }, 400);
-
         return () => clearTimeout(timeout);
     }, [search, fetchSearchedEvents]);
-
     const filteredEvents = useMemo(() => {
         let filtered = events;
         if (search.trim()) {
@@ -74,30 +59,24 @@ const PhotographerEvent = () => {
         const start = (currentPage - 1) * rowsPerPage;
         return filtered.slice(start, start + rowsPerPage);
     }, [events, search, currentPage]);
-
     const totalPages = useMemo(() => {
         const count = events.filter(e => e.name?.toLowerCase().includes(search.toLowerCase())).length;
         return Math.max(Math.ceil(count / rowsPerPage), 1);
     }, [events, search]);
-
     const nextPage = () => {
         if (currentPage < totalPages) setCurrentPage(p => p + 1);
     };
-
     const prevPage = () => {
         if (currentPage > 1) setCurrentPage(p => p - 1);
     };
-
     const formatDate = (dateStr) => {
         const d = new Date(dateStr);
         return isNaN(d) ? '' : d.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
     };
-
     const formatTime = (dateStr) => {
         const d = new Date(dateStr);
         return isNaN(d) ? '' : d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
     };
-
     return (
         <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
             <NavigationRoute />
@@ -108,7 +87,7 @@ const PhotographerEvent = () => {
                         <div className="profile-left">
                             <div className="profile-info">
                                 <small className="greeting text-muted" style={{ fontSize: '18px' }}>Planned and regular club competition</small>
-                                <h2 className="name m-0 text-dark fw-bold" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
+                                <h2 className="name m-0 text-dark head" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
                             </div>
                         </div>
                         <div className="search-bar position-relative" style={{ width: '250px' }}>
@@ -134,7 +113,7 @@ const PhotographerEvent = () => {
                             <small className="ca-details" style={{ fontSize: '20px' }}>Events</small>
                             <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberCount}</h3>
                         </div>
-                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                        <div className="event-cards text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
                             <small className="ca-details" style={{ fontSize: '20px' }}>Next Event</small>
                             <div className="row mt-4 align-items-center">
                                 <div className="col-md-5">
@@ -147,7 +126,6 @@ const PhotographerEvent = () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="row mt-4">
                     <div className="col-md-8">
                         <div className="container px-0">
@@ -159,7 +137,7 @@ const PhotographerEvent = () => {
                                                 <img src={event.featured_image || '/placeholder.jpg'} alt="Event" className="rounded" style={{ width: '200px', height: '150px', objectFit: 'cover' }} onError={(e) => { e.target.src = '/placeholder.jpg'; }} />
                                                 <div className="flex-grow-1">
                                                     <div className="d-flex justify-content-between align-items-center mb-3">
-                                                        <h5 className="m-0 fw-bold">{event.name || 'Untitled Event'}</h5>
+                                                        <h5 className="m-0 head">{event.name || 'Untitled Event'}</h5>
                                                         <div className="icon-container text-muted d-flex gap-3">
                                                             <i className="fa-regular fa-comment"></i>
                                                             <i className="fa-solid fa-camera"></i>
@@ -178,7 +156,6 @@ const PhotographerEvent = () => {
                                             </div>
                                         </div>
                                     ))}
-
                                     <nav className="mt-5">
                                         <ul className="pagination justify-content-center">
                                             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -198,15 +175,13 @@ const PhotographerEvent = () => {
                             )}
                         </div>
                     </div>
-
                     <div className="col-md-4">
                         <section className="d-flex flex-column gap-4">
                             <div className="bg-white rounded shadow-sm">
                                 <CalendarDashboard />
                             </div>
-
                             <div className="bg-white rounded shadow-sm p-4 d-flex flex-column min-vh-25">
-                                <h5 className="fw-bold mb-4">Recent Comments</h5>
+                                <h5 className="head mb-4">Recent Comments</h5>
                                 <div className="d-flex flex-column gap-3 mb-4">
                                     {eventComments.slice(0, 4).map(c => (
                                         <div key={c.id}>
@@ -233,7 +208,6 @@ const PhotographerEvent = () => {
                                     <button className="btn text-white w-50" style={{ backgroundColor: '#4c4036' }} onClick={() => navigate('/notice_single')}>Add New</button>
                                 </div>
                             </div>
-
                             <MoreEvents />
                         </section>
                     </div>
@@ -242,5 +216,4 @@ const PhotographerEvent = () => {
         </div>
     );
 };
-
 export default PhotographerEvent;

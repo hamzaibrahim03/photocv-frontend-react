@@ -1,167 +1,323 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import NavigationRoute from './NavigationRoute';
-import HeaderRoute from './HeaderRoute';
-import Ima from '../assets/icons/gallery/image.svg';
-import Hea from '../assets/icons/gallery/heart.svg';
-import Com from '../assets/icons/gallery/comment.svg';
-
-const MemberGallery = () => {
-    const [cards, setCards] = useState([]);
-    const [loading, setLoading] = useState(true);
+import React, { useEffect, useMemo, useState } from "react";
+import NavigationRoute from "./NavigationRoute";
+import HeaderRoute from "./HeaderRoute";
+import Loader from "../React/extra/LoaderAll";
+import Ima from "./assets/icons/gallery/image.svg";
+import Hea from "./assets/icons/gallery/heart.svg";
+import Com from "./assets/icons/gallery/comment.svg";
+import Share from "./assets/icons/event_list/share.svg";
+import Book from "./assets/icons/event_list/bookmark.svg";
+import { API_URL, readApiResponse } from "../api/axios";
+import { useNavigate } from "react-router";
+function MemberGalleryRoute() {
+    const [isLoading, setIsLoading] = useState(true);
+    const PLACEHOLDER_IMAGE = "/assets/images/dashboard/simple.png";
+    const [memberGallery, setMemberGallery] = useState([]);
+    const [search, setSearch] = useState("");
+    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 9;
-
-    // Mock stats
-    const [memberCount, setMemberCount] = useState(15);
-    const [eventDay, setEventDay] = useState(24);
-
-    useEffect(() => {
-        // Mock fetch member gallery
-        const fetchGallery = async () => {
-            setLoading(true);
-            try {
-                // In reality, this would fetch from an API
-                const dummyData = []; // Populate if needed
-                setCards(dummyData);
-            } catch (error) {
-                console.error("Failed to load galleries", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchGallery();
-    }, []);
-
-    const totalPages = useMemo(() => Math.ceil(cards.length / pageSize), [cards.length, pageSize]);
-
-    const paginatedCards = useMemo(() => {
-        const start = (currentPage - 1) * pageSize;
-        return cards.slice(start, start + pageSize);
-    }, [currentPage, cards, pageSize]);
-
-    const chunkedCards = useMemo(() => {
-        const chunkSize = 3;
-        const chunks = [];
-        for (let i = 0; i < paginatedCards.length; i += chunkSize) {
-            chunks.push(paginatedCards.slice(i, i + chunkSize));
+    const itemsPerPage = 9;
+    const [savedLibrary, setSavedLibrary] = useState(() => {
+        try {
+            return JSON.parse(
+                localStorage.getItem("savedLibrary") || "[]"
+            );
+        } catch {
+            return [];
         }
-        return chunks;
-    }, [paginatedCards]);
-
+    });
+    const toggleBookmark = (item, category) => {
+        const itemId = item.id ?? item.gallery_id;
+        const alreadySaved = savedLibrary.some(
+            (saved) =>
+                saved.id === itemId &&
+                saved.category === category
+        );
+        let updatedLibrary;
+        if (alreadySaved) {
+            updatedLibrary = savedLibrary.filter(
+                (saved) =>
+                    !(
+                        saved.id === itemId &&
+                        saved.category === category
+                    )
+            );
+        } else {
+            const firstPhoto = item?.photos?.[0] || {};
+            const libraryItem = {
+                id: itemId,
+                category,
+                gallery_type: "member",
+                title: item?.gallery_name || firstPhoto?.title || "Gallery",
+                description: item?.description || firstPhoto?.description || "",
+                date: item?.created_at || firstPhoto?.created_at || "",
+                image: firstPhoto?.image_url || firstPhoto?.image || firstPhoto?.large_url || firstPhoto?.medium_url || "",
+                photos: item?.total_photos ?? item?.photos?.length ?? 0,
+                likes: item?.total_likes ?? firstPhoto?.likes_count ?? 0,
+                comments: item?.total_comments ?? firstPhoto?.comments_count ?? firstPhoto?.comments?.length ?? 0,
+                originalData: item,
+                savedAt: new Date().toISOString(),
+            };
+            updatedLibrary = [...savedLibrary, libraryItem];
+        }
+        localStorage.setItem("savedLibrary", JSON.stringify(updatedLibrary));
+        setSavedLibrary(updatedLibrary);
+    };
+    const isBookmarked = (id, category) => {
+        return savedLibrary.some((item) => item.id === id && item.category === category);
+    };
+    const getMemberGallery = async () => {
+        try {
+            const response = await fetch(
+                `${API_URL}/members-galleries`,
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                }
+            );
+            const data = await readApiResponse(response);
+            if (!response.ok) {
+                throw new Error(data?.message || `API Error ${response.status}`);
+            }
+            setMemberGallery(Array.isArray(data?.data) ? data.data : []);
+        } catch (error) {
+            console.error("getMemberGallery failed:", error);
+            setMemberGallery([]);
+        }
+    };
+    useEffect(() => {
+        const loadData = async () => {
+            setIsLoading(true);
+            await getMemberGallery();
+            setIsLoading(false);
+        };
+        loadData();
+    }, []);
+    const allMemberGalleries = useMemo(() => {
+        return memberGallery.flatMap((member) => {
+            if (Array.isArray(member?.galleries)) {
+                return member.galleries.map((gallery) => ({
+                    ...gallery,
+                    member_id: gallery?.member_id ?? member?.id,
+                    member_name:
+                        `${member?.first_name || ""} ${member?.last_name || ""}`.trim() ||
+                        member?.username ||
+                        "",
+                }));
+            }
+            if (Array.isArray(member?.photos)) {
+                return [member];
+            }
+            return [];
+        });
+    }, [memberGallery]);
+    const totalImages = useMemo(() => {
+        return allMemberGalleries.reduce((sum, gallery) => sum + Number(gallery?.total_photos ?? gallery?.photos?.length ?? 0), 0);
+    }, [allMemberGalleries]);
+    const totalLikes = useMemo(() => {
+        return allMemberGalleries.reduce((sum, gallery) => {
+            const photoLikes = gallery?.photos?.reduce((photoSum, photo) => photoSum + Number(photo?.likes_count ?? 0), 0) ?? 0;
+            return (sum + Number(gallery?.total_likes ?? photoLikes));
+        }, 0);
+    }, [allMemberGalleries]);
+    const totalComments = useMemo(() => {
+        return allMemberGalleries.reduce((sum, gallery) => {
+            const photoComments = gallery?.photos?.reduce((photoSum, photo) => photoSum + Number(photo?.comments_count ?? photo?.comments?.length ?? 0), 0) ?? 0;
+            return (sum + Number(gallery?.total_comments ?? photoComments));
+        }, 0);
+    }, [allMemberGalleries]);
+    const totalInteractions = totalLikes + totalComments;
+    const filteredMemberGalleries = useMemo(() => {
+        const value = search.trim().toLowerCase();
+        if (!value) {
+            return allMemberGalleries;
+        }
+        return allMemberGalleries.filter((gallery) => {
+            const firstPhoto = gallery?.photos?.[0];
+            return [gallery?.gallery_name, gallery?.member_name, firstPhoto?.title,].some((field) => String(field || "").toLowerCase().includes(value));
+        });
+    }, [allMemberGalleries, search]);
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search]);
+    const totalPages = Math.max(1, Math.ceil(filteredMemberGalleries.length / itemsPerPage));
+    const paginatedGalleries = useMemo(() => {
+        const start = (currentPage - 1) * itemsPerPage;
+        return filteredMemberGalleries.slice(start, start + itemsPerPage);
+    }, [filteredMemberGalleries, currentPage]);
     const goToPage = (page) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
         }
     };
-
+    const handleShare = async (gallery) => {
+        const galleryId = gallery?.gallery_id ?? gallery?.id;
+        const shareUrl = `${window.location.origin}/gallery/member/${galleryId}`;
+        try {
+            if (navigator.share) {
+                await navigator.share({ title: gallery?.gallery_name || "Gallery", url: shareUrl });
+            } else {
+                await navigator.clipboard.writeText(shareUrl);
+                alert("Gallery link copied to clipboard.");
+            }
+        } catch (error) {
+            if (error?.name !== "AbortError") {
+                console.error("Share failed:", error);
+            }
+        }
+    };
     return (
-        <div className="content" style={{ padding: '0 30px', backgroundColor: 'white' }}>
-            <NavigationRoute />
-            <HeaderRoute title="Member Galleries" />
-
-            <section>
-                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
-                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4" style={{ gap: '15px' }}>
-                        <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
-                            <div className="profile-left d-flex flex-column justify-content-center">
-                                <small className="greeting text-muted" style={{ fontSize: '18px' }}>Galleries uploaded by Club Members</small>
-                                <h2 className="name m-0 text-dark" style={{ fontSize: '30px', fontWeight: '500' }}>15 Member Galleries</h2>
-                                <small className="role text-danger" style={{ fontSize: '18px' }}>Average 20 Images</small>
-                            </div>
-                            <div className="d-flex justify-content-end">
-                                <div className="dt-search">
-                                    <input type="search" style={{ width: '250px' }} className="form-control" placeholder="Search" />
+        <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
+            <Loader show={isLoading} />
+            {!isLoading && (
+                <>
+                    <NavigationRoute />
+                    <HeaderRoute title="Member Galleries" />
+                    <div className="content">
+                        <section>
+                            <div className="container" style={{ maxWidth: "1820px" }}>
+                                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                                    <div className="profile-card bg-white shadow-sm rounded p-4 d-flex align-items-center justify-content-between" style={{ height: "148px", width: "65.8%" }}>
+                                        <div className="profile-left">
+                                            <div className="profile-info">
+                                                <small className="greeting text-muted" style={{ fontSize: "18px" }}>
+                                                    Galleries uploaded by Club Members
+                                                </small>
+                                                <h2 className="name m-0" style={{ fontSize: "30px", fontWeight: "500", color: "#4c4036" }}>
+                                                    {allMemberGalleries.length}{" "}Member Galleries
+                                                </h2>
+                                                <small className="role mt-2 d-block" style={{ fontSize: "18px", color: "#cc445e" }}>
+                                                    Average {totalImages} Images
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div className="search-bar d-flex">
+                                            <input type="search" className="search-input" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                            <i className="fas fa-search"></i>
+                                        </div>
+                                    </div>
+                                    <div className="card-section d-flex gap-4" style={{ width: "32%" }}>
+                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: "#cc445e", width: "219px", height: "148px" }}>
+                                            <small style={{ fontSize: "20px" }}>
+                                                Images
+                                            </small>
+                                            <h3 className="mt-4" style={{ fontSize: "48px", fontWeight: "500" }}>
+                                                {totalImages}
+                                            </h3>
+                                        </div>
+                                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: "#755840", width: "219px", height: "148px" }}>
+                                            <small style={{ fontSize: "20px" }}>Interactions</small>
+                                            <div className="row mt-4">
+                                                <div className="col-md-5">
+                                                    <h3 className="m-0" style={{ fontSize: "48px", fontWeight: "500" }}>{totalInteractions}</h3>
+                                                </div>
+                                                <div className="col-md-7 text-start">
+                                                    <span style={{ fontSize: "16px" }}>Likes & Comments</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                            <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
-                                <small className="ca-details" style={{ fontSize: '20px' }}>Images</small>
-                                <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberCount}</h3>
-                            </div>
-                            <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                                <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
-                                <div className="row mt-4 align-items-center">
-                                    <div className="col-md-5">
-                                        <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{eventDay}</h3>
+                        </section>
+                        <section>
+                            <div className="container" style={{ maxWidth: "1810px", margin: "0 auto", padding: "0 15px" }}>
+                                <div className="card bg-white rounded p-4 mb-4 border-0">
+                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                        <h4>Member Galleries</h4>
                                     </div>
-                                    <div className="days col-md-7 text-start">
-                                        <span>Likes & Comments</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
-                    <div className="card bg-white rounded p-4 mb-4 border-0 h-auto">
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Member Galleries</h4>
-                        </div>
-
-                        {loading ? (
-                            <p>Loading...</p>
-                        ) : (
-                            <div className="row m-0">
-                                {chunkedCards.length > 0 ? chunkedCards.map((row, rowIndex) => (
-                                    <div key={`row-${rowIndex}`} className="row g-0 m-0">
-                                        {row.map((gallery, index) => (
-                                            <div key={gallery.id || index} className="galleriy col-4 p-0">
-                                                <div className="galleriy-item position-relative p-2">
-                                                    <img src={gallery.galleries?.[0]?.photos?.[0]?.image_url || 'placeholder.jpg'} alt="Gallery" className="img-fluid w-100" style={{ maxHeight: '370px', objectFit: 'cover' }} />
-                                                    <div className={`p-3 text-white ${index % 2 === 0 ? 'bg-secondary' : 'bg-dark'}`} style={{ backgroundColor: index % 2 === 0 ? '#99816b' : '#4c4036' }}>
-                                                        <div className="gal-item d-flex align-items-center gap-2 mb-2">
-                                                            <img src={gallery.profile_image_url || 'profile.jpg'} alt="Profile" className="rounded-circle" style={{ width: '30px', height: '30px', objectFit: 'cover' }} />
-                                                            <div className="gal-details fw-bold">
-                                                                <span>{gallery.galleries?.[0]?.gallery_name || 'Gallery Name'}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="profile-icon d-flex justify-content-between mt-2">
-                                                            <div className="icons d-flex align-items-center gap-1">
-                                                                <span>{gallery.gallery_total_photos || 0}</span>
-                                                                <img src={Ima} alt="icon" style={{ width: '14px', height: '14px' }} />
-                                                            </div>
-                                                            <div className="icons d-flex align-items-center gap-1">
-                                                                <span>{gallery.gallery_total_likes || 0}</span>
-                                                                <img src={Hea} alt="icon" style={{ width: '14px', height: '14px' }} />
-                                                            </div>
-                                                            <div className="icons d-flex align-items-center gap-1">
-                                                                <span>{gallery.gallery_total_comments || 0}</span>
-                                                                <img src={Com} alt="icon" style={{ width: '14px', height: '14px' }} />
+                                    <div className="row g-0 m-0">
+                                        {paginatedGalleries.length === 0 ? (
+                                            <div className="text-center text-muted py-5">
+                                                No galleries found
+                                            </div>
+                                        ) : (
+                                            paginatedGalleries.map((gallery, index) => {
+                                                const firstPhoto = gallery?.photos?.[0] || {};
+                                                const galleryId = gallery?.gallery_id ?? gallery?.id;
+                                                const image = firstPhoto?.image_url || firstPhoto?.large_url || firstPhoto?.medium_url || firstPhoto?.image || PLACEHOLDER_IMAGE || "";
+                                                const likes = gallery?.total_likes ?? gallery?.photos?.reduce((sum, photo) => sum + Number(photo?.likes_count ?? 0), 0) ?? 0;
+                                                const comments = gallery?.total_comments ?? gallery?.photos?.reduce((sum, photo) => sum + Number(photo?.comments_count ?? photo?.comments?.length ?? 0), 0) ?? 0;
+                                                return (
+                                                    <div key={galleryId} className="col-lg-4 col-md-6 p-0">
+                                                        <div className="galleriy">
+                                                            <div className="galleriy-item">
+                                                                {image ? (
+                                                                    <img src={image} alt={firstPhoto?.title || gallery?.gallery_name || "Gallery"} style={{ width: "493px", height: "370px", objectFit: "cover" }} onClick={() => navigate(`/gallery/member/${galleryId}`)} />
+                                                                ) : (
+                                                                    <div className="d-flex align-items-center justify-content-center bg-light text-muted" style={{ width: "493px", height: "370px" }}>
+                                                                        No image
+                                                                    </div>
+                                                                )}
+                                                                <div className="gallery-actions">
+                                                                    <img src={Book} alt="bookmark" className={isBookmarked(galleryId, "Galleries") ? "bookmark-icon active" : "bookmark-icon"} style={{ width: "20px", height: "20px", cursor: "pointer", }} onClick={() => toggleBookmark(gallery, "Galleries")} />
+                                                                    <img src={Share} alt="Share" style={{ width: "20px", height: "20px", cursor: "pointer", }} onClick={() => handleShare(gallery)} />
+                                                                </div>
+                                                                <div className="galleriy-infos" style={{ backgroundColor: index % 2 === 0 ? "#99816b" : "#4c4036", }}>
+                                                                    <div className="gal-item">
+                                                                        <span>{gallery?.gallery_name || firstPhoto?.title || "Gallery"}</span>
+                                                                    </div>
+                                                                    <div className="profile-icon d-flex justify-content-between">
+                                                                        <div className="icons">
+                                                                            <span>{gallery?.total_photos ?? gallery?.photos?.length ?? 0}</span>
+                                                                            <img src={Ima} alt="images" style={{ width: "14px", height: "14px", }} />
+                                                                        </div>
+                                                                        <div className="icons">
+                                                                            <span>{likes}</span>
+                                                                            <img src={Hea} alt="likes" style={{ width: "14px", height: "14px", }} />
+                                                                        </div>
+                                                                        <div className="icons">
+                                                                            <span>{comments}</span>
+                                                                            <img src={Com} alt="comments" style={{ width: "14px", height: "14px", }} />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        ))}
+                                                );
+                                            }
+                                            )
+                                        )}
                                     </div>
-                                )) : (
-                                    <p className="text-muted">No member galleries available.</p>
-                                )}
+                                </div>
                             </div>
-                        )}
+                        </section>
+                        <section className="pb-5 mt-4">
+                            <div className="container" style={{ maxWidth: "1820px", }}>
+                                <div className="d-flex justify-content-end align-items-center">
+                                    {totalPages >
+                                        1 && (
+                                            <div className="dt-paging">
+                                                <nav aria-label="pagination">
+                                                    <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>
+                                                        ‹
+                                                    </button>
+                                                    {Array.from({ length: totalPages }, (_, index) => {
+                                                        const page = index + 1; return (
+                                                            <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)}>
+                                                                {page}
+                                                            </button>
+                                                        );
+                                                    }
+                                                    )}
+                                                    <button className="dt-paging-button next" disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>
+                                                        ›
+                                                    </button>
+                                                </nav>
+                                            </div>
+                                        )}
+                                </div>
+                            </div>
+                        </section>
                     </div>
-
-                    <div className="dt-paging d-flex justify-content-center py-4">
-                        <nav aria-label="pagination">
-                            <button className={`btn btn-light mx-1 ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(1)}>«</button>
-                            <button className={`btn btn-light mx-1 ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>‹</button>
-                            {[...Array(totalPages)].map((_, i) => (
-                                <button key={i + 1} className={`btn mx-1 ${i + 1 === currentPage ? 'btn-primary' : 'btn-light'}`} onClick={() => goToPage(i + 1)}>
-                                    {i + 1}
-                                </button>
-                            ))}
-                            <button className={`btn btn-light mx-1 ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>›</button>
-                            <button className={`btn btn-light mx-1 ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}`} disabled={currentPage === totalPages || totalPages === 0} onClick={() => goToPage(totalPages)}>»</button>
-                        </nav>
-                    </div>
-                </div>
-            </section>
+                </>
+            )}
         </div>
     );
-};
-
-export default MemberGallery;
+}
+export default MemberGalleryRoute;

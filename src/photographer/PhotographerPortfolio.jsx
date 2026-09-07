@@ -1,27 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import HeaderRoute from '../club_admin/HeaderRoute';
-
-// Mock dependencies
-// import PhotoRequests from '../post/PhotoRequests';
-// import PhotographerGalleries from '../post/PhotographerGalleries';
-// import SalesCards from '../post/SalesCards';
 // import c1 from "../assets/images/dashboard/c1.jpg";
 // import m1 from "../assets/images/dashboard/m1.png";
 // import m2 from "../assets/images/dashboard/m2.jpg";
 // import m3 from "../assets/images/dashboard/m3.jpg";
 // import pro from "../assets/images/dashboard/pro.png";
 // import qrCode from "../assets/images/profile/qr_code.png";
-
 function PhotographerPortfolio() {
     const [user] = useState({
         first_name: 'Photographer',
         profile_image: c1
     });
-
     const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const chunkedCards = useMemo(() => {
         const chunkSize = 3;
         const chunks = [];
@@ -30,7 +22,6 @@ function PhotographerPortfolio() {
         }
         return chunks;
     }, [cards]);
-
     useEffect(() => {
         const timer = setTimeout(() => {
             setCards([
@@ -42,7 +33,6 @@ function PhotographerPortfolio() {
         }, 1000);
         return () => clearTimeout(timer);
     }, []);
-
     return (
         <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
             <NavigationRoute />
@@ -53,7 +43,7 @@ function PhotographerPortfolio() {
                         <div className="profile-left d-flex align-items-center gap-3">
                             <img className="img-fluid rounded-circle" style={{ width: '108px', height: '108px', objectFit: 'cover' }} src={user.profile_image} alt="Profile" onError={(e) => e.target.src = '/placeholder.jpg'} />
                             <div className="profile-info">
-                                <h2 className="name m-0 text-dark fw-bold">{user.first_name}</h2>
+                                <h2 className="name m-0 text-dark head">{user.first_name}</h2>
                             </div>
                         </div>
                         <div className="profile-icons d-flex flex-column gap-2 text-danger">
@@ -80,9 +70,8 @@ function PhotographerPortfolio() {
                         </div>
                     </div>
                 </div>
-
                 <div className="card bg-white mt-4 border-0 rounded shadow-sm overflow-hidden p-4">
-                    <h4 className="fw-bold mb-4">My Portfolio</h4>
+                    <h4 className="head mb-4">My Portfolio</h4>
                     {loading ? (
                         <div className="text-center py-5 text-muted">Loading portfolio...</div>
                     ) : (
@@ -112,11 +101,9 @@ function PhotographerPortfolio() {
                         </div>
                     )}
                 </div>
-
                 <div className="mt-4">
                     <PhotographerGalleries />
                 </div>
-
                 <div className="row mt-4">
                     <div className="col-md-6">
                         <div className="bg-white rounded shadow-sm border border-light p-4 h-100">
@@ -128,7 +115,7 @@ function PhotographerPortfolio() {
                             <PhotoRequests />
                         </div>
                         <div className="bg-white rounded shadow-sm border border-light p-4 text-center">
-                            <h4 className="fw-bold text-start mb-4">My QR Code</h4>
+                            <h4 className="head text-start mb-4">My QR Code</h4>
                             <img src={qrCode} alt="QR CODE" style={{ width: '200px' }} className="mb-4" />
                             <hr className="text-muted w-75 mx-auto" />
                             <p className="text-secondary mb-0 mt-3">username.photo.cv</p>
@@ -139,5 +126,4 @@ function PhotographerPortfolio() {
         </div>
     );
 };
-
 export default PhotographerPortfolio;

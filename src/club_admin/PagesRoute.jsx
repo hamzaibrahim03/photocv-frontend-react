@@ -16,19 +16,14 @@ import Hand from "./assets/icons/quick_notice/hand.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Books from "./assets/icons/event_list/bookmark.svg"
 import Note from "./assets/icons/quick_notice/note.svg"
-
 function PagesRoute() {
     const navigate = useNavigate();
     const [pagesData, setPagesData] = useState({})
     const [pagesExtra, setPagesExtra] = useState({})
     const [isLoading, setIsLoading] = useState(true);
     const [rowsPerPage] = useState(4);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
-
-
-
     useEffect(() => {
         getPagesData();
         getPagesExtra();
@@ -38,8 +33,6 @@ function PagesRoute() {
             setIsLoading(false);
         }, 2000);
     }, []);
-
-
     async function getPagesData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/pages'
         const response = await fetch(url, {
@@ -48,15 +41,11 @@ function PagesRoute() {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
-
         const data = await response.json();
-
         console.log(data);
-
         setPagesData(data.data);
     };
     console.log(pagesData.original?.data)
-
     async function getPagesExtra() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/pages-extras'
         const response = await fetch(url, {
@@ -65,25 +54,17 @@ function PagesRoute() {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
-
         const data = await response.json();
-
         console.log(data);
-
         setPagesExtra(data.data);
     };
     console.log(pagesExtra)
-
-
-
-
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
             year: "numeric",
         });
-
     const formatTime = (datetimeStr) => {
         const date = new Date(datetimeStr);
         return date.toLocaleTimeString("en-US", {
@@ -92,36 +73,29 @@ function PagesRoute() {
             minute: "2-digit",
         });
     };
-
     const filteredPages = useMemo(() => {
         const pages = pagesData.original?.data || [];
-
         return pages.filter((pages) =>
             pages.name?.toLowerCase().includes(search.toLowerCase()) ||
             pages.event_date?.toLowerCase().includes(search.toLowerCase()) ||
             pages.description?.toLowerCase().includes(search.toLowerCase())
         );
     }, [pagesData, search]);
-
     const totalPages = useMemo(() => {
         return Math.max(
             Math.ceil(filteredPages.length / rowsPerPage),
             1
         );
     }, [filteredPages, rowsPerPage]);
-
     const paginatedPages = useMemo(() => {
         const start = (currentPage - 1) * rowsPerPage;
-
         return filteredPages.slice(start, start + rowsPerPage);
     }, [filteredPages, currentPage, rowsPerPage]);
-
     const goToPage = (page) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
         }
     };
-
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
@@ -181,7 +155,6 @@ function PagesRoute() {
                                     </div>
                                 </div>
                             </section>
-
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="row">
@@ -211,8 +184,8 @@ function PagesRoute() {
                                                                                     {page.description || 'No description provided.'}
                                                                                 </p>
                                                                                 <div className="button-group mt-3 d-flex">
-                                                                                    <button className="btn me-2" id="e-view">View</button>
-                                                                                    <button className="btn" id="e-edit">Edit</button>
+                                                                                    <button className="btn me-2" id="e-view" onClick={() => navigate(`/pages/${page.id}`)}>View</button>
+                                                                                    <button className="btn" id="e-edit" onClick={() => navigate(`/pages/${page.id}/edit`)}>Edit</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -223,24 +196,20 @@ function PagesRoute() {
                                                             <div className="text-center text-muted">No pages found.</div>
                                                         )}
                                                     </div>
-
                                                     <div className="dt-paging">
                                                         <nav aria-label="pagination">
-                                                            <button className={`dt-paging-button previous ${currentPage === 1 ? "disabled" : ""}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous" >
+                                                            <button className={`dt-paging-button previous ${currentPage === 1 ? "disabled" : ""}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous">
                                                                 ‹
                                                             </button>
-
                                                             {Array.from({ length: totalPages }, (_, index) => {
                                                                 const page = index + 1;
-
                                                                 return (
-                                                                    <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)} >
+                                                                    <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)}>
                                                                         {page}
                                                                     </button>
                                                                 );
                                                             })}
-
-                                                            <button className={`dt-paging-button next ${currentPage === totalPages ? "disabled" : ""}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next" >
+                                                            <button className={`dt-paging-button next ${currentPage === totalPages ? "disabled" : ""}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next">
                                                                 ›
                                                             </button>
                                                         </nav>
@@ -279,20 +248,17 @@ function PagesRoute() {
                                                     <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
                                                         <h5 className="head">More Pages</h5>
                                                         {pagesExtra.random_pages.map((page) => (
-                                                            <div className="event-list" >
-
+                                                            <div className="event-list">
                                                                 <div className="event-item" style={{ marginBottom: '10px' }} key={page.id}>
                                                                     {page.featured_image_url ? (
                                                                         <img className="img-fluid event-img" src={page.featured_image_url} />
                                                                     ) : (
                                                                         <div className="event-img fallback-box d-flex justify-content-center align-items-center"></div>
                                                                     )}
-
                                                                     <div className="event-details">
                                                                         <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
                                                                             <span className="text-secondary">{page.title}</span>
                                                                         </div>
-
                                                                         <div className="event-time" id="edate">
                                                                             <small className="event-date galtext">{formatDate(page.created_at)}</small><br />
                                                                             <small className="event-time-details galtext">{formatTime(page.created_at)}</small>
@@ -301,7 +267,6 @@ function PagesRoute() {
                                                                 </div>
                                                             </div>
                                                         ))}
-
                                                         <div className="button-group mt-auto">
                                                             <button className="btn btn-sm" id="e-view" onClick={() => navigate('/pages_single')}>
                                                                 View All
@@ -312,25 +277,22 @@ function PagesRoute() {
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </section>
-                                        </div >
-                                    </div >
-                                </div >
-                            </section >
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
                                     <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
                                 </div>
                             </footer>
-                        </div >
-
+                        </div>
                     </>
                 )
                 }
-            </div >
+            </div>
         </>
     );
 }
-
 export default PagesRoute;

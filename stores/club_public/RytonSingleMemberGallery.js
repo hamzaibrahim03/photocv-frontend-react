@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytonsinglemembergallery';
-
 export const useRytonSingleMemGalStore = defineStore('singleMemberGallery', {
   state: () => ({
     sinmemgalData: null,
@@ -17,21 +16,17 @@ export const useRytonSingleMemGalStore = defineStore('singleMemberGallery', {
     role: '',
     socialLinks: []
   }),
-
   actions: {
     async fetchRytonSingleMemGalData(galleryId) {
       this.loading = true;
       try {
         const response = await api.getAllRytonMemberSingleGalleries(galleryId);
         console.log("Single Member Gallery data =>", response.data);
-
         const gallery = response.data?.data?.memberGalleries?.original?.data?.galleries
           || response.data?.data?.galleries
           || response.data?.galleries
           || null;
-
         const member = response.data?.data?.memberGalleries?.original?.data?.member;
-
         if (member) {
           this.member = member;
           this.username = member.username || '';

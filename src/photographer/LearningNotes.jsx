@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import HeaderRoute from '../club_admin/HeaderRoute';
-
-// Mock dependencies
 import icon1 from '../assets/images/profile/icon.png';
 import c1 from '../assets/images/dashboard/c1.jpg';
-
-const LearningNotes = () => {
-    // Mock user
+function LearningNotes() {
     const [user] = useState({
         first_name: 'Photographer',
         profile_image: '/placeholder.jpg'
     });
-
     const [search, setSearch] = useState('');
-
     const [notes, setNotes] = useState([
         {
             title: 'Camera Focus',
@@ -42,14 +36,12 @@ const LearningNotes = () => {
             time: '1 day ago'
         }
     ]);
-
     const [selectedNote, setSelectedNote] = useState({
         title: 'Exposure in Photography',
         content: 'Exposure in photography refers to the amount of light...',
         image: c1,
         tag: 'Exposure'
     });
-
     return (
         <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
             <NavigationRoute />
@@ -60,7 +52,7 @@ const LearningNotes = () => {
                         <div className="profile-left d-flex align-items-center gap-3">
                             <img className="img-fluid rounded-circle" style={{ width: '108px', height: '108px', objectFit: 'cover' }} src={user.profile_image} alt="Profile" onError={(e) => e.target.src = '/placeholder.jpg'} />
                             <div className="profile-info">
-                                <h2 className="name m-0 text-dark fw-bold">{user.first_name}</h2>
+                                <h2 className="name m-0 text-dark head">{user.first_name}</h2>
                             </div>
                         </div>
                         <div className="profile-icons d-flex flex-column gap-2 text-danger">
@@ -87,7 +79,6 @@ const LearningNotes = () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="card bg-white mt-4 border-0 p-3 rounded shadow-sm">
                     <div className="d-flex justify-content-between align-items-center">
                         <div className="dt-search" style={{ width: '300px' }}>
@@ -96,7 +87,6 @@ const LearningNotes = () => {
                                 <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" className="form-control border-start-0 shadow-none" placeholder="Search" style={{ borderColor: '#a0846c' }} />
                             </div>
                         </div>
-
                         <div className="button-group d-flex align-items-center gap-2">
                             <button className="btn d-flex align-items-center gap-2 px-3 py-2 text-white border-0" style={{ backgroundColor: '#99816B' }}>
                                 <i className="fas fa-sticky-note"></i> Note
@@ -110,7 +100,6 @@ const LearningNotes = () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="notes-app d-flex mt-4 bg-white rounded shadow-sm overflow-hidden" style={{ height: '70vh' }}>
                     <aside className="sidebars overflow-auto" style={{ width: '400px', backgroundColor: '#ede5dd', borderRight: '1px solid #ddd' }}>
                         <div className="p-3">
@@ -120,7 +109,7 @@ const LearningNotes = () => {
                             </div>
                             {notes.map((note, index) => (
                                 <div key={index} className={`note-preview p-3 rounded mb-3 bg-white position-relative ${note.title === selectedNote.title ? 'shadow' : ''}`} style={{ borderLeft: '3px solid #a0846c', cursor: 'pointer' }} onClick={() => setSelectedNote({ ...note, image: c1, tag: 'Other' })}>
-                                    <h6 className="fw-bold mb-1">{note.title}</h6>
+                                    <h6 className="head mb-1">{note.title}</h6>
                                     <p className="text-secondary small mb-2">{note.description}</p>
                                     <div className="d-flex justify-content-between align-items-center mt-3">
                                         <span className="badge bg-light text-dark small border">{note.time}</span>
@@ -137,22 +126,18 @@ const LearningNotes = () => {
                             </div>
                         </div>
                     </aside>
-
                     <main className="editor flex-grow-1 p-4 overflow-auto bg-white">
                         <div className="d-flex justify-content-between align-items-center mb-4">
                             <span className="small text-muted">Last edited on Feb 7, 2025</span>
                             <button className="btn text-white px-4" style={{ backgroundColor: '#99816b' }}>Share</button>
                         </div>
-
                         <input
-                            className="form-control form-control-lg fw-bold border-0 bg-transparent px-0 mb-3 fs-3 shadow-none"
+                            className="form-control form-control-lg head border-0 bg-transparent px-0 mb-3 fs-3 shadow-none"
                             style={{ color: '#333' }}
                             value={selectedNote.title}
                             onChange={(e) => setSelectedNote({ ...selectedNote, title: e.target.value })}
                             placeholder="Note Title"
                         />
-
-                        {/* Mock Quill Toolbar */}
                         <div className="editor-container border rounded mb-3">
                             <div id="toolbar" className="bg-light p-2 border-bottom d-flex gap-2 flex-wrap text-secondary">
                                 <i className="fas fa-bold cursor-pointer p-1"></i>
@@ -176,11 +161,9 @@ const LearningNotes = () => {
                                 style={{ resize: 'none' }}
                             ></textarea>
                         </div>
-
                         <div className="note-image my-4">
                             <img src={selectedNote.image} alt="Note Attachment" className="img-fluid rounded w-100" style={{ maxHeight: '300px', objectFit: 'cover' }} />
                         </div>
-
                         <div className="d-flex gap-2 mt-4">
                             <span className="badge bg-secondary px-3 py-2">{selectedNote.tag}</span>
                         </div>
@@ -190,5 +173,4 @@ const LearningNotes = () => {
         </div>
     );
 };
-
 export default LearningNotes;

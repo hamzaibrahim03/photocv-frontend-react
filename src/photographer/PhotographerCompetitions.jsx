@@ -2,55 +2,38 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import HeaderRoute from '../club_admin/HeaderRoute';
-
-// Mock dependencies
 import CalendarDashboard from '../club_admin/Calendars/CalendarDashboard';
 import RecentSubmissions from '../club_admin/competitions/RecentSubmissions';
 import MoreCompetitions from '../club_admin/competitions/MoreCompetitions';
-import apiClient from '../../api/axios'; // assuming standard location
-
-const PhotographerCompetitions = () => {
+import apiClient from '../../api/axios';
+function PhotographerCompetitions() {
     const navigate = useNavigate();
-
     const [competitions, setCompetitions] = useState([]);
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 4;
-
-    // Stats
     const [eventDay, setEventDay] = useState(25);
-
-    // Mock API fetch
     const fetchCompetitions = async () => {
         try {
-            // const res = await apiClient.get('/competitions');
-            // setCompetitions(res.data.data);
-            setCompetitions([
-                { id: 1, name: 'Spring Contest', start_date: '2024-03-01', result_announcement_date: '2024-04-01', submission_deadline: '2024-03-15', theme_id: 'Nature', max_entries_print: 2, allowed_image_formats: 'JPG, PNG', description: 'Show us nature.', featured_image: '/placeholder.jpg' }
-            ]);
+            const res = await apiClient.get('/competitions');
+            setCompetitions(res.data.data);
         } catch (e) {
             console.error(e);
         }
     };
-
     useEffect(() => {
         fetchCompetitions();
     }, []);
-
     const fetchSearchedCompetitions = useCallback(async (query) => {
         try {
-            /* 
-            const response = await apiClient.get('/competitions', { params: { search_term: query }});
+            const response = await apiClient.get('/competitions', { params: { search_term: query } });
             setCompetitions(response.data.data);
-            */
         } catch (error) {
             console.error(error);
             setCompetitions([]);
         }
         setCurrentPage(1);
     }, []);
-
-    // Debounce search effect
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (search.length >= 3) {
@@ -59,10 +42,8 @@ const PhotographerCompetitions = () => {
                 fetchCompetitions();
             }
         }, 400);
-
         return () => clearTimeout(timeout);
     }, [search, fetchSearchedCompetitions]);
-
     const filteredCompetitions = useMemo(() => {
         let filtered = competitions;
         if (search.trim()) {
@@ -71,25 +52,20 @@ const PhotographerCompetitions = () => {
         const start = (currentPage - 1) * rowsPerPage;
         return filtered.slice(start, start + rowsPerPage);
     }, [competitions, search, currentPage]);
-
     const totalPages = useMemo(() => {
         const count = competitions.filter(c => c.name?.toLowerCase().includes(search.toLowerCase())).length;
         return Math.max(Math.ceil(count / rowsPerPage), 1);
     }, [competitions, search]);
-
     const nextPage = () => {
         if (currentPage < totalPages) setCurrentPage(p => p + 1);
     };
-
     const prevPage = () => {
         if (currentPage > 1) setCurrentPage(p => p - 1);
     };
-
     const formatDate = (dateStr) => {
         const d = new Date(dateStr);
         return isNaN(d) ? '' : d.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
     };
-
     return (
         <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
             <NavigationRoute />
@@ -100,7 +76,7 @@ const PhotographerCompetitions = () => {
                         <div className="profile-left">
                             <div className="profile-info">
                                 <small className="greeting text-muted" style={{ fontSize: '18px' }}>Planned and regular club competition</small>
-                                <h2 className="name m-0 text-dark fw-bold" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
+                                <h2 className="name m-0 text-dark head" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
                             </div>
                         </div>
                         <div className="search-bar position-relative" style={{ width: '250px' }}>
@@ -135,7 +111,6 @@ const PhotographerCompetitions = () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="row mt-4">
                     <div className="col-md-8">
                         <div className="container px-0">
@@ -147,7 +122,7 @@ const PhotographerCompetitions = () => {
                                                 <img src={competition.featured_image || '/placeholder.jpg'} alt="Competition" className="rounded" style={{ width: '200px', height: '150px', objectFit: 'cover' }} onError={(e) => { e.target.src = '/placeholder.jpg'; }} />
                                                 <div className="flex-grow-1">
                                                     <div className="d-flex justify-content-between align-items-center mb-3">
-                                                        <h5 className="m-0 fw-bold">{competition.name || 'Untitled Competition'}</h5>
+                                                        <h5 className="m-0 head">{competition.name || 'Untitled Competition'}</h5>
                                                         <div className="icon-container text-muted d-flex gap-3">
                                                             <i className="fa-regular fa-comment"></i>
                                                             <i className="fa-solid fa-camera"></i>
@@ -171,7 +146,6 @@ const PhotographerCompetitions = () => {
                                             </div>
                                         </div>
                                     ))}
-
                                     <nav className="mt-5">
                                         <ul className="pagination justify-content-center">
                                             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -191,7 +165,6 @@ const PhotographerCompetitions = () => {
                             )}
                         </div>
                     </div>
-
                     <div className="col-md-4">
                         <section className="d-flex flex-column gap-4">
                             <div className="bg-white rounded shadow-sm">
@@ -208,5 +181,4 @@ const PhotographerCompetitions = () => {
         </div>
     );
 };
-
 export default PhotographerCompetitions;

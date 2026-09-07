@@ -1,109 +1,71 @@
-<template>
-    <ClubSignup title="Let's Start!" subtitle="We just need a few basic details of the club." />
-    <div className="form">
-        <h5 className="head">Basic Details</h5>
-        <div className="row">
-            <div className="col-md-6 mb-3">
-                <label for="names"> Club Name </label>
-                <input type="text" className="form-control" />
-            </div>
-            <div className="col-md-6 mb-3">
-                <label for="tagline"> Club Tagline </label>
-                <input type="text" className="form-control" />
-            </div>
-        </div>
-        <h5 className="fw-semibold mb-3">Domain Type and Name Options</h5>
-
-        <div className="row">
-
-            <div className="col-md-6">
-                <div className="form-check">
+import React, { useState } from 'react';
+function Step1GeneralSignup({ onNext }) {
+    const [domainType, setDomainType] = useState('subdomain');
+    return (
+        <section>
+            <div className="container">
+                <form style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    <h5 className="head">Basic Details</h5>
                     <div className="row">
-                        <div className="col-md-4">
-                            <input className="form-check-input" type="radio" name="domain_type" id="subdomain" value="subdomain">
-                                <label className="form-check-label fw-semibold" for="subdomain">
-                                    Subdomain
-                                </label>
+                        <div className="col-md-6 mb-3">
+                            <label htmlFor="club-name">Club Name</label>
+                            <input id="club-name" type="text" className="form-control" style={{ height: '50px', fontSize: '16.61px', borderRadius: '5px', color: '#4C4036', border: '1.04px solid #99816B' }} />
                         </div>
-                        <div className="col-md-8">
-                            <span className="small text-muted d-block ms-4 mt-1">
-                                Use our domain, type your name
-                            </span>
+                        <div className="col-md-6 mb-3">
+                            <label htmlFor="club-tagline">Club Tagline</label>
+                            <input id="club-tagline" type="text" className="form-control" style={{ height: '50px', fontSize: '16.61px', borderRadius: '5px', color: '#4C4036', border: '1.04px solid #99816B' }} />
                         </div>
                     </div>
-                </div>
-
-                <div className="input-group mt-3">
-                    <input type="text" className="form-control" v-model="domainName" placeholder="yourclubname" />
-                    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        {{ selectedDomain }}
-                    </button>
-                    <ul className="dropdown-menu dropdown-menu-end">
-                        <li v-for="item in domainOptions" key="item">
-                            <a className="dropdown-item" href="#" @click.prevent="selectDomain(item)">
-                            {{ item }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div className="col-md-6">
-            <div className="form-check mb-2">
-                <div className="row">
-                    <div className="col-md-6">
-                        <input className="form-check-input" type="radio" name="domain_type" id="customdomain" value="customdomain">
-                            <label className="form-check-label fw-semibold" for="customdomain">
-                                Custom Domain
-                            </label>
+                    <h5 className="fw-semibold mb-3">Domain Type and Name Options</h5>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="col-md-12">
+                                <div className="premium-radio">
+                                    <input type="radio" id="subdomain" name="domain_type" value="subdomain" checked={domainType === 'subdomain'} onChange={(e) => setDomainType(e.target.value)} />
+                                    <label htmlFor="subdomain">
+                                        <div className="premium-radio-circle" />
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                Subdomain
+                                            </div>
+                                            <div className="premium-radio-description">
+                                                Use our domain, type your name
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="input-group mt-3">
+                                <input type="text" className="form-control" placeholder="yourclubname" disabled={domainType !== 'subdomain'} style={{ height: '50px', fontSize: '16.61px', borderRadius: '5px', color: '#4C4036', border: '1.04px solid #99816B' }} />
+                                <button className="btn btn-outline-secondary dropdown-toggle" type="button" disabled={domainType !== 'subdomain'}> .cameraclub.website </button>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="col-md-12">
+                                <div className="premium-radio">
+                                    <input type="radio" id="customdomain" name="domain_type" value="customdomain" checked={domainType === 'customdomain'} onChange={(e) => setDomainType(e.target.value)} />
+                                    <label htmlFor="customdomain">
+                                        <div className="premium-radio-circle" />
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                Custom Domain
+                                            </div>
+                                            <div className="premium-radio-description">
+                                                Use your own domain
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="text" className="form-control mt-3" placeholder="example.com" disabled={domainType !== 'customdomain'} style={{ height: '50px', fontSize: '16.61px', borderRadius: '5px', color: '#4C4036', border: '1.04px solid #99816B' }} />
+                        </div>
                     </div>
-                    <div className="col-md-6">
-                        <span className="small text-muted d-block ms-4 mt-1">Use your own domain</span>
+                    <div className="button-group" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                        <button className="btn btn-sm" id="edit" type="button" onClick={onNext}>Next</button>
                     </div>
-                </div>
+                </form>
             </div>
-            <input type="text" className="form-control mt-3" placeholder="example.com">
-        </div>
-
-    </div>
-
-    <div className="button-group" style={{ justify- content:left">
-    <button className="btn btn-sm" id="edit">Next</button>
-</div>
-</div >
-</template >
-
-<script setup>
-import { ref } from 'vue';
-
-const domainName = ref("");
-const selectedDomain = ref(".cameraclub.website");
-
-const domainOptions = [
-    ".cameraclub.website",
-    ".ca.cameraclub.website",
-    ".uk.cameraclub.website",
-    ".aus.cameraclub.website",
-];
-
-const selectDomain = (item) => {
-    selectedDomain.value = item;
-};
-</script>
-
-<style scoped>
-.form {
-     display: flex;
-     flex-direction: column;
-     gap: 24px;
+        </section>
+    );
 }
-.form-control {
-     height: 50px;
-     font-size: 16.61px;
-     font-weight: 400;
-     padding: 12px;
-     border-radius: 5px;
-     color: #4C4036;
-     border: 1.04px solid #99816B;
-}
-</style>
+export default Step1GeneralSignup;

@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytonsinglecomp';
-
 export const useRytonSingleCompStore = defineStore('sincomp', {
   state: () => ({
     sincompData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRytonSingleCompData(competition_id) {
       this.loading = true;

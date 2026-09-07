@@ -1,110 +1,105 @@
-<template>
-<div class="form">
-    <div class="row">
-        <div class="col-md-6">
-            <label for="Registration">Registration & Access Control</label>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="open" name="Access" value="Open" />&nbsp;
-                        <span>Open</span>
+import React from 'react';
+function Step3MembershipSignup({ onPrevious, onNext, onSkip }) {
+    return (
+        <div className="form" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="row">
+                <div className="col-md-6">
+                    <label htmlFor="registration">Registration & Access Control</label>
+                    <div className="row mb-3">
+                        {[
+                            'Open', 'Invite Only', 'Manual Approval'
+                        ].map(option => (
+                            <div className="col-md-6 mb-2" key={option}>
+                                <div className="premium-radio">
+                                    <input type="radio" id={`access-${option}`} name="access" value={option} />
+                                    <label htmlFor={`access-${option}`}>
+                                        <div className="premium-radio-circle"></div>
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                {option}
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="invite" name="Access" value="Invite Only" />&nbsp;
-                        <span>Invite</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="man" name="Access" value="Manual Approval" />&nbsp;
-                        <span>Manual</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label for="members">Members Directory Public Visibility</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="visible" name="visible" value="Visible" />&nbsp;
-                        <span>Visible</span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="invite" name="visible" value="Club Only" />&nbsp;
-                        <span>Club Only</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label for="comments">Comments</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="en" name="enable1" value="Enable" />&nbsp;
-                        <span>Enable</span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="disable1" name="enable1" value="Disable" />&nbsp;
-                        <span>Disable</span>
+                <div className="col-md-6">
+                    <label htmlFor="members">Members Directory Public Visibility</label>
+                    <div className="row mb-3">
+                        {[
+                            'Visible', 'Club Only'
+                        ].map(option => (
+                            <div className="col-md-6 mb-2" key={option}>
+                                <div className="premium-radio">
+                                    <input type="radio" id={`visible-${option}`} name="visible" value={option} />
+                                    <label htmlFor={`visible-${option}`}>
+                                        <div className="premium-radio-circle"></div>
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                {option}
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <label for="likes">Likes</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="enable" name="enable" value="Enable" />&nbsp;
-                        <span>Enable</span>
+            <div className="row">
+                <div className="col-md-6">
+                    <label htmlFor="comments">Comments</label>
+                    <div className="row mb-3">
+                        {[
+                            'Enable', 'Disable'
+                        ].map(option => (
+                            <div className="col-md-6 mb-2" key={option}>
+                                <div className="premium-radio">
+                                    <input type="radio" id={`comments-${option}`} name="comments" value={option} />
+                                    <label htmlFor={`comments-${option}`}>
+                                        <div className="premium-radio-circle"></div>
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                {option}
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="disable" name="enable" value="Disable" />&nbsp;
-                        <span>Disable</span>
+                <div className="col-md-6">
+                    <label htmlFor="likes">Likes</label>
+                    <div className="row mb-3">
+                        {[
+                            'Enable', 'Disable'
+                        ].map(option => (
+                            <div className="col-md-6 mb-2" key={option}>
+                                <div className="premium-radio">
+                                    <input type="radio" id={`likes-${option}`} name="likes" value={option} />
+                                    <label htmlFor={`likes-${option}`}>
+                                        <div className="premium-radio-circle"></div>
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                {option}
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
+            <div className="button-group" style={{ display: 'flex', justifyContent: 'flex-start', gap: '12px', alignItems: 'center' }}>
+                <button className="btn" id="e-view" type="button" onClick={onPrevious}>Previous</button>
+                <button className="btn" id="e-edit" type="button" onClick={onNext}>Next</button>
+                <a href="#" style={{ color: '#cc445e' }} onClick={(event) => { event.preventDefault(); onSkip?.(); }}>Skip</a>
+            </div>
         </div>
-    </div>
-    <div class="button-group" style="justify-content:left">
-        <button class="btn btn-sm" id="view">Previous</button>
-        <button class="btn btn-sm" id="edit">Next</button>
-        <a href="#" style="color: #cc445e">Skip</a>
-    </div>
-</div>
-</template>
-
-<script>
-export default {
-    name: "Step3Membership",
-};
-</script>
-
-<style scoped>
-.form {
-     display: flex;
-     flex-direction: column;
-     gap: 24px;
+    );
 }
-.form-control {
-     height: 50px;
-     font-size: 16.61px;
-     font-weight: 400;
-     padding: 12px;
-     border-radius: 5px;
-     color: #4C4036;
-     border: 1.04px solid #99816B;
-}
-</style>
+export default Step3MembershipSignup;

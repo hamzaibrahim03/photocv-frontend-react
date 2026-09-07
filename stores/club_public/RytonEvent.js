@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytonevent';
-
 export const useRytonEventStore = defineStore('event', {
   state: () => ({
     eventData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRytonEventData(domain) {
       this.loading = true;

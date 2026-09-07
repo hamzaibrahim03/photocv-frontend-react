@@ -5,19 +5,12 @@ import HeaderRoute from '../club_admin/HeaderRoute';
 import CalendarDashboard from '../club_admin/Calendars/CalendarDashboard';
 import QuickFilters from '../club_admin/events/QuickFilters';
 import MoreEvents from '../club_admin/events/MoreEvents';
-
-// Formatting
 import dayjs from 'dayjs';
-
-const PhotographerEventSingle = () => {
+function PhotographerEventSingle() {
     const navigate = useNavigate();
-
-    // Mock states
     const [memberCount, setMemberCount] = useState(50);
     const [eventDay, setEventDay] = useState(12);
     const [eventComments, setEventComments] = useState([]);
-
-    // In Vue version it reads `events.value[8]`. We'll just define a mock object.
     const [event, setEvent] = useState({
         name: 'Zoom Lecture',
         event_date: '2024-04-22T10:00:00Z',
@@ -32,25 +25,19 @@ const PhotographerEventSingle = () => {
         url: 'http://example.com',
         rsvp_detail: 'RSVP by April 20'
     });
-
     useEffect(() => {
-        // fetchEvents and fetchEventComments would go here
     }, []);
-
     const formattedStartDate = useMemo(() => {
         return event?.event_date ? dayjs(event.event_date).format('MMMM D, YYYY h:mm A') : '';
     }, [event]);
-
     const formatDate = (dateStr) => {
         const d = new Date(dateStr);
         return isNaN(d) ? '' : d.toLocaleDateString();
     };
-
     const formatTime = (dateStr) => {
         const d = new Date(dateStr);
         return isNaN(d) ? '' : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     };
-
     return (
         <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
             <NavigationRoute />
@@ -58,13 +45,12 @@ const PhotographerEventSingle = () => {
             <section className="content" style={{ padding: '0 30px' }}>
                 <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
                     <QuickFilters greeting="Viewing Event" name="Zoom Lecture" role="April 22, Tuesday" />
-
                     <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
                         <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
                             <small className="ca-details" style={{ fontSize: '20px' }}>Events</small>
                             <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberCount}</h3>
                         </div>
-                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                        <div className="event-cards text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
                             <small className="ca-details" style={{ fontSize: '20px' }}>Next Event</small>
                             <div className="row mt-4 align-items-center">
                                 <div className="col-md-5">
@@ -77,7 +63,6 @@ const PhotographerEventSingle = () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="row mt-4">
                     <div className="col-md-8">
                         <div className="custom-card bg-white p-4 rounded shadow-sm border border-light">
@@ -87,7 +72,7 @@ const PhotographerEventSingle = () => {
                                 </div>
                                 <div className="col-md-8 px-4">
                                     <div className="d-flex align-items-center justify-content-between mb-2">
-                                        <h5 className="fw-bold m-0">{event.name}</h5>
+                                        <h5 className="head m-0">{event.name}</h5>
                                         <div className="icon-container d-flex gap-3 text-muted">
                                             <i className="fas fa-comment-alt cursor-pointer"></i>
                                             <i className="fas fa-camera cursor-pointer"></i>
@@ -102,7 +87,6 @@ const PhotographerEventSingle = () => {
                                     <p className="text-secondary">{event.description}</p>
                                     <p className="text-secondary">{event.description}</p>
                                 </div>
-
                                 <div className="col-12">
                                     <hr className="my-3 text-muted" />
                                     <div className="row mb-2">
@@ -149,7 +133,6 @@ const PhotographerEventSingle = () => {
                                         <div className="col-6"><h5 className="text-muted fs-6">RSVP Detail</h5></div>
                                         <div className="col-6"><h5 className="fs-6 fw-normal">{event.rsvp_detail}</h5></div>
                                     </div>
-
                                     <div className="row mt-4 mb-4">
                                         <div className="col-6">
                                             <div className="d-flex align-items-center gap-2">
@@ -158,7 +141,6 @@ const PhotographerEventSingle = () => {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div className="d-flex gap-2">
                                         <button className="btn text-white px-4" style={{ backgroundColor: '#99816b' }} onClick={() => navigate(-1)}>Back</button>
                                         <button className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }}>Edit</button>
@@ -167,15 +149,13 @@ const PhotographerEventSingle = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className="col-md-4">
                         <section className="d-flex flex-column gap-4">
                             <div className="bg-white rounded shadow-sm">
                                 <CalendarDashboard />
                             </div>
-
                             <div className="bg-white rounded shadow-sm p-4 d-flex flex-column" style={{ minHeight: '300px' }}>
-                                <h5 className="fw-bold mb-4">Recent Comments</h5>
+                                <h5 className="head mb-4">Recent Comments</h5>
                                 <div className="d-flex flex-column gap-3 mb-4">
                                     {eventComments.slice(0, 4).map(c => (
                                         <div key={c.id}>
@@ -202,7 +182,6 @@ const PhotographerEventSingle = () => {
                                     <button className="btn text-white w-50" style={{ backgroundColor: '#4c4036' }} onClick={() => navigate('/notice_single')}>Add New</button>
                                 </div>
                             </div>
-
                             <MoreEvents />
                         </section>
                     </div>
@@ -211,5 +190,4 @@ const PhotographerEventSingle = () => {
         </div>
     );
 };
-
 export default PhotographerEventSingle;

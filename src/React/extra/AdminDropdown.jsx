@@ -1,77 +1,65 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
-
-function AdminDropdown({
-    isLoggedIn,
-    profileImageUrl,
-    username,
-    handleLogout,
-}) {
+import { Link, useNavigate } from "react-router";
+function AdminDropdown({ dashboardData }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    const isLoggedIn = !!token;
+    const firstName = storedUser?.first_name || dashboardData?.data?.user_details?.first_name || "";
+    const profileImage = storedUser?.profile_image_url || dashboardData?.data?.user_details?.profile_image_url || "";
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/");
+    };
     const toggleDropdown = () => {
         setIsDropdownOpen((prev) => !prev);
     };
-
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (!e.target.closest(".admin-dropdown")) {
                 setIsDropdownOpen(false);
             }
         };
-
         document.addEventListener("click", handleClickOutside);
-
         return () => {
             document.removeEventListener("click", handleClickOutside);
         };
     }, []);
-
     return (
-        <div className="admin-dropdown position-relative" style={{ display: "flex", alignItems: "center", gap: "12px", }} >
-            {/* Profile Icon */}
-            <div className="icon profile-mobile">
-                {isLoggedIn && profileImageUrl ? (
-                    <img src={profileImageUrl} alt="Profile" style={{ width: "44px", height: "44px", borderRadius: "50%", objectFit: "cover", }} />
+        <div className="admin-dropdown position-relative" style={{ display: "flex", alignItems: "center", gap: "12px", }}>
+            {isLoggedIn && profileImage ? (
+                <img src={profileImage} alt="Profile" style={{ cursor: "pointer" }} />
+            ) : (
+                <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
+            )}
+            <span>
+                {isLoggedIn ? firstName : "Login"}
+                <i className="fa-solid fa-chevron-down ms-2"></i>
+            </span>
+            <div className="dropdown-menu">
+                {isLoggedIn ? (
+                    <>
+                        <a onClick={() => navigate("/dashboard/profile")}>
+                            Profile
+                        </a>
+                        <a onClick={handleLogout}>
+                            Log Out
+                        </a>
+                    </>
                 ) : (
-                    <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
+                    <>
+                        <a onClick={() => navigate("/login")}>
+                            Login
+                        </a>
+                        <a onClick={() => navigate("/signup")}>
+                            Register
+                        </a>
+                    </>
                 )}
             </div>
-
-            {/* Username OR Login */}
-            {isLoggedIn ? (
-                <span className="notification-desktop">
-                    {username}
-                </span>
-            ) : (
-                <Link to="/login" className="notification-desktop" style={{ textDecoration: "none" }} >
-                    Login
-                </Link>
-            )}
-
-            {/* Dropdown Arrow */}
-            <i className="fa-solid fa-chevron-down down notification-desktop" style={{ cursor: "pointer" }} onClick={(e) => {
-                e.stopPropagation();
-                toggleDropdown();
-            }}
-            />
-
-            {/* Dropdown Menu */}
-            {isDropdownOpen && (
-                <div className="dropdown-menu show" style={{ position: "absolute", top: "100%", right: 0, }} >
-                    {isLoggedIn ? (
-                        <button className="dropdown-item" onClick={handleLogout} >
-                            Log Out
-                        </button>
-                    ) : (
-                        <Link className="dropdown-item" to="/signup">
-                            Register
-                        </Link>
-                    )}
-                </div>
-            )}
         </div>
     );
 }
-
 export default AdminDropdown;

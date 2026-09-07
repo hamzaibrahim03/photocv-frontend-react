@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytonsinglenews';
-
 export const useRytonSingleNewsStore = defineStore('sinnews', {
   state: () => ({
     sinnewsData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRytonSingleNewsData(news_id) {
       this.loading = true;

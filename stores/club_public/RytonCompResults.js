@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytoncompresults';
-
 export const useRytonCompResultStore = defineStore('comp', {
   state: () => ({
     compresData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRytonCompResData(domain) {
       this.loading = true;

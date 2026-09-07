@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/clubdata';
-
 export const useHomeStore = defineStore('home', {
   state: () => ({
     homeData: {},
@@ -8,7 +7,6 @@ export const useHomeStore = defineStore('home', {
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchHomeData(domain) {
       this.loading = true;

@@ -1,5 +1,3 @@
-
-
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -10,6 +8,7 @@
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .btn {
   background: none;
 }
@@ -36,4 +35,140 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* ==========================================    PREMIUM RADIO GROUP
+========================================== */
+.premium-radio-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+/* ==========================================    RADIO WRAPPER
+========================================== */
+.premium-radio {
+  flex: 1;
+  position: relative;
+}
+
+.premium-radio input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================    RADIO CARD
+========================================== */
+.premium-radio label {
+  min-height: 52px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  border: 1px solid #d7ccc3;
+  border-radius: 7px;
+  background: #fff;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* ==========================================    HOVER
+========================================== */
+.premium-radio label:hover {
+  border-color: #2563eb;
+  background: #f8fbff;
+}
+
+/* ==========================================    SELECTED CARD
+========================================== */
+.premium-radio input:checked+label {
+  border-color: #2563eb;
+  background: linear-gradient(#fafdff,
+      #f2f7ff);
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.14);
+}
+
+/* ==========================================    OUTER RADIO CIRCLE
+========================================== */
+.premium-radio-circle {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-right: 10px;
+  border: 2px solid #c4cbd4;
+  border-radius: 50%;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+/* ==========================================    INNER DOT
+========================================== */
+.premium-radio-circle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2563eb;
+  transform:
+    translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
+}
+
+/* ==========================================    SELECTED CIRCLE
+========================================== */
+.premium-radio input:checked+label .premium-radio-circle {
+  border-color: #2563eb;
+  box-shadow:
+    0 0 0 5px rgba(37, 99, 235, 0.12);
+}
+
+/* ==========================================    SHOW DOT
+========================================== */
+.premium-radio input:checked+label .premium-radio-circle::after {
+  transform:
+    translate(-50%, -50%) scale(1);
+}
+
+/* ==========================================    TEXT
+========================================== */
+.premium-radio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.premium-radio-title {
+  font-size: 19px;
+  font-weight: 600;
+  color: #222;
+  text-transform: capitalize;
+}
+
+.premium-radio-description {
+  font-size: 7px;
+  color: #8a8a8a;
+  line-height: 1.3;
+}
+
+/* SELECTED TEXT */
+.premium-radio input:checked+label .premium-radio-title {
+  color: #2563eb;
+}
+
+/* ==========================================    MOBILE
+========================================== */
+@media (max-width: 600px) {
+  .premium-radio-group {
+    flex-direction: column;
+  }
 }

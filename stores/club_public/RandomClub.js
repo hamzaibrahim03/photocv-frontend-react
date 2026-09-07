@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/randomclubgallery';
-
 export const useRandomClub = defineStore('club', {
   state: () => ({
     clubrandom: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRandomClubGallery(domain) {
       this.loading = true;

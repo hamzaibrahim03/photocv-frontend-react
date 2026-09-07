@@ -13,7 +13,6 @@ function DashboardRoute() {
     const columns = 5;
     const [isLoading, setIsLoading] = useState(true);
     const columnss = 3;
-
     useEffect(() => {
         getDashboardData();
     }, []);
@@ -22,8 +21,6 @@ function DashboardRoute() {
             setIsLoading(false);
         }, 2000);
     }, []);
-
-
     async function getDashboardData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club/dashboard'
         const response = await fetch(url, {
@@ -32,11 +29,8 @@ function DashboardRoute() {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
-
         const data = await response.json();
-
         console.log(data);
-
         setDashboardData(data.data);
     };
     console.log(dashboardData)
@@ -48,14 +42,12 @@ function DashboardRoute() {
         if (hour >= 17 && hour < 21) return "Good evening!";
         return "Good night!";
     };
-
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-GB", {
             month: "long",
             day: "numeric",
             year: "numeric",
         });
-
     const formatTime = (datetimeStr) => {
         const date = new Date(datetimeStr);
         return date.toLocaleTimeString("en-US", {
@@ -66,10 +58,9 @@ function DashboardRoute() {
     };
     const upcomingEvents = useMemo(() => {
         const allEvents = dashboardData?.events || [];
-        console.log(Array.isArray(allEvents)); 
+        console.log(Array.isArray(allEvents));
         console.log(allEvents);
         const now = new Date();
-
         return allEvents
             .filter((event) => {
                 const eventDate = new Date(event.event_date);
@@ -77,11 +68,9 @@ function DashboardRoute() {
             })
             .sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
     });
-
     const upcomingCompetitions = useMemo(() => {
         const allCompetitions = dashboardData?.competitions || [];
         const now = new Date();
-
         return allCompetitions
             .filter((competition) => {
                 const competitionDate = new Date(competition.start_date);
@@ -89,24 +78,19 @@ function DashboardRoute() {
             })
             .sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
     });
-
     const latestNews = useMemo(() => {
         const allNews = dashboardData?.club_news || [];
-
         const now = new Date();
-
         return allNews
             .filter(news => new Date(news.publish_date) <= now)
             .sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date))
             .slice(0, 6);
     });
-
     const recentNotices = useMemo(() => {
         const notices = dashboardData?.member_notices || [];
         const now = new Date();
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(now.getDate() - 360);
-
         return notices
             .filter((notice) => {
                 const createdDate = new Date(notice.created_at);
@@ -115,36 +99,10 @@ function DashboardRoute() {
             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
             .slice(0, 6);
     });
-
-    const updateColumns = () => {
-        if (window.innerWidth < 575) {
-            columns = 1;
-        } else if (window.innerWidth < 991) {
-            columns = 2;
-        } else if (window.innerWidth < 1199) {
-            columns = 3;
-        } else {
-            columns = 5;
-        }
-    }
-
-    const updatedColumns = () => {
-        if (window.innerWidth < 575) {
-            columnss = 1;
-        } else if (window.innerWidth < 991) {
-            columnss = 2;
-        } else if (window.innerWidth < 1199) {
-            columnss = 3;
-        } else {
-            columnss = 3;
-        }
-    }
-
     const hexToRgba = (hex, alpha) => {
         let r = 0,
             g = 0,
             b = 0;
-
         if (hex.length === 4) {
             r = parseInt(hex[1] + hex[1], 16);
             g = parseInt(hex[2] + hex[2], 16);
@@ -154,39 +112,26 @@ function DashboardRoute() {
             g = parseInt(hex[3] + hex[4], 16);
             b = parseInt(hex[5] + hex[6], 16);
         }
-
         return `rgba(${r},${g},${b},${alpha})`;
     }
-
     const getPositionClass = (index, total) => {
         const row = Math.floor(index / columns);
         const col = index % columns;
         const lastIndex = total - 1;
-
         if (index === 0) return "top-left";
-
         if (row === 0 && col === columns - 1) return "top-right";
-
         if (row === Math.floor(lastIndex / columns) && col === 0) return "bottom-left";
-
         if (index === lastIndex) return "bottom-right";
-
         return "";
     }
-
     const getPositionedClass = (index, total) => {
         const row = Math.floor(index / columnss);
         const col = index % columnss;
         const lastIndex = total - 1;
-
         if (index === 0) return "top-left";
-
         if (row === 0 && col === columnss - 1) return "top-right";
-
         if (row === Math.floor(lastIndex / columnss) && col === 0) return "bottom-left";
-
         if (index === lastIndex) return "bottom-right";
-
         return "";
     }
     return (
@@ -215,68 +160,81 @@ function DashboardRoute() {
                                                         {dashboardData?.user_details?.role}
                                                     </p>
                                                 </div>
-                                            </div >
+                                            </div>
                                             <div className="profile-icons">
                                                 <div className="icon">
-                                                    <span>20</span>
+                                                    <span style={{ color: 'black' }}>{dashboardData?.clubGalleries?.original?.data?.total_photos}</span>
                                                     <img src={Image} alt="image-icon" />
                                                 </div>
                                                 <div className="icon">
-                                                    <span>53</span>
+                                                    <span style={{ color: 'black' }}>{dashboardData?.clubGalleries?.original?.data?.total_comments}</span>
                                                     <img src={Comment} alt="comment-icon" />
                                                 </div>
                                                 <div className="icon">
-                                                    <span>39</span>
+                                                    <span style={{ color: 'black' }}>{dashboardData?.clubGalleries?.original?.data?.total_likes}</span>
                                                     <img src={Point} alt="point-icon" />
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div className="card-section">
                                             <div className="stat-card">
                                                 <small className="ca-details">Members</small>
                                                 <h3 className="number">{String(dashboardData?.total_members_count).padStart(2, "0")}</h3>
                                             </div>
-
                                             <div className="event-cards">
-                                                <small className="ca-details">Next Event</small>
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <h3 className="number">{String(dashboardData?.upcoming_event?.remaining_days).padStart(2, "0")}</h3>
+                                                {dashboardData?.upcoming_event?.remaining_days !== undefined &&
+                                                    dashboardData?.upcoming_event?.remaining_days !== null ? (
+                                                    <>
+                                                        <small className="ca-details">Next Event</small>
+                                                        <div className="row">
+                                                            <div className="col-md-5">
+                                                                <h3 className="number">{String(dashboardData?.upcoming_event?.remaining_days).padStart(2, '0')}</h3>
+                                                            </div>
+                                                            <div className="days col-md-7">
+                                                                <span>days to go</span>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <div className="d-flex flex-column justify-content-center align-items-center">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                                            <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                            <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                            <path d="M32 4V12" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                            <path d="M6 20H20" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                            <path d="M42 20H31" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                            <path d="M4 4L44 44" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                                                        </svg>
+                                                        <h3 className="days">
+                                                            No upcoming events
+                                                        </h3>
                                                     </div>
-                                                    <div className="days col-md-7">
-                                                        <span>days to go</span>
-                                                    </div>
-                                                </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </section>
-
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dash-upcoming-sections">
                                         <div className="event-card d-flex flex-column">
                                             <h5 className="head">Upcoming Events</h5>
-
                                             {upcomingEvents.length > 0 ? (
                                                 <>
-                                                    <div className="event-list" >
+                                                    <div className="event-list">
                                                         {upcomingEvents.map((event, index) => (
                                                             <div className="event-item" key={index} style={{ marginBottom: "10px" }}>
                                                                 {event.featured_image_url ? (
-                                                                    <img className="img-fluid event-img" src={event.featured_image_url} alt="Event" error="event.featured_image_url = null" />
+                                                                    <img className="img-fluid event-img" src={event.featured_image_url} alt="Event" error="event.featured_image_url=null" />
                                                                 ) : (
                                                                     <div className="event-img fallback-box d-flex justify-content-center align-items-center">
                                                                     </div>
                                                                 )}
-
                                                                 <div className="event-details">
                                                                     <div className="event-info">
                                                                         <span id="ename">{event.name}</span>
                                                                     </div>
-
                                                                     <div className="event-time" id="edate">
                                                                         <small className="event-date galtext">{formatDate(event.event_date)}</small><br />
                                                                         <small className="event-time-details galtext">{formatTime(event.event_date)}</small>
@@ -300,20 +258,17 @@ function DashboardRoute() {
                                                     <span style={{ textAlign: 'center', width: '420px' }}>There are currently no events scheduled. Check back soon for updates!</span>
                                                 </div>
                                             )}
-
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/events')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/event')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/club-admin/events/create')}>
+                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/event/create')}>
                                                     Add New
                                                 </button>
                                             </div>
                                         </div>
-
                                         <div className="comp-card d-flex flex-column">
                                             <h5 className="head">Upcoming Competitions</h5>
-
                                             {upcomingCompetitions.length > 0 ? (
                                                 <>
                                                     <div className="event-list">
@@ -325,12 +280,10 @@ function DashboardRoute() {
                                                                     <div className="event-img fallback-box d-flex justify-content-center align-items-center">
                                                                     </div>
                                                                 )}
-
                                                                 <div className="event-details">
                                                                     <div className="event-info">
                                                                         <span id="ename">{comp.name}</span>
                                                                     </div>
-
                                                                     <div className="event-time" id="edate">
                                                                         <small className="event-date galtext">{formatDate(comp.start_date)}</small><br />
                                                                         <small className="event-time-details galtext">{formatTime(comp.start_date)}</small>
@@ -339,17 +292,9 @@ function DashboardRoute() {
                                                             </div>
                                                         ))}
                                                     </div>
-                                                    <div className="button-group mt-auto">
-                                                        <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/competitions')}>
-                                                            View All
-                                                        </button>
-                                                        <button className="btn btn-sm" id="new" onClick={() => navigate('/club-admin/competitions/create')}>
-                                                            Add New
-                                                        </button>
-                                                    </div>
                                                 </>
                                             ) : (
-                                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "250px", color: '#7FA483' }} >
+                                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "250px", color: '#7FA483' }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                                                         <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
@@ -358,23 +303,27 @@ function DashboardRoute() {
                                                         <path d="M42 20H31" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M4 4L44 44" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
-
                                                     <span>No competitions found</span>
-
-                                                    <span style={{ textAlign: "center", width: "400px", }} >
+                                                    <span style={{ textAlign: "center", width: "400px", }}>
                                                         There are currently no competitions scheduled. Check back soon for updates!
                                                     </span>
                                                 </div>
                                             )}
+                                            <div className="button-group mt-auto">
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/competitions')}>
+                                                    View All
+                                                </button>
+                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/competitions/create')}>
+                                                    Add New
+                                                </button>
+                                            </div>
                                         </div>
-
                                         <div className="calendar-card d-flex flex-column">
                                             <Calendar />
                                         </div>
                                     </div>
                                 </div>
                             </section>
-
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="upcoming-section">
@@ -398,19 +347,18 @@ function DashboardRoute() {
                                                 ))}
                                             </div>
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/members')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/members')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/club-admin/members/create')}>
+                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/members/create')}>
                                                     Add New
                                                 </button>
                                             </div>
                                         </div>
-
                                         <div className="card">
                                             <div className="d-flex justify-content-between align-items-center" style={{ padding: '10px' }}>
                                                 <h5 className="head">Member Galleries</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/galleries')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/member-gallery')}>
                                                     View All
                                                 </button>
                                             </div>
@@ -432,16 +380,14 @@ function DashboardRoute() {
                                     </div>
                                 </div>
                             </section>
-
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dash-upcoming-sections">
                                         <div className="result-card d-flex flex-column">
                                             <div className="d-flex justify-content-between mb-2">
                                                 <h5 className="head">Recent Results</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/results')}>View All</button>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/results')}>View All</button>
                                             </div>
-
                                             <div className="pic">
                                                 {dashboardData?.recent_results?.original?.data.slice(0, 6).map((item, index) => (
                                                     <div key={item.id} className={`pic-item ${getPositionedClass(index, dashboardData?.recent_results?.original?.data.slice(0, 6).length)}`}>
@@ -457,11 +403,10 @@ function DashboardRoute() {
                                                 ))}
                                             </div>
                                         </div>
-
                                         <div className="notice-card d-flex flex-column">
                                             <h5 className="head">Recent Notices</h5>
                                             {recentNotices.length > 0 ? (
-                                                <div className="event-list" >
+                                                <div className="event-list">
                                                     {recentNotices.map((notice, index) => (
                                                         <div className="event-item" key={notice.id}>
                                                             {notice.featured_image_url && (
@@ -482,8 +427,8 @@ function DashboardRoute() {
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "250px", color: '#7FA483' }} >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" >
+                                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "250px", color: '#7FA483' }}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                                                         <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M32 4V12" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
@@ -491,24 +436,21 @@ function DashboardRoute() {
                                                         <path d="M42 20H31" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M4 4L44 44" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
-
                                                     <span>No notices found</span>
-
                                                     <span style={{ textAlign: "center", width: "420px" }}>
                                                         There are currently no notices scheduled. Check back soon for updates!
                                                     </span>
                                                 </div>
                                             )}
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/notices')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/notices')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/club-admin/notices/create')}>
+                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/notices/create')}>
                                                     Add New
                                                 </button>
                                             </div>
                                         </div>
-
                                         <div className="news-card d-flex flex-column">
                                             <h5 className="head">Latest News</h5>
                                             {latestNews.length > 0 ? (
@@ -532,8 +474,8 @@ function DashboardRoute() {
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "250px", color: '#7FA483', }} >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" >
+                                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "250px", color: '#7FA483', }}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                                                         <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M32 4V12" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
@@ -541,27 +483,24 @@ function DashboardRoute() {
                                                         <path d="M42 20H31" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                         <path d="M4 4L44 44" stroke="#8EA390" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
-
                                                     <span>No news found</span>
-
                                                     <span style={{ textAlign: "center", width: "420px" }}>
                                                         There are currently no news scheduled. Check back soon for updates!
                                                     </span>
                                                 </div>
                                             )}
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/news')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/news')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/club-admin/news/create')}>
+                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/news/create')}>
                                                     Add New
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </section >
-
+                            </section>
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="upcoming-section" style={{ display: "flex" }}>
@@ -585,19 +524,18 @@ function DashboardRoute() {
                                                 ))}
                                             </div>
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/pages')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/pages')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="edit" onClick={() => navigate('/club-admin/pages/create')}>
+                                                <button className="btn btn-sm" id="edit" onClick={() => navigate('/pages/create')}>
                                                     Add New
                                                 </button>
                                             </div>
                                         </div>
-
                                         <div className="card">
                                             <div className="d-flex justify-content-between align-items-center" style={{ padding: '10px' }}>
                                                 <h5 className="head">Club Galleries</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-admin/galleries')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-galleries')}>
                                                     View All
                                                 </button>
                                             </div>
@@ -620,14 +558,13 @@ function DashboardRoute() {
                                         </div>
                                     </div>
                                 </div>
-                            </section >
+                            </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
                                     <p className="memtext" id="fcopy">Copyright &copy; 2025 – {dashboardData?.user_details?.username}</p>
                                 </div>
                             </footer>
                         </div>
-
                     </>
                 )
                 }
@@ -635,5 +572,4 @@ function DashboardRoute() {
         </>
     );
 }
-
 export default DashboardRoute;

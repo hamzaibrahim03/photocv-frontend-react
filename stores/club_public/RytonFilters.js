@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytonfilters';
-
 export const useRytonFilterStore = defineStore('filter', {
   state: () => ({
     filterData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRytonFilterData(domain) {
       this.loading = true;

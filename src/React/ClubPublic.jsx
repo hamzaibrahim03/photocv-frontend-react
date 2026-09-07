@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Loader from './extra/LoaderAll';
 import he from "he";
 import { useNavigate } from "react-router";
-
 function ClubPublic() {
     const navigate = useNavigate();
     const [clubData, setclubData] = useState([]);
@@ -22,7 +21,6 @@ function ClubPublic() {
             setIsLoading(false);
         }, 2000);
     }, []);
-
     async function getclubData() {
         const url = "http://rytonlocal-staging.cameraclub.website:8000/api/v1/club/public/about-us"
         let response = await fetch(url)
@@ -30,14 +28,11 @@ function ClubPublic() {
         setclubData(response.data)
     }
     console.log(clubData)
-
     const hexToRgba = (hex, alpha) => {
         if (!hex) return `rgba(0,0,0,${alpha})`;
-
         let r = 0,
             g = 0,
             b = 0;
-
         if (hex.length === 4) {
             r = parseInt(hex[1] + hex[1], 16);
             g = parseInt(hex[2] + hex[2], 16);
@@ -47,7 +42,6 @@ function ClubPublic() {
             g = parseInt(hex[3] + hex[4], 16);
             b = parseInt(hex[5] + hex[6], 16);
         }
-
         return `rgba(${r},${g},${b},${alpha})`;
     };
     const getByRole = (role) => {
@@ -64,7 +58,6 @@ function ClubPublic() {
                         <nav className="navbar navbar-expand-lg custom-navbar shadow-sm" style={{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, height: '108px' }}>
                             <Navbar />
                         </nav>
-
                         <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
                             <div className="carousel-indicators">
                                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -73,34 +66,30 @@ function ClubPublic() {
                                 <div className="carousel-item active">
                                     {
                                         clubData?.clubSettings?.original?.data?.settings?.cover_images?.length > 0 && (
-                                            <div className="hero-section" style={{ backgroundImage: `url(${clubData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }} >
+                                            <div className="hero-section" style={{ backgroundImage: `url(${clubData?.clubSettings?.original?.data?.settings?.cover_images[0]?.image_medium_url})` }}>
                                                 <div className="hero-overlay">
                                                     {
                                                         <div>
                                                             <h1 style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '400' }}>
                                                                 {clubData?.clubSettings?.original?.data?.club?.club_name}
                                                             </h1>
-
-                                                            <p className="cabout" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }} >
+                                                            <p className="cabout" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, fontWeight: '200' }}>
                                                                 {clubData?.clubSettings?.original?.data?.club?.about}
                                                             </p>
-
-                                                            <button id="overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color, }} >
+                                                            <button id="overlay-button" onClick={() => navigate('/rytonclub')} style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color, }}>
                                                                 Join Our Club
                                                             </button>
-
-                                                            <p className="prehead" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }} >
+                                                            <p className="prehead" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, paddingTop: '20px', }}>
                                                                 An NYCE Club based in Apps, North East England
                                                             </p>
-
                                                             <div className="d-flex">
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }}>
                                                                     <i className="fab fa-facebook-f"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }}>
                                                                     <i className="fab fa-instagram"></i>
                                                                 </a>
-                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }} >
+                                                                <a href="#" target="_blank" rel="noopener noreferrer" className="icon-circles" style={{ color: clubData?.clubSettings?.original?.data?.settings?.primary_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, textDecoration: 'none', }}>
                                                                     <span className="flickr-dots">
                                                                         <i className="fa fa-circle"></i>
                                                                         <i className="fa fa-circle"></i>
@@ -115,7 +104,6 @@ function ClubPublic() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="contents">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }} id="heads">
@@ -128,98 +116,90 @@ function ClubPublic() {
                                     </div>
                                 </div>
                             </section>
-
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }} id="overall">
                                     <p className="memtext">{clubData?.aboutUs?.description}</p>
-
                                     <div className="divider4"></div>
                                     <section>
                                         <div className="container" style={{ maxWidth: '1820px' }}>
                                             <h5 className="heading" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Club Officials</h5>
-
                                             <div className="row">
                                                 <div className="col-md-4">
                                                     <h2 className="main">Executive Committee</h2>
                                                     {getByRole("President").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 President
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("super_admin").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Chairman
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("club-admin").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Vice-Chair
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("Publicity & Events Officer").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Secretary
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Programme Secretary
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Treasurer
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
@@ -228,91 +208,86 @@ function ClubPublic() {
                                                 <div className="col-md-4">
                                                     <h2 className="main">Competition Secretaries</h2>
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Prints
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 PDI
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 External
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-                                                </div >
+                                                </div>
                                                 <div className="col-md-4">
                                                     <h2 className="main">Technical & Committee</h2>
                                                     {getByRole("General Members").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Webmaster
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("Internal Comp Secretary").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 IT Co-ordinator
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     {getByRole("Social Secretary").map((person) => (
-                                                        <div key={person.email} className="official" >
+                                                        <div key={person.email} className="official">
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                                 Social Secretary
                                                             </h1>
                                                             <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 {person.first_name} {person.last_name}
                                                             </h1>
-                                                            <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                            <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                 <i className="fa fa-envelope"></i> {person.email}
                                                             </small>
                                                         </div>
                                                     ))}
-
                                                     <div>
                                                         <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                             Committee Members
@@ -322,24 +297,21 @@ function ClubPublic() {
                                                                 <h1 className="list" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                     {person.first_name} {person.last_name}
                                                                 </h1>
-                                                                <small className="email" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
+                                                                <small className="emails" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                                     <i className="fa fa-envelope"></i> {person.email}
                                                                 </small>
                                                             </div>
                                                         ))}
-                                                    </div >
-                                                </div >
-                                            </div >
-                                        </div >
-                                    </section >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                     <div className="divider4"></div>
-
                                     <h5 className="head">Selection Committee</h5>
                                     <p>It had previously been agreed that henceforth the External Competition committee should comprise the three competition secretaries plus any competition NCPF judges that are members of the club.</p>
-
-                                </div >
-                            </section >
-
+                                </div>
+                            </section>
                             <section id="joincontainer">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div id="cls" className="join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style={{ backgroundColor: clubData?.clubSettings?.original?.data?.settings?.secondary_color }}>
@@ -351,14 +323,12 @@ function ClubPublic() {
                                                 Join the club and let’s create something amazing.
                                             </p>
                                         </div>
-
                                         <button className="btn" id="join-club" onClick={() => navigate('/rytonclub')} style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                             Join Club
                                         </button>
                                     </div>
                                 </div>
                             </section>
-
                             <section id="footer-section">
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div>
@@ -367,28 +337,24 @@ function ClubPublic() {
                                     </div>
                                 </div>
                             </section>
-
                             <section id="footer-section">
                                 <div className="container">
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">
                                                 <h5 className="head mb-4" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
-
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.address} </p>
                                                     <div className="icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-map-marker-alt"></i>
                                                     </div>
                                                 </div>
-
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.phone} </p>
                                                     <div className="icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
                                                         <i className="fas fa-phone"></i>
                                                     </div>
                                                 </div>
-
                                                 <div className="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
                                                     <p className="footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.email} </p>
                                                     <div className="icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
@@ -403,37 +369,34 @@ function ClubPublic() {
                                         <div className="col-12 col-md-4">
                                             <div className="social-col">
                                                 <h5 className="head mb-4 text-md-start text-center" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Social Links</h5>
-
                                                 <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
                                                     <div className="ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <p className="footer-text head mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
                                                         <a href="fb_link" target="_blank" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
                                                     </div>
                                                 </div>
-
                                                 <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
                                                     <div className="ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <p className="footer-text head mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
                                                         <a href="insta_link" target="_blank" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
                                                     </div>
                                                 </div>
-
                                                 <div className="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
                                                     <div className="ficon-circles me-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                         <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text fw-bold mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <p className="footer-text head mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
                                                         <a href="flickr_link" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>
@@ -444,20 +407,18 @@ function ClubPublic() {
                                     </div>
                                 </div>
                             </section>
-
                             <footer className="site-footer">
                                 <div className="footer-content">
                                     <p className="memtext" id="fcopy">Copyright &copy; 2025 – {clubData?.clubSettings?.original?.data?.club.club_name} </p>
                                     <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 'bold' }}>cameraclub.website</a></p>
                                 </div>
                             </footer>
-                        </div >
-                    </div >
+                        </div>
+                    </div>
                 )
                 }
-            </div >
+            </div>
         </>
     )
 }
-
 export default ClubPublic

@@ -1,6 +1,5 @@
 import apiClient from '@/api/axios';
 import { defineStore } from 'pinia';
-
 export const useClubFormStore = defineStore('clubForm', {
     state: () => ({
         step1: {
@@ -63,7 +62,6 @@ export const useClubFormStore = defineStore('clubForm', {
                 ...this.step4,
                 ...this.step5,
             };
-
             try {
                 const res = await apiClient.post('/api/submit-club', payload);
                 return res.data;

@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import api from '@/api/club_public/rytonnews';
-
 export const useRytonNewsStore = defineStore('news', {
   state: () => ({
     newsData: {},
     loading: false,
     error: null
   }),
-
   actions: {
     async fetchRytonNewsData(domain) {
       this.loading = true;

@@ -1,48 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import NavigationRoute from '../../components/NavigationRoute';
-import HeaderRoute from '../../components/HeaderRoute';
-import CalendarDashboard from '../../components/club_admin/Calendars/CalendarDashboard';
-import RecentSubmissions from '../../partials/club_admin/competitions/RecentSubmissions';
-import MoreCompetitions from '../../partials/club_admin/competitions/MoreCompetitions';
-import GlobalSettings from '../../partials/club_admin/competitionsadd/GlobalSettings';
-
-// Mock API
-// import apiClient from '../../api/axios';
-
-const NewsEdit = () => {
+import HeaderRoute from "./HeaderRoute";
+import NavigationRoute from "./NavigationRoute";
+import Loader from "../React/extra/LoaderAll";
+import Calendar from "../React/extra/CalendarRyton";
+import apiClient from '../api/axios';
+const initialFormData = {
+    title: '',
+    news_type: '',
+    description: '',
+    featured_image_url: '',
+    featured_image: null,
+    location: '',
+    link_page_url: '',
+    tags: [],
+    images: [],
+    documents: [],
+    status: 'draft',
+    poll: 'none',
+    comment_allowed: 'none',
+    created_at: '',
+};
+function NewsEdit() {
     const navigate = useNavigate();
     const { id } = useParams();
-
-    const [memberCount, setMemberCount] = useState(50);
-    const [competitionCount, setCompetitionCount] = useState(5);
-    const [eventDay, setEventDay] = useState(12);
-
-    const [formData, setFormData] = useState({
-        name: '',
-        competition_type_id: '',
-        description: '',
-        judging_type_id: '',
-        status: '',
-        start_date: '',
-        submission_deadline: '',
-        max_entries_digital: '',
-        max_entries_print: '',
-        max_file_size: '',
-        allowed_image_formats: '',
-        theme_id: '',
-        category_id: '',
-        print_vs_digital: '',
-        color_vs_mono: '',
-        judging_panel: '',
-        voting_method_id: '',
-        result_announcement_date: '',
-        top_places: '',
-        high_commendation_number: '',
-        commendation_number: '',
-        prizes: ''
-    });
-
+    const isEditMode = Boolean(id);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+    const [formData, setFormData] = useState(initialFormData);
+    const [newsData, setNewsData] = useState({});
+    const [newsExtra, setNewsExtra] = useState({});
+    const [tagInput, setTagInput] = useState('');
+    const [images, setImages] = useState([]);
+    const [documents, setDocuments] = useState([]);
+    const [existingImages, setExistingImages] = useState([]);
+    const [existingDocuments, setExistingDocuments] = useState([]);
+    const formatDateForInput = (date) => {
+        if (!date) return '';
+        const d = new Date(date);
+        if (Number.isNaN(d.getTime())) {
+            return '';
+        }
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+    const formatDateTimeForInput = (date) => {
+        if (!date) return '';
+        const d = new Date(date);
+        if (Number.isNaN(d.getTime())) {
+            return '';
+        }
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const hours = String(d.getHours()).padStart(2, '0');
+        const minutes = String(d.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
@@ -50,297 +66,606 @@ const NewsEdit = () => {
             [name]: type === 'checkbox' ? checked : value
         }));
     };
-
     useEffect(() => {
-        if (id) {
-            // Mock fetch
-        }
+        loadPage();
     }, [id]);
-
-    const submitForm = async (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        getNewsData();
+        getNewsExtras();
+    }, []);
+    const formatDate = (date) =>
+        new Date(date).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+        });
+    const formatTime = (datetimeStr) => {
+        const date = new Date(datetimeStr);
+        return date.toLocaleTimeString("en-US", {
+            weekday: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    };
+    const loadPage = async () => {
+        setIsLoading(true);
         try {
-            alert("News Edit saved successfully!");
-            navigate(-1);
+            if (isEditMode) {
+                const response = await apiClient.get(`/club-news/${id}`);
+                const news = response.data?.data ||
+                    response.data;
+                console.log('News:', news);
+                setFormData({
+                    ...initialFormData,
+                    title: news.title || '',
+                    news_type: news.news_type || '',
+                    description: news.description || '',
+                    featured_image_url: news.featured_image_url || '',
+                    location: news.location || '',
+                    link_page_url: news.link_page_url || '',
+                    tags: Array.isArray(news.tags)
+                        ? news.tags
+                        : [],
+                    status: news.status || 'draft',
+                    poll: news.poll || 'none',
+                    comment_allowed: news.comment_allowed || 'none',
+                    created_at: formatDateTimeForInput(news.created_at),
+                });
+                setExistingImages(
+                    Array.isArray(news.images)
+                        ? news.images
+                        : []
+                );
+                setExistingDocuments(
+                    Array.isArray(news.documents)
+                        ? news.documents
+                        : []
+                );
+            } else {
+                setFormData(initialFormData);
+                setImages([]);
+                setDocuments([]);
+                setExistingImages([]);
+                setExistingDocuments([]);
+            }
         } catch (error) {
-            console.error("Error submitting news edit:", error);
+            console.error(
+                'Error loading news:',
+                error
+            );
+            if (isEditMode) {
+                alert('Unable to load news.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
-
+    async function getNewsData() {
+        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-news'
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const data = await response.json();
+        console.log(data);
+        setNewsData(data.data);
+    };
+    console.log(newsData.original?.data)
+    async function getNewsExtras() {
+        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-news-extras'
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const data = await response.json();
+        console.log(data);
+        setNewsExtra(data.data);
+    };
+    console.log(newsExtra)
+    const submitForm = async (e) => {
+        e.preventDefault();
+        if (isSaving) return;
+        setIsSaving(true);
+        try {
+            const payload = new FormData();
+            payload.append('title', formData.title);
+            payload.append('news_type', formData.news_type);
+            payload.append('description', formData.description);
+            payload.append('location', formData.location);
+            payload.append('link_page_url', formData.link_page_url);
+            payload.append('status', formData.status);
+            payload.append('poll', formData.poll);
+            payload.append('urgency_importance', formData.urgency_importance);
+            payload.append('comment_allowed', formData.comment_allowed);
+            formData.tags.forEach(
+                (tag, index) => {
+                    payload.append(
+                        `tags[${index}]`,
+                        tag
+                    );
+                }
+            );
+            if (formData.featured_image) {
+                payload.append(
+                    'featured_image',
+                    formData.featured_image
+                );
+            }
+            images.forEach((image, index) => {
+                payload.append(
+                    `images[${index}]`,
+                    image
+                );
+            });
+            documents.forEach((document, index) => {
+                payload.append(
+                    `documents[${index}]`,
+                    document
+                );
+            });
+            if (isEditMode) {
+                payload.append('_method', 'PUT');
+                await apiClient.post(`/club-news/${id}`, payload);
+                alert('News updated successfully!');
+            } else {
+                await apiClient.post('/club-news', payload);
+                alert('News created successfully!');
+            }
+            navigate('/news');
+        } catch (error) {
+            console.error('Error saving news:', error);
+            console.error('Validation errors:', error.response?.data);
+            alert(error.response?.data?.message || 'Unable to save news.');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+    const handleThumbnailChange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setFormData(prev => ({
+            ...prev,
+            featured_image: file,
+            featured_image_url: URL.createObjectURL(file)
+        }));
+    };
+    const handleTagKeyDown = (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        const newTag = tagInput.trim();
+        if (!newTag) return;
+        if (formData.tags.includes(newTag)) {
+            setTagInput('');
+            return;
+        }
+        setFormData(prev => ({
+            ...prev,
+            tags: [...prev.tags, newTag]
+        }));
+        setTagInput('');
+    };
+    const removeTag = (tag) => {
+        setFormData(prev => ({
+            ...prev,
+            tags: prev.tags.filter(item => item !== tag)
+        }));
+    };
+    const handleImageUpload = (e) => {
+        const files = Array.from(
+            e.target.files || []
+        );
+        const availableSlots = Math.max(4 - images.length, 0);
+        setImages(prev => [
+            ...prev,
+            ...files.slice(0, availableSlots)
+        ]);
+        e.target.value = '';
+    };
+    const removeImage = (index) => {
+        setImages(prev =>
+            prev.filter((_, i) => i !== index)
+        );
+    };
+    const handleDocumentUpload = (e) => {
+        const files = Array.from(
+            e.target.files || []
+        );
+        const availableSlots = Math.max(4 - documents.length, 0);
+        setDocuments(prev => [
+            ...prev,
+            ...files.slice(0, availableSlots)
+        ]);
+        e.target.value = '';
+    };
+    const removeDocument = (index) => {
+        setDocuments(prev =>
+            prev.filter((_, i) => i !== index)
+        );
+    };
     return (
-        <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
-            <NavigationRoute />
-            <HeaderRoute title="Competitions" />
-            <div className="content" style={{ padding: '0 30px' }}>
-                <section>
-                    <div className="container px-0 mx-auto" style={{ maxWidth: '1810px' }}>
-                        <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
-                            <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
-                                <div className="profile-left">
-                                    <div className="profile-info">
-                                        <small className="greeting text-muted fs-6">Planned and Regular Club Competition</small>
-                                        <h2 className="name m-0 text-dark fw-bold fs-3">2024 - 2025 Season</h2>
-                                        <small className="role text-danger fs-6">{competitionCount} Competitions to go</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                                <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
-                                    <small className="ca-details fs-5">Competitions</small>
-                                    <h3 className="number mt-4 fw-medium" style={{ fontSize: '48px' }}>{memberCount}</h3>
-                                </div>
-                                <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                                    <small className="ca-details fs-5">Next Competition</small>
-                                    <div className="row mt-4 align-items-center">
-                                        <div className="col-md-5">
-                                            <h3 className="number m-0 fw-medium" style={{ fontSize: '48px' }}>{eventDay}</h3>
+        <>
+            <div style={{ backgroundColor: 'white' }}>
+                <Loader show={isLoading} />
+                {!isLoading && (
+                    <>
+                        <NavigationRoute />
+                        <HeaderRoute title="News" />
+                        <div className="content">
+                            <section>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="dashboard-card">
+                                        <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                                            <div className="profile-left">
+                                                <div className="profile-info">
+                                                    <small className="greeting">
+                                                        {isEditMode
+                                                            ? 'Edit News'
+                                                            : 'Add New News'}
+                                                    </small>
+                                                    <h2 className="name">
+                                                        {formData.title ||
+                                                            (isEditMode
+                                                                ? 'Edit News'
+                                                                : 'New News')}
+                                                    </h2>
+                                                    <small className="role">
+                                                        {isEditMode && formData.created_at
+                                                            ? formatDate(formData.created_at)
+                                                            : 'Create a new news'}
+                                                    </small>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="days col-md-7 text-start">
-                                            <span>days to go</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <div className="row container mx-auto px-0" style={{ maxWidth: '1810px' }}>
-                    <div className="col-md-8 px-0">
-                        <div className="bg-white p-4 rounded shadow-sm">
-                            <form onSubmit={submitForm}>
-                                <h5 className="fw-bold mb-4">Basic Information</h5>
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Competition Name</label>
-                                        <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Competition Type</label>
-                                        <input type="number" name="competition_type_id" value={formData.competition_type_id} onChange={handleChange} className="form-control" />
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <label className="form-label text-muted">Competition Description</label>
-                                <textarea name="description" value={formData.description} onChange={handleChange} className="form-control mb-3" style={{ height: '250px', resize: 'none' }}></textarea>
-                                <hr className="text-light my-4" />
-
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Judging Type</label>
-                                        <select name="judging_type_id" value={formData.judging_type_id} onChange={handleChange} className="form-select">
-                                            <option value=""></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                        </select>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Assign Judge</label>
-                                        <select className="form-select">
-                                            <option value=""></option>
-                                            <option value="Ammar">Ammar</option>
-                                            <option value="Sohaib">Sohaib</option>
-                                            <option value="Kamran">Kamran</option>
-                                            <option value="Sarfraz">Sarfraz</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <label className="form-label text-muted mb-3 d-block">Status</label>
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <div className="row">
-                                            {['scheduled', 'draft', 'postponed'].map(s => (
-                                                <div className="col-md-4" key={s}>
-                                                    <div className="form-check p-0 d-flex align-items-center gap-2 border rounded p-2">
-                                                        <input type="radio" name="status" value={s} checked={formData.status === s} onChange={handleChange} className="form-check-input m-0 ms-2" />
-                                                        <span className="text-capitalize">{s}</span>
+                                        <div className="card-section">
+                                            <div className="stat-card">
+                                                <small className="ca-details">News</small>
+                                                <h3 className="number">{newsExtra?.total_news}</h3>
+                                            </div>
+                                            <div className="event-cards">
+                                                <small className="ca-details">Last News</small>
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <h3 className="number">{newsExtra?.last_news_days_ago}</h3>
+                                                    </div>
+                                                    <div className="days col-md-7">
+                                                        <span>days ago</span>
                                                     </div>
                                                 </div>
-                                            ))}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6">
-                                        <div className="row">
-                                            {['cancelled', 'completed'].map(s => (
-                                                <div className="col-md-6" key={s}>
-                                                    <div className="form-check p-0 d-flex align-items-center gap-2 border rounded p-2">
-                                                        <input type="radio" name="status" value={s} checked={formData.status === s} onChange={handleChange} className="form-check-input m-0 ms-2" />
-                                                        <span className="text-capitalize">{s}</span>
+                                </div>
+                            </section>
+                            <section>
+                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                    <div className="row">
+                                        <div className="col-md-8">
+                                            <section>
+                                                <div className="container" style={{ maxWidth: '1820px' }}>
+                                                    <div className="mt-4">
+                                                        <div id="news">
+                                                            <div className="news-list">
+                                                                <div className="form-containers">
+                                                                    <form onSubmit={submitForm}>
+                                                                        <h5>Basic Information</h5>
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                <label for="title"> News Title </label>
+                                                                                <input type="text" name='title' id='title' className="form-control" value={formData.title} onChange={handleChange} required />
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <label htmlFor="news_type"> News Type </label>
+                                                                                <select id="news_type" name="news_type" className="form-control" value={formData.news_type} onChange={handleChange} required>
+                                                                                    <option value=""> - Select - </option>
+                                                                                    <option value="1"> General News </option>
+                                                                                    <option value="2"> Important News </option>
+                                                                                    <option value="3"> Event News </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                <label htmlFor="description"> News Body </label>
+                                                                                <textarea id="description" name="description" className="form-control" value={formData.description} onChange={handleChange} />
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <label htmlFor="featured_image"> Upload Thumbnail </label>
+                                                                                <input type="file" id="featured_image" className="form-control" accept="image/*" onChange={handleThumbnailChange} />
+                                                                                {formData.featured_image_url && (
+                                                                                    <img src={formData.featured_image_url} alt="News thumbnail" className="mt-2 rounded" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                <label for="link"> Location </label>
+                                                                                <input type="text" id="location" name="location" className="form-control" value={formData.location} onChange={handleChange} />
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <label for="link"> Link to related Page </label>
+                                                                                <input type="url" id="link" name="link" className="form-control" value={formData.link_url} onChange={handleChange} />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <div className="container col-md-12 mb-3">
+                                                                            <label>
+                                                                                Tags / Keywords
+                                                                            </label>
+                                                                            <div className="tag-dropdown">
+                                                                                <div className="d-flex flex-wrap gap-2 mb-2">
+                                                                                    {formData.tags.map((tag) => (
+                                                                                        <div className="tag" key={tag}>
+                                                                                            {tag}
+                                                                                            <button type="button" onClick={() => removeTag(tag)}>
+                                                                                                ×
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                </div>
+                                                                                <input type="text" placeholder="Type tag and press Enter..." className="sea" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={handleTagKeyDown} />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                <label for="image"> Image to be chosen </label>
+                                                                                <input type="file" id="imageUpload" className="form-control" accept="image/*" multiple disabled={images.length >= 4} onChange={handleImageUpload} />
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <label for="image"> Documents to be download </label>
+                                                                                <input type="file" id="docUpload" className="form-control" multiple disabled={documents.length >= 4} onChange={handleDocumentUpload} />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                <label for="upload"> Uploaded Images </label>
+                                                                                <div className="row mt-2">
+                                                                                    <div className="col-md-12">
+                                                                                        <div id="imagePreview" className="d-flex gap-2 flex-wrap">
+                                                                                            {images.map((img, index) => (
+                                                                                                <div key={index} className="position-relative border rounded p-1" style={{ width: '70px', height: '70px', background: '#f8f9fa' }}>
+                                                                                                    <img src={URL.createObjectURL(img)} alt={`Preview ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
+                                                                                                    <button type="button" className="btn btn-sm btn-danger position-absolute top-0 end-0" onClick={() => removeImage(index)}>
+                                                                                                        ×
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            ))}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <label for="Attachments"> Attachments </label>
+                                                                                <div className="row mt-2">
+                                                                                    <div className="col-md-12">
+                                                                                        <div className="d-flex gap-2 flex-wrap">
+                                                                                            {documents.map((doc, index) => (
+                                                                                                <div key={index} className="border rounded p-2 position-relative">
+                                                                                                    <i className="fa-regular fa-file me-2"></i>
+                                                                                                    {doc.name}
+                                                                                                    <button type="button" className="btn btn-sm ms-2" onClick={() => removeDocument(index)}>
+                                                                                                        ×
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            ))}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <div className="divider3"></div>
+                                                                        <h5>Settings</h5>
+                                                                        <div className="divider3"></div>
+                                                                        <label className="mb-3 d-block">
+                                                                            News Status
+                                                                        </label>
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                <div className="row">
+                                                                                    {[
+                                                                                        'active',
+                                                                                        'draft',
+                                                                                        'deleted'
+                                                                                    ].map(status => (
+                                                                                        <div className="col-md-4 mb-3" key={status}>
+                                                                                            <div className="premium-radio">
+                                                                                                <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
+                                                                                                <label htmlFor={`status-${status}`}>
+                                                                                                    <div className="premium-radio-circle" />
+                                                                                                    <div className="premium-radio-content">
+                                                                                                        <div className="premium-radio-title text-capitalize">
+                                                                                                            {status}
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <div className="row">
+                                                                                    {[
+                                                                                        'scheduled',
+                                                                                        'pending'
+                                                                                    ].map(status => (
+                                                                                        <div className="col-md-4 mb-3" key={status}>
+                                                                                            <div className="premium-radio">
+                                                                                                <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
+                                                                                                <label htmlFor={`status-${status}`}>
+                                                                                                    <div className="premium-radio-circle" />
+                                                                                                    <div className="premium-radio-content">
+                                                                                                        <div className="premium-radio-title text-capitalize">
+                                                                                                            {status}
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <label className="mb-3 d-block">
+                                                                            News Poll
+                                                                        </label>
+                                                                        <div className="row">
+                                                                            {[
+                                                                                'public',
+                                                                                'none',
+                                                                                'anonymous'
+                                                                            ].map(value => (
+                                                                                <div className="col-md-4" key={value}>
+                                                                                    <div className="premium-radio">
+                                                                                        <input type="radio" id={`poll-${value}`} name="poll" value={value} checked={formData.poll === value} onChange={handleChange} />
+                                                                                        <label htmlFor={`poll-${value}`}>
+                                                                                            <div className="premium-radio-circle" />
+                                                                                            <div className="premium-radio-content">
+                                                                                                <div className="premium-radio-title text-capitalize">
+                                                                                                    {value}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <label for="news_comment">News Comment Allowed</label>
+                                                                        <div className="row">
+                                                                            {[
+                                                                                'public',
+                                                                                'none',
+                                                                                'anonymous'
+                                                                            ].map(value => (
+                                                                                <div className="col-md-4" key={value}>
+                                                                                    <div className="premium-radio">
+                                                                                        <input type="radio" id={`comment-${value}`} name="comment_allowed" value={value} checked={formData.comment_allowed === value} onChange={handleChange} />
+                                                                                        <label htmlFor={`comment-${value}`}>
+                                                                                            <div className="premium-radio-circle" />
+                                                                                            <div className="premium-radio-content">
+                                                                                                <div className="premium-radio-title text-capitalize">
+                                                                                                    {value}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                        <div className="divider3"></div>
+                                                                        <div className="button-group">
+                                                                            <button type="button" className="btn me-2" id="e-view" onClick={() => navigate(-1)}>
+                                                                                Back
+                                                                            </button>
+                                                                            <button type="submit" className="btn" id="edit" disabled={isSaving}>
+                                                                                {isSaving ? 'Saving...' : isEditMode ? 'Update' : 'Save'}
+                                                                            </button>
+                                                                        </div>
+                                                                    </form >
+                                                                </div >
+                                                            </div >
+                                                        </div >
+                                                    </div >
+                                                </div >
+                                            </section>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <section>
+                                                <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
+                                                    <div className="calendar-card" style={{ width: '100%' }}>
+                                                        <Calendar />
+                                                    </div>
+                                                    <div id="news">
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">Recent Comments on News</h5>
+                                                            {newsData?.original?.data?.flatMap((news) => news.comments || [])?.slice(0, 4)?.map((comment) => (
+                                                                <div className="event-list" style={{ marginBottom: '10px' }} key={comment.id}>
+                                                                    <div className="event-item">
+                                                                        {comment.user?.profile_image_url ? (
+                                                                            <img className="img-fluid event-img" src={comment.user.profile_image_url} onError={(e) => {
+                                                                                e.currentTarget.style.display = 'none';
+                                                                            }} />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                                <i className="fa-regular fa-user" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details">
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span className="text-secondary">{comment?.comment}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(comment?.created_at)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(comment?.created_at)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">More News</h5>
+                                                            {newsData?.original?.data?.slice(0, 6)?.map((news) => (
+                                                                <div className="event-list" style={{ marginBottom: '10px' }} key={news.id}>
+                                                                    <div className="event-item">
+                                                                        {news.featured_image_url ? (
+                                                                            <img className="img-fluid event-img" src={news.featured_image_url} onError={(e) => {
+                                                                                e.currentTarget.style.display = 'none';
+                                                                            }} />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                                <i className="fa-regular fa-user" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details">
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span className="text-secondary">{news?.title}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(news?.created_at)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(news?.created_at)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                            <div className="button-group mt-auto">
+                                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/news')}>
+                                                                    View All
+                                                                </button>
+                                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/news/create')}>
+                                                                    Add New
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            ))}
+                                            </section>
                                         </div>
-                                    </div>
+                                    </div >
+                                </div >
+                            </section >
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
                                 </div>
-                                <hr className="text-light my-4" />
-
-                                <h5 className="fw-bold mb-4">Submission Rules</h5>
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Start Date & Time</label>
-                                        <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} className="form-control" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Deadlines for Submissions</label>
-                                        <input type="date" name="submission_deadline" value={formData.submission_deadline} onChange={handleChange} className="form-control" />
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Max Number of PDI Entries Per Participant</label>
-                                        <input type="number" name="max_entries_digital" value={formData.max_entries_digital} onChange={handleChange} className="form-control" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Max Number of PRINT Per Participant</label>
-                                        <input type="number" name="max_entries_print" value={formData.max_entries_print} onChange={handleChange} className="form-control" />
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Max File Size</label>
-                                        <input type="number" name="max_file_size" value={formData.max_file_size} onChange={handleChange} className="form-control" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Allowed Image Formats</label>
-                                        <select name="allowed_image_formats" value={formData.allowed_image_formats} onChange={handleChange} className="form-select">
-                                            <option value="" disabled>Allowed Image Formats</option>
-                                            <option value="active">Active</option>
-                                            <option value="enable">Enable</option>
-                                            <option value="diactive">Diactive</option>
-                                            <option value="disable">Disable</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <h5 className="fw-bold mb-4">Categories and Themes</h5>
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Theme (If applicable)</label>
-                                        <input type="number" name="theme_id" value={formData.theme_id} onChange={handleChange} className="form-control" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Competition Categories</label>
-                                        <input type="number" name="category_id" value={formData.category_id} onChange={handleChange} className="form-control" />
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Print vs Digital Submission</label>
-                                        <select name="print_vs_digital" value={formData.print_vs_digital} onChange={handleChange} className="form-select">
-                                            <option value="" disabled>print_vs_digital</option>
-                                            <option value="print">Print</option>
-                                            <option value="digital">Digital</option>
-                                        </select>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Colour vs. Monochrome</label>
-                                        <select name="color_vs_mono" value={formData.color_vs_mono} onChange={handleChange} className="form-select">
-                                            <option value="" disabled>color_vs_mono</option>
-                                            <option value="color">Color</option>
-                                            <option value="monochrome">Monochrome</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <h5 className="fw-bold mb-4">Judging and Scoring</h5>
-                                <label className="form-label text-muted">Judging Panels</label>
-                                <textarea name="judging_panel" value={formData.judging_panel} onChange={handleChange} className="form-control mb-3"></textarea>
-                                <hr className="text-light my-4" />
-
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Voting Method</label>
-                                        <input type="number" name="voting_method_id" value={formData.voting_method_id} onChange={handleChange} className="form-control" />
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <h5 className="fw-bold mb-4">Results & Awards</h5>
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Announcement Date</label>
-                                        <input type="date" name="result_announcement_date" value={formData.result_announcement_date} onChange={handleChange} className="form-control" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Awards - Top Places Available</label>
-                                        <input type="text" name="top_places" value={formData.top_places} onChange={handleChange} className="form-control" />
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Award - No. of High Commendations Available</label>
-                                        <input type="number" name="high_commendation_number" value={formData.high_commendation_number} onChange={handleChange} className="form-control" />
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Awards - Number of Commendations Available</label>
-                                        <input type="number" name="commendation_number" value={formData.commendation_number} onChange={handleChange} className="form-control" />
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <label className="form-label text-muted">Prizes (if any)</label>
-                                        <textarea name="prizes" value={formData.prizes} onChange={handleChange} className="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <hr className="text-light my-4" />
-
-                                <h5 className="fw-bold mb-4">Additional Features</h5>
-                                <div className="d-flex flex-column gap-2 mb-4">
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input shadow-none" id="feature1" />
-                                        <label className="form-check-label" htmlFor="feature1">Comments & Critique Section (For Consecutive Purpose)</label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input shadow-none" id="feature2" />
-                                        <label className="form-check-label" htmlFor="feature2">Auto generated Certificates (For Winners & Participants)</label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input shadow-none" id="feature3" />
-                                        <label className="form-check-label" htmlFor="feature3">Allow Feedback from the judges to be visible to participants</label>
-                                    </div>
-                                </div>
-
-                                <div className="button-group d-flex gap-2">
-                                    <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#99816b' }} onClick={() => navigate(-1)}>Back</button>
-                                    <button type="submit" className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }}>Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div className="col-md-4 px-3">
-                        <section className="d-flex flex-column gap-4">
-                            <div className="bg-white rounded shadow-sm">
-                                <CalendarDashboard />
-                            </div>
-                            <div className="d-flex flex-column gap-4 text-center">
-                                <RecentSubmissions />
-                                <MoreCompetitions />
-                                <GlobalSettings />
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            </footer>
+                        </div >
+                    </>
+                )
+                }
+            </div >
+        </>
     );
-};
-
+}
 export default NewsEdit;

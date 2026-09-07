@@ -1,9 +1,6 @@
-import React from "react";
 import "../assets/css/Loader.css";
-
 function Loader({ show }) {
   if (!show) return null;
-
   return (
     <>
       <div className="loader-overlay">
@@ -13,5 +10,4 @@ function Loader({ show }) {
     </>
   );
 }
-
 export default Loader;

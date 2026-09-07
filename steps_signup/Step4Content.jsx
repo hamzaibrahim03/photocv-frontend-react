@@ -1,98 +1,71 @@
-<template>
-<div class="form">
-    <label for="website"> Website Sections </label>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-control">
-                <input type="checkbox" /> <span>News</span>
+import React from 'react';
+function Step4ContentSignup({ onPrevious, onNext, onSkip }) {
+    const sections = ['News', 'Events', 'Galleries', 'Competitions'];
+    return (
+        <div className="form" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <label htmlFor="website">Website Sections</label>
+            <div className="row">
+                {sections.map((section) => (
+                    <div className="col-md-3" key={section}>
+                        <label className="form-control" style={{ display: 'flex', alignItems: 'center', gap: '8px', height: '50px', fontSize: '16.61px', borderRadius: '5px', color: '#4C4036', border: '1.04px solid #99816B' }}>
+                            <input type="checkbox" />
+                            <span>{section}</span>
+                        </label>
+                    </div>
+                ))}
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-control">
-                <input type="checkbox" /> <span>Events</span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-control">
-                <input type="checkbox" /> <span>Galleries</span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-control">
-                <input type="checkbox" /> <span>Competitions</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <label for="homepage">Homepage Content Blocks</label>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="all" name="homepage" value="All" />&nbsp;
-                        <span>All</span>
+            <div className="row">
+                <div className="col-md-6">
+                    <label htmlFor="homepage">Homepage Content Blocks</label>
+                    <div className="row mb-3">
+                        {[
+                            'All', 'Fewer', 'Fewest'
+                        ].map(option => (
+                            <div className="col-md-4 mb-2" key={option}>
+                                <div className="premium-radio">
+                                    <input type="radio" id={`homepage-${option}`} name="homepage" value={option} />
+                                    <label htmlFor={`homepage-${option}`}>
+                                        <div className="premium-radio-circle"></div>
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                {option}
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="fewer" name="homepage" value="Fewer" />&nbsp;
-                        <span>Fewer</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="fewest" name="homepage" value="Fewest" />&nbsp;
-                        <span>Fewest</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label for="reminder">Reminders</label>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="all" name="reminder" value="All" />&nbsp;
-                        <span>All</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="some" name="reminder" value="Some" />&nbsp;
-                        <span>Some</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-control">
-                        <input type="radio" id="none" name="reminder" value="None" />&nbsp;
-                        <span>None</span>
+                <div className="col-md-6">
+                    <label htmlFor="reminder">Reminders</label>
+                    <div className="row mb-3">
+                        {[
+                            'All', 'Some', 'None'
+                        ].map(option => (
+                            <div className="col-md-4 mb-2" key={option}>
+                                <div className="premium-radio">
+                                    <input type="radio" id={`reminder-${option}`} name="reminder" value={option} />
+                                    <label htmlFor={`reminder-${option}`}>
+                                        <div className="premium-radio-circle"></div>
+                                        <div className="premium-radio-content">
+                                            <div className="premium-radio-title">
+                                                {option}
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
+            <div className="button-group" style={{ display: 'flex', justifyContent: 'flex-start', gap: '12px', alignItems: 'center' }}>
+                <button className="btn" id="e-view" type="button" onClick={onPrevious}>Previous</button>
+                <button className="btn" id="e-edit" type="button" onClick={onNext}>Next</button>
+                <a href="#" style={{ color: '#cc445e' }} onClick={(event) => { event.preventDefault(); onSkip?.(); }}>Skip</a>
+            </div>
         </div>
-    </div>
-    <div class="button-group" style="justify-content:left">
-        <button class="btn btn-sm" id="view">Previous</button>
-        <button class="btn btn-sm" id="edit">Next</button>
-        <a href="#" style="color: #cc445e">Skip</a>
-    </div>
-</div>
-</template>
-
-<style scoped>
-.form {
-     display: flex;
-     flex-direction: column;
-     gap: 24px;
+    );
 }
-.form-control {
-     height: 50px;
-     font-size: 16.61px;
-     font-weight: 400;
-     padding: 12px;
-     border-radius: 5px;
-     color: #4C4036;
-     border: 1.04px solid #99816B;
-}
-</style>
+export default Step4ContentSignup;

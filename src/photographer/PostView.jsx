@@ -1,26 +1,17 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import HeaderRoute from '../club_admin/HeaderRoute';
-
-// Mock dependencies
-// import MyPosts from '../post/MyPosts';
-// import RecentComments from '../club_admin/notices/RecentComments';
-// import MoreNotices from '../club_admin/notices/MoreNotices';
-
-const PostView = () => {
+function PostView() {
     const [user] = useState({
         first_name: 'Photographer',
         profile_image: '/placeholder.jpg'
     });
-
     const [notices, setNotices] = useState([]);
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 4;
-
     const fetchNotices = async () => {
         try {
-            // Mock api logic
             setNotices([
                 { id: 1, title: 'Weekly Meeting', location: 'Zoom', created_at: '2024-04-10T08:00:00Z', description: 'Weekly sync up', featured_image: '/placeholder.jpg' }
             ]);
@@ -28,20 +19,16 @@ const PostView = () => {
             console.error(e);
         }
     };
-
     useEffect(() => {
         fetchNotices();
     }, []);
-
     const fetchSearchedNotices = useCallback(async (query) => {
         try {
-            // simulate api call
         } catch (e) {
             console.error(e);
         }
         setCurrentPage(1);
     }, []);
-
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (search.length >= 3) {
@@ -50,10 +37,8 @@ const PostView = () => {
                 fetchNotices();
             }
         }, 400);
-
         return () => clearTimeout(timeout);
     }, [search, fetchSearchedNotices]);
-
     const filteredNotices = useMemo(() => {
         let filtered = notices;
         if (search.trim()) {
@@ -62,25 +47,20 @@ const PostView = () => {
         const start = (currentPage - 1) * rowsPerPage;
         return filtered.slice(start, start + rowsPerPage);
     }, [notices, search, currentPage]);
-
     const totalPages = useMemo(() => {
         const count = notices.filter(n => n.title?.toLowerCase().includes(search.toLowerCase())).length;
         return Math.max(Math.ceil(count / rowsPerPage), 1);
     }, [notices, search]);
-
     const nextPage = () => {
         if (currentPage < totalPages) setCurrentPage(p => p + 1);
     };
-
     const prevPage = () => {
         if (currentPage > 1) setCurrentPage(p => p - 1);
     };
-
     const formatDate = (dateStr) => {
         const d = new Date(dateStr);
         return isNaN(d) ? '' : d.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
     };
-
     return (
         <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
             <NavigationRoute />
@@ -91,7 +71,7 @@ const PostView = () => {
                         <div className="profile-left d-flex align-items-center gap-3">
                             <img className="img-fluid rounded-circle" style={{ width: '108px', height: '108px', objectFit: 'cover' }} src={user.profile_image} alt="Profile" onError={(e) => e.target.src = '/placeholder.jpg'} />
                             <div className="profile-info">
-                                <h2 className="name m-0 text-dark fw-bold">{user.first_name}</h2>
+                                <h2 className="name m-0 text-dark head">{user.first_name}</h2>
                             </div>
                         </div>
                         <div className="profile-icons d-flex flex-column gap-2 text-danger">
@@ -118,16 +98,13 @@ const PostView = () => {
                         </div>
                     </div>
                 </div>
-
                 <div className="mt-4">
                     <MyPosts />
                 </div>
-
                 <div className="d-flex justify-content-between align-items-center py-4">
-                    <h5 className="m-0 fw-bold">My Notices</h5>
+                    <h5 className="m-0 head">My Notices</h5>
                     <button className="btn text-white px-4" style={{ backgroundColor: '#99816b' }}>View All</button>
                 </div>
-
                 <div className="row">
                     <div className="col-md-8">
                         <div className="container px-0">
@@ -139,7 +116,7 @@ const PostView = () => {
                                                 <img src={notice.featured_image || '/placeholder.jpg'} alt="Notice" className="rounded" style={{ width: '200px', height: '150px', objectFit: 'cover' }} onError={(e) => { e.target.src = '/placeholder.jpg'; }} />
                                                 <div className="flex-grow-1">
                                                     <div className="d-flex justify-content-between align-items-center mb-2">
-                                                        <h5 className="m-0 fw-bold">{notice.title || 'Untitled Notice'}</h5>
+                                                        <h5 className="m-0 head">{notice.title || 'Untitled Notice'}</h5>
                                                         <div className="icon-container text-muted d-flex gap-3">
                                                             <i className="fa-regular fa-comment"></i>
                                                             <i className="fa-solid fa-camera"></i>
@@ -157,7 +134,6 @@ const PostView = () => {
                                             </div>
                                         </div>
                                     ))}
-
                                     <nav className="mt-5">
                                         <ul className="pagination justify-content-center">
                                             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -177,7 +153,6 @@ const PostView = () => {
                             )}
                         </div>
                     </div>
-
                     <div className="col-md-4">
                         <section className="d-flex flex-column gap-4">
                             <RecentComments />
@@ -185,10 +160,8 @@ const PostView = () => {
                         </section>
                     </div>
                 </div>
-
             </section>
         </div>
     );
 };
-
 export default PostView;

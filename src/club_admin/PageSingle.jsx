@@ -1,417 +1,289 @@
-<template>
-<NavigationRoute />
-<HeaderRoute title="Notices" />
-<div className="content">
-    <section>
-        <div className="container">
-            <div className="dashboard-card">
-                <ProfileWithoutSearch greeting="New Notice" name="Title here" role="Dec 20, 2024" />
-                <div className="card-section">
-                    <div className="stat-card">
-                        <small className="ca-details">Notices</small>
-                        <h3 className="number">{{ MemberCount }}</h3>
-                    </div>
-                    <div className="event-card">
-                        <small className="ca-details">Last Notice</small>
-                        <div className="row">
-                            <div className="col-md-5">
-                                <h3 className="number">{{EventDay}}</h3>
-                            </div>
-                            <div className="days col-md-7">
-                                <span>days ago</span>
-                            </div>
-                        </div>
-                    </div>
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams, useNavigate, Link } from 'react-router';
+import dayjs from 'dayjs';
+import Calendar from "../React/extra/CalendarRyton";
+import HeaderRoute from "./HeaderRoute";
+import NavigationRoute from "./NavigationRoute";
+import Loader from "../React/extra/LoaderAll";
+import Pro from './assets/icons/event_list/pro.svg';
+import Cal from './assets/icons/event_list/cal.svg';
+import Cam from './assets/icons/event_list/cam.svg';
+import Mess from './assets/icons/event_list/mess.svg';
+function PageSingle() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    // Single page object
+    const [page, setpage] = useState(null);
+    const [pageExtra, setpageExtra] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const formatDate = (date) => {
+        if (!date) {
+            return '';
+        }
+        return new Date(date).toLocaleDateString('en-GB', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    };
+    const formatTime = (datetimeStr) => {
+        if (!datetimeStr) {
+            return '';
+        }
+        const date = new Date(datetimeStr);
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+    const formattedStartDate = useMemo(() => {
+        if (!page?.created_at) {
+            return '';
+        }
+        return dayjs(page.created_at).format('MMMM D, dddd');
+    }, [page?.created_at]);
+    const getpageData = async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            const url = `http://rytonlocal-staging.cameraclub.website:8000/api/v1/pages/${id}`;
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to load page. Status: ${response.status}`
+                );
+            }
+            const data = await response.json();
+            console.log("PAGE API RESPONSE:", data);
+            setpage(data?.data || null);
+        } catch (error) {
+            console.error("PAGE API ERROR:", error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    async function getpageExtra() {
+        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/pages-extras'
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const data = await response.json();
+        console.log(data);
+        setpageExtra(data.data);
+    };
+    useEffect(() => {
+        if (id) {
+            getpageData();
+        }
+    }, [id]);
+    useEffect(() => {
+        getpageExtra();
+    }, []);
+    if (!isLoading && error) {
+        return (
+            <div className="container py-5">
+                <div className="alert alert-danger">
+                    <h5>Unable to load page</h5>
+                    <p className="mb-0">
+                        {error}
+                    </p>
                 </div>
+                <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+                    Back
+                </button>
             </div>
-        </div>
-    </section>
-
-    <div className="row">
-        <NoticeForm />
-        <div className="col-md-4">
-            <section>
-                <div className="container" id="right">
-                    <div className="cardddd" style="padding: 0px; height: auto">
-                        <CalendarDashboard />
-                    </div>
-                    <div id="news">
-                        <RecentComments />
-                        <MoreNotices />
-                    </div>
+        );
+    }
+    if (!isLoading && !page) {
+        return (
+            <div className="container py-5">
+                <div className="alert alert-warning">
+                    page not found.
                 </div>
-            </section>
-        </div>
-    </div>
-</div>
-</template>
-
-<script setup>
-import { onMounted } from 'vue'
-import { useNoticeStore } from '@/stores/club_admin/NoticeStore'
-import NavigationRoute from "@/components/NavigationRoute.vue";
-import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
-import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
-import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
-import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue";
-import NoticeForm from "@/partials/club_admin/noticesingle/NoticeForm.vue";
-
-const { completedDaysAgo, fetchNotices, memberCount, } = useNoticeStore()
-
-const MemberCount = memberCount
-const EventDay = completedDaysAgo
-onMounted(() => {
-    fetchNotices()
-})
-</script>
-
-<style scoped>
-.container {
-     max-width: 1810px;
-     padding: 0 15px;
-     margin: 0 auto;
-}
- .content {
-     padding: 0 30px;
-}
- .dashboard-card {
-     gap: 15px;
-     border-radius: 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 20px 0px;
-     width: 100%;
-}
- .profile-card {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     background: white;
-     padding: 15px 25px;
-     border-radius: 12px;
-     width: 65.8%;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     height: 148px;
-}
- .profile-left {
-     display: flex;
-     align-items: left;
-}
- .profile-left img {
-     width: 100%;
-     max-width: 108px;
-     height: 108px;
-     border-radius: 50%;
-}
- .greeting {
-     color: #99816b;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .name {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 100%;
-     color: #4c4036;
-     font-family: Inter;
-}
- .names {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 18.68px;
-     line-height: 20.76px;
-     letter-spacing: 0%;
-}
- .namess {
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: #4c4036;
-     padding-left: 20px;
-     font-family: Inter;
-     text-align: justify;
-}
- .left-header-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-}
- .role {
-     color: #cc445e;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .profile-icons {
-     display: flex;
-     gap: 10px;
-     flex-direction: column;
-}
- .profile-icon {
-     display: flex;
-     flex-direction: column;
-}
- .icons {
-     display: flex;
-     align-items: center;
-     color: white;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon {
-     display: flex;
-     align-items: center;
-     color: #cc445e;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon i {
-     margin-right: 5px;
-}
- .stat-card {
-     background: #cc445e;
-     color: white;
-     padding: 20px;
-     border-radius: 8px;
-     text-align: center;
-     width: 219px;
-     font-family: Inter;
-     font-size: 1.2rem;
-     height: 148px;
-}
- .event-card {
-     background: #755840;
-     color: white;
-     padding: 20px;
-     height: 148px;
-     border-radius: 8px;
-     text-align: center;
-     font-family: Inter;
-     font-size: 1.2rem;
-     width: 219px;
-}
- .number {
-     font-weight: 500;
-     font-size: 48px;
-     font-family: Inter;
-     line-height: 100%;
-     color: white;
-     margin-top: 30px;
-}
- .ca-details {
-     font-weight: 400;
-     font-size: 20px;
-     font-family: Inter;
-     line-height: 100%;
-}
- .days {
-     margin-top: 35px;
-     font-weight: 400;
-     font-family: Inter;
-     font-size: 16px;
-     line-height: 100%;
-}
- .card-section {
-     display: flex;
-     gap: 35px;
-     width: 32%;
-}
- .cardddd {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-}
- .cardddd:first-child {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-top: 20px;
-}
- .event-list {
-     padding-top: 30px;
-}
- .event-list {
-     display: flex;
-     flex-direction: column;
-     gap: 10px;
-}
- .event-item {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-}
- .event-item img {
-     width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 5px;
-     object-fit: cover;
-}
- .event-details {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     flex: 1;
-     font-size: 0.875rem;
-     width: 100%;
-}
- #ename {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 20px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- #view {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #99816b;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     font-family: Inter;
-     color: white;
-}
- #edit {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
-}
- #new {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
-}
- .card {
-     background: white;
-     border-radius: 10px;
-     flex: 1;
-     width: 65%;
-     height: auto;
-     padding-bottom: 15px;
-     border: none;
-}
- .site-footer {
-     padding: 15px 0;
-     text-align: center;
-     font-size: 14px;
-     color: #99816b;
-     bottom: 0;
-     left: 0;
-     width: 100%;
-     position: relative;
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .ultrahead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 72px;
-     line-height: 20px;
-     letter-spacing: 0%;
-}
- .heading {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 36px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .head {
-     font-family: Inter;
-     font-weight: 500;
-     font-style: Medium;
-     font-size: 24px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .clubhead {
-     font-family: Inter;
-     font-weight: 600;
-     font-style: Semi Bold;
-     font-size: 20px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .subhead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 18px;
-     line-height: 36px;
-     letter-spacing: 0%;
-}
- .memtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .prehead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 14px;
-     line-height: 20px;
-     letter-spacing: 0%;
-}
- .galtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 12px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .event-img, .fallback-box {
-     width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 5px;
-     object-fit: cover;
-     background-color: #f0f0f0;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
- .fallback-box {
-     font-size: 14px;
-     color: #888;
-}
- .icon-circles .flickr-dots i, .flickr-dots i {
-     font-size: 8px;
-     padding-bottom: 8px;
-     margin: 1px;
-}
-</style>
+                <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+                    Back
+                </button>
+            </div>
+        );
+    }
+    return (
+        <>
+            <div style={{ backgroundColor: 'white' }}>
+                <Loader show={isLoading} />
+                {!isLoading && (
+                    <>
+                        <NavigationRoute />
+                        <HeaderRoute title="Pages" />
+                        <div className="content">
+                            <section>
+                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4" style={{ gap: '15px' }}>
+                                        <div class="profile-card">
+                                            <div class="profile-left">
+                                                <div class="profile-info">
+                                                    <small class="greeting">New page</small>
+                                                    <h2 class="name">{page?.title}</h2>
+                                                    <small class="role">{formatDate(page?.created_at)}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="card-section">
+                                            <div className="stat-card">
+                                                <small className="ca-details">Drafts</small>
+                                                <h3 className="number"> {pageExtra?.total_drafted_pages}</h3>
+                                            </div>
+                                            <div className="event-cards">
+                                                <small className="ca-details">Latest change</small>
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <h3 className="number">{pageExtra?.last_page_days_ago}</h3>
+                                                    </div>
+                                                    <div className="days col-md-7">
+                                                        <span>days ago</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                                    <div className="row">
+                                        <div className="col-md-8">
+                                            <div id="news">
+                                                <div className="news-list">
+                                                    <div className="custom-cards" style={{ display: 'flex', borderRadius: '10px', width: '100%', height: '310px', margin: 'auto', flexDirection: 'column' }}>
+                                                        <div className="row">
+                                                            <div className="col-md-4">
+                                                                {page.featured_image_url ? (
+                                                                    <img src={page.featured_image_url} alt={page.name} style={{ maxWidth: '300px', width: '100%', height: '250px', objectFit: 'cover' }} />
+                                                                ) : (
+                                                                    <div className="d-flex justify-content-center align-items-center bg-light" style={{ width: '100%', height: '250px' }}>
+                                                                        No Image
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                            <div className="col-md-8">
+                                                                <div className="d-flex justify-content-space-between" style={{ gap: '300px' }}>
+                                                                    <h5>
+                                                                        {page.title}
+                                                                    </h5>
+                                                                    <div className="e-icon-container">
+                                                                        {page.types?.map((t, i) => (
+                                                                            <div key={t.id || i} className="d-flex align-items-center justify-content-center gap-3" style={{ width: '180px' }}>
+                                                                                <img className="head" src={t.icon_url} alt={t.name} style={{ width: "20px", height: "20px" }} />
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                                <p className="date rounded">
+                                                                    {formattedStartDate}
+                                                                </p>
+                                                                <p className="text-secondary" dangerouslySetInnerHTML={{ __html: page.description || '' }} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="button-group mt-4" style={{ position: 'absolute', bottom: '20px' }}>
+                                                            <button className="btn text-white me-3" style={{ backgroundColor: '#99816b', width: '120px' }} onClick={() => navigate(-1)}>
+                                                                Back
+                                                            </button>
+                                                            <Link to={`/pages/${page.id}/edit`}>
+                                                                <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }}>
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <section>
+                                                <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
+                                                    <div className="calendar-card" style={{ width: '100%' }}>
+                                                        <Calendar />
+                                                    </div>
+                                                    <div id="news">
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">Recent Comments on page</h5>
+                                                            {pageExtra?.recent_comments?.slice(0, 4)?.map((comment) => (
+                                                                <div className="event-list" style={{ marginBottom: '10px' }} key={comment.id}>
+                                                                    <div className="event-item">
+                                                                        {comment?.comments?.[0]?.user?.profile_image_url ? (
+                                                                            <img className="img-fluid event-img" src={comment?.comments?.[0]?.user?.profile_image_url} onError="this.src='null'" />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                                <i className="fa-regular fa-user" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details">
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span className="text-secondary">{comment?.comments?.[0]?.comment}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(comment?.created_at)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(comment?.created_at)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">More pages</h5>
+                                                            {pageExtra?.random_pages?.slice(0, 6)?.map((page) => (
+                                                                <div className="event-list" style={{ marginBottom: '10px' }} key={page.id}>
+                                                                    <div className="event-item">
+                                                                        {page.featured_image_url ? (
+                                                                            <img className="img-fluid event-img" src={page.featured_image_url} onError="this.src='null'" />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                                <i className="fa-regular fa-user" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details">
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span className="text-secondary">{page?.title}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(page?.created_at)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(page?.created_at)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                            <div className="button-group mt-auto">
+                                                                <button className="btn btn-sm" id="e-view" onClick="{() => navigate(/pages)}">
+                                                                    View All
+                                                                </button>
+                                                                <button className="btn btn-sm" id="new" onClick="{() => navigate(/pages/create)}">
+                                                                    Add New
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </>
+                )}
+            </div>
+        </>
+    );
+};
+export default PageSingle;

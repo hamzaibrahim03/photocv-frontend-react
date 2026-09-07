@@ -1,48 +1,37 @@
 import { useState, useEffect, useRef } from "react";
 import "./assets/css/rytonstyle.css";
 import apiClient from "../api/axios";
-
 function CommentsDrawMember({ photo, onClose }) {
     const [newComment, setNewComment] = useState("");
     const [comments, setComments] = useState([]);
     const [exifOpen, setExifOpen] = useState(true);
     const [commentsOpen, setCommentsOpen] = useState(true);
     const [posting, setPosting] = useState(false);
-
     const commentsRef = useRef(null);
-
     const exif = photo?.exif || {};
     const like = photo?.likes_count || 0;
-
     useEffect(() => {
         setComments(photo?.comments || []);
     }, [photo]);
-
     const postComment = async () => {
         if (!newComment.trim() || posting) return;
-
         try {
             setPosting(true);
-
             const response = await apiClient.post(
                 `/photos/${photo.photo_id}/comments`,
                 {
                     body: newComment,
                 }
             );
-
             console.log("Comment Response:", response.data);
-
             const comment = response.data?.data || {
                 id: Date.now(),
                 comment: newComment,
                 posted_by: "You",
                 posted_at: new Date().toISOString(),
             };
-
             setComments((prev) => [...prev, comment]);
             setNewComment("");
-
             setTimeout(() => {
                 commentsRef.current?.scrollTo({
                     top: commentsRef.current.scrollHeight,
@@ -51,7 +40,6 @@ function CommentsDrawMember({ photo, onClose }) {
             }, 100);
         } catch (err) {
             console.log("Error:", err);
-
             if (err.response) {
                 console.log("Status:", err.response.status);
                 console.log("Response:", err.response.data);
@@ -62,10 +50,8 @@ function CommentsDrawMember({ photo, onClose }) {
             setPosting(false);
         }
     };
-
     const time = (date) =>
         date ? new Date(date).toLocaleDateString() : "";
-
     return (
         <div className="drawer-overlay">
             <div className="drawer">
@@ -78,7 +64,6 @@ function CommentsDrawMember({ photo, onClose }) {
                         <span>EXIF Details</span>
                         <span className="chev">{exifOpen ? "⌃" : "⌄"}</span>
                     </div>
-
                     {exifOpen && <div className="exif-grid">
                         <div className="exif-item">
                             <label>Camera</label><br />
@@ -88,7 +73,6 @@ function CommentsDrawMember({ photo, onClose }) {
                             <label>Focal Length</label><br />
                             <span>{exif?.focal_length}</span>
                         </div>
-
                         <div className="exif-item">
                             <label>Lens</label><br />
                             <span>{exif?.lens}</span>
@@ -97,7 +81,6 @@ function CommentsDrawMember({ photo, onClose }) {
                             <label>Aperture</label><br />
                             <span>{exif?.aperture}</span>
                         </div>
-
                         <div className="exif-item">
                             <label>Shutter Speed</label><br />
                             <span>{exif?.shutter_speed}</span>
@@ -107,14 +90,12 @@ function CommentsDrawMember({ photo, onClose }) {
                             <span>{exif?.iso}</span>
                         </div>
                     </div>}
-                </div >
-
+                </div>
                 <div className="block comments-block">
                     <div className="block-head" onClick={() => setCommentsOpen(!commentsOpen)}>
                         <span>Comments</span>
                         <span className="chev">{commentsOpen ? "⌃" : "⌄"}</span>
                     </div>
-
                     {commentsOpen && (
                         <>
                             <div className="comments" ref={commentsRef}>
@@ -137,29 +118,23 @@ function CommentsDrawMember({ photo, onClose }) {
                                 <div className="input-bar">
                                     <input value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder="Add a comment..." onKeyUp={(e) => e.key === 'Enter' && postComment()} />
                                     <button onClick={postComment}>➤</button>
-                                </div >
+                                </div>
                                 <div className="comment-stats">
                                     <div className="stat">
                                         <span className="icon heart">♥</span>
                                         <span className="count">{like}</span>
                                     </div>
-
                                     <div className="stat">
                                         <span className="icon comment">💬</span>
                                         <span className="count">{comments.length}</span>
                                     </div>
                                 </div>
-
                             </div>
                         </>
                     )}
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     )
 }
-
 export default CommentsDrawResult;
-
-
-

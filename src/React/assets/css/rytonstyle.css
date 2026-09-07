@@ -4,7 +4,6 @@
   margin: 0 auto;
   max-width: 1820px;
 }
-
 .hero-section {
   position: relative;
   display: flex;
@@ -17,7 +16,6 @@
   background-repeat: no-repeat;
   overflow: hidden;
 }
-
 .hero-section::before {
   content: "";
   position: absolute;
@@ -25,7 +23,6 @@
   background: rgba(255, 255, 255, 0.46);
   z-index: 1;
 }
-
 .date {
   font-family: Inter;
   font-weight: 400;
@@ -34,7 +31,6 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .hero-overlay {
   position: relative;
   z-index: 2;
@@ -46,7 +42,6 @@
   border-radius: 10px;
   color: #fff;
 }
-
 .hero-overlay .icon-circles {
   margin-top: 10px;
   margin-bottom: 50px;
@@ -54,7 +49,6 @@
   height: 34px;
   margin-right: 10px;
 }
-
 .hero-overlay h1 {
   font-size: 72px;
   margin-bottom: 20px;
@@ -65,12 +59,10 @@
   line-height: 1.2;
   letter-spacing: 0%;
 }
-
 .hero-overlay .prehead {
   margin-top: 5px;
   margin-left: 5px;
 }
-
 #overlay-button {
   width: 280px;
   height: 60px;
@@ -86,41 +78,34 @@
   margin-top: 12px;
   margin-left: 5px;
 }
-
 .hero-image img {
   width: 540px;
   height: 460px;
   border-radius: 20px;
   object-fit: cover;
 }
-
 .hero-content h1 {
   font-size: 48px;
   font-weight: bold;
   margin-bottom: 5px;
 }
-
 .hero-content p {
   font-size: 18px;
   line-height: 1.6;
   margin-top: 5px;
 }
-
 .hero-content #clubheading {
   margin-top: 0px;
 }
-
 .hero-content #clubsub {
   letter-spacing: -0.1px;
   margin-top: 20px;
 }
-
 .card-section {
   display: flex;
   gap: 15px;
   width: 100%;
 }
-
 .stat-card {
   background: #cc445e;
   color: white;
@@ -132,7 +117,6 @@
   font-size: 1.2rem;
   height: 148px;
 }
-
 .up-event-card {
   background: #755840;
   color: white;
@@ -144,7 +128,6 @@
   font-size: 1.2rem;
   width: 219px;
 }
-
 .number {
   font-weight: 500;
   font-size: 48px;
@@ -153,14 +136,12 @@
   color: white;
   margin-top: 30px;
 }
-
 .ca-details {
   font-weight: 400;
   font-size: 20px;
   font-family: Inter;
   line-height: 100%;
 }
-
 #view {
   width: 100%;
   max-width: 187px;
@@ -173,7 +154,6 @@
   font-family: Inter;
   color: white;
 }
-
 .days {
   margin-top: 35px;
   font-weight: 400;
@@ -181,18 +161,15 @@
   font-size: 16px;
   line-height: 100%;
 }
-
 #herocontainer {
   padding: 80px 10px 44px 16px;
 }
-
 .hero-grid {
   display: grid;
   grid-template-columns: 30% 62.5%;
   gap: 80px;
   align-items: start;
 }
-
 #learn-more {
   width: 280px;
   height: 60px;
@@ -206,21 +183,17 @@
   color: white;
   margin-top: 40px;
 }
-
 #clubcontainer {
   padding: 20px 10px 20px 16px;
 }
-
 .club-banners .icon-circles {
   width: 34px;
   height: 34px;
   margin-right: 4px;
 }
-
 .club-banners .icon-circles:last-child {
   margin-right: 0;
 }
-
 .club-banners {
   background-color: #c54058;
   color: white;
@@ -233,15 +206,12 @@
   max-width: 1776px;
   width: 1776px;
 }
-
 #galcontainer {
   padding: 35px 0px 30px;
 }
-
 #cl {
   margin-bottom: 0px;
 }
-
 #club-gallery {
   width: 300px;
   height: 60px;
@@ -255,18 +225,15 @@
   color: white;
   margin-bottom: 25px;
 }
-
 .clubpics {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   width: 100%;
 }
-
 .clubpics-item {
   position: relative;
   overflow: hidden;
 }
-
 .clubpics-item img {
   border-radius: 0;
   width: 100%;
@@ -274,7 +241,6 @@
   object-fit: cover;
   object-position: top;
 }
-
 .clubpics-info {
   background: #4c403699;
   position: absolute;
@@ -291,40 +257,31 @@
   justify-content: center;
   height: 55px;
 }
-
 .clubpics-item.top-left img {
   border-top-left-radius: 10px !important;
 }
-
 .clubpics-item.top-right img {
   border-top-right-radius: 10px !important;
 }
-
 .clubpics-item.bottom-left img {
   border-bottom-left-radius: 10px !important;
 }
-
 .clubpics-item.bottom-right img {
   border-bottom-right-radius: 10px !important;
 }
-
 .clubpics-info.bottom-left {
   border-bottom-left-radius: 10px;
 }
-
 .clubpics-info.bottom-right {
   border-bottom-right-radius: 10px;
 }
-
 .clubpics-item.special-radius img,
 .clubpics-info.special-radius {
   border-bottom-right-radius: 10px;
 }
-
 #eventcontainer {
   padding: 48px 0px 20px;
 }
-
 .upcoming-sections {
   display: flex;
   border-radius: 10px;
@@ -335,7 +292,6 @@
   flex-wrap: wrap;
   gap: 40px;
 }
-
 .event-card {
   background: white;
   width: 31%;
@@ -343,9 +299,7 @@
   height: 397px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-
 }
-
 .calendar-card {
   background: white;
   width: 31%;
@@ -355,7 +309,6 @@
   height: auto;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
 .competition-card {
   background: white;
   width: 31%;
@@ -364,20 +317,17 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
-
-.event-list {
+.ryton-event-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding-top: 10px;
 }
-
 .event-item {
   display: flex;
   align-items: center;
   gap: 20px;
 }
-
 .event-item img {
   width: 100%;
   max-width: 50px;
@@ -385,7 +335,6 @@
   border-radius: 7px;
   object-fit: cover;
 }
-
 .event-details {
   display: flex;
   justify-content: space-between;
@@ -394,7 +343,6 @@
   font-size: 0.875rem;
   width: 100%;
 }
-
 #ename {
   font-family: Inter;
   font-weight: 600;
@@ -404,7 +352,6 @@
   letter-spacing: 0%;
   margin-bottom: 5px;
 }
-
 #espeaker {
   font-family: Inter;
   font-weight: 400;
@@ -413,7 +360,6 @@
   line-height: 20px;
   letter-spacing: 0%;
 }
-
 #view-all {
   width: 130px;
   height: 40px;
@@ -426,20 +372,16 @@
   letter-spacing: 0%;
   text-align: center;
 }
-
 #membercontainer {
   padding: 20px 0px 50px;
 }
-
 #gal {
   margin-bottom: 10px;
 }
-
 #mcl {
   margin-right: 0;
   padding-top: 20px;
 }
-
 #member-gallery {
   width: 330px;
   height: 60px;
@@ -453,7 +395,6 @@
   color: white;
   margin-bottom: 25px;
 }
-
 .upcoming-section {
   display: flex;
   border-radius: 10px;
@@ -462,7 +403,6 @@
   flex-wrap: wrap;
   gap: 40px;
 }
-
 .member-card {
   border: none;
   margin-top: -1px;
@@ -471,31 +411,26 @@
   margin: 0px 0 10px 0px;
   width: 97.4%;
   height: auto;
-  padding-bottom: 15px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
-.pics {
+.ryton-pics {
   align-items: start;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   width: 99.8%;
 }
-
-.pics-items {
+.ryton-pics-items {
   position: relative;
   overflow: hidden;
   align-self: start;
 }
-
-.pics-items img {
+.ryton-pics-items img {
   width: 100%;
   height: 179px;
   object-fit: cover;
   object-position: top;
 }
-
-.pics-infos {
+.ryton-pics-infos {
   background: #4c403699;
   position: absolute;
   bottom: 0;
@@ -511,50 +446,40 @@
   justify-content: center;
   height: 32px
 }
-
-.pics-items.top-left img {
+.ryton-pics-items.top-left img {
   border-top-left-radius: 10px;
 }
-
-.pics-items.top-right img {
+.ryton-pics-items.top-right img {
   border-top-right-radius: 10px;
 }
-
-.pics-items.bottom-left img {
+.ryton-pics-items.bottom-left img {
   border-bottom-left-radius: 10px;
 }
-
-.pics-items.bottom-right img {
+.ryton-pics-items.bottom-right img {
   border-bottom-right-radius: 10px;
 }
-
-.pics-infos.bottom-left {
+.ryton-pics-infos.bottom-left {
   border-bottom-left-radius: 10px;
 }
-
-.pics-infos.bottom-right {
+.ryton-pics-infos.bottom-right {
   border-bottom-right-radius: 10px;
 }
-
-.pics-items.special-radius img,
-.pics-infos.special-radius {
+.ryton-pics-items.special-radius img,
+.ryton-pics-infos.special-radius {
   border-bottom-right-radius: 10px;
 }
-
-.latest-card {
+.ryton-latest-card {
   background: white;
   width: 32%;
   padding: 40px;
   height: 360px;
   border-radius: 10px;
 }
-
 .event-items {
   display: flex;
   align-items: center;
   gap: 20px;
 }
-
 .event-items img {
   width: 50px;
   height: 50px;
@@ -562,15 +487,12 @@
   object-fit: cover;
   object-position: top;
 }
-
 #latest-interaction {
   padding: 75px 60px 55px;
 }
-
 #laint {
   margin-top: 30px;
 }
-
 .comments-card {
   width: 99%;
   height: 330px;
@@ -580,23 +502,19 @@
   margin: 20px 0 10px 17px;
   border: none;
 }
-
 .card-header {
   margin-bottom: 20px;
 }
-
 .card-body {
   margin-left: -21px;
   padding: 5px;
 }
-
 .comment-item {
   padding: 0px 35px;
   gap: 30px;
   margin-bottom: 28px;
   align-items: center;
 }
-
 .comment-item img {
   width: 100%;
   max-width: 50px;
@@ -604,19 +522,16 @@
   border-radius: 7px;
   object-fit: cover;
 }
-
 .comment-details {
   flex: 1;
   font-size: 0.875rem;
   width: 100%;
 }
-
 #comimg {
   max-width: 60px !important;
   height: 60px !important;
   object-fit: cover;
 }
-
 #comtext {
   font-family: Inter;
   font-weight: 400;
@@ -626,7 +541,6 @@
   letter-spacing: 0%;
   margin-bottom: 5px;
 }
-
 #comreply {
   font-family: Inter;
   font-weight: 400;
@@ -636,7 +550,6 @@
   letter-spacing: 0%;
   text-decoration: none;
 }
-
 #comdate {
   font-family: Inter;
   font-weight: 400;
@@ -646,7 +559,6 @@
   letter-spacing: 0%;
   margin-right: 10px;
 }
-
 #likeimg {
   max-width: 140px;
   width: 140px;
@@ -655,14 +567,12 @@
   object-position: top;
   border-radius: 7px;
 }
-
 .interaction-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 25px;
   max-height: calc(2 * 180px);
 }
-
 .comments-cards {
   width: 868px;
   height: 330px;
@@ -670,7 +580,6 @@
   margin: 20px 0 10px 17px;
   border: none;
 }
-
 .heart-icon {
   position: absolute;
   bottom: -8px;
@@ -685,16 +594,13 @@
   width: 30px;
   height: 30px;
 }
-
 .heart-icon img {
   width: 14px;
   height: 13px;
 }
-
 #newscontainer {
   padding: 75px 0px 40px;
 }
-
 .news-section {
   display: flex;
   border-radius: 10px;
@@ -703,7 +609,6 @@
   flex-wrap: wrap;
   gap: 20px;
 }
-
 #view-results {
   width: 230px;
   height: 60px;
@@ -715,8 +620,7 @@
   font-family: Inter;
   margin-bottom: 26px;
 }
-
-.news-card {
+.ryton-news-card {
   margin-left: 0;
   background: white;
   width: 31%;
@@ -725,26 +629,22 @@
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
 .resultpics {
   margin-top: -15px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   width: 100%;
 }
-
 .resultpics-items {
   position: relative;
   overflow: hidden;
 }
-
 .resultpics-items img {
   width: 100%;
   height: 195px;
   object-fit: cover;
   object-position: top;
 }
-
 .resultpics-infos {
   background: #4c403699;
   position: absolute;
@@ -761,46 +661,36 @@
   justify-content: center;
   height: 60px;
 }
-
 .resultpics-items.top-left img {
   border-top-left-radius: 10px;
 }
-
 .resultpics-items.top-right img {
   border-top-right-radius: 10px;
 }
-
 .resultpics-items.bottom-left img {
   border-bottom-left-radius: 10px;
 }
-
 .resultpics-items.bottom-right img {
   border-bottom-right-radius: 10px;
 }
-
 .resultpics-infos.bottom-left {
   border-bottom-left-radius: 10px;
 }
-
 .resultpics-infos.bottom-right {
   border-bottom-right-radius: 10px;
 }
-
 .resultpics-items.special-radius img,
 .resultpics-infos.special-radius {
   border-bottom-right-radius: 10px;
 }
-
 #joincontainer {
   padding: 25px 0px 20px;
 }
-
 .join {
   border-radius: 15px;
   padding: 45px 60px 35px;
   height: 180px;
 }
-
 #join-club {
   width: 200px;
   height: 60px;
@@ -817,12 +707,10 @@
   outline: none;
   box-shadow: none;
 }
-
 #footer-section {
   padding-top: 30px;
   padding-bottom: 36px;
 }
-
 .site-footer {
   padding-top: 25px;
   padding-bottom: 10px;
@@ -832,16 +720,13 @@
   border-top: 1px solid #ddd;
   margin-top: 40px;
 }
-
 .site-footer a {
   color: #007bff;
   text-decoration: none;
 }
-
 .site-footer a:hover {
   text-decoration: underline;
 }
-
 .ultrahead {
   font-family: Inter;
   font-weight: 400;
@@ -850,7 +735,6 @@
   line-height: 20px;
   letter-spacing: 0%;
 }
-
 .heading {
   font-family: Inter;
   font-weight: 400;
@@ -859,7 +743,6 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .head {
   font-family: Inter;
   font-weight: 500;
@@ -868,7 +751,6 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .clubhead {
   font-family: Inter;
   font-weight: 600;
@@ -877,7 +759,6 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .subhead {
   font-family: Inter;
   font-weight: 400;
@@ -886,7 +767,6 @@
   line-height: 36px;
   letter-spacing: 0%;
 }
-
 .memtext {
   font-family: Inter;
   font-weight: 400;
@@ -896,7 +776,6 @@
   letter-spacing: 0%;
   color: #000;
 }
-
 .prehead {
   font-family: Inter;
   font-weight: 400;
@@ -905,7 +784,6 @@
   line-height: 20px;
   letter-spacing: 0%;
 }
-
 .galtext {
   font-family: Inter;
   font-weight: 400;
@@ -913,7 +791,6 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .event-img,
 .fallback-box {
   width: 100%;
@@ -924,18 +801,15 @@
   background-color: #D6DFD2;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
 .fallback-box {
   font-size: 14px;
   color: #D6DFD2;
 }
-
 .icon-circles .flickr-dots i,
 .flickr-dots i {
   font-size: 8px;
   margin: 1px;
 }
-
 .events-card h5 {
   font-family: Inter;
   font-weight: 400;
@@ -944,18 +818,15 @@
   line-height: 20px;
   letter-spacing: 0%;
 }
-
 .divider {
   width: 2px;
   height: 46px;
   margin: 0 10px;
   border: 1px #ddd
 }
-
 #fcopy {
   margin-bottom: 10px
 }
-
 #clubheading {
   font-family: Inter;
   font-weight: 500;
@@ -964,7 +835,6 @@
   line-height: 36px;
   letter-spacing: 0%;
 }
-
 #clubsub {
   font-family: Inter;
   font-weight: 400;
@@ -973,25 +843,21 @@
   line-height: 36px;
   letter-spacing: 1%;
 }
-
 .footer-head {
   font-size: 20px;
   font-weight: 700;
 }
-
 .footer-text {
   font-size: 15px;
   font-weight: 400;
   line-height: 1.4;
   width: 275px;
 }
-
 .footer-link {
   font-size: 14px;
   text-decoration: none;
   word-break: break-word;
 }
-
 .footer-img {
   max-width: 440px;
   height: 350px;
@@ -999,38 +865,30 @@
   object-fit: cover;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 .contact-col,
 .social-col {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
 .contact-col {
   margin-right: 60px;
 }
-
 .social-col {
   margin-left: 60px;
 }
-
 .contact-item {
   padding-bottom: 4px;
 }
-
 .contact-item:last-child {
   padding-bottom: 0px;
 }
-
 .social-item {
   padding-bottom: 10px;
 }
-
 .social-item:last-child {
   padding-bottom: 0px;
 }
-
 .icon-circles,
 .ficon-circles {
   width: 40px;
@@ -1041,7 +899,6 @@
   justify-content: center;
   font-size: 16px;
 }
-
 .cabout {
   font-family: Inter;
   font-weight: 400;
@@ -1051,24 +908,20 @@
   letter-spacing: 0%;
   margin-bottom: 30px;
 }
-
 .text {
   font-size: 36px;
   margin-bottom: 30px;
 }
-
 .location {
   font-size: 14px;
   color: #ccc;
   margin-top: 20px;
 }
-
 .social-icons i {
   font-size: 20px;
   margin-right: 12px;
   cursor: pointer;
 }
-
 .card {
   background: white;
   border-radius: 10px;
@@ -1077,7 +930,6 @@
   padding-bottom: 15px;
   border: none;
 }
-
 .ficon-circles {
   width: 40px;
   height: 40px;
@@ -1088,7 +940,6 @@
   align-items: center;
   justify-content: center;
 }
-
 #joincontainer #clubheading {
   font-family: Inter;
   font-weight: 500;
@@ -1098,7 +949,6 @@
   letter-spacing: 0%;
   margin-bottom: 9px;
 }
-
 #joincontainer #clubsub {
   font-family: Inter;
   font-weight: 400;
@@ -1107,13 +957,11 @@
   line-height: 42px;
   letter-spacing: 0%;
 }
-
 .button-group {
   display: flex;
   gap: 10px;
   margin-top: 30px;
 }
-
 .Latest {
   background: white;
   width: 420px;
@@ -1123,14 +971,12 @@
   margin-left: 20px;
   margin-right: 20px;
 }
-
 #footer-heading {
   text-align: center;
   margin-bottom: 30px;
   font-weight: 500;
   line-height: 36px
 }
-
 #footer-description {
   font-weight: 400;
   text-align: center;
@@ -1140,19 +986,15 @@
   letter-spacing: 0%;
   max-width: 1145px;
 }
-
 #overall {
   padding: 0 25px 60px 55px;
 }
-
 #events-left {
   flex: 3;
 }
-
 #heads {
   padding: 65px 70px 38px 82px;
 }
-
 .events-header {
   display: flex;
   justify-content: space-between;
@@ -1160,7 +1002,6 @@
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
-
 .events-title {
   font-family: Inter;
   font-weight: 500;
@@ -1170,7 +1011,6 @@
   letter-spacing: 0%;
   margin: 0;
 }
-
 .search-bar {
   display: flex;
   align-items: center;
@@ -1184,18 +1024,15 @@
   gap: 20px;
   margin-top: 5px;
 }
-
 .search-bar:hover,
 .search-bar:focus-within {
   border-color: #d1d5db;
 }
-
 .search-bar i {
   color: #c0c0c0;
   font-size: 20px;
   margin-right: 8px;
 }
-
 .search-input {
   border: none;
   outline: none;
@@ -1204,18 +1041,15 @@
   flex: 1;
   background: transparent;
 }
-
 .search-input::placeholder {
   color: #c0c0c0;
 }
-
 .filter-buttons {
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
   padding-bottom: 50px;
 }
-
 .filter-btn {
   padding: 10px 16px;
   border: 1px solid rgba(127, 164, 131, 1);
@@ -1235,30 +1069,25 @@
   align-items: center;
   margin-top: -3px;
 }
-
 .comp-filter-btn,
 .news-filter-btn,
 .notice-filter-btn {
   width: 122.71px;
 }
-
 .comp-filter-buttons,
 .news-filter-buttons,
 .notice-filter-buttons {
   gap: 20px;
 }
-
 .filter-btn:hover {
   border-color: #6f8c6f;
   color: #2e2e2e;
 }
-
 .filter-btn .icones {
   width: 16px;
   height: 16px;
   transition: 0.3s;
 }
-
 .filter-btn .label {
   font-family: Inter;
   font-weight: 400;
@@ -1268,21 +1097,17 @@
   letter-spacing: 0%;
   margin-left: 5px
 }
-
 .filter-btn.active {
   background-color: #7a9c7a;
   color: #fff;
   border-color: #7a9c7a;
 }
-
 .filter-btn.active .icones {
   filter: brightness(0) invert(1);
 }
-
 .filter-btn.active .label {
   color: white;
 }
-
 .events-cards {
   display: flex;
   align-items: center;
@@ -1296,7 +1121,6 @@
   gap: 50px;
   margin-top: 5px;
 }
-
 .events-cards img {
   max-width: 300px;
   width: 550px;
@@ -1306,7 +1130,6 @@
   margin-left: 20px;
   margin-right: 0;
 }
-
 .events-cards #ename {
   font-family: Inter;
   font-weight: 500;
@@ -1316,7 +1139,6 @@
   letter-spacing: 0%;
   margin-top: -15px;
 }
-
 .events-cards #edate {
   font-family: Inter;
   font-weight: 400;
@@ -1326,13 +1148,11 @@
   letter-spacing: 0%;
   text-align: left;
 }
-
 .icon-container .virtual {
   margin-top: -5px;
   width: 25px;
   height: 25px;
 }
-
 .events-cards .text-secondary {
   font-family: Inter;
   font-weight: 400;
@@ -1342,13 +1162,11 @@
   letter-spacing: 0%;
   margin-bottom: 25px;
 }
-
 #detail {
   margin-top: 15px;
   margin-right: 40px;
   width: 99%;
 }
-
 .events-cards #espeaker {
   font-family: Inter;
   font-weight: 400;
@@ -1358,12 +1176,10 @@
   letter-spacing: 0%;
   text-align: left;
 }
-
 #right {
   margin-left: 26px;
   flex: 1;
 }
-
 .button-groups #view {
   max-width: 130px;
   height: 40px;
@@ -1378,7 +1194,6 @@
   letter-spacing: 0%;
   margin-top: 15px;
 }
-
 .dt-paging {
   display: flex;
   justify-content: flex-start;
@@ -1388,7 +1203,6 @@
   gap: 5px;
   margin-left: -5px;
 }
-
 .dt-paging-button {
   border: 1px solid green;
   background: #ffffff;
@@ -1403,7 +1217,6 @@
   padding: 0;
   margin-left: 8px;
 }
-
 .dt-paging-button.disabled {
   background: #ffffff;
   color: black;
@@ -1411,14 +1224,12 @@
   cursor: not-allowed;
   opacity: 0.6;
 }
-
 .dt-paging-button.current {
   background: orange;
   font-weight: bold;
   border: none;
   color: white
 }
-
 .calendars-card {
   background: white;
   width: 470px;
@@ -1428,8 +1239,7 @@
   box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
   margin-top: -5px;
 }
-
-.season-card {
+.ryton-season-card {
   height: 470px;
   background: white;
   width: 470px;
@@ -1438,7 +1248,6 @@
   margin-bottom: 24px;
   box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
-
 .more-card {
   height: auto;
   background: white;
@@ -1448,23 +1257,19 @@
   margin-bottom: 24px;
   box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
-
 .more-card .event-list:last-child {
   padding-bottom: 20px;
 }
-
 .event-info {
   display: flex;
   flex-direction: column;
 }
-
 .session-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 25px 0px;
 }
-
 .session-card {
   width: 410px;
   height: 160px;
@@ -1475,24 +1280,20 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
 }
-
 .session-card:hover {
   transform: translateY(-2px);
 }
-
 .session-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
 }
-
 .session-header h3 {
   font-size: 20px;
   color: #333;
   margin: 0;
 }
-
 .status {
   display: flex;
   align-items: center;
@@ -1505,55 +1306,45 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .status .dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   margin-right: 6px;
 }
-
 .status.active {
   background: #eaf8ef;
   color: #22c55e;
 }
-
 .status.active .dot {
   background: #22c55e;
 }
-
 .status.inactive {
   background: #f0f0f0;
   color: #777;
 }
-
 .status.inactive .dot {
   background: #bdbdbd;
 }
-
 .session-body {
   display: flex;
   justify-content: space-between;
   margin: 40px 40px 20px 20px;
 }
-
-.info {
+.ryton-info {
   font-size: 15px;
   color: #444;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-
-.session-body .info img {
+.session-body .ryton-info img {
   width: 16px;
   height: 16px;
 }
-
 .icon {
   font-size: 16px;
 }
-
 .session-footer {
   font-family: Inter;
   font-weight: 400;
@@ -1562,7 +1353,6 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -1571,25 +1361,20 @@
   color: #6b7280;
   margin-top: 5px;
 }
-
 .breadcrumb-item {
   text-decoration: none;
   color: #6b7280;
 }
-
 .breadcrumb-item.active {
   color: #111827;
   font-weight: 600;
 }
-
 .breadcrumb-separator {
   color: #9ca3af;
 }
-
 .card #edate {
   margin-bottom: 50px;
 }
-
 .card .text-secondary {
   font-family: Inter;
   font-weight: 400;
@@ -1601,7 +1386,6 @@
   margin-left: -10px;
   width: 1100px;
 }
-
 .divider4 {
   width: 1100px;
   height: 1px;
@@ -1610,15 +1394,12 @@
   margin-bottom: 70px;
   border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
-
 #eventdetails .clubhead {
   font-weight: 400;
 }
-
 #eventdetails {
   margin-left: -10px;
 }
-
 .divider5 {
   width: 1100px;
   height: 1px;
@@ -1627,7 +1408,6 @@
   margin-bottom: 50px;
   border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
-
 .event-resultpics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1635,19 +1415,16 @@
   margin-bottom: 235px;
   margin-left: -10px
 }
-
 .event-resultpics-items {
   position: relative;
   overflow: hidden;
 }
-
 .event-resultpics-items img {
   width: 273.25px;
   height: 273.25px;
   object-fit: cover;
   object-position: top;
 }
-
 .sco-resultpics {
   margin-top: 60px;
   margin-left: 20px;
@@ -1657,12 +1434,10 @@
   max-width: 1068px;
   margin-bottom: 235px;
 }
-
 .sco-resultpics-items {
   position: relative;
   overflow: hidden;
 }
-
 .sco-resultpics-items img {
   width: 100%;
   height: 364px;
@@ -1670,7 +1445,6 @@
   object-position: top;
   max-width: 356px;
 }
-
 .sco-resultpics-infos {
   background: #4c403699;
   position: absolute;
@@ -1688,19 +1462,16 @@
   height: 60px;
   padding: 6px 28px;
 }
-
 .sco-resultpics-infos #sco-medal-inline {
   width: 30px !important;
   height: 36px !important;
 }
-
 .sco-title {
   font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 22px;
   margin: 0;
 }
-
 .sco-name {
   font-family: "Inter", sans-serif;
   font-weight: 400;
@@ -1708,19 +1479,16 @@
   opacity: 0.9;
   margin-top: 2px;
 }
-
 .gallery-pics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
   max-width: 1644px;
 }
-
 .gallery-pics-item {
   position: relative;
   overflow: hidden;
 }
-
 .gallery-pics-item img {
   border-radius: 0;
   width: 100%;
@@ -1729,7 +1497,6 @@
   object-fit: cover;
   object-position: top;
 }
-
 .gallery-pics-info {
   background: #4c403699;
   position: absolute;
@@ -1747,15 +1514,12 @@
   text-align: center;
   height: 60px;
 }
-
 #gallery-container {
   padding: 50px 58px 0 14px;
 }
-
 .suggestions-header {
   padding: 57px 45px 45px 78px;
 }
-
 .suggestions-header h3 {
   font-family: Inter;
   font-weight: 500;
@@ -1764,7 +1528,6 @@
   line-height: 100%;
   letter-spacing: 0%;
 }
-
 .suggestions-gallery,
 .suggestion-gallery {
   display: grid;
@@ -1773,13 +1536,11 @@
   gap: 25px;
   padding: 0 45px 0 82px;
 }
-
 .suggestions-card,
 .suggestion-card {
   position: relative;
   overflow: hidden;
 }
-
 .suggestions-card img,
 .suggestion-card img {
   border-radius: 0;
@@ -1789,7 +1550,6 @@
   object-position: top;
   max-width: 394px
 }
-
 .suggestions-card .img-overlay,
 .suggestion-card .img-overlay {
   background: #4c403699;
@@ -1808,7 +1568,6 @@
   width: 394px;
   padding: 15px 20px;
 }
-
 .img-overlay .names {
   font-family: Inter;
   font-weight: 500;
@@ -1817,7 +1576,6 @@
   line-height: 24px;
   letter-spacing: 0px;
 }
-
 .img-overlay .role {
   font-family: Inter;
   font-weight: 300;
@@ -1826,37 +1584,31 @@
   line-height: 20px;
   letter-spacing: 0px;
 }
-
 .gallery-wrapper {
   padding: 40px 25px 0 40px;
   background: #fff;
 }
-
 .gallery-title {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 25px;
   text-align: center;
 }
-
 .gallery-grid {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
-
 .gallery-row {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 30px;
 }
-
 .gallery-column {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
-
 .gallery-big img {
   width: 1093px;
   height: 980px;
@@ -1864,7 +1616,6 @@
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-
 .gallery-half img {
   width: 816px;
   height: 475px;
@@ -1872,7 +1623,6 @@
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-
 .gallery-small img {
   width: 540px;
   height: 475px;
@@ -1880,13 +1630,11 @@
   cursor: pointer;
   transition: transform 0.3s ease;
 }
-
 .gallery-row-bottom {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
 }
-
 .gallery-big .overlay {
   position: absolute;
   bottom: 0;
@@ -1899,7 +1647,6 @@
   height: 110px;
   color: white;
 }
-
 .gallery-half .overlay {
   position: absolute;
   bottom: 0;
@@ -1912,7 +1659,6 @@
   height: 110px;
   color: white;
 }
-
 .gallery-small .overlay {
   position: absolute;
   bottom: 0;
@@ -1925,7 +1671,6 @@
   height: 110px;
   color: white;
 }
-
 .event-img,
 .fallback-box {
   max-width: 50px;
@@ -1935,7 +1680,6 @@
   background-color: #f0f0f0;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
-
 .title {
   font-weight: 500;
   font-size: 32px;
@@ -1945,7 +1689,6 @@
   letter-spacing: 0%;
   margin: 0;
 }
-
 .name {
   font-weight: 400;
   opacity: 0.9;
@@ -1956,41 +1699,34 @@
   letter-spacing: 0%;
   margin-top: 20px;
 }
-
 .icons span {
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-size: 21.73px;
 }
-
 .gallery-big {
   position: relative;
   overflow: hidden;
   width: 1093px;
 }
-
 .gallery-small {
   position: relative;
   overflow: hidden;
 }
-
 .gallery-half {
   width: 816px;
   position: relative;
   overflow: hidden;
 }
-
 .viewer {
   background: #000;
   color: #fff;
   display: flex;
   flex-direction: column;
 }
-
 .top-bar {
   padding: 18px 30px;
 }
-
 .back-btn {
   background: none;
   border: none;
@@ -1998,7 +1734,6 @@
   font-size: 22px;
   cursor: pointer;
 }
-
 .image-section {
   flex: 1;
   position: relative;
@@ -2006,18 +1741,15 @@
   align-items: center;
   justify-content: center;
 }
-
 .image-wrapper {
   position: relative;
 }
-
 .main-image {
   max-width: 70vw;
   max-height: 60vh;
   border-radius: 16px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, .7);
 }
-
 .expand-btn {
   position: absolute;
   top: 14px;
@@ -2031,7 +1763,6 @@
   font-size: 18px;
   cursor: pointer;
 }
-
 .nav-arrow {
   position: absolute;
   top: 50%;
@@ -2045,15 +1776,12 @@
   border-radius: 50%;
   cursor: pointer;
 }
-
 .nav-arrow.left {
   left: 30px;
 }
-
 .nav-arrow.right {
   right: 30px;
 }
-
 .open-comments {
   position: fixed;
   top: 10%;
@@ -2067,29 +1795,24 @@
   border-radius: 12px 0 0 12px;
   cursor: pointer;
 }
-
 .image-info {
   padding: 18px 30px;
   border-top: 1px solid rgba(255, 255, 255, .1);
 }
-
 .info-left {
   display: flex;
   align-items: center;
   gap: 14px;
 }
-
 .profile-img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
 }
-
 .text {
   padding: 0 10px;
 }
-
 .text .title {
   margin: 0;
   padding: 0;
@@ -2101,7 +1824,6 @@
   letter-spacing: 0%;
   color: rgba(255, 255, 255, 1);
 }
-
 .meta {
   font-family: Inter;
   font-weight: 400;
@@ -2111,33 +1833,26 @@
   letter-spacing: 0%;
   color: rgba(255, 255, 255, 1);
 }
-
 .viewer {
   transition: transform 0.3s ease;
 }
-
 .viewer.drawer-open .image-section {
   transform: translateX(-200px);
 }
-
 .viewer.drawer-open .nav-arrow.left {
   left: 210px;
 }
-
 .viewer.drawer-open .nav-arrow.right {
   right: 510px;
 }
-
 .viewer.drawer-open .open-comments {
   display: none;
 }
-
 .thumbs-wrapper {
   display: flex;
   justify-content: center;
   width: 100%;
 }
-
 .thumbnails {
   display: flex;
   gap: 30px;
@@ -2148,11 +1863,9 @@
   scroll-behavior: smooth;
   max-width: 1610px;
 }
-
 .thumbnails::-webkit-scrollbar {
   display: none;
 }
-
 .thumb {
   flex: 0 0 auto;
   width: 296px;
@@ -2162,18 +1875,15 @@
   cursor: pointer;
   transition: 0.3s;
 }
-
 .thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .thumb.active {
   opacity: 1;
   outline: 2px solid #fff;
 }
-
 .drawer-overlay {
   position: fixed;
   top: 0;
@@ -2184,7 +1894,6 @@
   pointer-events: auto;
   z-index: 50;
 }
-
 .drawer {
   width: 610px;
   background: 121212;
@@ -2196,14 +1905,12 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   margin-right: 70px
 }
-
 .top {
   padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #1f1f1f;
 }
-
 .close {
   background: none;
   border: none;
@@ -2213,12 +1920,10 @@
   top: 30px;
   right: 80px
 }
-
 .block {
   padding: 14px 16px;
   border-bottom: 1px solid #1f1f1f;
 }
-
 .block-head {
   display: flex;
   justify-content: space-between;
@@ -2230,16 +1935,13 @@
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0px;
-
 }
-
 .exif-grid {
   margin-top: 12px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
-
 .exif-item label {
   font-family: Inter;
   font-weight: 400;
@@ -2249,7 +1951,6 @@
   letter-spacing: 0px;
   color: rgba(255, 255, 255, 0.4);
 }
-
 .exif-item span {
   font-family: Inter;
   font-weight: 400;
@@ -2259,32 +1960,26 @@
   letter-spacing: 0px;
   color: rgba(255, 255, 255, 0.9);
 }
-
 .comments {
   margin-top: 12px;
   max-height: 300px;
   overflow-y: auto;
 }
-
 .comment {
   margin-bottom: 14px;
 }
-
 .comment strong {
   font-size: 13px;
 }
-
 .comment p {
   font-size: 13px;
   color: #ccc;
   margin: 2px 0;
 }
-
 .comment small {
   font-size: 11px;
   color: #777;
 }
-
 .input-bar {
   margin-top: auto;
   padding: 12px;
@@ -2292,7 +1987,6 @@
   gap: 8px;
   border-top: 1px solid #1f1f1f;
 }
-
 .input-bar input {
   flex: 1;
   background: #1e1e1e;
@@ -2301,14 +1995,12 @@
   padding: 10px;
   border-radius: 6px;
 }
-
 .input-bar button {
   background: #1db954;
   border: none;
   padding: 0 14px;
   border-radius: 6px;
 }
-
 .comment-stats {
   display: flex;
   gap: 22px;
@@ -2319,7 +2011,6 @@
       rgba(255, 255, 255, 0.02),
       rgba(0, 0, 0, 0.4));
 }
-
 .stat {
   display: flex;
   align-items: center;
@@ -2327,39 +2018,31 @@
   font-size: 14px;
   color: #ddd;
 }
-
 .stat .icon {
   font-size: 16px;
 }
-
 .stat .heart {
   color: #ff4d6d;
 }
-
 .stat .comment {
   color: #aaa;
 }
-
 .stat .count {
   font-weight: 500;
 }
-
 .custom-filter {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-
 .competition-wrapper {
   padding: 0 8px 30px 125px;
 }
-
 .competition-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 45px;
 }
-
 .competition-result-card {
   background: #fff;
   border-radius: 12px;
@@ -2371,25 +2054,21 @@
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-
 .competition-result-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
 }
-
 .competition-result-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
 .cover img {
   width: 100%;
   height: 160px;
   object-fit: cover;
 }
-
 .resultpics-infos {
   padding: 10px 20px;
   height: 50px;
@@ -2406,7 +2085,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .filter-label {
   font-family: Inter;
   font-weight: 400;
@@ -2415,7 +2093,6 @@
   line-height: 32.51px;
   letter-spacing: 0px;
 }
-
 .filter-select {
   width: 230px;
   height: 40px;
@@ -2427,32 +2104,26 @@
   background: #fff;
   outline: none;
 }
-
 .filter-select:focus {
   border-color: #999;
 }
-
 .covers {
   position: relative;
 }
-
 .covers img {
   width: 100%;
   height: 218px;
   object-fit: cover;
 }
-
 .covers-medal {
   position: absolute;
   bottom: 10px;
   right: 10px;
   width: 3px;
 }
-
 .card-body {
   padding: 0px 10px 10px 20px;
 }
-
 .title {
   font-family: Inter;
   font-weight: 400;
@@ -2463,11 +2134,9 @@
   margin-top: 30px;
   margin-bottom: 17px;
 }
-
 p {
   margin-bottom: 0px;
 }
-
 .entry-date {
   font-family: Inter;
   font-weight: 500;
@@ -2479,7 +2148,6 @@ p {
   margin-bottom: 45px;
   text-align: left;
 }
-
 .entry-row {
   display: flex;
   align-items: center;
@@ -2492,14 +2160,12 @@ p {
   height: 55px;
   border: 0.46px solid #333;
 }
-
 .entry-thumb {
   width: 42px;
   height: 42px;
   border-radius: 6px;
   object-fit: cover;
 }
-
 .info {
   display: flex;
   flex-direction: column;
@@ -2507,7 +2173,6 @@ p {
   margin-left: 10px;
   flex: 1;
 }
-
 .entry-title {
   font-family: Inter;
   font-weight: 600;
@@ -2516,7 +2181,6 @@ p {
   line-height: 16.57px;
   letter-spacing: 0%;
 }
-
 .author {
   font-family: Inter;
   font-weight: 400;
@@ -2525,7 +2189,6 @@ p {
   line-height: 16.57px;
   letter-spacing: 0%;
 }
-
 .entry-titles {
   font-family: Inter;
   font-weight: 600;
@@ -2534,7 +2197,6 @@ p {
   line-height: 16.15px;
   letter-spacing: 0%;
 }
-
 .authors {
   font-family: Inter;
   font-weight: 400;
@@ -2543,33 +2205,27 @@ p {
   line-height: 16.15px;
   letter-spacing: 0%;
 }
-
 .medal {
   width: 23.07px;
   height: 28px;
 }
-
 .competition-section {
   padding: 30px;
 }
-
 .result-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-
 .gallery-card {
   position: relative;
   overflow: hidden;
 }
-
 .gallery-img {
   max-width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
 .gallery-card .overlay {
   position: absolute;
   bottom: 0;
@@ -2581,20 +2237,16 @@ p {
   justify-content: space-between;
   align-items: center;
 }
-
 .gallery-card .author {
   font-size: 11px;
   color: #e6e6e6;
 }
-
 .gallery-card .overlay .title {
   font-size: 12px;
 }
-
 .gallery-card #badge {
   font-size: 14px;
 }
-
 .list {
   font-family: Inter;
   font-weight: 400;
@@ -2603,7 +2255,6 @@ p {
   line-height: 36px;
   letter-spacing: 0%;
 }
-
 .main {
   font-family: Inter;
   font-weight: 500;
@@ -2612,8 +2263,7 @@ p {
   line-height: 100%;
   letter-spacing: 0%;
 }
-
-.email {
+.emails {
   font-family: Inter;
   font-weight: 400;
   font-style: Regular;
@@ -2621,30 +2271,24 @@ p {
   line-height: 20px;
   letter-spacing: 0%
 }
-
 /* 1399px and below */
 @media only screen and (max-width: 1399px) {
   .custom-nav {
     margin-left: 35px;
   }
-
   .club-banners {
     max-width: 100%;
     width: 100%;
   }
-
   .custom-nav .nav-item {
     margin-right: 0;
   }
-
   .admin-dropdown {
     width: 180px;
   }
-
   .hero-content #clubheading {
     margin-top: -20px;
   }
-
   #likeimg {
     max-width: 140px;
     width: 100%;
@@ -2653,19 +2297,16 @@ p {
     object-position: top;
     border-radius: 7px;
   }
-
   #latest-interaction {
     padding: 75px 0px 55px;
     width: 100%;
   }
-
   #login {
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
     font-family: Inter;
   }
-
   .right-header {
     font-size: 1rem;
     font-family: Inter;
@@ -2673,46 +2314,37 @@ p {
     justify-content: flex-end;
     position: relative;
   }
-
   #edate {
     width: 120px;
   }
-
   #memname {
     font-size: 14px;
   }
-
   .hero-overlay {
     margin-bottom: 30px;
   }
-
   .hero-overlay h1 {
     font-size: 56px !important;
     margin-top: 49px !important;
     margin-bottom: 15px;
   }
-
   .hero-overlay .icon-circles {
     margin-bottom: 49px;
   }
-
   .hero-grid {
     grid-template-columns: 34% 61%;
     gap: 60px;
   }
-
   .hero-image img {
     width: 100%;
     height: auto;
   }
-
   .pics-items img {
     width: 100%;
     height: 150px;
     object-fit: cover;
     object-position: top;
   }
-
   #clubheading {
     font-family: Inter;
     font-weight: 500;
@@ -2721,7 +2353,6 @@ p {
     line-height: 36px;
     letter-spacing: 0%;
   }
-
   #clubsub {
     font-family: Inter;
     font-weight: 400;
@@ -2730,79 +2361,63 @@ p {
     line-height: 30px;
     letter-spacing: 0%;
   }
-
   .club-banners {
     padding: 20px;
   }
-
   .club-banners .head {
     font-size: 22px;
   }
-
   .club-banners .prehead {
     font-size: 13px;
   }
-
   .clubpics-item img {
     width: 100%;
     height: 240px;
   }
-
   .join {
     border-radius: 15px;
     padding: 25px 50px;
     height: auto;
     width: 1355px;
   }
-
   #join-club {
     width: 165px;
     padding: 5px 12px;
     font-size: 18px;
   }
-
   .resultpics-items img {
     width: 100%;
     height: 170px;
   }
-
   .upcard {
     height: auto;
     padding: 25px;
   }
-
   .upcards {
     height: auto;
   }
-
   .event-item img {
     max-width: 48px;
     height: 48px;
   }
-
   .button-group {
     margin-top: 20px;
   }
-
   .Latest {
     width: 20%;
     height: auto;
   }
-
   .comments-card,
   .comments-cards {
     height: 400px;
   }
-
   .comments-cards img {
     max-width: 70px;
     height: 70px;
   }
-
   .club-banners {
     height: 75px;
   }
-
   #ehead {
     font-family: Inter;
     font-weight: 400;
@@ -2812,7 +2427,6 @@ p {
     letter-spacing: 0%;
     padding-bottom: 8px;
   }
-
   #esub {
     font-family: Inter;
     font-weight: 500;
@@ -2821,7 +2435,6 @@ p {
     line-height: 100%;
     letter-spacing: 0%;
   }
-
   #view-results {
     width: 200px;
     height: 60px;
@@ -2835,30 +2448,25 @@ p {
     color: white;
     margin-bottom: 20px;
   }
-
   #footer-heading {
     font-size: 34px;
     text-align: center;
     margin-bottom: 18px;
   }
-
   #footer-description {
     font-size: 22px;
     text-align: center;
     line-height: 30px;
   }
-
   .footer-img {
     width: 100%;
     height: auto;
   }
-
   #comimg {
     max-width: 50px !important;
     height: 50px !important;
     object-fit: cover;
   }
-
   #comtext {
     font-family: Inter;
     font-weight: 400;
@@ -2867,7 +2475,6 @@ p {
     line-height: 20px;
     letter-spacing: 0%;
   }
-
   #comdate {
     font-family: Inter;
     font-weight: 400;
@@ -2876,22 +2483,18 @@ p {
     line-height: 20px;
     letter-spacing: 0%;
   }
-
   .social-col {
     padding-left: 30px;
     margin-left: 0px;
   }
-
   .contact-col {
     padding-right: 30px;
     margin-right: 0px;
   }
-
   #joincontainer #clubheading {
     font-size: 34px;
     margin-bottom: 0;
   }
-
   #learn-more {
     width: 240px;
     height: 50px;
@@ -2905,73 +2508,58 @@ p {
     color: white;
     margin-top: 30px;
   }
-
   .cardddd {
     width: 35% !important;
     margin: 0;
   }
-
   .comments-card,
   .comments-cards {
     width: 100% !important;
   }
-
   .cardddd:last-child {
     margin: 0 auto;
   }
-
   .lcardddd {
     width: 45% !important;
     margin: 0;
     height: 300px;
     padding: 20px 40px;
   }
-
   .lcardddd:last-child {
     margin: 0 auto;
   }
-
   .ncardddd {
     width: 45% !important;
     margin: 0;
     height: 340px;
   }
-
   .ncardddd:last-child {
     margin: 0 auto;
   }
-
   .resultpics-infos {
     font-size: 1rem;
   }
-
   .comments-cards {
     width: 95% !important;
   }
-
   #facebook {
     width: 250px;
   }
 }
-
 /* 1199px and below */
 @media only screen and (max-width: 1199px) {
   .hero-content #clubheading {
     margin-top: 0px;
   }
-
   .join {
     width: 1155px;
   }
-
   .admin-dropdown {
     width: 100%;
   }
-
   .custom-nav {
     margin-left: 5px;
   }
-
   .navbar-nav .nav-link {
     font-weight: 400;
     font-size: 14px;
@@ -2981,7 +2569,6 @@ p {
     line-height: 100%;
     letter-spacing: 0%;
   }
-
   #login {
     width: 75px;
     font-weight: 500;
@@ -2989,7 +2576,6 @@ p {
     line-height: 100%;
     font-family: Inter;
   }
-
   .right-header {
     font-size: 1rem;
     font-family: Inter;
@@ -2997,61 +2583,48 @@ p {
     justify-content: flex-end;
     position: relative;
   }
-
   .nav-item {
     padding: 15px 7px;
     gap: 100px
   }
-
   .hero-grid {
     grid-template-columns: 45% 50%;
     gap: 50px;
   }
-
   #ename,
   #pname {
     width: 200px;
   }
-
   #espeaker {
     width: 200px;
   }
-
   #edate {
     width: 120px;
   }
-
   #joincontainer #clubheading {
     width: 580px
   }
-
   .clubpics-info {
     height: 45px;
     font-size: 18px;
   }
-
   .resultpics-infos {
     height: 30px;
     font-size: 18px;
   }
-
   .pics-infos {
     height: 30px;
     font-size: 11px;
   }
-
   .social-col {
     padding-left: 5px
   }
-
   .contact-col {
     padding-right: 5px;
   }
-
   #ename {
     font-size: 14px
   }
-
   #clubheading {
     font-family: Inter;
     font-weight: 500;
@@ -3060,7 +2633,6 @@ p {
     line-height: 36px;
     letter-spacing: 0%;
   }
-
   #clubsub {
     font-family: Inter;
     font-weight: 400;
@@ -3069,77 +2641,61 @@ p {
     line-height: 30px;
     letter-spacing: 0%;
   }
-
   .club-banners {
     text-align: left;
   }
-
   .join-btn {
     width: 100%;
     max-width: 300px;
   }
-
   .club-banners .head {
     font-size: 22px;
   }
-
   .club-banners .prehead {
     font-size: 13px;
   }
-
   .clubpics-item img {
     width: 100%;
     height: 225px;
   }
-
   .pics {
     grid-template-columns: repeat(3, 1fr);
   }
-
   .pics-items img {
     width: 100%;
     height: 150px;
   }
-
   .resultpics {
     grid-template-columns: repeat(3, 1fr);
   }
-
   .resultpics-items img {
     width: 100%;
     height: 150px;
   }
-
   #view-all {
     font-size: 14px;
   }
-
   .upcoming-section {
     gap: 20px;
   }
-
   .upcard {
     height: auto;
     padding: 20px;
     width: 48%;
   }
-
   .upcard {
     height: auto;
     width: 48%;
   }
-
   .event-item img {
     max-width: 45px;
     height: 45px;
   }
-
   .Latest {
     width: 100%;
     margin: 20px auto;
     height: auto;
   }
-
   #ehead {
     font-family: Inter;
     font-weight: 400;
@@ -3150,7 +2706,6 @@ p {
     padding-bottom: 8px;
     text-align: left;
   }
-
   #esub {
     font-family: Inter;
     font-weight: 500;
@@ -3159,7 +2714,6 @@ p {
     line-height: 100%;
     letter-spacing: 0%;
   }
-
   #view-results {
     width: 180px;
     height: 60px;
@@ -3173,7 +2727,6 @@ p {
     color: white;
     margin-bottom: 5px;
   }
-
   #learn-more {
     width: 160px;
     height: 50px;
@@ -3187,7 +2740,6 @@ p {
     color: white;
     margin-top: 20px;
   }
-
   #club-gallery {
     width: 230px;
     height: 60px;
@@ -3201,7 +2753,6 @@ p {
     color: white;
     margin-bottom: 20px;
   }
-
   #member-gallery {
     width: 270px;
     height: 60px;
@@ -3215,115 +2766,93 @@ p {
     color: white;
     margin-bottom: 5px;
   }
-
   #join-club {
     width: 180px;
     padding: 6px 12px;
     font-size: 18px;
   }
-
   #club {
     border-radius: 15px;
     height: 160px;
     padding: 25px 50px;
     margin-top: 40px;
   }
-
   .comments-card,
   .comments-cards {
     height: 360px;
   }
-
   .comments-cards img {
     max-width: 65px;
     height: 65px;
   }
-
   .cardddd {
     width: 30% !important;
     margin: 0;
   }
-
   .cardddd:last-child {
     margin: 0 auto;
   }
-
   .lcardddd {
     width: 47% !important;
     margin: 0;
     height: 390px;
   }
-
   .lcardddd:last-child {
     margin: 0 auto;
   }
-
   .ncardddd:last-child {
     margin: 0 auto;
   }
-
   .ncardddd {
     width: 47% !important;
     margin: 0;
     height: 390px;
   }
-
   .comments-card img {
     max-width: 35px;
     height: 35px;
   }
-
   .club-banners {
     height: 70px;
   }
-
   .hero-overlay h1 {
     font-size: 48px !important;
     margin-top: 48px !important;
   }
-
   .hero-overlay .icon-circles {
     margin-bottom: 45px;
   }
-
   .custom-card img {
     width: 150px;
   }
-
   .club-section {
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
   }
-
   .club-button {
     width: 100%;
     max-width: 300px;
   }
-
   #footer-heading {
     font-size: 32px;
     text-align: center;
     margin-bottom: 15px;
   }
-
   #footer-description {
     font-size: 22px;
     text-align: center;
     line-height: 30px;
   }
-
   .footer-img {
     max-width: 310px;
     max-height: 200px;
   }
-
   #comimg {
     max-width: 40px !important;
     height: 40px !important;
     object-fit: cover;
   }
-
   #comtext {
     font-family: Inter;
     font-weight: 400;
@@ -3332,7 +2861,6 @@ p {
     line-height: 16px;
     letter-spacing: 0%;
   }
-
   #comdate {
     font-family: Inter;
     font-weight: 400;
@@ -3341,27 +2869,22 @@ p {
     line-height: 16px;
     letter-spacing: 0%;
   }
-
   .footer-text {
     width: 75%;
   }
 }
-
 /* 991px and below */
 @media only screen and (max-width: 991px) {
-
   .right-header .profile-mobile,
   .right-header .divider,
   .notification-desktop,
   .down {
     display: none !important;
   }
-
   .notification-mobile {
     display: inline-flex !important;
     margin-right: 10px;
   }
-
   #login {
     padding: 0px 15px 20px 45px;
     display: flex;
@@ -3369,18 +2892,15 @@ p {
     font-family: Inter;
     font-weight: 400;
   }
-
   .navbar .right-header {
     margin-left: 0;
   }
-
   .custom-nav {
     position: relative;
     background-color: white;
     width: 100%;
     margin-left: 10px;
   }
-
   .custom-collapse {
     position: absolute;
     top: 100%;
@@ -3390,130 +2910,104 @@ p {
     z-index: 5000;
     margin-top: 10px;
   }
-
   .hero-overlay {
     margin-right: 5%;
   }
-
   .navbar-nav .nav-link {
     padding: 12px;
     display: block;
   }
-
   .navbar-brand img {
     max-height: 40px;
     align-items: center;
   }
-
   .navbar .right-header {
     width: 100px;
   }
-
   .nav-item {
     padding: 5px 22px;
   }
-
   #login {
     width: 100%;
     margin-top: 10px;
   }
-
   .join {
     padding: 15px 20px;
   }
-
   #joincontainer #clubheading {
     width: 400px;
     font-size: 26px;
     font-weight: 500;
   }
-
   #joincontainer #clubsub {
     width: 460px;
   }
-
   .latest-interaction {
     padding-top: 25px;
     padding-left: 20px;
     padding-bottom: 25px
   }
-
   .hero-overlay h1 {
     font-size: 44px !important;
     margin-top: 45px !important;
   }
-
   .hero-overlay .icon-circles {
     margin-bottom: 45px;
   }
-
   .cardddd {
     width: 50% !important;
     margin: 0;
   }
-
   .join {
     width: 940px;
   }
-
   .cardddd:last-child,
   .lcardddd:last-child,
   .ncardddd:last-child {
     margin: 0;
   }
-
   .lcardddd {
     width: 100% !important;
     margin: 0;
     height: auto;
   }
-
   .ncardddd {
     width: 100% !important;
     margin: 0;
   }
-
   .custom-card {
     flex-direction: column;
     text-align: center;
     align-items: center;
   }
-
   #latest-interaction {
     padding: 75px 15px 55px 0px;
   }
-
   .custom-card img {
     width: 100%;
     max-width: 300px;
     margin-bottom: 15px;
   }
-
   .events-card {
     width: auto;
     text-align: left;
   }
-
   .cabout {
     font-size: 26px;
   }
-
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 20px;
     text-align: left;
   }
-
   .hero-image,
   .hero-content {
     justify-self: center;
   }
-
   .hero-image img {
     width: 100%;
     height: auto;
   }
-
   #clubheading {
     font-family: Inter;
     font-weight: 500;
@@ -3522,7 +3016,6 @@ p {
     line-height: 36px;
     letter-spacing: 0%;
   }
-
   #clubsub {
     font-family: Inter;
     font-weight: 400;
@@ -3531,95 +3024,77 @@ p {
     line-height: 30px;
     letter-spacing: 0%;
   }
-
   .card {
     height: auto;
     width: 95%;
     margin-left: auto;
     margin-right: auto;
   }
-
   .club-banners {
     justify-content: space-between;
   }
-
   .join-btn {
     height: 50px;
     font-size: 16px;
   }
-
   .club-banners .head {
     font-size: 20px;
   }
-
   .club-banners .prehead {
     font-size: 12px;
   }
-
   #view-all {
     width: 100%;
     max-width: 100%;
     font-size: 14px;
   }
-
   .clubpics,
   .resultpics {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-
   .clubpics-item img {
     max-width: 100%;
     width: 100% !important;
     max-height: auto;
   }
-
   .resultpics-items img {
     max-width: 100%;
     width: 100% !important;
     height: 190px;
   }
-
   .pics {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .upcard,
   .upcards {
     width: 100%;
     margin-left: 0 !important;
   }
-
   .event-item img {
     max-width: 45px;
     height: 45px;
   }
-
   .button-group {
     justify-content: left;
     margin-top: 20px;
   }
-
   #facebook {
     width: 170px
   }
-
   #view-all {
     width: 100%;
     font-size: 14px;
   }
-
   .Latest {
     width: 100%;
     margin: 20px auto;
     padding: 20px;
     height: auto;
   }
-
   #view-all {
     width: 100%;
     font-size: 14px;
   }
-
   .comments-card,
   .comments-cards {
     width: 100%;
@@ -3628,13 +3103,11 @@ p {
     margin-left: 0;
     padding: 20px !important;
   }
-
   .comments-cards img,
   .comments-card img {
     max-width: 100%;
     height: auto;
   }
-
   #join-club {
     width: 160px;
     padding: 5px 10px;
@@ -3642,48 +3115,39 @@ p {
     font-weight: 400;
     height: 50px;
   }
-
   #club {
     border-radius: 15px;
     height: 140px;
     padding: 15px 40px;
     margin-top: 30px
   }
-
   .latest-interaction .row>div {
     margin-bottom: 20px;
   }
-
   .club-banner {
     flex-direction: column;
     align-items: flex-start !important;
     height: auto;
     padding: 15px !important;
   }
-
   .pics-items img {
     max-width: 100%;
     width: 100% !important;
     height: 179px;
   }
-
   .card {
     width: 100% !important;
   }
-
   .club-heading {
     font-size: 18px;
   }
-
   .club-subheading {
     font-size: 16px;
   }
-
   .club-button {
     height: 50px;
     font-size: 16px;
   }
-
   #ehead {
     font-family: Inter;
     font-weight: 400;
@@ -3694,7 +3158,6 @@ p {
     padding-bottom: 8px;
     text-align: left;
   }
-
   #esub {
     font-family: Inter;
     font-weight: 500;
@@ -3703,44 +3166,36 @@ p {
     line-height: 100%;
     letter-spacing: 0%;
   }
-
   #ename,
   #pname {
     width: 100%;
   }
-
   #espeaker {
     width: 100%;
   }
-
   #edate {
     width: 150px;
   }
-
   .footer-img {
     max-width: 240px;
     max-height: 200px;
     width: 100%;
   }
-
   #footer-heading {
     font-size: 30px;
     text-align: center;
     margin-bottom: 10px;
   }
-
   #footer-description {
     font-size: 20px;
     text-align: center;
     line-height: 28px;
   }
-
   #comimg {
     max-width: 30px !important;
     height: 30px !important;
     object-fit: cover;
   }
-
   #comtext {
     font-family: Inter;
     font-weight: 400;
@@ -3749,7 +3204,6 @@ p {
     line-height: 18px;
     letter-spacing: 0%;
   }
-
   #comdate {
     font-family: Inter;
     font-weight: 400;
@@ -3758,24 +3212,19 @@ p {
     line-height: 12px;
     letter-spacing: 0%;
   }
-
   #cl {
     flex-direction: column !important;
     align-items: start !important;
   }
-
   .contact-item .icon-circles {
     margin-bottom: 10px;
   }
-
   .contact-col .head {
     font-size: 20px;
   }
-
   .social-col .head {
     font-size: 20px;
   }
-
   #member-gallery,
   #club-gallery,
   #view-results,
@@ -3786,33 +3235,27 @@ p {
     height: 50px;
   }
 }
-
 /* 767px and below (tablet to mobile) */
 @media only screen and (max-width: 767px) {
   .comments-cards {
     width: 100%;
     margin: 0 auto;
   }
-
   .hero-section {
     height: 70vh;
     padding: 20px;
     text-align: center;
   }
-
   .hero-section .d-flex {
     justify-content: center;
     text-align: center;
   }
-
   .hero-content #clubsub {
     margin-top: 10px;
   }
-
   .join {
     height: auto;
   }
-
   #join-club {
     width: 100%;
     padding: 5px 10px;
@@ -3820,149 +3263,119 @@ p {
     font-weight: 500;
     height: 50px;
   }
-
   #cls {
     align-items: center !important;
   }
-
   .footer-text {
     width: 100%;
   }
-
   #facebook {
     width: 100%;
     text-align: center;
   }
-
   #cla {
     flex-direction: column-reverse !important;
     align-items: center !important;
   }
-
   .event-list {
     padding-top: 15px;
   }
-
   #cle {
     flex-direction: column !important;
     align-items: center !important;
   }
-
   #herocontainer {
     padding: 70px 10px 34px 16px;
   }
-
   #clubcontainer {
     padding: 10px 10px 10px 16px;
   }
-
   #eventcontainer {
     padding: 38px 10px 10px 16px;
   }
-
   #membercontainer {
     padding: 10px 0px 40px;
   }
-
   #latest-interaction {
     padding: 65px 10px 45px;
   }
-
   #newscontainer {
     padding: 65px 0px 30px;
   }
-
   #joincontainer {
     padding: 15px 0px 10px;
   }
-
   #galcontainer {
     padding: 25px 0px 20px;
   }
-
   .cardddd {
     width: 100% !important;
     margin: 0;
   }
-
   .lcardddd {
     width: 100% !important;
     margin: 0;
   }
-
   .ncardddd {
     width: 100% !important;
     margin: 0;
   }
-
   .hero-overlay h1 {
     font-size: 36px !important;
     margin-top: 40px !important;
   }
-
   #joincontainer #clubheading {
     width: 500px;
     font-size: 24px;
     font-weight: 500;
     text-align: center;
   }
-
   #joincontainer #clubsub {
     width: 500px;
     font-size: 20px;
     text-align: center;
   }
-
   .hero-overlay .icon-circles {
     margin-bottom: 40px;
   }
-
   .hero-overlay .row {
     justify-content: center;
   }
-
   .hero-overlay p {
     font-size: 18px;
     margin-bottom: 15px;
   }
-
   .icon-circles {
     margin-left: 5%;
     width: 40px;
     height: 40px;
   }
-
   #footer-heading {
     font-size: 28px;
     margin-bottom: 10px;
   }
-
   .custom-card {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-
   .custom-card img {
     margin-right: 0;
     margin-bottom: 15px;
     max-width: 100%;
     height: auto;
   }
-
   #footer-description {
     font-size: 18px;
     max-width: 100%;
     line-height: 26px;
   }
-
   #club {
     border-radius: 15px;
     height: 120px;
     padding: 10px 20px;
     margin-top: 30px
   }
-
   #clubheading {
     font-family: Inter;
     font-weight: 500;
@@ -3971,7 +3384,6 @@ p {
     line-height: 36px;
     letter-spacing: 0%;
   }
-
   #clubsub {
     font-family: Inter;
     font-weight: 400;
@@ -3980,32 +3392,26 @@ p {
     line-height: 26px;
     letter-spacing: 0%;
   }
-
   .club-section {
     padding: 20px 15px;
     gap: 15px;
   }
-
   .club-button {
     width: 100%;
     height: 48px;
   }
-
   .club-banner {
     font-size: 16px;
   }
-
   .pics {
     flex-direction: column;
     grid-template-columns: repeat(2, 1fr);
   }
-
   .pics-items img {
     max-width: 100%;
     height: 179px;
     width: 100% !important;
   }
-
   #ehead {
     font-family: Inter;
     font-weight: 400;
@@ -4016,7 +3422,6 @@ p {
     padding-bottom: 8px;
     text-align: left;
   }
-
   #esub {
     font-family: Inter;
     font-weight: 500;
@@ -4025,92 +3430,74 @@ p {
     line-height: 100%;
     letter-spacing: 0%;
   }
-
   .hero-grid {
     gap: 20px;
   }
-
   #clubheading {
     text-align: left;
   }
-
   #clubsub {
     text-align: left;
   }
-
   .hero-image img {
     width: 100%;
   }
-
   .club-banners {
     flex-direction: column;
     height: auto;
     padding: 1rem;
     text-align: center;
   }
-
   .club-banners>div:first-child {
     margin-left: 0;
   }
-
   .club-banners .head,
   .club-banners .prehead {
     text-align: center !important;
   }
-
   .club-banners .d-flex.gap-2 {
     margin-top: 0.5rem;
     margin-right: 0;
     justify-content: center;
   }
-
   .resultpics {
     flex-direction: column;
     align-items: center;
     grid-template-columns: repeat(2, 1fr);
   }
-
   .resultpics-items img {
     width: 100%;
     height: 190px;
   }
-
   .clubpics {
     flex-direction: column;
     grid-template-columns: repeat(2, 1fr) !important;
   }
-
   .clubpics-item img {
     width: 100%;
   }
-
   .event-item img {
     max-width: 40px;
     height: 40px;
   }
-
   .event-details {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-
   .event-title,
   .event-date,
   .event-time-details {
     text-align: left;
     font-size: 0.85rem;
   }
-
   .button-group {
     justify-content: flex-start;
   }
-
   .Latest {
     padding: 15px;
     margin: 0 auto;
   }
-
   .social-col,
   .contact-col,
   .ficon-circles,
@@ -4121,34 +3508,27 @@ p {
     justify-content: center;
     text-align: center;
   }
-
   .card-header {
     padding: 0;
   }
-
   .comments-card {
     height: 330px;
   }
-
   .comments-card,
   .comments-cards {
     padding: 25px 15px !important;
   }
-
   .footer-image {
     max-width: 300px;
   }
-
   .footer-section {
     text-align: center;
   }
-
   #comimg {
     max-width: 60px !important;
     height: 60px !important;
     object-fit: cover;
   }
-
   #comtext {
     font-family: Inter;
     font-weight: 400;
@@ -4157,7 +3537,6 @@ p {
     line-height: 16px;
     letter-spacing: 0%;
   }
-
   #comdate {
     font-family: Inter;
     font-weight: 400;
@@ -4166,20 +3545,16 @@ p {
     line-height: 16px;
     letter-spacing: 0%;
   }
-
   #ename,
   #pname {
     width: 100%;
   }
-
   #espeaker {
     width: 100%;
   }
-
   #edate {
     width: 100%;
   }
-
   .event-details {
     display: flex;
     justify-content: space-between;
@@ -4187,67 +3562,52 @@ p {
     font-size: 0.875rem;
     width: 100%;
   }
-
   #overlay-button {
     width: 210px;
   }
-
   .event-item {
     gap: 15px;
   }
-
   .event-list {
     margin-bottom: 15px;
   }
 }
-
 /* 575px and below (mobile) */
 @media only screen and (max-width: 575px) {
   .hero-section {
     min-height: 60vh;
   }
-
   .hero-overlay {
     padding: 10px;
     margin-left: 0;
   }
-
   .divider {
     border: 1px solid #ddd;
   }
-
   #herocontainer {
     padding: 60px 0px 24px;
   }
-
   #clubcontainer {
     padding: 0px 0px;
   }
-
   #eventcontainer {
     padding: 28px 0px 0px;
   }
-
   #membercontainer {
     padding: 0px 0px 30px;
   }
-
   #latest-interaction {
     padding: 55px 0px 35px;
   }
-
   #newscontainer {
     padding: 55px 0px 20px;
   }
-
   #joincontainer {
     padding: 5px 0px 0px;
   }
-
   #galcontainer {
     padding: 15px 0px 10px;
   }
-
   #member-gallery,
   #club-gallery,
   #view-results,
@@ -4257,27 +3617,22 @@ p {
     width: 100%;
     height: 50px;
   }
-
   .hero-overlay h1 {
     font-size: 24px !important;
     margin-top: 25px !important;
   }
-
   .hero-overlay .icon-circles {
     margin-bottom: 30px;
     margin-top: 10px;
   }
-
   .hero-overlay p {
     font-size: 16px;
     margin-top: 10px;
   }
-
   .custom-card img {
     max-width: 100%;
     height: auto;
   }
-
   #clubheading {
     font-family: Inter;
     font-weight: 500;
@@ -4286,7 +3641,6 @@ p {
     line-height: 30px;
     letter-spacing: 0%;
   }
-
   #clubsub {
     font-family: Inter;
     font-weight: 400;
@@ -4295,163 +3649,131 @@ p {
     line-height: 24px;
     letter-spacing: 0%;
   }
-
   .hero-image img {
     width: 100%;
     height: auto;
   }
-
   .custom-card {
     padding: 15px;
     max-width: 300px;
     flex-direction: column;
     display: flex-column
   }
-
   .card {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
   }
-
   .club-banners {
     padding: 15px 10px;
   }
-
   #overlay-button {
     height: 45px;
     font-size: 15px;
     width: 150px;
   }
-
   .join-btn {
     height: 45px;
     font-size: 15px;
   }
-
   #bhead {
     margin-bottom: 5px;
     margin-top: 15px;
     font-size: 24px;
   }
-
   #bpre {
     font-size: 13px;
     margin-bottom: 20px;
   }
-
   .clubpics {
     flex-direction: column;
     grid-template-columns: repeat(1, 1fr) !important;
   }
-
   .clubpics-item img {
     max-width: 100%;
     height: auto;
   }
-
   .resultpics {
     flex-direction: column;
     grid-template-columns: repeat(1, 1fr) !important;
   }
-
   .resultpics-items img {
     width: 100%;
     height: 190px;
   }
-
   .upcard {
     padding: 15px;
   }
-
   .event-item img {
     max-width: 38px;
     height: 38px;
   }
-
   .join {
     height: auto;
   }
-
   #joincontainer #clubheading {
     width: 275px;
   }
-
   #joincontainer #clubsub {
     width: 275px;
   }
-
   .event-item {
     gap: 10px;
   }
-
   .club-banners .icon-circles {
     width: 40px;
     height: 34px;
     margin-bottom: 10px
   }
-
   .event-details {
     font-size: 0.8rem;
   }
-
   .event-list {
     margin-bottom: 10px;
   }
-
   .pics {
     grid-template-columns: repeat(1, 1fr);
     flex-direction: column;
     align-items: center;
   }
-
   .pics-items img {
     max-width: 100%;
     height: 179px;
   }
-
   .Latest {
     padding: 15px;
     width: 100%;
     height: auto;
     margin: 10px 0;
   }
-
   #view-all {
     font-size: 13px;
   }
-
   .club-banner {
     flex-direction: column;
     gap: 5px;
     padding: 10px !important;
   }
-
   .cardddd {
     padding: 20px !important;
     width: 100%;
     height: auto;
   }
-
   .lcardddd {
     padding: 20px !important;
     width: 100%;
     height: auto;
   }
-
   .ncardddd {
     padding: 20px !important;
     width: 100%;
   }
-
   #calendar {
     padding: 0px !important;
   }
-
   #view-all {
     width: 100% !important;
   }
-
   #ehead {
     font-family: Inter;
     font-weight: 400;
@@ -4462,7 +3784,6 @@ p {
     padding-bottom: 8px;
     text-align: left;
   }
-
   #esub {
     font-family: Inter;
     font-weight: 500;
@@ -4471,7 +3792,6 @@ p {
     line-height: 100%;
     letter-spacing: 0%;
   }
-
   .club-section {
     background-color: #ebe6e1;
     border-radius: 15px;
@@ -4481,17 +3801,14 @@ p {
     margin-top: 50px;
     gap: 20px;
   }
-
   .club-heading {
     margin-bottom: 20px;
   }
-
   .club-button {
     max-width: 200px;
     height: 60px;
     font-size: 18px;
   }
-
   .club-section {
     flex-direction: column;
     text-align: center;
@@ -4499,41 +3816,33 @@ p {
     padding: 15px;
     font-size: 16px;
   }
-
   .club-heading {
     font-size: 17px;
   }
-
   .club-subheading {
     font-size: 15px;
   }
-
   .club-button {
     width: 100%;
     height: 45px;
     font-size: 15px;
   }
-
   #memname {
     width: 30px;
   }
-
   #footer-heading {
     font-size: 24px;
     margin-bottom: 10px;
   }
-
   #footer-description {
     font-size: 16px;
     max-width: 1150px;
     line-height: 22px;
   }
-
   .footer-img {
     max-width: 240px;
     max-height: 200px;
   }
-
   .social-col,
   .contact-col,
   .ficon-circles,
@@ -4544,18 +3853,15 @@ p {
     justify-content: center;
     text-align: center;
   }
-
   .footer-section {
     padding: 20px 15px;
   }
-
   .footer-image {
     width: 100%;
     max-width: 440px;
     height: auto;
     border-radius: 20px;
   }
-
   .icon-circles {
     width: 34px;
     height: 34px;
@@ -4565,39 +3871,31 @@ p {
     align-items: center;
     justify-content: center;
   }
-
   .footer-image {
     max-width: 100%;
   }
-
   .contact-item,
   .social-link {
     align-items: left;
     justify-content: left;
   }
-
   .footer-section {
     padding: 10px;
   }
-
   .clubpics-info {
     height: 30px;
   }
-
   .pics-infos {
     height: 28px;
   }
-
   .resultpics-infos {
     height: 28px;
   }
-
   #comimg {
     max-width: 50px !important;
     height: 50px !important;
     object-fit: cover;
   }
-
   #comtext {
     font-family: Inter;
     font-weight: 400;
@@ -4606,36 +3904,29 @@ p {
     line-height: 16px;
     letter-spacing: 0%;
   }
-
   .navbar-brand img {
     width: 100%;
   }
-
   .navbar .right-header {
     width: 100%;
   }
 }
-
 /* For very small screens (like 359px width devices) */
 @media only screen and (max-width: 359px) {
   .hero-overlay h1 {
     font-size: 24px !important;
     margin-top: 15px !important;
   }
-
   .hero-overlay .icon-circles {
     margin-bottom: 15px;
   }
-
   .hero-overlay p,
   .custom-card p {
     font-size: 13px;
   }
-
   .custom-card {
     padding: 10px;
   }
-
   #clubheading {
     font-family: Inter;
     font-weight: 500;
@@ -4644,7 +3935,6 @@ p {
     line-height: 28px;
     letter-spacing: 0%;
   }
-
   #clubsub {
     font-family: Inter;
     font-weight: 400;
@@ -4653,104 +3943,428 @@ p {
     line-height: 26px;
     letter-spacing: 0%;
   }
-
   .card {
     width: 95%;
     padding: 8px;
   }
-
   .custom-card img {
     width: 100%;
     height: auto;
   }
-
   .icon-circles {
     width: 24px;
     height: 24px;
     font-size: 11px;
   }
-
   .club-banners {
     padding: 10px 8px;
   }
-
   .join-btn {
     height: 40px;
     font-size: 14px;
   }
-
   #bhead {
     font-size: 20px;
   }
-
   #bpre {
     font-size: 12px;
   }
-
   .event-item img {
     max-width: 32px;
     height: 32px;
   }
-
   .event-details {
     font-size: 0.75rem;
   }
-
   .Latest {
     padding: 10px;
     margin: 8px 0;
   }
-
   #view-all {
     font-size: 12px;
   }
-
   #ehead {
     font-size: 18px;
   }
-
   #esub {
     font-size: 11px;
   }
-
   .club-section {
     padding: 10px;
     font-size: 14px;
     margin-top: 40px;
   }
-
   .club-heading {
     font-size: 16px;
   }
-
   .club-subheading {
     font-size: 13px;
   }
-
   .club-button {
     height: 40px;
     font-size: 14px;
   }
-
   #footer-heading {
     font-size: 20px;
   }
-
   #footer-description {
     font-size: 14px;
     line-height: 20px;
   }
-
   .footer-img {
     max-width: 200px;
     max-height: 160px;
   }
-
   .footer-section {
     padding: 8px;
   }
-
   .footer-image {
     border-radius: 15px;
+  }
+}
+/* Fully responsive layout breakpoints */
+@media only screen and (max-width: 1399px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .join,
+  .club-banners,
+  .events-cards,
+  .calendars-card,
+  .ryton-season-card,
+  .more-card,
+  .competition-result-card,
+  .session-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .gallery-wrapper,
+  .gallery-grid,
+  .gallery-row,
+  .gallery-row-bottom,
+  .gallery-big,
+  .gallery-half,
+  .gallery-small {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .gallery-row {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+  .gallery-big img,
+  .gallery-half img,
+  .gallery-small img,
+  .gallery-big .overlay,
+  .gallery-half .overlay,
+  .gallery-small .overlay {
+    width: 100%;
+    max-width: 100%;
+  }
+  .gallery-big img {
+    height: auto;
+    aspect-ratio: 1093 / 980;
+  }
+  .gallery-half img,
+  .gallery-small img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .competition-wrapper {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .competition-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .drawer-overlay {
+    width: min(680px, 100vw);
+  }
+  .drawer {
+    width: min(610px, calc(100vw - 24px));
+    margin-right: 12px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .hero-section {
+    min-height: 420px;
+    height: auto;
+    padding: 32px 16px;
+  }
+  .hero-overlay {
+    width: 100%;
+    max-width: 825px;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hero-content,
+  .hero-image {
+    width: 100%;
+  }
+  .upcoming-sections,
+  .upcoming-section,
+  .news-section {
+    width: 100%;
+    gap: 24px;
+  }
+  .event-card,
+  .calendar-card,
+  .competition-card,
+  .member-card,
+  .latest-card,
+  .news-card {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+  }
+  .clubpics,
+  .resultpics,
+  .gallery-pics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .clubpics-item img,
+  .resultpics-items img,
+  .gallery-pics-item img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .events-cards {
+    height: auto;
+    min-height: 0;
+    gap: 24px;
+    padding: 20px;
+  }
+  .events-cards img {
+    width: 38%;
+    max-width: 300px;
+    height: auto;
+    aspect-ratio: 6 / 5;
+    margin: 0;
+  }
+  .competition-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .competition-result-card {
+    height: auto;
+  }
+  .competition-section {
+    padding: 24px;
+  }
+  .event-resultpics,
+  .sco-resultpics {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-bottom: 80px;
+  }
+  .event-resultpics-items img,
+  .sco-resultpics-items img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .divider4,
+  .divider5,
+  .card .text-secondary {
+    width: 100%;
+    max-width: 100%;
+  }
+  .viewer.drawer-open .image-section {
+    transform: none;
+  }
+  .viewer.drawer-open .nav-arrow.left {
+    left: 16px;
+  }
+  .viewer.drawer-open .nav-arrow.right {
+    right: 16px;
+  }
+  .thumbnails {
+    max-width: 100%;
+  }
+  .thumb {
+    width: 180px;
+    height: 135px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .hero-overlay {
+    padding: 24px;
+  }
+  .hero-overlay h1 {
+    font-size: clamp(28px, 8vw, 44px) !important;
+    line-height: 1.15;
+  }
+  .card-section,
+  .button-group,
+  .events-cards,
+  .gallery-row,
+  .gallery-row-bottom {
+    flex-direction: column;
+  }
+  .card-section,
+  .events-cards {
+    align-items: stretch;
+  }
+  .stat-card,
+  .up-event-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .clubpics,
+  .resultpics,
+  .gallery-pics,
+  .competition-grid {
+    grid-template-columns: 1fr;
+  }
+  .gallery-row,
+  .gallery-row-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .events-cards img {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 16 / 9;
+  }
+  .events-cards #ename {
+    margin-top: 0;
+  }
+  .competition-wrapper,
+  .competition-section,
+  #overall,
+  #heads,
+  #gallery-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .image-section {
+    min-height: 42vh;
+  }
+  .main-image {
+    max-width: calc(100vw - 32px);
+    max-height: 52vh;
+    border-radius: 10px;
+  }
+  .nav-arrow {
+    width: 42px;
+    height: 42px;
+    font-size: 30px;
+  }
+  .nav-arrow.left {
+    left: 12px;
+  }
+  .nav-arrow.right {
+    right: 12px;
+  }
+  .drawer-overlay {
+    width: 100%;
+  }
+  .drawer {
+    width: calc(100vw - 16px);
+    height: 94vh;
+    margin-right: 8px;
+  }
+  .image-info {
+    padding: 14px 16px;
+  }
+  .text .title {
+    font-size: 26px;
+  }
+  .meta {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .hero-section {
+    min-height: 360px;
+    padding: 20px 12px;
+  }
+  .hero-overlay {
+    padding: 18px;
+  }
+  .hero-overlay .icon-circles {
+    margin-bottom: 22px;
+  }
+  .hero-overlay h1 {
+    margin-top: 16px !important;
+  }
+  .join {
+    padding: 24px 16px;
+  }
+  .join,
+  #joincontainer #clubheading,
+  #joincontainer #clubsub {
+    width: 100%;
+    max-width: 100%;
+  }
+  .clubpics-item img,
+  .resultpics-items img,
+  .gallery-pics-item img {
+    aspect-ratio: 4 / 3;
+  }
+  .gallery-wrapper {
+    padding: 24px 12px 0;
+  }
+  .gallery-big .overlay,
+  .gallery-half .overlay,
+  .gallery-small .overlay {
+    height: auto;
+    min-height: 64px;
+    padding: 10px 14px;
+  }
+  .title {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .name {
+    font-size: 16px;
+    margin-top: 8px;
+  }
+  .search-bar {
+    width: 100%;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .filter-buttons {
+    gap: 12px;
+    padding-bottom: 28px;
+  }
+  .filter-btn,
+  .comp-filter-btn,
+  .news-filter-btn,
+  .notice-filter-btn {
+    width: 100%;
+  }
+  .comments-card,
+  .comments-cards {
+    margin-right: 0;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+  .top-bar {
+    padding: 14px 16px;
+  }
+  .thumb {
+    width: 132px;
+    height: 100px;
   }
 }

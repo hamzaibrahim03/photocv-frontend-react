@@ -1,600 +1,289 @@
-<template>
-<NavigationRoute />
-<HeaderRoute title="Competitions" />
-<div className="content">
-    <section>
-        <div className="container">
-            <div className="dashboard-card">
-                <ProfileWithoutSearch greeting="Planned and regular club competition" name="2024 - 2025 Season" role="Add new Competition" />
-                <div className="card-section">
-                    <div className="stat-card">
-                        <small className="ca-details">Competitions</small>
-                        <h3 className="number">{{ MemberCount }}</h3>
-                    </div>
-                    <div className="event-card">
-                        <small className="ca-details">Next Competition</small>
-                        <div className="row">
-                            <div className="col-md-5">
-                                <h3 className="number">{{EventDay}}</h3>
-                            </div>
-                            <div className="days col-md-7">
-                                <span>days to go</span>
-                            </div>
-                        </div>
-                    </div>
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams, useNavigate, Link } from 'react-router';
+import dayjs from 'dayjs';
+import Calendar from "../React/extra/CalendarRyton";
+import HeaderRoute from "./HeaderRoute";
+import NavigationRoute from "./NavigationRoute";
+import Loader from "../React/extra/LoaderAll";
+import Pro from './assets/icons/event_list/pro.svg';
+import Cal from './assets/icons/event_list/cal.svg';
+import Cam from './assets/icons/event_list/cam.svg';
+import Mess from './assets/icons/event_list/mess.svg';
+function NewsSingle() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    // Single notice object
+    const [news, setNews] = useState(null);
+    const [newsExtra, setNewsExtra] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const formatDate = (date) => {
+        if (!date) {
+            return '';
+        }
+        return new Date(date).toLocaleDateString('en-GB', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    };
+    const formatTime = (datetimeStr) => {
+        if (!datetimeStr) {
+            return '';
+        }
+        const date = new Date(datetimeStr);
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+    const formattedStartDate = useMemo(() => {
+        if (!news?.created_at) {
+            return '';
+        }
+        return dayjs(news.created_at).format('MMMM D, dddd');
+    }, [news?.created_at]);
+    const getNewsData = async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            const url = `http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-news/${id}`;
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to load news. Status: ${response.status}`
+                );
+            }
+            const data = await response.json();
+            console.log("NEWS API RESPONSE:", data);
+            setNews(data?.data || null);
+        } catch (error) {
+            console.error("NEWS API ERROR:", error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    async function getNewsExtra() {
+        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-news-extras'
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const data = await response.json();
+        console.log(data);
+        setNewsExtra(data.data);
+    };
+    useEffect(() => {
+        if (id) {
+            getNewsData();
+        }
+    }, [id]);
+    useEffect(() => {
+        getNewsExtra();
+    }, []);
+    if (!isLoading && error) {
+        return (
+            <div className="container py-5">
+                <div className="alert alert-danger">
+                    <h5>Unable to load news</h5>
+                    <p className="mb-0">
+                        {error}
+                    </p>
                 </div>
+                <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+                    Back
+                </button>
             </div>
-        </div>
-    </section>
-
-    <div className="row">
-        <div className="col-md-8">
-            <section>
-                <div className="container">
-                    <div id="news">
-                        <div className="news-list">
-                            <div className="form-containers">
-                                <h5>Basic Information</h5>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role">Competition Name</label>
-                                        <h2 className="namess">{{competition.name}}</h2>
+        );
+    }
+    if (!isLoading && !news) {
+        return (
+            <div className="container py-5">
+                <div className="alert alert-warning">
+                    News not found.
+                </div>
+                <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+                    Back
+                </button>
+            </div>
+        );
+    }
+    return (
+        <>
+            <div style={{ backgroundColor: 'white' }}>
+                <Loader show={isLoading} />
+                {!isLoading && (
+                    <>
+                        <NavigationRoute />
+                        <HeaderRoute title="News" />
+                        <div className="content">
+                            <section>
+                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4" style={{ gap: '15px' }}>
+                                        <div class="profile-card">
+                                            <div class="profile-left">
+                                                <div class="profile-info">
+                                                    <small class="greeting">New News</small>
+                                                    <h2 class="name">{news?.title}</h2>
+                                                    <small class="role">{formatDate(news?.created_at)}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="card-section">
+                                            <div className="stat-card">
+                                                <small className="ca-details">News</small>
+                                                <h3 className="number"> {newsExtra?.total_news}</h3>
+                                            </div>
+                                            <div className="event-cards">
+                                                <small className="ca-details">Last News</small>
+                                                <div className="row">
+                                                    <div className="col-md-5">
+                                                        <h3 className="number">{newsExtra?.last_news_days_ago}</h3>
+                                                    </div>
+                                                    <div className="days col-md-7">
+                                                        <span>days ago</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="col-md-6">
-                                        <label className="role"> Competition Type </label>
-                                        <h2 className="namess">{{competition.competition_type_id}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <label className="role"> Competition Description </label>
-                                    <h2 className="namess">{{competition.description}}</h2>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Judging Type </label>
-                                        <h2 className="namess">{{competition.judging_type_id}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Status </label>
-                                        <h2 className="namess">{{competition.status}}</h2>
-                                    </div>
-                                    <div className="col-md-6"></div>
-                                </div><br /><br />
-
-                                <h5>Submission Rules</h5><br />
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Start Date & Time </label>
-                                        <h2 className="namess">{{formattedStartDate}}</h2>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="role"> Deadlines for Submissions </label>
-                                        <h2 className="namess">{{formattedEndDate}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role">Max Number of Entries Per Participant</label>
-                                        <h2 className="namess">{{competition.max_entries_print}}</h2>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="role"> Allowed Image Formats </label>
-                                        <h2 className="namess">{{competition.allowed_image_formats}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Max File Size </label>
-                                        <h2 className="namess">{{competition.max_file_size}}</h2>
-                                    </div>
-                                </div><br /><br />
-
-                                <h5>Categories and Themes</h5><br />
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Theme (If applicable) </label>
-                                        <h2 className="namess">{{competition.theme_id}}</h2>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="role"> Competition Categories </label>
-                                        <h2 className="namess">{{competition.category_id}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Print vs Digital Submission </label>
-                                        <h2 className="namess">{{competition.print_vs_digital}}</h2>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="role">Colour vs. Monochrome</label>
-                                        <h2 className="namess">{{competition.color_vs_mono}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <h5>Judging and Scoring</h5>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Judging Panels </label>
-                                        <h2 className="namess">{{competition.judging_panel}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Voting Method </label>
-                                        <h2 className="namess">{{competition.voting_method_id}}</h2>
-                                    </div>
-                                </div><br /><br />
-
-                                <h5>Results & Awards</h5><br />
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Announcement Date </label>
-                                        <h2 className="namess">{{formattedResultDate}}</h2>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="role"> Awards - Top Places Available </label>
-                                        <h2 className="namess">{{competition.top_places}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role">Award - Number of High Commendations Available</label>
-                                        <h2 className="namess">{{competition.high_commendation_number}}</h2>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <label className="role">Awards - Number of Commendations Available</label>
-                                        <h2 className="namess">{{competition.commendation_number}}</h2>
-                                    </div>
-                                </div><br />
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <label className="role"> Prizes (if any) </label>
-                                        <h2 className="namess">{{competition.prizes}}</h2>
-                                    </div>
-                                    <div className="col-md-6"></div>
-                                </div><br />
-
-                                <h2 className="role">Addtional Features</h2>
-                                <h2 className="namess">
-                                    <input type="checkbox" />Comments & Critique Section (For Consecutive Purpose)
-                                </h2>
-                                <h2 className="namess">
-                                    <input type="checkbox" />Auto generated Certificates (For Winners & Participants)
-                                </h2>
-                                <h2 className="namess">
-                                    <input type="checkbox" />Allow Feedback from the judges to be visible to partcipants
-                                </h2>
-                                <div className="button-group">
-                                    <button className="btn me-2" id="view">Back</button>
-                                    <button className="btn" id="edit">Save</button>
                                 </div>
-                            </div>
+                            </section>
+                            <section>
+                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                                    <div className="row">
+                                        <div className="col-md-8">
+                                            <div id="news">
+                                                <div className="news-list">
+                                                    <div className="custom-cards" style={{ display: 'flex', borderRadius: '10px', width: '100%', height: '310px', margin: 'auto', flexDirection: 'column' }}>
+                                                        <div className="row">
+                                                            <div className="col-md-4">
+                                                                {news.featured_image_url ? (
+                                                                    <img src={news.featured_image_url} alt={news.name} style={{ maxWidth: '300px', width: '100%', height: '250px', objectFit: 'cover' }} />
+                                                                ) : (
+                                                                    <div className="d-flex justify-content-center align-items-center bg-light" style={{ width: '100%', height: '250px' }}>
+                                                                        No Image
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                            <div className="col-md-8">
+                                                                <div className="d-flex justify-content-space-between" style={{ gap: '300px' }}>
+                                                                    <h5>
+                                                                        {news.title}
+                                                                    </h5>
+                                                                    <div className="e-icon-container">
+                                                                        {news.types?.map((t, i) => (
+                                                                            <div key={t.id || i} className="d-flex align-items-center justify-content-center gap-3" style={{ width: '180px' }}>
+                                                                                <img className="head" src={t.icon_url} alt={t.name} style={{ width: "20px", height: "20px" }} />
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                                <p className="date rounded">
+                                                                    {formattedStartDate}
+                                                                </p>
+                                                                <p className="text-secondary" dangerouslySetInnerHTML={{ __html: news.description || '' }} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="button-group mt-4" style={{ position: 'absolute', bottom: '20px' }}>
+                                                            <button className="btn text-white me-3" style={{ backgroundColor: '#99816b', width: '120px' }} onClick={() => navigate(-1)}>
+                                                                Back
+                                                            </button>
+                                                            <Link to={`/news/${news.id}/edit`}>
+                                                                <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }}>
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <section>
+                                                <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
+                                                    <div className="calendar-card" style={{ width: '100%' }}>
+                                                        <Calendar />
+                                                    </div>
+                                                    <div id="news">
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">Recent Comments on News</h5>
+                                                            {newsExtra?.recent_comments?.slice(0, 4)?.map((comment) => (
+                                                                <div className="event-list" style={{ marginBottom: '10px' }} key={comment.id}>
+                                                                    <div className="event-item">
+                                                                        {comment?.comments?.[0]?.user?.profile_image_url ? (
+                                                                            <img className="img-fluid event-img" src={comment?.comments?.[0]?.user?.profile_image_url} onError="this.src='null'" />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                                <i className="fa-regular fa-user" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details">
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span className="text-secondary">{comment?.comments?.[0]?.comment}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(comment?.created_at)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(comment?.created_at)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">More News</h5>
+                                                            {newsExtra?.random_news?.slice(0, 6)?.map((news) => (
+                                                                <div className="event-list" style={{ marginBottom: '10px' }} key={news.id}>
+                                                                    <div className="event-item">
+                                                                        {news.featured_image_url ? (
+                                                                            <img className="img-fluid event-img" src={news.featured_image_url} onError="this.src='null'" />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                                <i className="fa-regular fa-user" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details">
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span className="text-secondary">{news?.title}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(news?.created_at)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(news?.created_at)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                            <div className="button-group mt-auto">
+                                                                <button className="btn btn-sm" id="e-view" onClick="{() => navigate(/notices)}">
+                                                                    View All
+                                                                </button>
+                                                                <button className="btn btn-sm" id="new" onClick="{() => navigate(/notices/create)}">
+                                                                    Add New
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div className="col-md-4">
-            <section>
-                <div className="container" id="right">
-                    <div className="cardddd" style="padding: 0; height: auto">
-                        <CalendarDashboard />
-                    </div>
-                    <div id="news">
-                        <RecentSubmissions />
-                        <MoreCompetitions style="height: auto" />
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
-</template>
-
-<script setup>
-import { onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import dayjs from 'dayjs'
-import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
-import NavigationRoute from "@/components/NavigationRoute.vue"
-import HeaderRoute from "@/components/HeaderRoute.vue"
-import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
-import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue"
-import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue"
-import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue"
-
-const route = useRoute()
-const id = route.params.id
-
-const { competitions, fetchCompetitions, memberCount, eventDay } = useCompetitionStore()
-
-onMounted(() => {
-    fetchCompetitions()
-})
-
-const competition = computed(() =>
-    competitions.value.find(e => e.id == id) || {}
-)
-
-const formattedStartDate = computed(() =>
-    competition.value?.start_date ?
-    dayjs(competition.value.start_date).format('MMMM D, YYYY h:mm A') :
-    ''
-)
-
-const formattedEndDate = computed(() =>
-    competition.value?.submission_deadline ?
-    dayjs(competition.value.submission_deadline).format('MMMM D, YYYY h:mm A') :
-    ''
-)
-
-const formattedResultDate = computed(() =>
-    competition.value?.result_announcement_date ?
-    dayjs(competition.value.result_announcement_date).format('MMMM D, YYYY h:mm A') :
-    ''
-)
-
-const MemberCount = memberCount
-const EventDay = eventDay
-</script>
-
-<style scoped>
-.container {
-     max-width: 1810px;
-     padding: 0 15px;
-     margin: 0 auto;
-}
- .content {
-     padding: 0 30px;
-}
- .dashboard-card {
-     gap: 15px;
-     border-radius: 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 20px 0px;
-     width: 100%;
-}
- .profile-card {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     background: white;
-     padding: 15px 25px;
-     border-radius: 12px;
-     width: 65.8%;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     height: 148px;
-}
- .profile-left {
-     display: flex;
-     align-items: left;
-}
- .profile-left img {
-     width: 100%;
-     max-width: 108px;
-     height: 108px;
-     border-radius: 50%;
-}
- .greeting {
-     color: #99816b;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .name {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 100%;
-     color: #4c4036;
-     font-family: Inter;
-}
- .names {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 18.68px;
-     line-height: 20.76px;
-     letter-spacing: 0%;
-}
- .namess {
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: #4c4036;
-     padding-left: 20px;
-     font-family: Inter;
-     text-align: justify;
-}
- .left-header-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-}
- .role {
-     color: #cc445e;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
-}
- .profile-icons {
-     display: flex;
-     gap: 10px;
-     flex-direction: column;
-}
- .profile-icon {
-     display: flex;
-     flex-direction: column;
-}
- .icons {
-     display: flex;
-     align-items: center;
-     color: white;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon {
-     display: flex;
-     align-items: center;
-     color: #cc445e;
-     font-size: 14px;
-     gap: 5px;
-}
- .icon i {
-     margin-right: 5px;
-}
- .stat-card {
-     background: #cc445e;
-     color: white;
-     padding: 20px;
-     border-radius: 8px;
-     text-align: center;
-     width: 219px;
-     font-family: Inter;
-     font-size: 1.2rem;
-     height: 148px;
-}
- .event-card {
-     background: #755840;
-     color: white;
-     padding: 20px;
-     height: 148px;
-     border-radius: 8px;
-     text-align: center;
-     font-family: Inter;
-     font-size: 1.2rem;
-     width: 219px;
-}
- .number {
-     font-weight: 500;
-     font-size: 48px;
-     font-family: Inter;
-     line-height: 100%;
-     color: white;
-     margin-top: 30px;
-}
- .ca-details {
-     font-weight: 400;
-     font-size: 20px;
-     font-family: Inter;
-     line-height: 100%;
-}
- .days {
-     margin-top: 35px;
-     font-weight: 400;
-     font-family: Inter;
-     font-size: 16px;
-     line-height: 100%;
-}
- .card-section {
-     display: flex;
-     gap: 35px;
-     width: 32%;
-}
- .cardddd {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-}
- .cardddd:first-child {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-top: 20px;
-}
- .event-list {
-     padding-top: 30px;
-}
- .event-list {
-     display: flex;
-     flex-direction: column;
-     gap: 10px;
-}
- .event-item {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-}
- .event-item img {
-     width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 5px;
-     object-fit: cover;
-}
- .event-details {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     flex: 1;
-     font-size: 0.875rem;
-     width: 100%;
-}
- #ename {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 20px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- #view {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #99816b;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     font-family: Inter;
-     color: white;
-}
- #edit {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
-}
- #new {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
-}
- .card {
-     background: white;
-     border-radius: 10px;
-     flex: 1;
-     width: 65%;
-     height: auto;
-     padding-bottom: 15px;
-     border: none;
-}
- .site-footer {
-     padding: 15px 0;
-     text-align: center;
-     font-size: 14px;
-     color: #99816b;
-     bottom: 0;
-     left: 0;
-     width: 100%;
-     position: relative;
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .ultrahead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 72px;
-     line-height: 20px;
-     letter-spacing: 0%;
-}
- .heading {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 36px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .head {
-     font-family: Inter;
-     font-weight: 500;
-     font-style: Medium;
-     font-size: 24px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .clubhead {
-     font-family: Inter;
-     font-weight: 600;
-     font-style: Semi Bold;
-     font-size: 20px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .subhead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 18px;
-     line-height: 36px;
-     letter-spacing: 0%;
-}
- .memtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .prehead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 14px;
-     line-height: 20px;
-     letter-spacing: 0%;
-}
- .galtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 12px;
-     line-height: 100%;
-     letter-spacing: 0%;
-}
- .event-img, .fallback-box {
-     width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 5px;
-     object-fit: cover;
-     background-color: #f0f0f0;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
- .fallback-box {
-     font-size: 14px;
-     color: #888;
-}
- .icon-circles .flickr-dots i, .flickr-dots i {
-     font-size: 8px;
-     padding-bottom: 8px;
-     margin: 1px;
-}
-</style>
+                    </>
+                )}
+            </div>
+        </>
+    );
+};
+export default NewsSingle;

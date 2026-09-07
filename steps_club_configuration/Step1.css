@@ -1,0 +1,654 @@
+.general-config-container {
+    width: 100%;
+    padding: 20px 27px 35px;
+    background: #fff;
+    font-family: "Inter", sans-serif;
+    color: #4c4036;
+}
+
+.general-config-title {
+    color: #e34c5c;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 34px;
+}
+
+/* =====================================    CONFIGURATION ACCORDION
+===================================== */
+.config-section {
+    border: 1px solid #d8cec6;
+    border-radius: 4px;
+    margin-bottom: 19px;
+    overflow: hidden;
+    width: 1344px;
+    height: 302px;
+}
+
+.config-section-header {
+    height: 60px;
+    padding: 0 12px;
+    background: #f8f6f4;
+    border-bottom: 1px solid #d8cec6;
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #4c4036;
+    cursor: pointer;
+}
+
+.config-section-body {
+    padding: 12px 19px 16px;
+}
+
+.config-section-body label,
+.season-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4c4036;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16.62px;
+    line-height: 18.47px;
+    letter-spacing: 0%;
+}
+
+.arrow {
+    font-size: 32px;
+    transition: transform 0.2s ease;
+    width: 32px;
+    height: 32px;
+}
+
+.arrow.rotate {
+    transform: rotate(0deg);
+}
+
+/* =====================================    INPUTS
+===================================== */
+.custom-input {
+    min-height: 46.17856979370117px !important;
+    width: 636.3406982421875px !important;
+    opacity: 1 !important;
+    border-radius: 6.46px !important;
+    border: 1px solid #d7ccc3 !important;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14.78px;
+    line-height: 18.47px;
+    letter-spacing: 0%;
+    color: #4c4036 !important;
+    padding: 3px 7px !important;
+    box-shadow: none !important;
+}
+
+.custom-input::placeholder {
+    color: #aaa19b;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14.78px;
+    line-height: 18.47px;
+    letter-spacing: 0%;
+}
+
+.custom-input:focus {
+    border-color: #a99889 !important;
+    box-shadow: none !important;
+}
+
+/* =====================================    FILE INPUT
+===================================== */
+.custom-file {
+    min-height: 48px !important;
+    width: 355.6363525390625px !important;
+    opacity: 1 !important;
+    border-radius: 7px !important;
+    border-width: 0.92px !important;
+    padding-top: 4.36px !important;
+    padding-right: 13.09px !important;
+    padding-bottom: 4.36px !important;
+    padding-left: 13.09px !important;
+    gap: 10.91px !important;
+    font-size: 7px !important;
+    border: 1px solid #d7ccc3 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+
+.custom-file::file-selector-button {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14.78px;
+    line-height: 18.47px;
+    letter-spacing: 0%;
+    padding: 1px 5px;
+    border: 1px solid #c8beb7;
+    background: #f7f5f3;
+    color: #4c4036;
+    border-radius: 2px;
+}
+
+/* =====================================    ADD BUTTON
+===================================== */
+.add-btn {
+    margin-top: 11px;
+    height: 15px;
+    min-width: 37px;
+    padding: 0 7px;
+    border: none;
+    border-radius: 3px;
+    background: #9b8774;
+    color: white;
+    font-size: 7px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #806c5a;
+}
+
+.add-btn span {
+    font-size: 10px;
+    margin-right: 3px;
+}
+
+/* =====================================    ADDED ITEMS
+===================================== */
+.added-items {
+    margin-top: 10px;
+}
+
+.added-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 8px;
+    margin-bottom: 5px;
+}
+
+.added-item img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/* =====================================    SEASONS
+===================================== */
+.seasons-section {
+    margin-top: 12px;
+    width: 1342px;
+}
+
+.section-title {
+    font-size: 10px;
+    font-weight: 400;
+    margin-bottom: 7px;
+    color: #4c4036;
+}
+
+.seasons-list {
+    width: 100%;
+}
+
+/* =====================================    SEASON CARD
+===================================== */
+.season-card {
+    min-height: 129px;
+    border: 1px solid #d8cec6;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    width: 1342px;
+    height: 129px;
+    opacity: 1;
+    border-radius: 7.67px;
+    border-width: 0.96px;
+    padding: 8px 18px;
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr 1fr 35px;
+    align-items: center;
+    background: #fff;
+}
+
+.season-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column-label {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 15.95px;
+    line-height: 17.72px;
+    letter-spacing: 0%;
+    color: #4c4036;
+    margin-bottom: 6px;
+}
+
+.column-value {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 17.72px;
+    letter-spacing: 0%;
+    color: #4c4036;
+}
+
+.status-badge {
+    width: fit-content;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 6px;
+}
+
+.status-badge.enabled {
+    background: #e9e5e2;
+    color: #746b64;
+}
+
+.status-badge.disabled {
+    background: #e9e5e2;
+    color: #746b64;
+}
+
+.season-actions {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    justify-content: center;
+}
+
+.season-actions i {
+    border: none;
+    padding: 0;
+    font-size: 20px;
+    color: #4c4036;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.season-actions i:hover {
+    color: #9b8774;
+}
+
+/* =====================================    SEASON FORM
+===================================== */
+.season-form {
+    margin-top: 18px;
+}
+
+.season-form .row {
+    margin-bottom: 10px;
+}
+
+.status-options {
+    display: flex;
+    gap: 8px;
+}
+
+.radio-box {
+    height: 46px;
+    border: 1px solid #d7ccc3;
+    border-radius: 6.46px;
+    display: flex !important;
+    align-items: center;
+    padding: 0 7px;
+    flex: 1;
+    cursor: pointer;
+}
+
+.radio-box input {
+    opacity: 1 !important;
+    border-radius: 6.46px !important;
+    border: 1px solid #d7ccc3 !important;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14.78px;
+    line-height: 18.47px;
+    letter-spacing: 0%;
+    color: #4c4036 !important;
+    padding: 3px 7px !important;
+    box-shadow: none !important;
+    gap: 10px;
+}
+
+.radio-box span {
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/* =====================================    DATE
+===================================== */
+.date-wrapper {
+    position: relative;
+}
+
+.date-wrapper input {
+    width: 100%;
+}
+
+/* =====================================    CANCEL EDIT
+===================================== */
+.cancel-edit-btn {
+    margin-left: 7px;
+    height: 15px;
+    padding: 0 8px;
+    border: 1px solid #9b8774;
+    border-radius: 3px;
+    background: white;
+    color: #806c5a;
+    font-size: 7px;
+    cursor: pointer;
+}
+
+/* =====================================    BOTTOM BUTTONS
+===================================== */
+.bottom-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 9px;
+    margin-top: 35px;
+    padding-left: 4px;
+}
+
+.save-main-btn,
+.cancel-main-btn {
+    height: 24px;
+    min-width: 55px;
+    padding: 0 13px;
+    border-radius: 4px;
+    font-size: 9px;
+    cursor: pointer;
+}
+
+.save-main-btn {
+    border: none;
+    background: #4c4036;
+    color: white;
+}
+
+.cancel-main-btn {
+    border: none;
+    background: #a18d7a;
+    color: white;
+}
+
+.save-main-btn:hover {
+    background: #382f29;
+}
+
+.cancel-main-btn:hover {
+    background: #8d7967;
+}
+
+/* =====================================    RESPONSIVE
+===================================== */
+@media (max-width: 768px) {
+    .general-config-container {
+        padding: 15px;
+    }
+
+    .season-card {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .season-actions {
+        justify-content: flex-start;
+    }
+
+    .status-options {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .bottom-buttons {
+        margin-top: 25px;
+    }
+}
+
+.added-items {
+    margin-top: 12px;
+}
+
+.added-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    margin-bottom: 6px;
+    border: 1px solid #d8cec6;
+    border-radius: 4px;
+}
+
+.added-item-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+}
+
+.added-item-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.delete-item-btn {
+    border: 0;
+    background: transparent;
+    color: #4c4036;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.result-heading small {
+    display: block;
+    font-size: 7px;
+    font-weight: 400;
+    color: #8c837c;
+    line-height: 1.3;
+}
+
+.result-heading>small {
+    padding-top: 14px;
+}
+
+/* ==========================================    RESULT ROW
+========================================== */
+.result-row {
+    width: 100%;
+    height: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0%;
+}
+
+.result-row span:first-child {
+    line-height: 1;
+}
+
+/* ==========================================    SMALL PINK SWITCH
+========================================== */
+.small-switch {
+    position: relative;
+    width: 26px;
+    height: 16px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: #d7d2ce;
+    cursor: pointer;
+}
+
+.small-switch span {
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+    transition: 0.2s ease;
+}
+
+.small-switch.active {
+    background: #d83e61;
+}
+
+.small-switch.active span {
+    left: 10px;
+}
+
+/* ==========================================    REMINDER LIST
+========================================== */
+.reminders-list {
+    margin-top: 11px;
+}
+
+.reminder-row {
+    height: 75px;
+    width: 910px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #99816B;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 0 7px;
+    background: #fff;
+    gap: 10px;
+}
+
+/* ==========================================    CHECKBOX
+========================================== */
+.reminder-checkbox {
+    width: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.reminder-checkbox input {
+    display: none;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #a99889;
+    border-radius: 1px;
+    background: #fff;
+}
+
+.reminder-checkbox input:checked+.custom-checkbox {
+    background: #9b8774;
+    border-color: #9b8774;
+}
+
+.custom-checkbox i {
+    color: white;
+    font-size: 10px;
+}
+
+/* ==========================================    REMINDER NAME
+========================================== */
+.reminder-name {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 17.72px;
+    letter-spacing: 0%;
+}
+
+/* ==========================================    DAYS INPUT
+========================================== */
+.days-input {
+    width: 105.138671875px;
+    height: 40.437950134277344px;
+    border-radius: 5.66px;
+    border-width: 0.81px;
+    padding: 2px 5px;
+    border: 1px solid #d7ccc3;
+    border-radius: 3px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12.94px;
+    line-height: 16.18px;
+    letter-spacing: 0%;
+    outline: none;
+}
+
+.days-input:focus {
+    border-color: #9b8774;
+}
+
+/* Remove number input arrows on Chrome if desired */
+.days-input::-webkit-inner-spin-button,
+.days-input::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+/* ==========================================    DAYS TEXT
+========================================== */
+.days-label {
+    margin-left: 12px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 17.72px;
+    letter-spacing: 0%;
+}
+
+/* ==========================================    RESPONSIVE
+========================================== */
+@media (max-width: 600px) {
+    .competition-results {
+        padding: 0 5px;
+    }
+
+    .result-heading {
+        grid-template-columns: 1fr;
+    }
+
+    .result-heading>small {
+        padding-top: 3px;
+    }
+
+    .reminder-row {
+        padding: 0 5px;
+    }
+
+    .reminder-name {
+        width: 65px;
+    }
+
+    .days-label {
+        margin-left: 6px;
+    }
+}

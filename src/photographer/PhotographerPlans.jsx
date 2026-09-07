@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import HeaderRoute from '../club_admin/HeaderRoute';
-
 function PhotographerPlans() {
+    const [search, setSearch] = useState('');
+    const user = {
+        profile_image: 'https://via.placeholder.com/100',
+        first_name: 'Photographer'
+    };
+    const handleDeleteNote = (e) => {
+        e.preventDefault();
+        console.log('Delete note');
+    };
+    const handleEditNote = (e) => {
+        e.preventDefault();
+        console.log('Edit note');
+    };
     return (
         <>
             <NavigationRoute />
@@ -54,7 +66,15 @@ function PhotographerPlans() {
                         <h5>Planned Locations</h5>
                         <div className="d-flex align-items-center justify-content-between" style={{ gap: '10px' }}>
                             <div className="input-group" style={{ flex: '1' }}>
-                                <input v-model="search" type="search" className="form-control" placeholder="Search" aria-label="Search" style={{ border: '1px solid #a0846c' }} />
+                                <input 
+                                    type="search" 
+                                    className="form-control" 
+                                    placeholder="Search" 
+                                    aria-label="Search" 
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    style={{ border: '1px solid #a0846c' }} 
+                                />
                                 <span className="input-group-text" style={{ backgroundColor: '#fff', border: '1px solid #a0846c' }}>
                                     <i className="fas fa-search" style={{ color: '#a0846c' }}></i>
                                 </span>
@@ -62,31 +82,29 @@ function PhotographerPlans() {
                             <button className="btn" id="view" style={{ whiteSpace: 'nowrap' }}>Add</button>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l1.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -94,30 +112,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l2.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -126,31 +142,29 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l3.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -158,30 +172,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l4.png" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" />Not Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -190,31 +202,29 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l1.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -222,30 +232,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l2.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -254,31 +262,29 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l3.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -286,30 +292,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l4.png" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" />Not Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -318,31 +322,29 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l1.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -350,30 +352,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l2.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -382,31 +382,29 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l3.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -414,30 +412,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l4.png" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" />Not Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -446,31 +442,29 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l1.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -478,30 +472,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l2.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -510,31 +502,29 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                     <div className="row" style={{ marginTop: '15px' }}>
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l3.jpg" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" checked /> Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -542,30 +532,28 @@ function PhotographerPlans() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-md-6">
                             <div className="note-card p-3 rounded d-flex gap-3">
                                 <div className="image-wrapper">
-                                    <img src="@/assets/images/topics/l4.png" alt="Notice Image" className="note-img" />
+                                    <img src="https://via.placeholder.com/400x300" alt="Notice Image" className="note-img" />
                                 </div>
                                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                     <div>
-                                        <h6 className="fw-bold mb-1">Center Parcs Whinfell Forest</h6>
+                                        <h6 className="head mb-1">Center Parcs Whinfell Forest</h6>
                                         <h6 className="date">Penrith, UK</h6>
                                         <p className="text-secondary small mb-3">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                         </p>
                                     </div>
-
                                     <div className="d-flex justify-content-between align-items-center">
                                         <label className="small">
                                             <input type="checkbox" />Not Visited
                                         </label>
                                         <div className="d-flex gap-2">
-                                            <button className="icon-btn" onClick="deleteNote">
+                                            <button className="icon-btn" onClick={handleDeleteNote}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>
-                                            <button className="icon-btn" onClick="editNote">
+                                            <button className="icon-btn" onClick={handleEditNote}>
                                                 <i className="fas fa-edit"></i>
                                             </button>
                                         </div>
@@ -574,11 +562,9 @@ function PhotographerPlans() {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </section>
         </>
     );
 }
-
 export default PhotographerPlans;
