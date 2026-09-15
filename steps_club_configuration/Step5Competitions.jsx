@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Step1.css";
+import apiClient from "../src/api/axios";
 function Step5Competitions() {
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
     const [sections, setSections] = useState({
         types: {
             title: "Competition Types",
@@ -52,7 +55,6 @@ function Step5Competitions() {
             open: true,
         },
     });
-    // Change input value for one section only
     const handleNameChange = (sectionKey, value) => {
         setSections((prev) => ({
             ...prev,
@@ -62,7 +64,6 @@ function Step5Competitions() {
             },
         }));
     };
-    // Change icon for one section only
     const handleIconChange = (sectionKey, file) => {
         setSections((prev) => ({
             ...prev,
@@ -72,7 +73,6 @@ function Step5Competitions() {
             },
         }));
     };
-    // Open/close only clicked accordion
     const toggleSection = (sectionKey) => {
         setSections((prev) => ({
             ...prev,
@@ -82,7 +82,6 @@ function Step5Competitions() {
             },
         }));
     };
-    // Add item only to selected section
     const handleAdd = (sectionKey) => {
         const section = sections[sectionKey];
         if (!section.name.trim()) {
@@ -104,7 +103,6 @@ function Step5Competitions() {
             },
         }));
     };
-    // Delete added item
     const handleDelete = (sectionKey, itemId) => {
         setSections((prev) => ({
             ...prev,
@@ -116,20 +114,54 @@ function Step5Competitions() {
             },
         }));
     };
-    const handleSave = (e) => {
+    useEffect(() => {
+        loadConfiguration();
+    }, []);
+    const loadConfiguration = async () => {
+        setIsLoading(true);
+        try {
+            const response = await apiClient.get('/club-configuration-competitions');
+            const data = response.data?.data || response.data;
+            if (data) {
+                setSections((prev) => {
+                    const next = { ...prev };
+                    Object.keys(next).forEach((key) => {
+                        if (Array.isArray(data[key])) {
+                            next[key] = { ...next[key], items: data[key] };
+                        }
+                    });
+                    return next;
+                });
+            }
+        } catch (error) {
+            console.error('Error loading competition configuration:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    const handleSave = async (e) => {
         e.preventDefault();
-        const data = {
-            competition_types: sections.types.items,
-            competition_themes: sections.themes.items,
-            competition_categories: sections.categories.items,
-            competition_voting_methods: sections.votingMethods.items,
-            competition_entry_delivery_methods:
-                sections.deliveryMethods.items,
-            competition_result_methods: sections.resultMethods.items,
-            judging_types: sections.judgingTypes.items,
-        };
-        console.log("Competition Configuration:", data);
-        alert("Competition configuration saved successfully!");
+        if (isSaving) return;
+        setIsSaving(true);
+        try {
+            const data = {
+                competition_types: sections.types.items,
+                competition_themes: sections.themes.items,
+                competition_categories: sections.categories.items,
+                competition_voting_methods: sections.votingMethods.items,
+                competition_entry_delivery_methods:
+                    sections.deliveryMethods.items,
+                competition_result_methods: sections.resultMethods.items,
+                judging_types: sections.judgingTypes.items,
+            };
+            await apiClient.post('/club-configuration-competitions', data);
+            alert("Competition configuration saved successfully!");
+        } catch (error) {
+            console.error('Error saving competition configuration:', error);
+            alert(error.response?.data?.message || 'Unable to save configuration.');
+        } finally {
+            setIsSaving(false);
+        }
     };
     const handleCancel = () => {
         setSections((prev) => {
@@ -144,15 +176,17 @@ function Step5Competitions() {
             return resetSections;
         });
     };
+    if (isLoading) {
+        return <div className="general-config-container">Loading...</div>;
+    }
     return (
         <div className="general-config-container">
             <form onSubmit={handleSave}>
-                <h5 className="general-config-title">
+                <h5 className="head role">
                     Competitions Configurations
                 </h5>
                 {Object.entries(sections).map(([sectionKey, section]) => (
                     <div className="config-section" key={sectionKey}>
-                        {/* Header */}
                         <div
                             className="config-section-header"
                             onClick={() => toggleSection(sectionKey)}
@@ -165,11 +199,9 @@ function Step5Competitions() {
                                 <i className="fa-solid fa-chevron-down"></i>
                             </span>
                         </div>
-                        {/* Body */}
                         {section.open && (
                             <div className="config-section-body">
                                 <div className="row">
-                                    {/* Name */}
                                     <div className="col-md-6">
                                         <label>Name</label>
                                         <input
@@ -185,7 +217,6 @@ function Step5Competitions() {
                                             }
                                         />
                                     </div>
-                                    {/* Icon */}
                                     <div className="col-md-6">
                                         <label>Upload Icon</label>
                                         <input
@@ -201,7 +232,6 @@ function Step5Competitions() {
                                         />
                                     </div>
                                 </div>
-                                {/* Add */}
                                 <button
                                     type="button"
                                     className="add-btn"
@@ -211,7 +241,6 @@ function Step5Competitions() {
                                     <i className="fa-solid fa-plus"></i>{" "}
                                     Add
                                 </button>
-                                {/* Added Items */}
                                 {section.items.length > 0 && (
                                     <div className="added-items">
                                         {section.items.map((item) => (
@@ -266,8 +295,9 @@ function Step5Competitions() {
                         type="submit"
                         className="save-main-btn"
                         id="e-edit"
+                        disabled={isSaving}
                     >
-                        Save
+                        {isSaving ? 'Saving...' : 'Save'}
                     </button>
                 </div>
             </form>

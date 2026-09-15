@@ -19,28 +19,24 @@ function ClubGalleryRoute() {
     const itemsPerPage = 9;
     const [savedLibrary, setSavedLibrary] = useState(() => {
         try {
-            return JSON.parse(
-                localStorage.getItem("savedLibrary") || "[]"
-            );
+            return JSON.parse(localStorage.getItem("savedLibrary") || "[]");
         } catch {
             return [];
         }
     });
     const toggleBookmark = (item, category) => {
         const itemId = item.id ?? item.gallery_id;
-        const alreadySaved = savedLibrary.some(
-            (saved) =>
-                saved.id === itemId &&
-                saved.category === category
+        const alreadySaved = savedLibrary.some((saved) =>
+            saved.id === itemId &&
+            saved.category === category
         );
         let updatedLibrary;
         if (alreadySaved) {
-            updatedLibrary = savedLibrary.filter(
-                (saved) =>
-                    !(
-                        saved.id === itemId &&
-                        saved.category === category
-                    )
+            updatedLibrary = savedLibrary.filter((saved) =>
+                !(
+                    saved.id === itemId &&
+                    saved.category === category
+                )
             );
         } else {
             const firstPhoto = item?.photos?.[0] || {};
@@ -62,6 +58,7 @@ function ClubGalleryRoute() {
         }
         localStorage.setItem("savedLibrary", JSON.stringify(updatedLibrary));
         setSavedLibrary(updatedLibrary);
+        navigate("/library");
     };
     const isBookmarked = (id, category) => {
         return savedLibrary.some((item) => item.id === id && item.category === category);
@@ -331,27 +328,26 @@ function ClubGalleryRoute() {
                         <section className="pb-5 mt-4">
                             <div className="container" style={{ maxWidth: "1820px", }}>
                                 <div className="d-flex justify-content-end align-items-center">
-                                    {totalPages >
-                                        1 && (
-                                            <div className="dt-paging" >
-                                                <nav aria-label="pagination">
-                                                    <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>
-                                                        ‹
-                                                    </button>
-                                                    {Array.from({ length: totalPages }, (_, index) => {
-                                                        const page = index + 1; return (
-                                                            <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)}>
-                                                                {page}
-                                                            </button>
-                                                        );
-                                                    }
-                                                    )}
-                                                    <button className="dt-paging-button next" disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>
-                                                        ›
-                                                    </button>
-                                                </nav>
-                                            </div>
-                                        )}
+                                    {totalPages > 1 && (
+                                        <div className="dt-paging" >
+                                            <nav aria-label="pagination">
+                                                <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>
+                                                    ‹
+                                                </button>
+                                                {Array.from({ length: totalPages }, (_, index) => {
+                                                    const page = index + 1; return (
+                                                        <button key={page} className={`dt-paging-button ${page === currentPage ? "current" : ""}`} onClick={() => goToPage(page)}>
+                                                            {page}
+                                                        </button>
+                                                    );
+                                                }
+                                                )}
+                                                <button className="dt-paging-button next" disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>
+                                                    ›
+                                                </button>
+                                            </nav>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </section>

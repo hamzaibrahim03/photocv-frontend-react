@@ -12,7 +12,6 @@ import Mess from './assets/icons/event_list/mess.svg';
 function PageSingle() {
     const { id } = useParams();
     const navigate = useNavigate();
-    // Single page object
     const [page, setpage] = useState(null);
     const [pageExtra, setpageExtra] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -197,11 +196,9 @@ function PageSingle() {
                                                             <button className="btn text-white me-3" style={{ backgroundColor: '#99816b', width: '120px' }} onClick={() => navigate(-1)}>
                                                                 Back
                                                             </button>
-                                                            <Link to={`/pages/${page.id}/edit`}>
-                                                                <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }}>
-                                                                    Edit
-                                                                </button>
-                                                            </Link>
+                                                            <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }} onClick={() => navigate(`/pages/${page.id}/edit`)}>
+                                                                Edit
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>

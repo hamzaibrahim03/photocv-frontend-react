@@ -104,25 +104,15 @@ function NoticeEdit() {
                     featured_image_url: notice.featured_image_url || '',
                     location: notice.location || '',
                     link_page_url: notice.link_page_url || '',
-                    tags: Array.isArray(notice.tags)
-                        ? notice.tags
-                        : [],
+                    tags: Array.isArray(notice.tags) ? notice.tags : [],
                     status: notice.status || 'draft',
                     poll: notice.poll || 'none',
                     urgency_importance: notice.urgency_importance || 'general',
                     comment_allowed: notice.comment_allowed || 'none',
                     created_at: formatDateTimeForInput(notice.created_at),
                 });
-                setExistingImages(
-                    Array.isArray(notice.images)
-                        ? notice.images
-                        : []
-                );
-                setExistingDocuments(
-                    Array.isArray(notice.documents)
-                        ? notice.documents
-                        : []
-                );
+                setExistingImages( Array.isArray(notice.images) ? notice.images : [] );
+                setExistingDocuments( Array.isArray(notice.documents) ? notice.documents : [] );
             } else {
                 setFormData(initialFormData);
                 setImages([]);
@@ -183,14 +173,7 @@ function NoticeEdit() {
             payload.append('poll', formData.poll);
             payload.append('urgency_importance', formData.urgency_importance);
             payload.append('comment_allowed', formData.comment_allowed);
-            formData.tags.forEach(
-                (tag, index) => {
-                    payload.append(
-                        `tags[${index}]`,
-                        tag
-                    );
-                }
-            );
+            formData.tags.forEach( (tag, index) => { payload.append( `tags[${index}]`, tag ); } );
             if (formData.featured_image) {
                 payload.append(
                     'featured_image',
@@ -304,20 +287,13 @@ function NoticeEdit() {
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     <small className="greeting">
-                                                        {isEditMode
-                                                            ? 'Edit Notice'
-                                                            : 'Add New Notice'}
+                                                        {isEditMode ? 'Edit Notice' : 'Add New Notice'}
                                                     </small>
                                                     <h2 className="name">
-                                                        {formData.title ||
-                                                            (isEditMode
-                                                                ? 'Edit Notice'
-                                                                : 'New Notice')}
+                                                        {formData.title || (isEditMode ? 'Edit Notice' : 'New Notice')}
                                                     </h2>
                                                     <small className="role">
-                                                        {isEditMode && formData.created_at
-                                                            ? formatDate(formData.created_at)
-                                                            : 'Create a new notice'}
+                                                        {isEditMode && formData.created_at ? formatDate(formData.created_at) : 'Create a new notice'}
                                                     </small>
                                                 </div>
                                             </div>
@@ -472,11 +448,7 @@ function NoticeEdit() {
                                                                         <div className="row">
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[
-                                                                                        'active',
-                                                                                        'draft',
-                                                                                        'deleted'
-                                                                                    ].map(status => (
+                                                                                    {[ 'active', 'draft', 'deleted' ].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -495,10 +467,7 @@ function NoticeEdit() {
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[
-                                                                                        'scheduled',
-                                                                                        'pending'
-                                                                                    ].map(status => (
+                                                                                    {[ 'scheduled', 'pending' ].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -521,11 +490,7 @@ function NoticeEdit() {
                                                                             Notice Poll
                                                                         </label>
                                                                         <div className="row">
-                                                                            {[
-                                                                                'public',
-                                                                                'none',
-                                                                                'anonymous'
-                                                                            ].map(value => (
+                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`poll-${value}`} name="poll" value={value} checked={formData.poll === value} onChange={handleChange} />
@@ -544,11 +509,7 @@ function NoticeEdit() {
                                                                         <div className="divider3"></div>
                                                                         <label for="notice_urgency">Notice Urgency and Importance</label>
                                                                         <div className="row">
-                                                                            {[
-                                                                                'general',
-                                                                                'urgent',
-                                                                                'important'
-                                                                            ].map(value => (
+                                                                            {[ 'general', 'urgent', 'important' ].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`urgency-${value}`} name="urgency_importance" value={value} checked={formData.urgency_importance === value} onChange={handleChange} />
@@ -567,11 +528,7 @@ function NoticeEdit() {
                                                                         <div className="divider3"></div>
                                                                         <label for="notice_comment">Notice Comment Allowed</label>
                                                                         <div className="row">
-                                                                            {[
-                                                                                'public',
-                                                                                'none',
-                                                                                'anonymous'
-                                                                            ].map(value => (
+                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`comment-${value}`} name="comment_allowed" value={value} checked={formData.comment_allowed === value} onChange={handleChange} />

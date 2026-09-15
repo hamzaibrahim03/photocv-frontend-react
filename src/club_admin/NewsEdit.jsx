@@ -103,9 +103,7 @@ function NewsEdit() {
                     featured_image_url: news.featured_image_url || '',
                     location: news.location || '',
                     link_page_url: news.link_page_url || '',
-                    tags: Array.isArray(news.tags)
-                        ? news.tags
-                        : [],
+                    tags: Array.isArray(news.tags) ? news.tags : [],
                     status: news.status || 'draft',
                     poll: news.poll || 'none',
                     comment_allowed: news.comment_allowed || 'none',
@@ -129,10 +127,7 @@ function NewsEdit() {
                 setExistingDocuments([]);
             }
         } catch (error) {
-            console.error(
-                'Error loading news:',
-                error
-            );
+            console.error( 'Error loading news:', error );
             if (isEditMode) {
                 alert('Unable to load news.');
             }
@@ -470,11 +465,7 @@ function NewsEdit() {
                                                                         <div className="row">
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[
-                                                                                        'active',
-                                                                                        'draft',
-                                                                                        'deleted'
-                                                                                    ].map(status => (
+                                                                                    {[ 'active', 'draft', 'deleted' ].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -493,10 +484,7 @@ function NewsEdit() {
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[
-                                                                                        'scheduled',
-                                                                                        'pending'
-                                                                                    ].map(status => (
+                                                                                    {[ 'scheduled', 'pending' ].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -519,11 +507,7 @@ function NewsEdit() {
                                                                             News Poll
                                                                         </label>
                                                                         <div className="row">
-                                                                            {[
-                                                                                'public',
-                                                                                'none',
-                                                                                'anonymous'
-                                                                            ].map(value => (
+                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`poll-${value}`} name="poll" value={value} checked={formData.poll === value} onChange={handleChange} />
@@ -542,11 +526,7 @@ function NewsEdit() {
                                                                         <div className="divider3"></div>
                                                                         <label for="news_comment">News Comment Allowed</label>
                                                                         <div className="row">
-                                                                            {[
-                                                                                'public',
-                                                                                'none',
-                                                                                'anonymous'
-                                                                            ].map(value => (
+                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`comment-${value}`} name="comment_allowed" value={value} checked={formData.comment_allowed === value} onChange={handleChange} />

@@ -38,8 +38,52 @@ body {
     margin-right: 115px;
 }
 
+.premium-radio {
+    flex: 1;
+    position: relative;
+}
+
+.premium-radio input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.premium-radio label {
+    min-height: 52px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 9px 12px;
+    border: 1px solid #d7ccc3;
+    border-radius: 7px;
+    background: #fff;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
 .form-control {
     border-radius: 5px;
+    flex: 1;
+    position: relative;
+    min-height: 52px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 9px 12px;
+    border: 1px solid #d7ccc3;
+    border-radius: 7px;
+    background: #fff;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
 .footer {
@@ -362,7 +406,6 @@ a.icon {
     font-weight: bold;
 }
 
-/*  */
 .container {
     max-width: 1810px;
     padding: 0 15px;
@@ -640,7 +683,7 @@ a.icon {
 
 .event-time {
     margin-right: 10px;
-    width: 32%;
+    width: 44%;
     text-align: right;
 }
 
@@ -1127,7 +1170,6 @@ a.icon {
 
 .bookmark-icon.active {
     transform: scale(1.15);
-    /* highlighted bookmark */
     filter: brightness(0) saturate(100%) invert(36%) sepia(45%) saturate(900%) hue-rotate(310deg) brightness(90%);
 }
 
@@ -1572,8 +1614,6 @@ a.icon {
     width: 100%;
 }
 
-/* =========================    EXPORT EVENTS BUTTON
-========================= */
 .export-events-btn {
     max-width: 158px;
     width: 158px;
@@ -1600,8 +1640,6 @@ a.icon {
     font-size: 11px;
 }
 
-/* =========================    OVERLAY
-========================= */
 .export-modal-overlay {
     position: fixed;
     inset: 0;
@@ -1613,8 +1651,6 @@ a.icon {
     padding: 20px;
 }
 
-/* =========================    MODAL
-========================= */
 .export-modal {
     width: 100%;
     max-width: 650px;
@@ -1638,8 +1674,6 @@ a.icon {
     }
 }
 
-/* =========================    HEADER
-========================= */
 .export-modal-header {
     display: flex;
     align-items: center;
@@ -1669,8 +1703,6 @@ a.icon {
     color: #4c4036;
 }
 
-/* =========================    TOP SECTION
-========================= */
 .export-top-section {
     display: flex;
     align-items: center;
@@ -1688,7 +1720,6 @@ a.icon {
     margin: 0;
 }
 
-/* Hide native checkbox */
 .select-all-wrapper input,
 .export-event-row input {
     position: absolute;
@@ -1696,7 +1727,6 @@ a.icon {
     pointer-events: none;
 }
 
-/* Custom checkbox */
 .custom-checkbox {
     width: 17px;
     height: 17px;
@@ -1710,7 +1740,6 @@ a.icon {
     transition: 0.15s;
 }
 
-/* Checked */
 .select-all-wrapper input:checked+.custom-checkbox,
 .export-event-row input:checked+.custom-checkbox {
     background: #4c4036;
@@ -1726,8 +1755,6 @@ a.icon {
     line-height: 1;
 }
 
-/* =========================    FILTERS
-========================= */
 .export-filters {
     display: flex;
     gap: 5px;
@@ -1755,16 +1782,12 @@ a.icon {
     color: #fff;
 }
 
-/* =========================    EVENTS TITLE
-========================= */
 .export-events-title {
     color: #4c4036;
     font-size: 15px;
     margin-bottom: 10px;
 }
 
-/* =========================    EVENT LIST
-========================= */
 .export-event-list {
     border: 1px solid #e4e0dc;
     border-radius: 10px;
@@ -1773,7 +1796,6 @@ a.icon {
     overflow-y: auto;
 }
 
-/* Event */
 .export-event-row {
     position: relative;
     min-height: 59px;
@@ -1795,21 +1817,18 @@ a.icon {
     background: #faf8f6;
 }
 
-/* Event name */
 .export-event-name {
     color: #4c4036;
     font-size: 15px;
     flex: 1;
 }
 
-/* Date */
 .export-event-date {
     color: #777;
     font-size: 13px;
     white-space: nowrap;
 }
 
-/* Empty */
 .no-events {
     padding: 35px 20px;
     text-align: center;
@@ -1817,8 +1836,6 @@ a.icon {
     font-size: 14px;
 }
 
-/* =========================    FOOTER
-========================= */
 .export-modal-footer {
     display: flex;
     justify-content: flex-end;
@@ -1861,8 +1878,6 @@ a.icon {
     cursor: not-allowed;
 }
 
-/* =========================    MOBILE
-========================= */
 @media (max-width: 576px) {
     .export-modal {
         padding: 20px;

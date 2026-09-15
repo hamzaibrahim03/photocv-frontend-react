@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import HeaderRoute from '../club_admin/HeaderRoute';
-// import c1 from "../assets/images/dashboard/c1.jpg";
-// import m1 from "../assets/images/dashboard/m1.png";
-// import m2 from "../assets/images/dashboard/m2.jpg";
-// import m3 from "../assets/images/dashboard/m3.jpg";
-// import pro from "../assets/images/dashboard/pro.png";
-// import qrCode from "../assets/images/profile/qr_code.png";
 function PhotographerPortfolio() {
     const [user] = useState({
         first_name: 'Photographer',

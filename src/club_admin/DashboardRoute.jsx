@@ -347,7 +347,7 @@ function DashboardRoute() {
                                                 ))}
                                             </div>
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/members')}>
+                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/members')}>
                                                     View All
                                                 </button>
                                                 <button className="btn btn-sm" id="new" onClick={() => navigate('/members/create')}>
@@ -391,8 +391,8 @@ function DashboardRoute() {
                                             <div className="pic">
                                                 {dashboardData?.recent_results?.original?.data.slice(0, 6).map((item, index) => (
                                                     <div key={item.id} className={`pic-item ${getPositionedClass(index, dashboardData?.recent_results?.original?.data.slice(0, 6).length)}`}>
-                                                        {item?.competition_members?.[0]?.entries?.[0]?.entry_image_thumb && (
-                                                            <img className="img-fluid" src={item?.competition_members?.[0]?.entries?.[0]?.entry_image_thumb} alt={item.gallery_name} />
+                                                        {item?.competition_members?.[0]?.entries?.[0]?.entry_image_url && (
+                                                            <img className="img-fluid" src={item?.competition_members?.[0]?.entries?.[0]?.entry_image_url} alt={item.gallery_name} />
                                                         )}
                                                         <div className={`pic-info ${getPositionedClass(index, dashboardData?.recent_results?.original?.data.slice(0, 6).length)}`} style={{ backgroundColor: hexToRgba('#7FA483', 0.7) }}>
                                                             <div>
@@ -542,15 +542,14 @@ function DashboardRoute() {
                                             <div className="pics">
                                                 {dashboardData?.clubGalleries?.original?.data.map((item, index) => (
                                                     <div key={item.id || index} className={`pics-items ${getPositionClass(index, dashboardData?.clubGalleries?.original?.data.length)}`}>
-                                                        {
-                                                            item.photos && item.photos.length && (
-                                                                <>
-                                                                    <img src={item.photos[0].image} alt={item.photos[0].title} />
-                                                                    <div className={`pics-infos ${getPositionClass(index, dashboardData?.clubGalleries?.original?.data.length)}`} style={{ backgroundColor: hexToRgba('#7FA483', 0.7) }}>
-                                                                        {item.gallery_name}
-                                                                    </div>
-                                                                </>
-                                                            )
+                                                        {item.photos && item.photos.length && (
+                                                            <>
+                                                                <img src={item.photos[0].image} alt={item.photos[0].title} />
+                                                                <div className={`pics-infos ${getPositionClass(index, dashboardData?.clubGalleries?.original?.data.length)}`} style={{ backgroundColor: hexToRgba('#7FA483', 0.7) }}>
+                                                                    {item.gallery_name}
+                                                                </div>
+                                                            </>
+                                                        )
                                                         }
                                                     </div>
                                                 ))}

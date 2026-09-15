@@ -48,10 +48,7 @@ function MemberSingle() {
     const socialLinks = member?.social_links || [];
     const getSocialLink = (name) => {
         return (
-            socialLinks.find(
-                (item) =>
-                    item?.social_media_name?.toLowerCase() === name.toLowerCase()
-            )?.social_link || "#"
+            socialLinks.find( (item) => item?.social_media_name?.toLowerCase() === name.toLowerCase() )?.social_link || "#"
         );
     };
     const galleries = useMemo(() => {

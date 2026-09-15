@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import AdminDropdown from './AdminDropdown'
 import { NavLink, Outlet } from "react-router"
 import "../assets/css/navbar.css"
-// import NotificationBell from "./NotificationBell";
 function Navbar() {
     const [homeData, sethomeData] = useState([]);
     useEffect(() => {

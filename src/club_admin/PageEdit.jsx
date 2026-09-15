@@ -101,9 +101,7 @@ function PageEdit() {
                     featured_image_url: page.featured_image_url || '',
                     location: page.location || '',
                     link_page_url: page.link_page_url || '',
-                    tags: Array.isArray(page.tags)
-                        ? page.tags
-                        : [],
+                    tags: Array.isArray(page.tags) ? page.tags : [],
                     status: page.status || 'draft',
                     created_at: formatDateTimeForInput(page.created_at),
                 });
@@ -298,20 +296,13 @@ function PageEdit() {
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     <small className="greeting">
-                                                        {isEditMode
-                                                            ? 'Edit Page'
-                                                            : 'Add New Page'}
+                                                        {isEditMode ? 'Edit Page' : 'Add New Page'}
                                                     </small>
                                                     <h2 className="name">
-                                                        {formData.title ||
-                                                            (isEditMode
-                                                                ? 'Edit Page'
-                                                                : 'New Page')}
+                                                        {formData.title || (isEditMode ? 'Edit Page' : 'New Page')}
                                                     </h2>
                                                     <small className="role">
-                                                        {isEditMode && formData.created_at
-                                                            ? formatDate(formData.created_at)
-                                                            : 'Create a new page'}
+                                                        {isEditMode && formData.created_at ? formatDate(formData.created_at) : 'Create a new page'}
                                                     </small>
                                                 </div>
                                             </div>
@@ -466,11 +457,7 @@ function PageEdit() {
                                                                         <div className="row">
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[
-                                                                                        'active',
-                                                                                        'draft',
-                                                                                        'deleted'
-                                                                                    ].map(status => (
+                                                                                    {[ 'active', 'draft', 'deleted' ].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -489,10 +476,7 @@ function PageEdit() {
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[
-                                                                                        'scheduled',
-                                                                                        'pending'
-                                                                                    ].map(status => (
+                                                                                    {[ 'scheduled', 'pending' ].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />

@@ -11,27 +11,9 @@ const components = [
     Step4ContentSignup,
     Step5AccountSignup
 ];
-const steps = [
-    'General Settings',
-    'Appearance & Branding',
-    'Membership Settings',
-    'Content Management',
-    'Account Setup'
-];
-const titles = [
-    "Let's Start!",
-    "Let's Design!",
-    "Let's manage memberships!",
-    "Let's manage club website!",
-    "You're almost there!"
-];
-const subtitles = [
-    'We just need a few basic details of the club.',
-    'Customize your branding and colors.',
-    'Set up how people can join your club.',
-    'Add photo albums, posts, and galleries.',
-    'Finish up by setting admin credentials.'
-];
+const steps = [ 'General Settings', 'Appearance & Branding', 'Membership Settings', 'Content Management', 'Account Setup' ];
+const titles = [ "Let's Start!", "Let's Design!", "Let's manage memberships!", "Let's manage club website!", "You're almost there!" ];
+const subtitles = [ 'We just need a few basic details of the club.', 'Customize your branding and colors.', 'Set up how people can join your club.', 'Add photo albums, posts, and galleries.', 'Finish up by setting admin credentials.' ];
 function ClubSignup() {
     const [currentStep, setCurrentStep] = useState(0);
     const selectStep = (index) => {
@@ -39,15 +21,9 @@ function ClubSignup() {
             setCurrentStep(index);
         }
     };
-    const handleNext = () => {
-        setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-    };
-    const handlePrevious = () => {
-        setCurrentStep((prev) => Math.max(prev - 1, 0));
-    };
-    const handleSkip = () => {
-        setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-    };
+    const handleNext = () => { setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1)); };
+    const handlePrevious = () => { setCurrentStep((prev) => Math.max(prev - 1, 0)); };
+    const handleSkip = () => { setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1)); };
     const CurrentComponent = components[currentStep];
     return (
         <section className="signup-container m-0 p-0 vw-100 vh-100 d-flex overflow-hidden">
@@ -55,7 +31,6 @@ function ClubSignup() {
                 <div className="content-wrapper d-flex w-100 flex-row">
                     <div className="form-section d-flex flex-column justify-content-center bg-white" style={{ flex: '0.7', padding: '60px 50px 40px 50px' }}>
                         <div className="logo-wrapper d-flex justify-content-center align-items-center mb-4">
-                            {/* <img src={clubLogo} alt="Camera Club Logo" className="logo" style={{ maxWidth: '200px', height: 'auto' }} /> */}
                         </div>
                         <h2 className="title text-center" style={{ fontSize: '48px', fontWeight: '600', color: '#4c4036' }}>{titles[currentStep]}</h2>
                         <p className="subtitle text-center mb-4" style={{ fontSize: '20px', color: '#4c4036' }}>{subtitles[currentStep]}</p>
@@ -81,7 +56,6 @@ function ClubSignup() {
                         </div>
                     </div>
                     <div className="image-section bg-dark d-flex align-items-center overflow-hidden justify-content-end" style={{ flex: '0.3' }}>
-                        {/* <img src={loginBackground} alt="Background" className="w-100 h-100" style={{ objectFit: 'cover' }} /> */}
                     </div>
                 </div>
             </div>

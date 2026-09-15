@@ -5,6 +5,7 @@ import Loader from "../React/extra/LoaderAll.jsx";
 import Image from "./assets/icons/dashboard/profile_image.svg";
 import Comment from "./assets/icons/dashboard/comment.svg";
 import Point from "./assets/icons/dashboard/point.svg";
+import apiClient from '../api/axios';
 import Step1General from '../../steps_club/Step1General.jsx';
 import Step2Appearance from '../../steps_club/Step2Appearance.jsx';
 import Step3Membership from '../../steps_club/Step3Membership.jsx';
@@ -22,24 +23,18 @@ function ClubRoute() {
     useEffect(() => {
         getDashboardData();
     }, []);
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, []);
     async function getDashboardData() {
-        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club/dashboard'
-        const response = await fetch(url, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
-        const data = await response.json();
-        console.log(data);
-        setDashboardData(data.data);
+        setIsLoading(true);
+        try {
+            const response = await apiClient.get('/club/dashboard');
+            const data = response.data?.data || response.data;
+            setDashboardData(data || {});
+        } catch (error) {
+            console.error('Error loading club dashboard:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
-    console.log(dashboardData)
     const hour = new Date().getHours();
     const greetingMessage = () => {
         if (hour >= 5 && hour < 12) return "Good morning!";
@@ -54,24 +49,9 @@ function ClubRoute() {
     const [settingsStep, setSettingsStep] = useState(0);
     const [configurationStep, setConfigurationStep] = useState(0);
     const [defaultsStep, setDefaultsStep] = useState(-1);
-    const selectSettingsStep = (index) => {
-        setSettingsStep(index);
-    };
-    const selectConfigurationStep = (index) => {
-        setConfigurationStep(index);
-    };
-    const selectDefaultsStep = (index) => {
-        setDefaultsStep(index);
-    };
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-            } catch (error) {
-                console.error("Failed to fetch events", error);
-            }
-        };
-        fetchEvents();
-    }, []);
+    const selectSettingsStep = (index) => { setSettingsStep(index); };
+    const selectConfigurationStep = (index) => { setConfigurationStep(index); };
+    const selectDefaultsStep = (index) => { setDefaultsStep(index); };
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
@@ -92,7 +72,7 @@ function ClubRoute() {
                                                         {greetingMessage()}
                                                     </span>
                                                     <h2 className="name">
-                                                        {dashboardData?.user_details?.first_name + " " + dashboardData?.user_details?.last_name}
+                                                        {[dashboardData?.user_details?.first_name, dashboardData?.user_details?.last_name].filter(Boolean).join(" ")}
                                                     </h2>
                                                     <p className="role">
                                                         {dashboardData?.user_details?.role}
@@ -117,7 +97,7 @@ function ClubRoute() {
                                         <div className="card-section">
                                             <div className="stat-card">
                                                 <small className="ca-details">Members</small>
-                                                <h3 className="number">{String(dashboardData?.total_members_count).padStart(2, "0")}</h3>
+                                                <h3 className="number">{String(dashboardData?.total_members_count ?? 0).padStart(2, "0")}</h3>
                                             </div>
                                             <div className="event-cards">
                                                 {dashboardData?.upcoming_event?.remaining_days !== undefined &&

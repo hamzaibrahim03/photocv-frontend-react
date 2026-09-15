@@ -31,9 +31,7 @@ function CompetitionSingle() {
                 }
             });
             if (!response.ok) {
-                throw new Error(
-                    `Failed to load competition. Status: ${response.status}`
-                );
+                throw new Error( `Failed to load competition. Status: ${response.status}` );
             }
             const data = await response.json();
             console.log("COMPETITION API RESPONSE:", data);
@@ -63,18 +61,6 @@ function CompetitionSingle() {
             getCompetitionData();
         }
     }, [id]);
-    // const formattedStartDate = useMemo(() => {
-    //     if (!competition.start_date) return '';
-    //     return new Date(competition.start_date).toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
-    // }, [competition.start_date]);
-    // const formattedEndDate = useMemo(() => {
-    //     if (!competition.submission_deadline) return '';
-    //     return new Date(competition.submission_deadline).toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
-    // }, [competition.submission_deadline]);
-    // const formattedResultDate = useMemo(() => {
-    //     if (!competition.result_announcement_date) return '';
-    //     return new Date(competition.result_announcement_date).toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
-    // }, [competition.result_announcement_date]);
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",

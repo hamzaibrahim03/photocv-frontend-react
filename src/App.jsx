@@ -56,6 +56,7 @@ import PageSingle from './club_admin/PageSingle';
 import PageEdit from './club_admin/PageEdit';
 import ClubSignup from './club_admin/ClubSignup';
 import ClubGallerySingle from './club_admin/ClubGallerySingle';
+import KamranGallerySingle from './club_admin/KamranGallerySingle';
 function App() {
     return (
         <>
@@ -98,11 +99,12 @@ function App() {
                 <Route path="/members/:id/edit" element={<MemberAdd />} />
                 <Route path="/members/:id" element={<MemberSingle />} />
                 <Route path="/members/request" element={<MembersRequest />} />
-                <Route path="/memberrequest/:id" element={<MemberSingleRequest />} />
+                <Route path="/members/request/:id" element={<MemberSingleRequest />} />
                 <Route path="/gallery" element={<GalleryRoute />} />
                 <Route path="/gallery/club" element={<ClubGalleryRoute />} />
                 <Route path="/gallery/club/:id" element={<ClubGallerySingle />} />
                 <Route path="/gallery/member" element={<MemberGalleryRoute />} />
+                <Route path="/gallery/member/:id" element={<KamranGallerySingle />} />
                 <Route path="/notices" element={<NoticeRoute />} />
                 <Route path="/notices/:id" element={<NoticeSingle />} />
                 <Route path="/notices/create" element={<NoticeEdit />} />

@@ -12,7 +12,6 @@ import Mess from './assets/icons/event_list/mess.svg';
 function NoticeSingle() {
     const { id } = useParams();
     const navigate = useNavigate();
-    // Single notice object
     const [notice, setNotice] = useState(null);
     const [noticeExtra, setNoticeExtra] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -197,11 +196,9 @@ function NoticeSingle() {
                                                             <button className="btn text-white me-3" style={{ backgroundColor: '#99816b', width: '120px' }} onClick={() => navigate(-1)}>
                                                                 Back
                                                             </button>
-                                                            <Link to={`/notice/${notice.id}/edit`}>
-                                                                <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }}>
-                                                                    Edit
-                                                                </button>
-                                                            </Link>
+                                                            <button className="btn text-white" onClick={() => navigate(`/notices/${notice.id}/edit`)} style={{ backgroundColor: '#4c4036', width: '120px' }}>
+                                                                Edit
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>

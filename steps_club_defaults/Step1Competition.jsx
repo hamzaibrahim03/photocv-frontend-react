@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import '../src/App.css'
-import NavigationRoute from '../src/club_admin/NavigationRoute';
-import HeaderRoute from '../src/club_admin/HeaderRoute';
 import Loader from '../src/React/extra/LoaderAll';
 import Calendar from '../src/React/extra/CalendarRyton';
 import apiClient from '../src/api/axios';
@@ -62,54 +60,6 @@ function Step1Competition() {
             [name]: type === 'checkbox' ? checked : value
         }));
     };
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, []);
-    useEffect(() => {
-        if (id) {
-            /* 
-            apiClient.get(`/competitions/${id}`).then(res => {
-                setFormData(res.data.data);
-            });
-            */
-        }
-    }, [id]);
-    const submitForm = async (e) => {
-        const payload = {
-            ...formData,
-            result_options: {
-                photographer_name: results.photographerName,
-                comments: results.comments,
-                scores: results.scores,
-                position: results.position,
-                reels: results.reels,
-                arrows: results.arrows,
-            },
-            submission_reminders: {
-                enabled: reminderEnabled,
-                reminders: reminders.map((item) => ({
-                    id: item.id,
-                    enabled: item.checked,
-                    days_before_deadline: item.days,
-                })),
-            },
-        };
-        console.log("Final payload:", payload);
-        e.preventDefault();
-        try {
-            if (id) {
-                await apiClient.put(`/competitions/${id}`, formData);
-            } else {
-                await apiClient.post(`/competitions`, formData);
-            }
-            alert("Competition saved successfully!");
-            navigate("/competitions");
-        } catch (error) {
-            console.error("Error submitting competition:", error);
-        }
-    };
     const [results, setResults] = useState({
         photographerName: true,
         comments: true,
@@ -147,14 +97,12 @@ function Step1Competition() {
     const handleReminderCountChange = (e) => {
         let count = Number(e.target.value);
         if (count < 0) count = 0;
-        // optional maximum limit
         if (count > 20) count = 20;
         setFormData((prev) => ({
             ...prev,
             number_of_reminders: count,
         }));
         setReminders((prev) => {
-            // agar rows increase hongi
             if (count > prev.length) {
                 const newReminders = [...prev];
                 for (let i = prev.length + 1; i <= count; i++) {
@@ -166,9 +114,82 @@ function Step1Competition() {
                 }
                 return newReminders;
             }
-            // agar rows decrease hongi
             return prev.slice(0, count);
         });
+    };
+    const [recentSubmissions, setRecentSubmissions] = useState([]);
+    const [moreCompetitions, setMoreCompetitions] = useState([]);
+    const [isSaving, setIsSaving] = useState(false);
+    useEffect(() => {
+        loadPage();
+    }, [id]);
+    const loadPage = async () => {
+        setIsLoading(true);
+        try {
+            const [competitionsRes] = await Promise.all([
+                apiClient.get('/competitions'),
+                id ? apiClient.get(`/competitions/${id}`).then((res) => {
+                    const data = res.data?.data || res.data;
+                    if (data) setFormData((prev) => ({ ...prev, ...data }));
+                }) : Promise.resolve(),
+            ]);
+            const competitions = competitionsRes.data?.data || competitionsRes.data || [];
+            const list = Array.isArray(competitions) ? competitions : [];
+            setMoreCompetitions(list.slice(0, 6));
+            setRecentSubmissions(
+                list.flatMap((c) => (Array.isArray(c.recent_submissions) ? c.recent_submissions : [])).slice(0, 4)
+            );
+        } catch (error) {
+            console.error('Error loading competition defaults:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    const submitForm = async (e) => {
+        e.preventDefault();
+        if (isSaving) return;
+        const payload = {
+            ...formData,
+            result_options: {
+                photographer_name: results.photographerName,
+                comments: results.comments,
+                scores: results.scores,
+                position: results.position,
+                reels: results.reels,
+                arrows: results.arrows,
+            },
+            submission_reminders: {
+                enabled: reminderEnabled,
+                reminders: reminders.map((item) => ({
+                    id: item.id,
+                    enabled: item.checked,
+                    days_before_deadline: item.days,
+                })),
+            },
+        };
+        setIsSaving(true);
+        try {
+            if (id) {
+                await apiClient.put(`/competitions/${id}`, payload);
+            } else {
+                await apiClient.post(`/competitions`, payload);
+            }
+            alert("Competition saved successfully!");
+            navigate("/competitions");
+        } catch (error) {
+            console.error("Error submitting competition:", error);
+            alert(error.response?.data?.message || 'Unable to save competition.');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+    const formatDate = (date) => {
+        if (!date) return '';
+        return new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    };
+    const formatTime = (date) => {
+        if (!date) return '';
+        return new Date(date).toLocaleTimeString('en-US', { weekday: 'short', hour: '2-digit', minute: '2-digit' });
     };
     return (
         <>
@@ -191,7 +212,7 @@ function Step1Competition() {
                                     <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
                                         <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
                                             <small className="ca-details fs-5">Competitions</small>
-                                            <h3 className="number mt-4 fw-medium" style={{ fontSize: '48px' }}>0</h3>
+                                            <h3 className="number mt-4 fw-medium" style={{ fontSize: '48px' }}>{moreCompetitions.length}</h3>
                                         </div>
                                         <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
                                             <small className="ca-details fs-5">Next Competition</small>
@@ -217,7 +238,7 @@ function Step1Competition() {
                                             <div className="row mb-3">
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Competition Type</label>
-                                                    <select name="competition_type_id" value={formData.competition_type_id} onChange={handleChange} className="form-select">
+                                                    <select name="competition_type_id" value={formData.competition_type_id} onChange={handleChange} className="form-control form-select">
                                                         <option value="" disabled>Select Competition Type</option>
                                                         <option value="1">Club Competition</option>
                                                         <option value="2">Salon Competition</option>
@@ -227,7 +248,7 @@ function Step1Competition() {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Judging Type</label>
-                                                    <select name="judging_type_id" value={formData.judging_type_id} onChange={handleChange} className="form-select">
+                                                    <select name="judging_type_id" value={formData.judging_type_id} onChange={handleChange} className="form-control form-select">
                                                         <option value="" disabled>Select Judging Type</option>
                                                         <option value="1">Accept/Reject</option>
                                                         <option value="2">Score</option>
@@ -298,7 +319,7 @@ function Step1Competition() {
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label text-muted">Allowed Image Formats</label>
-                                                <select name="allowed_image_formats" value={formData.allowed_image_formats} onChange={handleChange} className="form-select">
+                                                <select name="allowed_image_formats" value={formData.allowed_image_formats} onChange={handleChange} className="form-control form-select">
                                                     <option value="" disabled>Allowed Image Formats</option>
                                                     <option value="active">Active</option>
                                                     <option value="enable">Enable</option>
@@ -323,7 +344,7 @@ function Step1Competition() {
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <label className="form-label text-muted">Print vs Digital Submission</label>
-                                                <select name="print_vs_digital" value={formData.print_vs_digital} onChange={handleChange} className="form-select">
+                                                <select name="print_vs_digital" value={formData.print_vs_digital} onChange={handleChange} className="form-control form-select">
                                                     <option value="" disabled>print_vs_digital</option>
                                                     <option value="print">Print</option>
                                                     <option value="digital">Digital</option>
@@ -331,7 +352,7 @@ function Step1Competition() {
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label text-muted">Colour vs. Monochrome</label>
-                                                <select name="color_vs_mono" value={formData.color_vs_mono} onChange={handleChange} className="form-select">
+                                                <select name="color_vs_mono" value={formData.color_vs_mono} onChange={handleChange} className="form-control form-select">
                                                     <option value="" disabled>color_vs_mono</option>
                                                     <option value="color">Color</option>
                                                     <option value="monochrome">Monochrome</option>
@@ -343,7 +364,7 @@ function Step1Competition() {
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <label className="form-label text-muted">Voting Method</label>
-                                                <select name="voting_method_id" value={formData.voting_method_id} onChange={handleChange} className="form-select">
+                                                <select name="voting_method_id" value={formData.voting_method_id} onChange={handleChange} className="form-control form-select">
                                                     <option value="" disabled>Select Voting Method</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -360,7 +381,7 @@ function Step1Competition() {
                                         <div className="row mb-3">
                                             <div className="col-md-6">
                                                 <label className="form-label text-muted">Voting Method</label>
-                                                <select name="voting_method_id" value={formData.voting_method_id} onChange={handleChange} className="form-select">
+                                                <select name="voting_method_id" value={formData.voting_method_id} className="form-control form-select" onChange={handleChange} >
                                                     <option value="" disabled>Select Voting Method</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -369,7 +390,7 @@ function Step1Competition() {
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label text-muted">Result Announcement Method</label>
-                                                <select name="result_announcement_method_id" value={formData.result_announcement_method_id} onChange={handleChange} className="form-select">
+                                                <select name="result_announcement_method_id" value={formData.result_announcement_method_id} onChange={handleChange} className="form-control form-select">
                                                     <option value="" disabled>Select Result Announcement Method</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -482,7 +503,6 @@ function Step1Competition() {
                                                 <label className="form-label">Reminder</label>
                                                 <div className="row">
                                                     <div className="premium-radio-group">
-                                                        {/* Enable */}
                                                         <div className="premium-radio">
                                                             <input type="radio" id="enable" name="reminder-status" value="enable" checked={reminderEnabled} onChange={() => setReminderEnabled(true)} />
                                                             <label htmlFor="enable">
@@ -494,7 +514,6 @@ function Step1Competition() {
                                                                 </div>
                                                             </label>
                                                         </div>
-                                                        {/* Disable */}
                                                         <div className="premium-radio">
                                                             <input type="radio" id="disable" name="reminder-status" value="disable" checked={!reminderEnabled} onChange={() => setReminderEnabled(false)} />
                                                             <label htmlFor="disable">
@@ -534,21 +553,21 @@ function Step1Competition() {
                                         <h5 className="head">Additional Features</h5>
                                         <div className="d-flex flex-column gap-2 mb-4">
                                             <div className="form-check">
-                                                <input type="checkbox" className="form-check-input shadow-none" id="feature1" />
+                                                <input type="checkbox" className="form-check-input shadow-none" id="feature1" name="comments_enabled" checked={formData.comments_enabled} onChange={handleChange} />
                                                 <label className="form-check-label" htmlFor="feature1">Comments & Critique Section (For Consecutive Purpose)</label>
                                             </div>
                                             <div className="form-check">
-                                                <input type="checkbox" className="form-check-input shadow-none" id="feature2" />
+                                                <input type="checkbox" className="form-check-input shadow-none" id="feature2" name="certificates_enabled" checked={formData.certificates_enabled} onChange={handleChange} />
                                                 <label className="form-check-label" htmlFor="feature2">Auto generated Certificates (For Winners & Participants)</label>
                                             </div>
                                             <div className="form-check">
-                                                <input type="checkbox" className="form-check-input shadow-none" id="feature3" />
+                                                <input type="checkbox" className="form-check-input shadow-none" id="feature3" name="judge_feedback_visible" checked={formData.judge_feedback_visible} onChange={handleChange} />
                                                 <label className="form-check-label" htmlFor="feature3">Allow Feedback from the judges to be visible to participants</label>
                                             </div>
                                         </div>
                                         <div className="button-group d-flex gap-2">
                                             <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#99816b' }} onClick={() => navigate(-1)}>Back</button>
-                                            <button type="submit" className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }}>Save</button>
+                                            <button type="submit" className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }} disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -563,27 +582,36 @@ function Step1Competition() {
                                             <div className="more-card d-flex flex-column" style={{ padding: '35px', height: 'auto' }}>
                                                 <h5 className="head">Recent Submissions</h5>
                                                 <div className="event-list">
-                                                    <div className="event-item" style={{ marginBottom: '10px' }}>
-                                                        <img className="img-fluid event-img" alt="Event" />
-                                                        <div className="event-img fallback-box d-flex justify-content-center align-items-center">
-                                                        </div>
-                                                        <div className="event-details" style={{ display: 'flex' }}>
-                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                <span id="ename">member_username</span>
-                                                                <span id="espeaker"> competition_name</span>
+                                                    {recentSubmissions.length === 0 && (
+                                                        <p className="text-muted mb-0">No recent submissions.</p>
+                                                    )}
+                                                    {recentSubmissions.map((sub, index) => (
+                                                        <div className="event-item" style={{ marginBottom: '10px' }} key={sub.id ?? index}>
+                                                            {sub.member?.profile_image_url ? (
+                                                                <img className="img-fluid event-img" src={sub.member.profile_image_url} alt="Event" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                                                            ) : (
+                                                                <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                    <i className="fa-regular fa-user" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                </div>
+                                                            )}
+                                                            <div className="event-details" style={{ display: 'flex' }}>
+                                                                <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                    <span id="ename">{sub.member?.username || sub.member_username || 'Member'}</span>
+                                                                    <span id="espeaker"> {sub.competition_name}</span>
+                                                                </div>
+                                                                <div className="event-time" id="edate">
+                                                                    <small className="event-date galtext">{formatDate(sub.submitted_at)}</small><br />
+                                                                    <small className="event-time-details galtext">{formatTime(sub.submitted_at)}</small>
+                                                                </div>
                                                             </div>
-                                                            <div className="event-time" id="edate">
-                                                                <small className="event-date galtext">formatDate(co.submitted_at)</small><br />
-                                                                <small className="event-time-details galtext">formatTime(co.submitted_at)</small>
-                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    ))}
                                                 </div>
                                                 <div className="button-group mt-auto">
-                                                    <button className="btn btn-sm" id="e-view">
+                                                    <button type="button" className="btn btn-sm" id="e-view" onClick={() => navigate('/competitions')}>
                                                         View All
                                                     </button>
-                                                    <button className="btn btn-sm" id="new">
+                                                    <button type="button" className="btn btn-sm" id="new" onClick={() => navigate('/competitions/create')}>
                                                         Add New
                                                     </button>
                                                 </div>
@@ -591,26 +619,35 @@ function Step1Competition() {
                                             <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
                                                 <h5 className="head">More Competitions</h5>
                                                 <div className="event-list">
-                                                    <div className="event-item" style={{ marginBottom: '10px' }}>
-                                                        <img className="img-fluid event-img" alt="Comp" />
-                                                        <div className="event-img fallback-box d-flex justify-content-center align-items-center">
-                                                        </div>
-                                                        <div className="event-details">
-                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                <span id="ename">name</span>
+                                                    {moreCompetitions.length === 0 && (
+                                                        <p className="text-muted mb-0">No competitions yet.</p>
+                                                    )}
+                                                    {moreCompetitions.map((comp) => (
+                                                        <div className="event-item" style={{ marginBottom: '10px' }} key={comp.id}>
+                                                            {comp.image_url ? (
+                                                                <img className="img-fluid event-img" src={comp.image_url} alt="Comp" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                                                            ) : (
+                                                                <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                    <i className="fa-regular fa-image" style={{ fontSize: '24px', color: 'gray' }}></i>
+                                                                </div>
+                                                            )}
+                                                            <div className="event-details">
+                                                                <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                    <span id="ename">{comp.name}</span>
+                                                                </div>
+                                                                <div className="event-time" id="edate">
+                                                                    <small className="event-date galtext">{formatDate(comp.start_date)}</small><br />
+                                                                    <small className="event-time-details galtext">{formatTime(comp.start_date)}</small>
+                                                                </div>
                                                             </div>
-                                                            <div className="event-time" id="edate">
-                                                                <small className="event-date galtext">formatDate(start_date)</small><br />
-                                                                <small className="event-time-details galtext">formatTime(start_date)</small>
-                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    ))}
                                                 </div>
                                                 <div className="button-group mt-auto">
-                                                    <button className="btn btn-sm" id="e-view">
+                                                    <button type="button" className="btn btn-sm" id="e-view" onClick={() => navigate('/competitions')}>
                                                         View All
                                                     </button>
-                                                    <button className="btn btn-sm" id="new">
+                                                    <button type="button" className="btn btn-sm" id="new" onClick={() => navigate('/competitions/create')}>
                                                         Add New
                                                     </button>
                                                 </div>

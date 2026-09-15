@@ -30,7 +30,6 @@ function NavigationRoute() {
     };
     return (
         <div className="sidebar">
-            {/* Top Logo */}
             <img src={photoLogo} style={{ marginLeft: "25px" }} alt="Logo" id="side-logo" />
             <div className="divider3"></div>
             {/* CLUB ADMIN */}

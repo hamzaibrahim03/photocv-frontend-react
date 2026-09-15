@@ -64,26 +64,10 @@ function NoticeRoute() {
             const libraryItem = {
                 id: item.id,
                 category: category,
-                title:
-                    item.name ||
-                    item.title ||
-                    item.event_name ||
-                    item.competition_name ||
-                    "Untitled",
-                description:
-                    item.description || "",
-                date:
-                    item.event_date ||
-                    item.competition_date ||
-                    item.published_at ||
-                    item.created_at ||
-                    "",
-                image:
-                    item.featured_image_url ||
-                    item.image ||
-                    item.image_url ||
-                    item.thumbnail_url ||
-                    "",
+                title: item.name || item.title || item.event_name || item.competition_name || "Untitled",
+                description: item.description || "",
+                date: item.event_date || item.competition_date || item.published_at || item.created_at || "",
+                image: item.featured_image_url || item.image || item.image_url || item.thumbnail_url || "",
                 originalData: item,
                 savedAt: new Date().toISOString()
             };
@@ -110,25 +94,19 @@ function NoticeRoute() {
         const shareUrl = `${window.location.origin}/notices/${notices.id}`;
         const shareData = {
             title: notices.title || "Notice",
-            text: notices.description
-                ? notices.description.replace(/<[^>]*>/g, "").slice(0, 150)
-                : "Check out this notice",
+            text: notices.description ? notices.description.replace(/<[^>]*>/g, "").slice(0, 150) : "Check out this notice",
             url: shareUrl,
         };
         try {
-            // Mobile / supported browsers
             if (navigator.share) {
                 await navigator.share(shareData);
             } else {
-                // Desktop fallback
                 await navigator.clipboard.writeText(shareUrl);
                 alert("Notice link copied to clipboard!");
             }
         } catch (error) {
-            // User cancelled the share popup
             if (error.name !== "AbortError") {
                 console.error("Share failed:", error);
-                // Last fallback
                 try {
                     await navigator.clipboard.writeText(shareUrl);
                     alert("Notice link copied to clipboard!");

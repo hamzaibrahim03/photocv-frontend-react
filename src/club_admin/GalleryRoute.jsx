@@ -14,8 +14,6 @@ function GalleryRoute() {
     const [isLoading, setIsLoading] = useState(true);
     const [memberGallery, setMemberGallery] = useState([]);
     const [clubGallery, setClubGallery] = useState([]);
-    const [memberCount] = useState(0);
-    const [eventDay] = useState(0);
     const [search, setSearch] = useState("");
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
     const [shareOpenId, setShareOpenId] = useState(null);
@@ -55,69 +53,25 @@ function GalleryRoute() {
                     )
             );
         } else {
-            const isMemberGallery = item.gallery_type === "member" ||
-                Array.isArray(item.galleries);
-            const isClubGallery = item.gallery_type === "club" ||
-                Array.isArray(item.photos);
-            const memberGallery = isMemberGallery
-                ? item.galleries?.[0] || {}
-                : {};
+            const isMemberGallery = item.gallery_type === "member" || Array.isArray(item.galleries);
+            const isClubGallery = item.gallery_type === "club" || Array.isArray(item.photos);
+            const memberGallery = isMemberGallery ? item.galleries?.[0] || {} : {};
             const memberPhoto = memberGallery.photos?.[0] || {};
-            const clubPhoto = isClubGallery
-                ? item.photos?.[0] || {}
-                : {};
-            const title = isMemberGallery
-                ? memberGallery.gallery_name ||
-                memberPhoto.title ||
-                "Gallery"
-                : clubPhoto.title ||
-                item.gallery_name ||
-                "Gallery";
-            const image = isMemberGallery
-                ? memberPhoto.image_url ||
-                memberPhoto.image ||
-                ""
-                : clubPhoto.image ||
-                clubPhoto.image_url ||
-                "";
-            const totalPhotos = isMemberGallery
-                ? item.gallery_total_photos ??
-                memberGallery.gallery_total_photos ??
-                memberGallery.photos?.length ??
-                0
-                : item.total_photos ??
-                item.gallery_total_photos ??
-                item.photos?.length ??
-                0;
-            const totalLikes = isMemberGallery
-                ? item.gallery_total_likes ??
-                memberGallery.gallery_total_likes ??
-                0
-                : item.gallery_total_likes ??
-                clubPhoto.likes_count ??
-                0;
-            const totalComments = isMemberGallery
-                ? item.gallery_total_comments ??
-                memberGallery.gallery_total_comments ??
-                0
-                : item.gallery_total_comments ??
-                clubPhoto.comments_count ??
-                0;
+            const clubPhoto = isClubGallery ? item.photos?.[0] || {} : {};
+            const title = isMemberGallery ? memberGallery.gallery_name || memberPhoto.title || "Gallery" : clubPhoto.title || item.gallery_name || "Gallery";
+            const image = isMemberGallery ? memberPhoto.image_url || memberPhoto.image || "" : clubPhoto.image || clubPhoto.image_url || "";
+            const totalPhotos = isMemberGallery ? item.gallery_total_photos ?? memberGallery.gallery_total_photos ?? memberGallery.photos?.length ?? 0 : item.total_photos ?? item.gallery_total_photos ?? item.photos?.length ?? 0;
+            const totalLikes = isMemberGallery ? item.gallery_total_likes ?? memberGallery.gallery_total_likes ?? 0 : item.gallery_total_likes ?? clubPhoto.likes_count ?? 0;
+            const totalComments = isMemberGallery ? item.gallery_total_comments ?? memberGallery.gallery_total_comments ?? 0 : item.gallery_total_comments ?? clubPhoto.comments_count ?? 0;
             const libraryItem = {
                 id: itemId,
                 category: category,
-                gallery_type:
-                    isMemberGallery
-                        ? "member"
-                        : "club",
+                gallery_type: isMemberGallery ? "member" : "club",
                 title: title,
-                description:
-                    item.description || "",
-                date:
-                    item.created_at || "",
+                description: item.description || "",
+                date: item.created_at || "",
                 image: image,
-                profileImage:
-                    item.profile_image_url || "",
+                profileImage: item.profile_image_url || "",
                 photos: totalPhotos,
                 likes: totalLikes,
                 comments: totalComments,
@@ -134,14 +88,14 @@ function GalleryRoute() {
             JSON.stringify(updatedLibrary)
         );
         setSavedLibrary(updatedLibrary);
+        navigate("/library");
         setBookmarkOpenId(null);
         if (!alreadySaved) {
             navigate("/library");
         }
     };
     const isBookmarked = (id, category) => {
-        return savedLibrary.some(
-            item =>
+        return savedLibrary.some( item =>
                 item.id === id &&
                 item.category === category
         );

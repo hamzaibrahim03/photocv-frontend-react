@@ -15,20 +15,10 @@ function Library() {
             setIsLoading(false);
         }, 2000);
     }, []);
-    const filters = [
-        "Events",
-        "Competitions",
-        "Galleries",
-        "Notices",
-        "News"
-    ];
+    const filters = [ "Events", "Competitions", "Galleries", "Notices", "News" ];
     const filteredItems = savedLibrary.filter(item => {
         const categoryMatch = item.category === activeFilter;
-        const searchMatch = item.title
-            ?.toLowerCase()
-            .includes(
-                search.toLowerCase()
-            );
+        const searchMatch = item.title ?.toLowerCase() .includes( search.toLowerCase() );
         return (
             categoryMatch &&
             searchMatch
@@ -148,10 +138,7 @@ function Library() {
                                             ) : (
                                                 <div className="library-empty">
                                                     <h4>
-                                                        No saved{" "}
-                                                        {
-                                                            activeFilter
-                                                        }
+                                                        No saved{" "} { activeFilter }
                                                     </h4>
                                                     <p>
                                                         Your bookmarked{" "}

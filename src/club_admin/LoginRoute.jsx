@@ -63,30 +63,11 @@ function LoginRoute() {
                 <h3>Login</h3>
                 <form onSubmit={login}>
                     <div className="inputBox mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            placeholder="Email"
-                            required
-                        />
+                        <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Email" required />
                     </div>
                     <div className="inputBox mb-3">
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            className="form-control"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Password"
-                            required
-                        />
-                        <button
-                            type="button"
-                            id="togglePassword"
-                            aria-label={showPassword ? "Hide password" : "Show password"}
-                            onClick={() => setShowPassword((visible) => !visible)}
-                        >
+                        <input type={showPassword ? "text" : "password"} className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+                        <button type="button" id="togglePassword" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword((visible) => !visible)} >
                             <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} aria-hidden="true"></i>
                         </button>
                     </div>

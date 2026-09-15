@@ -13,8 +13,6 @@
     margin-bottom: 34px;
 }
 
-/* =====================================    CONFIGURATION ACCORDION
-===================================== */
 .config-section {
     border: 1px solid #d8cec6;
     border-radius: 4px;
@@ -70,8 +68,6 @@
     transform: rotate(0deg);
 }
 
-/* =====================================    INPUTS
-===================================== */
 .custom-input {
     min-height: 46.17856979370117px !important;
     width: 636.3406982421875px !important;
@@ -104,8 +100,6 @@
     box-shadow: none !important;
 }
 
-/* =====================================    FILE INPUT
-===================================== */
 .custom-file {
     min-height: 48px !important;
     width: 355.6363525390625px !important;
@@ -137,8 +131,6 @@
     border-radius: 2px;
 }
 
-/* =====================================    ADD BUTTON
-===================================== */
 .add-btn {
     margin-top: 11px;
     height: 15px;
@@ -161,8 +153,6 @@
     margin-right: 3px;
 }
 
-/* =====================================    ADDED ITEMS
-===================================== */
 .added-items {
     margin-top: 10px;
 }
@@ -181,8 +171,6 @@
     object-fit: contain;
 }
 
-/* =====================================    SEASONS
-===================================== */
 .seasons-section {
     margin-top: 12px;
     width: 1342px;
@@ -199,8 +187,6 @@
     width: 100%;
 }
 
-/* =====================================    SEASON CARD
-===================================== */
 .season-card {
     min-height: 129px;
     border: 1px solid #d8cec6;
@@ -282,8 +268,6 @@
     color: #9b8774;
 }
 
-/* =====================================    SEASON FORM
-===================================== */
 .season-form {
     margin-top: 18px;
 }
@@ -329,8 +313,6 @@
     margin-left: 10px;
 }
 
-/* =====================================    DATE
-===================================== */
 .date-wrapper {
     position: relative;
 }
@@ -339,8 +321,6 @@
     width: 100%;
 }
 
-/* =====================================    CANCEL EDIT
-===================================== */
 .cancel-edit-btn {
     margin-left: 7px;
     height: 15px;
@@ -353,8 +333,6 @@
     cursor: pointer;
 }
 
-/* =====================================    BOTTOM BUTTONS
-===================================== */
 .bottom-buttons {
     display: flex;
     justify-content: flex-start;
@@ -393,8 +371,6 @@
     background: #8d7967;
 }
 
-/* =====================================    RESPONSIVE
-===================================== */
 @media (max-width: 768px) {
     .general-config-container {
         padding: 15px;
@@ -466,8 +442,6 @@
     padding-top: 14px;
 }
 
-/* ==========================================    RESULT ROW
-========================================== */
 .result-row {
     width: 100%;
     height: 20px;
@@ -488,8 +462,6 @@
     line-height: 1;
 }
 
-/* ==========================================    SMALL PINK SWITCH
-========================================== */
 .small-switch {
     position: relative;
     width: 26px;
@@ -520,8 +492,6 @@
     left: 10px;
 }
 
-/* ==========================================    REMINDER LIST
-========================================== */
 .reminders-list {
     margin-top: 11px;
 }
@@ -539,8 +509,6 @@
     gap: 10px;
 }
 
-/* ==========================================    CHECKBOX
-========================================== */
 .reminder-checkbox {
     width: 20px;
     display: flex;
@@ -573,8 +541,6 @@
     font-size: 10px;
 }
 
-/* ==========================================    REMINDER NAME
-========================================== */
 .reminder-name {
     font-family: Inter;
     font-weight: 400;
@@ -584,8 +550,6 @@
     letter-spacing: 0%;
 }
 
-/* ==========================================    DAYS INPUT
-========================================== */
 .days-input {
     width: 105.138671875px;
     height: 40.437950134277344px;
@@ -607,14 +571,11 @@
     border-color: #9b8774;
 }
 
-/* Remove number input arrows on Chrome if desired */
 .days-input::-webkit-inner-spin-button,
 .days-input::-webkit-outer-spin-button {
     opacity: 1;
 }
 
-/* ==========================================    DAYS TEXT
-========================================== */
 .days-label {
     margin-left: 12px;
     font-family: Inter;
@@ -625,8 +586,6 @@
     letter-spacing: 0%;
 }
 
-/* ==========================================    RESPONSIVE
-========================================== */
 @media (max-width: 600px) {
     .competition-results {
         padding: 0 5px;

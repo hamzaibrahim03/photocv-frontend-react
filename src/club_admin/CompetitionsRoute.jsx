@@ -48,44 +48,26 @@ function CompetitionsRoute() {
         const existingLibrary = JSON.parse(
             localStorage.getItem("savedLibrary") || "[]"
         );
-        const alreadySaved = existingLibrary.some(
-            saved =>
-                saved.id === item.id &&
-                saved.category === category
+        const alreadySaved = existingLibrary.some(saved =>
+            saved.id === item.id &&
+            saved.category === category
         );
         let updatedLibrary;
         if (alreadySaved) {
-            updatedLibrary = existingLibrary.filter(
-                saved =>
-                    !(
-                        saved.id === item.id &&
-                        saved.category === category
-                    )
+            updatedLibrary = existingLibrary.filter(saved =>
+                !(
+                    saved.id === item.id &&
+                    saved.category === category
+                )
             );
         } else {
             const libraryItem = {
                 id: item.id,
                 category: category,
-                title:
-                    item.name ||
-                    item.title ||
-                    item.event_name ||
-                    item.competition_name ||
-                    "Untitled",
-                description:
-                    item.description || "",
-                date:
-                    item.event_date ||
-                    item.competition_date ||
-                    item.published_at ||
-                    item.created_at ||
-                    "",
-                image:
-                    item.featured_image_url ||
-                    item.image ||
-                    item.image_url ||
-                    item.thumbnail_url ||
-                    "",
+                title: item.name || item.title || item.event_name || item.competition_name || "Untitled",
+                description: item.description || "",
+                date: item.event_date || item.competition_date || item.published_at || item.created_at || "",
+                image: item.featured_image_url || item.image || item.image_url || item.thumbnail_url || "",
                 originalData: item,
                 savedAt: new Date().toISOString()
             };
@@ -102,35 +84,28 @@ function CompetitionsRoute() {
         navigate("/library");
     };
     const isBookmarked = (id, category) => {
-        return savedLibrary.some(
-            item =>
-                item.id === id &&
-                item.category === category
+        return savedLibrary.some(item =>
+            item.id === id &&
+            item.category === category
         );
     };
     const handleShare = async (competition) => {
         const shareUrl = `${window.location.origin}/competition/${competition.id}`;
         const shareData = {
             title: competition.name || "Competition",
-            text: competition.description
-                ? competition.description.replace(/<[^>]*>/g, "").slice(0, 150)
-                : "Check out this competition",
+            text: competition.description ? competition.description.replace(/<[^>]*>/g, "").slice(0, 150) : "Check out this competition",
             url: shareUrl,
         };
         try {
-            // Mobile / supported browsers
             if (navigator.share) {
                 await navigator.share(shareData);
             } else {
-                // Desktop fallback
                 await navigator.clipboard.writeText(shareUrl);
                 alert("Competition link copied to clipboard!");
             }
         } catch (error) {
-            // User cancelled the share popup
             if (error.name !== "AbortError") {
                 console.error("Share failed:", error);
-                // Last fallback
                 try {
                     await navigator.clipboard.writeText(shareUrl);
                     alert("Competition link copied to clipboard!");
@@ -230,11 +205,10 @@ function CompetitionsRoute() {
         if (exportFilter === "upcoming") {
             const now = new Date();
             return competitions.filter((competition) => {
-                if (!competition.event_date) return false;
-                return new Date(competition.event_date) >= now;
+                if (!competition.start_date) return false;
+                return new Date(competition.start_date) >= now;
             });
         }
-        // All
         return competitions;
     };
     const exportCompetitions = getExportCompetitions();
@@ -245,12 +219,10 @@ function CompetitionsRoute() {
             selectedCompetitions.includes(id)
         );
         if (allSelected) {
-            // Remove currently displayed competitions from selection
             setSelectedCompetitions((prev) =>
                 prev.filter((id) => !visibleIds.includes(id))
             );
         } else {
-            // Add currently displayed competitions
             setSelectedCompetitions((prev) => [
                 ...new Set([...prev, ...visibleIds])
             ]);
@@ -262,31 +234,18 @@ function CompetitionsRoute() {
             alert("Please select at least one competition to export.");
             return;
         }
-        const headers = [
-            "Competition Name",
-            "Competition Date",
-            "Description"
-        ];
+        const headers = ["Competition Name", "Competition Date", "Description"];
         const rows = competitionsToExport.map((competition) => [
             competition.name || "",
-            competition.start_date
-                ? new Date(competition.start_date).toLocaleString()
-                : "",
-            competition.description
-                ? competition.description.replace(/<[^>]*>/g, "")
-                : ""
+            competition.start_date ? new Date(competition.start_date).toLocaleString() : "",
+            competition.description ? competition.description.replace(/<[^>]*>/g, "") : ""
         ]);
-        const csvContent = [
-            headers,
-            ...rows
-        ]
-            .map(row =>
-                row
-                    .map(value =>
-                        `"${String(value).replace(/"/g, '""')}"`
-                    )
-                    .join(",")
+        const csvContent = [headers, ...rows].map(row =>
+            row.map(value =>
+                `"${String(value).replace(/"/g, '""')}"`
             )
+                .join(",")
+        )
             .join("\n");
         const blob = new Blob(
             [csvContent],
@@ -295,9 +254,7 @@ function CompetitionsRoute() {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `competitions-${new Date()
-            .toISOString()
-            .slice(0, 10)}.csv`;
+        link.download = `competitions-${new Date() .toISOString() .slice(0, 10)}.csv`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -432,9 +389,7 @@ function CompetitionsRoute() {
                                                                                         {competition.name || "Untitled Competition"}
                                                                                     </span>
                                                                                     <span className="export-event-date">
-                                                                                        {competition.start_date
-                                                                                            ? formatDate(competition.start_date)
-                                                                                            : "No date"}
+                                                                                        {competition.start_date ? formatDate(competition.start_date) : "No date"}
                                                                                     </span>
                                                                                 </label>
                                                                             ))

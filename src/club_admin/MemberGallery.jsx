@@ -62,14 +62,14 @@ function MemberGalleryRoute() {
         }
         localStorage.setItem("savedLibrary", JSON.stringify(updatedLibrary));
         setSavedLibrary(updatedLibrary);
+        navigate("/library");
     };
     const isBookmarked = (id, category) => {
         return savedLibrary.some((item) => item.id === id && item.category === category);
     };
     const getMemberGallery = async () => {
         try {
-            const response = await fetch(
-                `${API_URL}/members-galleries`,
+            const response = await fetch( `${API_URL}/members-galleries`,
                 {
                     headers: {
                         Accept: "application/json",
@@ -103,10 +103,7 @@ function MemberGalleryRoute() {
                 return member.galleries.map((gallery) => ({
                     ...gallery,
                     member_id: gallery?.member_id ?? member?.id,
-                    member_name:
-                        `${member?.first_name || ""} ${member?.last_name || ""}`.trim() ||
-                        member?.username ||
-                        "",
+                    member_name: `${member?.first_name || ""} ${member?.last_name || ""}`.trim() || member?.username || "",
                 }));
             }
             if (Array.isArray(member?.photos)) {
@@ -171,7 +168,7 @@ function MemberGalleryRoute() {
         }
     };
     return (
-        <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
+        <div style={{ backgroundColor: "white" }}>
             <Loader show={isLoading} />
             {!isLoading && (
                 <>
@@ -247,7 +244,7 @@ function MemberGalleryRoute() {
                                                         <div className="galleriy">
                                                             <div className="galleriy-item">
                                                                 {image ? (
-                                                                    <img src={image} alt={firstPhoto?.title || gallery?.gallery_name || "Gallery"} style={{ width: "493px", height: "370px", objectFit: "cover" }} onClick={() => navigate(`/gallery/member/${galleryId}`)} />
+                                                                    <img src={image} alt={firstPhoto?.title || gallery?.gallery_name || "Gallery"} style={{ width: "493px", height: "370px", objectFit: "cover" }} onClick={() => navigate(`/gallery/member/${gallery?.member_id}`)} />
                                                                 ) : (
                                                                     <div className="d-flex align-items-center justify-content-center bg-light text-muted" style={{ width: "493px", height: "370px" }}>
                                                                         No image

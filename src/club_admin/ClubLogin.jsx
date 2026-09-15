@@ -20,26 +20,10 @@ function ClubLogin() {
                     <p className="text-secondary text-center mb-4">Log in to access your club dashboard.</p>
                     <form onSubmit={handleLogin} className="mx-auto" style={{ width: '600px', maxWidth: '100%' }}>
                         <div className="inputBox mb-4 position-relative">
-                            <input
-                                type="text"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="form-control"
-                                placeholder="Username/Email"
-                                required
-                                style={{ width: '100%', height: '50px', padding: '10px 14px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '14px' }}
-                            />
+                            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder="Username/Email" required style={{ width: '100%', height: '50px', padding: '10px 14px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '14px' }} />
                         </div>
                         <div className="inputBox mb-3 position-relative">
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="form-control"
-                                placeholder="Password"
-                                required
-                                style={{ width: '100%', height: '50px', padding: '10px 14px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '14px' }}
-                            />
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Password" required style={{ width: '100%', height: '50px', padding: '10px 14px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '14px' }}/>
                         </div>
                         <div className="remember-forgot d-flex justify-content-between align-items-center mb-4" style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px' }}>
                             <div className="remember-left d-flex align-items-center gap-2" style={{ fontSize: '16px' }}>

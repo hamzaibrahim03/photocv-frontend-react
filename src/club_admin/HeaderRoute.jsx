@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router";
-// import NotificationBell from "../React/extra/NotificationBell";
 function HeaderRoute({ title = "Dashboard", dashboardData }) {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");

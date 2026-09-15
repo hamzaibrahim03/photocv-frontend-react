@@ -49,44 +49,26 @@ function EventRoute() {
         const existingLibrary = JSON.parse(
             localStorage.getItem("savedLibrary") || "[]"
         );
-        const alreadySaved = existingLibrary.some(
-            saved =>
-                saved.id === item.id &&
-                saved.category === category
+        const alreadySaved = existingLibrary.some(saved =>
+            saved.id === item.id &&
+            saved.category === category
         );
         let updatedLibrary;
         if (alreadySaved) {
-            updatedLibrary = existingLibrary.filter(
-                saved =>
-                    !(
-                        saved.id === item.id &&
-                        saved.category === category
-                    )
+            updatedLibrary = existingLibrary.filter(saved =>
+                !(
+                    saved.id === item.id &&
+                    saved.category === category
+                )
             );
         } else {
             const libraryItem = {
                 id: item.id,
                 category: category,
-                title:
-                    item.name ||
-                    item.title ||
-                    item.event_name ||
-                    item.competition_name ||
-                    "Untitled",
-                description:
-                    item.description || "",
-                date:
-                    item.event_date ||
-                    item.competition_date ||
-                    item.published_at ||
-                    item.created_at ||
-                    "",
-                image:
-                    item.featured_image_url ||
-                    item.image ||
-                    item.image_url ||
-                    item.thumbnail_url ||
-                    "",
+                title: item.name || item.title || item.event_name || item.competition_name || "Untitled",
+                description: item.description || "",
+                date: item.event_date || item.competition_date || item.published_at || item.created_at || "",
+                image: item.featured_image_url || item.image || item.image_url || item.thumbnail_url || "",
                 originalData: item,
                 savedAt: new Date().toISOString()
             };
@@ -103,35 +85,28 @@ function EventRoute() {
         navigate("/library");
     };
     const isBookmarked = (id, category) => {
-        return savedLibrary.some(
-            item =>
-                item.id === id &&
-                item.category === category
+        return savedLibrary.some(item =>
+            item.id === id &&
+            item.category === category
         );
     };
     const handleShare = async (event) => {
         const shareUrl = `${window.location.origin}/event/${event.id}`;
         const shareData = {
             title: event.name || "Event",
-            text: event.description
-                ? event.description.replace(/<[^>]*>/g, "").slice(0, 150)
-                : "Check out this event",
+            text: event.description ? event.description.replace(/<[^>]*>/g, "").slice(0, 150) : "Check out this event",
             url: shareUrl,
         };
         try {
-            // Mobile / supported browsers
             if (navigator.share) {
                 await navigator.share(shareData);
             } else {
-                // Desktop fallback
                 await navigator.clipboard.writeText(shareUrl);
                 alert("Event link copied to clipboard!");
             }
         } catch (error) {
-            // User cancelled the share popup
             if (error.name !== "AbortError") {
                 console.error("Share failed:", error);
-                // Last fallback
                 try {
                     await navigator.clipboard.writeText(shareUrl);
                     alert("Event link copied to clipboard!");
@@ -199,10 +174,7 @@ function EventRoute() {
         );
     }, [eventData, search]);
     const totalPages = useMemo(() => {
-        return Math.max(
-            Math.ceil(filteredEvents.length / rowsPerPage),
-            1
-        );
+        return Math.max(Math.ceil(filteredEvents.length / rowsPerPage), 1);
     }, [filteredEvents, rowsPerPage]);
     const paginatedEvents = useMemo(() => {
         const start = (currentPage - 1) * rowsPerPage;
@@ -234,7 +206,6 @@ function EventRoute() {
                 return new Date(event.event_date) >= now;
             });
         }
-        // All
         return events;
     };
     const exportEvents = getExportEvents();
@@ -245,12 +216,10 @@ function EventRoute() {
             selectedEvents.includes(id)
         );
         if (allSelected) {
-            // Remove currently displayed events from selection
             setSelectedEvents((prev) =>
                 prev.filter((id) => !visibleIds.includes(id))
             );
         } else {
-            // Add currently displayed events
             setSelectedEvents((prev) => [
                 ...new Set([...prev, ...visibleIds])
             ]);
@@ -262,31 +231,17 @@ function EventRoute() {
             alert("Please select at least one event to export.");
             return;
         }
-        const headers = [
-            "Event Name",
-            "Event Date",
-            "Description"
-        ];
+        const headers = ["Event Name", "Event Date", "Description"];
         const rows = eventsToExport.map((event) => [
             event.name || "",
-            event.event_date
-                ? new Date(event.event_date).toLocaleString()
-                : "",
-            event.description
-                ? event.description.replace(/<[^>]*>/g, "")
-                : ""
+            event.event_date ? new Date(event.event_date).toLocaleString() : "",
+            event.description ? event.description.replace(/<[^>]*>/g, "") : ""
         ]);
-        const csvContent = [
-            headers,
-            ...rows
-        ]
-            .map(row =>
-                row
-                    .map(value =>
-                        `"${String(value).replace(/"/g, '""')}"`
-                    )
-                    .join(",")
-            )
+        const csvContent = [headers, ...rows].map(row => row.map(value =>
+            `"${String(value).replace(/"/g, '""')}"`
+        )
+            .join(",")
+        )
             .join("\n");
         const blob = new Blob(
             [csvContent],
@@ -435,20 +390,13 @@ function EventRoute() {
                                                                                         {event.name || "Untitled Event"}
                                                                                     </span>
                                                                                     <span className="export-event-date">
-                                                                                        {event.event_date
-                                                                                            ? formatDate(event.event_date)
-                                                                                            : "No date"}
+                                                                                        {event.event_date ? formatDate(event.event_date) : "No date"}
                                                                                     </span>
                                                                                 </label>
                                                                             ))
                                                                         ) : (
                                                                             <div className="no-events">
-                                                                                {exportFilter === "selected"
-                                                                                    ? "No events selected"
-                                                                                    : exportFilter === "upcoming"
-                                                                                        ? "No upcoming events"
-                                                                                        : "No events found"
-                                                                                }
+                                                                                {exportFilter === "selected" ? "No events selected" : exportFilter === "upcoming" ? "No upcoming events" : "No events found" }
                                                                             </div>
                                                                         )}
                                                                     </div>

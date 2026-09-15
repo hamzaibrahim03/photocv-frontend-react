@@ -251,7 +251,7 @@ const MembersRequest = () => {
                                                                             </button>
                                                                         </div>
                                                                         <div className="d-flex justify-content-center gap-2 mt-2">
-                                                                            <button type="button" className="btn" onClick={() => navigate(`/memberrequest/${member.id}`)} disabled={processingId !== null} style={{ backgroundColor: '#CC445E', color: 'white', border: '1px solid #CC445E', width: '307px', maxWidth: '307px', height: '38px' }}>
+                                                                            <button type="button" className="btn" onClick={() => navigate(`/members/request/${member.id}`)} disabled={processingId !== null} style={{ backgroundColor: '#CC445E', color: 'white', border: '1px solid #CC445E', width: '307px', maxWidth: '307px', height: '38px' }}>
                                                                                 View Profile
                                                                             </button>
                                                                         </div>

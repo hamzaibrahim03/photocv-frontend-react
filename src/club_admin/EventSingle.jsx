@@ -12,7 +12,6 @@ import Mess from './assets/icons/event_list/mess.svg';
 function EventSingle() {
     const { id } = useParams();
     const navigate = useNavigate();
-    // Single event object
     const [event, setEvent] = useState(null);
     const [eventExtra, setEventExtra] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -55,9 +54,7 @@ function EventSingle() {
                 }
             });
             if (!response.ok) {
-                throw new Error(
-                    `Failed to load event. Status: ${response.status}`
-                );
+                throw new Error( `Failed to load event. Status: ${response.status}` );
             }
             const data = await response.json();
             console.log("EVENT API RESPONSE:", data);
@@ -92,12 +89,7 @@ function EventSingle() {
     const comments = event?.comments || [];
     const eventTypes = event?.types || [];
     const eventTags = event?.tags || [];
-    const keywords = event?.tags_keywords
-        ? event.tags_keywords
-            .split(',')
-            .map(keyword => keyword.trim())
-            .filter(Boolean)
-        : [];
+    const keywords = event?.tags_keywords ? event.tags_keywords .split(',') .map(keyword => keyword.trim()) .filter(Boolean) : [];
     if (!isLoading && error) {
         return (
             <div className="container py-5">
@@ -402,11 +394,9 @@ function EventSingle() {
                                                                     <button className="btn text-white me-3" style={{ backgroundColor: '#99816b', width: '120px' }} onClick={() => navigate(-1)}>
                                                                         Back
                                                                     </button>
-                                                                    <Link to={`/event/${event.id}/edit`}>
-                                                                        <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }}>
-                                                                            Edit
-                                                                        </button>
-                                                                    </Link>
+                                                                    <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }} onClick={() => navigate(`/event/${event.id}/edit`)}>
+                                                                        Edit
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -75,27 +75,18 @@ function EventsAdd() {
         try {
             const response = await apiClient.get('/catalogs');
             const data = response.data?.data || response.data || [];
-            const types = data.filter(
-                item => item.catalog_type === 'event_type'
-            );
+            const types = data.filter( item => item.catalog_type === 'event_type' );
             setEventTypes(types);
             console.log("EVENT TYPES:", types);
         } catch (error) {
-            console.error(
-                "Failed to fetch event types:",
-                error.response?.data || error.message
-            );
+            console.error( "Failed to fetch event types:", error.response?.data || error.message );
         }
     }
     async function getEventTags() {
         try {
             const response = await apiClient.get('/events');
             const result = response.data?.data?.original?.data;
-            const events = Array.isArray(result)
-                ? result
-                : Array.isArray(result?.data)
-                    ? result.data
-                    : [];
+            const events = Array.isArray(result) ? result : Array.isArray(result?.data) ? result.data : [];
             console.log(result)
             console.log(events)
             const tagMap = new Map();
@@ -113,7 +104,6 @@ function EventsAdd() {
                         return parsed.map(String).map(v => v.trim()).filter(Boolean);
                     }
                 } catch {
-                    // API normally returns comma-separated text.
                 }
                 return value.split(',').map(v => v.trim()).filter(Boolean);
             };
@@ -134,10 +124,7 @@ function EventsAdd() {
             console.log('EVENT TAGS:', tags);
             console.log('EVENT KEYWORDS:', keywords);
         } catch (error) {
-            console.error(
-                'Failed to fetch event tags:',
-                error.response?.data || error.message
-            );
+            console.error( 'Failed to fetch event tags:', error.response?.data || error.message );
             setEventTags([]);
         }
     }
@@ -155,31 +142,16 @@ function EventsAdd() {
             if (id) {
                 event = result?.data || result || {};
             } else {
-                event = Array.isArray(result)
-                    ? result[0] || {}
-                    : result || {};
+                event = Array.isArray(result) ? result[0] || {} : result || {};
             }
             setEventData(event);
-            // Populate form when editing
             if (id && event) {
                 setName(event.name || '');
-                setEventDate(
-                    event.event_date
-                        ? event.event_date.substring(0, 10)
-                        : ''
-                );
+                setEventDate( event.event_date ? event.event_date.substring(0, 10) : '' );
                 setDescription(event.description || '');
-                const typeIds = Array.isArray(event.types)
-                    ? event.types.map(type => Number(type.id)).filter(Number.isFinite)
-                    : event.event_type_id != null
-                        ? [Number(event.event_type_id)]
-                        : [];
+                const typeIds = Array.isArray(event.types) ? event.types.map(type => Number(type.id)).filter(Number.isFinite) : event.event_type_id != null ? [Number(event.event_type_id)] : [];
                 setSelectedEventTypes(typeIds);
-                const tagIds = Array.isArray(event.tags)
-                    ? event.tags.map(tag => Number(tag.id)).filter(Number.isFinite)
-                    : event.event_tag_id != null
-                        ? [Number(event.event_tag_id)]
-                        : [];
+                const tagIds = Array.isArray(event.tags) ? event.tags.map(tag => Number(tag.id)).filter(Number.isFinite) : event.event_tag_id != null ? [Number(event.event_tag_id)] : [];
                 setSelectedEventTags(tagIds);
                 setDuration(event.duration || '');
                 setSpeaker(event.speaker || '');
@@ -189,41 +161,23 @@ function EventsAdd() {
                 setRequiredGear(event.required_gear || '');
                 setUrl(event.url || '');
                 setRsvpDetail(event.rsvp_detail || '');
-                setFeaturedThumbUrl(
-                    event.featured_thumb_url ||
-                    event.featured_thumb_url ||
-                    ''
-                );
-                // Handle tags whether API returns array or JSON string
+                setFeaturedThumbUrl( event.featured_thumb_url || event.featured_thumb_url || '' );
                 let tags = [];
                 if (Array.isArray(event.tags_keywords)) {
                     tags = event.tags_keywords;
                 } else if (typeof event.tags_keywords === 'string') {
                     try {
                         const parsed = JSON.parse(event.tags_keywords);
-                        tags = Array.isArray(parsed)
-                            ? parsed
-                            : event.tags_keywords
-                                .split(',')
-                                .map(tag => tag.trim())
-                                .filter(Boolean);
+                        tags = Array.isArray(parsed) ? parsed : event.tags_keywords .split(',') .map(tag => tag.trim()) .filter(Boolean);
                     } catch {
-                        tags = event.tags_keywords
-                            .split(',')
-                            .map(tag => tag.trim())
-                            .filter(Boolean);
+                        tags = event.tags_keywords .split(',') .map(tag => tag.trim()) .filter(Boolean);
                     }
                 }
                 setSelectedTags(tags);
-                // Also include keywords from the event currently being edited.
                 if (typeof event.tags_keywords === 'string') {
-                    const currentKeywords = event.tags_keywords
-                        .split(',')
-                        .map(value => value.trim())
-                        .filter(Boolean);
+                    const currentKeywords = event.tags_keywords .split(',') .map(value => value.trim()) .filter(Boolean);
                     setAvailableKeywords(prev => [...new Set([...prev, ...currentKeywords])]);
                 }
-                // The event response is also the source for event-tag options.
                 if (Array.isArray(event.tags) && event.tags.length) {
                     setEventTags(prev => {
                         const map = new Map(prev.map(tag => [Number(tag.id), tag]));
@@ -235,10 +189,7 @@ function EventsAdd() {
                 }
             }
         } catch (error) {
-            console.error(
-                "Failed to fetch event:",
-                error.response?.data || error.message
-            );
+            console.error( "Failed to fetch event:", error.response?.data || error.message );
         }
     }
     console.log(eventData.original?.data)
@@ -262,10 +213,7 @@ function EventsAdd() {
         };
         document.addEventListener('click', handleClickOutside);
         return () => {
-            document.removeEventListener(
-                'click',
-                handleClickOutside
-            );
+            document.removeEventListener( 'click', handleClickOutside );
         };
     }, []);
     const formatsDate = (date) => {
@@ -306,8 +254,6 @@ function EventsAdd() {
     };
     const normalizeDateForApi = (value) => {
         if (!value) return '';
-        // <input type="date"> should always be YYYY-MM-DD.
-        // Never send an ISO datetime or a locale-formatted date to the API.
         const match = String(value).match(/^(\d{4}-\d{2}-\d{2})/);
         if (!match) return '';
         const date = new Date(`${match[1]}T00:00:00`);
@@ -333,7 +279,6 @@ function EventsAdd() {
             alert('Please select at least one Event Tag.');
             return;
         }
-        // Backend requires at least one image only when creating a new event.
         if (!id && images.length === 0) {
             alert('Please upload at least one image.');
             return;
@@ -351,18 +296,10 @@ function EventsAdd() {
             formData.append('required_gear', requiredGear);
             formData.append('url', url);
             formData.append('rsvp_detail', rsvpDetail);
-            // Backend expects arrays.
-            selectedEventTypes.forEach(typeId => {
-                formData.append('event_types[]', String(typeId));
-            });
-            selectedEventTags.forEach(tagId => {
-                formData.append('event_tags[]', String(tagId));
-            });
-            // tags_keywords is a comma-separated string in the API response.
+            selectedEventTypes.forEach(typeId => { formData.append('event_types[]', String(typeId)); });
+            selectedEventTags.forEach(tagId => { formData.append('event_tags[]', String(tagId)); });
             formData.append('tags_keywords', selectedTags.join(', '));
-            if (featuredThumbUrl) {
-                formData.append('featured_thumb_url', featuredThumbUrl);
-            }
+            if (featuredThumbUrl) { formData.append('featured_thumb_url', featuredThumbUrl); }
             images.forEach((image, index) => {
                 if (image?.file instanceof File) {
                     formData.append(`images[${index}]`, image.file);
@@ -375,7 +312,6 @@ function EventsAdd() {
                 }
             });
             if (id) {
-                // Laravel method spoofing is used because multipart PUT can be problematic.
                 formData.append('_method', 'PUT');
                 await apiClient.post(`/events/${id}`, formData);
             } else {
@@ -389,8 +325,7 @@ function EventsAdd() {
             console.error('API RESPONSE:', error.response?.data);
             const errors = error.response?.data?.errors;
             if (errors) {
-                const messages = Object.entries(errors)
-                    .flatMap(([field, messages]) =>
+                const messages = Object.entries(errors) .flatMap(([field, messages]) =>
                         Array.isArray(messages)
                             ? messages.map(message => `${field}: ${message}`)
                             : [`${field}: ${messages}`]
@@ -398,10 +333,7 @@ function EventsAdd() {
                     .join('\n');
                 alert(messages);
             } else {
-                alert(
-                    error.response?.data?.message ||
-                    'Failed to save event.'
-                );
+                alert( error.response?.data?.message || 'Failed to save event.' );
             }
         }
     };
@@ -419,14 +351,7 @@ function EventsAdd() {
     };
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const validFiles = files.filter(file =>
-            [
-                "image/jpeg",
-                "image/jpg",
-                "image/png",
-                "image/gif"
-            ].includes(file.type)
-        );
+        const validFiles = files.filter(file => [ "image/jpeg", "image/jpg", "image/png", "image/gif" ].includes(file.type) );
         if (validFiles.length !== files.length) {
             alert("Only JPG, JPEG, PNG and GIF images are allowed.");
         }
@@ -557,32 +482,9 @@ function EventsAdd() {
                                                                     return (
                                                                         <div className="col-md-3" key={type.id}>
                                                                             <label className="w-100 border rounded p-2 d-flex align-items-center" style={{ cursor: "pointer", minHeight: "42px" }}>
-                                                                                <input
-                                                                                    type="checkbox"
-                                                                                    className="form-check-input me-2"
-                                                                                    checked={selectedEventTypes.includes(typeId)}
-                                                                                    onChange={() => {
-                                                                                        setSelectedEventTypes(prev => {
-                                                                                            if (prev.includes(typeId)) {
-                                                                                                return prev.filter(
-                                                                                                    id => id !== typeId
-                                                                                                );
-                                                                                            }
-                                                                                            return [...prev, typeId];
-                                                                                        });
-                                                                                    }}
-                                                                                />
+                                                                                <input type="checkbox" className="form-check-input me-2" checked={selectedEventTypes.includes(typeId)} onChange={() => { setSelectedEventTypes(prev => { if (prev.includes(typeId)) { return prev.filter( id => id !== typeId ); } return [...prev, typeId]; }); }} />
                                                                                 {type.icon_url && (
-                                                                                    <img
-                                                                                        src={type.icon_url}
-                                                                                        alt=""
-                                                                                        style={{
-                                                                                            width: "18px",
-                                                                                            height: "18px",
-                                                                                            objectFit: "contain",
-                                                                                            marginRight: "6px"
-                                                                                        }}
-                                                                                    />
+                                                                                    <img src={type.icon_url} alt="" style={{ width: "18px", height: "18px", objectFit: "contain", marginRight: "6px" }} />
                                                                                 )}
                                                                                 {type.name}
                                                                             </label>
@@ -596,26 +498,8 @@ function EventsAdd() {
                                                             <div className="row g-2">
                                                                 {availableKeywords.map((keyword, index) => (
                                                                     <div className="col-md-3" key={`${keyword}-${index}`}>
-                                                                        <label
-                                                                            className="w-100 border rounded p-2 d-flex align-items-center"
-                                                                            style={{
-                                                                                cursor: "pointer",
-                                                                                minHeight: "42px"
-                                                                            }}
-                                                                        >
-                                                                            <input
-                                                                                type="checkbox"
-                                                                                className="form-check-input me-2"
-                                                                                checked={selectedTags.includes(keyword)}
-                                                                                onChange={() => {
-                                                                                    setSelectedTags(prev => {
-                                                                                        if (prev.includes(keyword)) {
-                                                                                            return prev.filter(tag => tag !== keyword);
-                                                                                        }
-                                                                                        return [...prev, keyword];
-                                                                                    });
-                                                                                }}
-                                                                            />
+                                                                        <label className="w-100 border rounded p-2 d-flex align-items-center" style={{ cursor: "pointer", minHeight: "42px" }} >
+                                                                            <input type="checkbox" className="form-check-input me-2" checked={selectedTags.includes(keyword)} onChange={() => { setSelectedTags(prev => { if (prev.includes(keyword)) { return prev.filter(tag => tag !== keyword); } return [...prev, keyword]; }); }} />
                                                                             {keyword}
                                                                         </label>
                                                                     </div>
@@ -698,25 +582,7 @@ function EventsAdd() {
                                                                         <button type="button" className="btn-close btn-close-white ms-2 mb-1" style={{ fontSize: '0.4rem' }} onClick={(e) => { e.stopPropagation(); removeTag(index); }}></button>
                                                                     </div>
                                                                 ))}
-                                                                <input
-                                                                    type="text"
-                                                                    className="border-0 shadow-none flex-grow-1 outline-none"
-                                                                    style={{ minWidth: '100px', outline: 'none' }}
-                                                                    placeholder="Add keyword..."
-                                                                    value={searchInput}
-                                                                    onChange={e => setSearchInput(e.target.value)}
-                                                                    onFocus={() => setShowDropdown(true)}
-                                                                    onKeyDown={e => {
-                                                                        if (e.key === 'Enter') {
-                                                                            e.preventDefault();
-                                                                            const value = searchInput.trim();
-                                                                            if (value && !selectedTags.includes(value)) {
-                                                                                setSelectedTags(prev => [...prev, value]);
-                                                                                setSearchInput('');
-                                                                            }
-                                                                        }
-                                                                    }}
-                                                                />
+                                                                <input type="text" className="border-0 shadow-none flex-grow-1 outline-none" style={{ minWidth: '100px', outline: 'none' }} placeholder="Add keyword..." value={searchInput} onChange={e => setSearchInput(e.target.value)} onFocus={() => setShowDropdown(true)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); const value = searchInput.trim(); if (value && !selectedTags.includes(value)) { setSelectedTags(prev => [...prev, value]); setSearchInput(''); } } }} />
                                                             </div>
                                                             {showDropdown && (
                                                                 <ul className="dropdown-menu show w-100 position-absolute" style={{ top: '100%', zIndex: 1000 }}>
@@ -745,40 +611,10 @@ function EventsAdd() {
                                                         {images.length > 0 && (
                                                             <div className="d-flex flex-wrap gap-3 mb-4">
                                                                 {images.map((img, index) => (
-                                                                    <div
-                                                                        key={index}
-                                                                        className="position-relative border p-1 rounded"
-                                                                        style={{ width: "150px" }}
-                                                                    >
-                                                                        <button
-                                                                            type="button"
-                                                                            className="btn-close position-absolute top-0 end-0 m-1 bg-white"
-                                                                            onClick={() => removeImage(index)}
-                                                                        />
-                                                                        <img
-                                                                            src={img.preview}
-                                                                            className="img-fluid w-100 object-fit-cover"
-                                                                            style={{ height: "100px" }}
-                                                                            alt="upload"
-                                                                        />
-                                                                        <textarea
-                                                                            className="form-control form-control-sm mt-1"
-                                                                            rows="2"
-                                                                            placeholder="Caption..."
-                                                                            value={img.caption}
-                                                                            onChange={(e) => {
-                                                                                setImages(prev =>
-                                                                                    prev.map((item, i) =>
-                                                                                        i === index
-                                                                                            ? {
-                                                                                                ...item,
-                                                                                                caption: e.target.value
-                                                                                            }
-                                                                                            : item
-                                                                                    )
-                                                                                );
-                                                                            }}
-                                                                        />
+                                                                    <div key={index} className="position-relative border p-1 rounded" style={{ width: "150px" }} >
+                                                                        <button type="button" className="btn-close position-absolute top-0 end-0 m-1 bg-white" onClick={() => removeImage(index)} />
+                                                                        <img src={img.preview} className="img-fluid w-100 object-fit-cover" style={{ height: "100px" }} alt="upload" />
+                                                                        <textarea className="form-control form-control-sm mt-1" rows="2" placeholder="Caption..." value={img.caption} onChange={(e) => { setImages(prev => prev.map((item, i) => i === index ? { ...item, caption: e.target.value } : item ) ); }} />
                                                                     </div>
                                                                 ))}
                                                             </div>

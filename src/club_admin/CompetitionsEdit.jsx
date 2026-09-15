@@ -67,12 +67,7 @@ function CompetitionsEdit() {
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     };
     const handleChange = (e) => {
-        const {
-            name,
-            value,
-            type,
-            checked
-        } = e.target;
+        const { name, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value
@@ -103,7 +98,6 @@ function CompetitionsEdit() {
         try {
             if (isEditMode) {
                 const response = await apiClient.get(`/competitions/${id}`);
-                console.log('Competition API:', response.data);
                 const competition = response.data?.data || response.data;
                 setFormData({
                     name: competition.name || '',
@@ -111,58 +105,28 @@ function CompetitionsEdit() {
                     description: competition.description || '',
                     judging_type_id: competition.judging_type_id || '',
                     status: competition.status || '',
-                    start_date: formatDateTimeForInput(
-                        competition.start_date
-                    ),
-                    submission_deadline: formatDateTimeForInput(
-                        competition.submission_deadline
-                    ),
-                    max_entries_digital:
-                        competition.max_entries_digital ?? '',
-                    max_entries_print:
-                        competition.max_entries_print ?? '',
-                    max_file_size:
-                        competition.max_file_size ?? '',
-                    allowed_image_formats:
-                        competition.allowed_image_formats || '',
-                    theme_id:
-                        competition.theme_id ?? '',
-                    category_id:
-                        competition.category_id ?? '',
-                    print_vs_digital:
-                        competition.print_vs_digital || '',
-                    color_vs_mono:
-                        competition.color_vs_mono || '',
-                    judging_panel:
-                        competition.judging_panel || '',
-                    voting_method_id:
-                        competition.voting_method_id ?? '',
-                    judging_start_date:
-                        formatDateTimeForInput(
-                            competition.judging_start_date
-                        ),
-                    judging_end_date:
-                        formatDateTimeForInput(
-                            competition.judging_end_date
-                        ),
-                    result_announcement_date:
-                        formatDateTimeForInput(
-                            competition.result_announcement_date
-                        ),
-                    top_places:
-                        competition.top_places ?? '',
-                    high_commendation_number:
-                        competition.high_commendation_number ?? '',
-                    commendation_number:
-                        competition.commendation_number ?? '',
-                    prizes:
-                        competition.prizes || '',
-                    comments_and_critique:
-                        Boolean(competition.comments_and_critique),
-                    auto_generate_certificates:
-                        Boolean(competition.auto_generate_certificates),
-                    visible_judges_feedback:
-                        Boolean(competition.visible_judges_feedback),
+                    start_date: formatDateTimeForInput( competition.start_date ),
+                    submission_deadline: formatDateTimeForInput( competition.submission_deadline ),
+                    max_entries_digital: competition.max_entries_digital ?? '',
+                    max_entries_print: competition.max_entries_print ?? '',
+                    max_file_size: competition.max_file_size ?? '',
+                    allowed_image_formats: competition.allowed_image_formats || '',
+                    theme_id: competition.theme_id ?? '',
+                    category_id: competition.category_id ?? '',
+                    print_vs_digital: competition.print_vs_digital || '',
+                    color_vs_mono: competition.color_vs_mono || '',
+                    judging_panel: competition.judging_panel || '',
+                    voting_method_id: competition.voting_method_id ?? '',
+                    judging_start_date: formatDateTimeForInput( competition.judging_start_date ),
+                    judging_end_date: formatDateTimeForInput( competition.judging_end_date ),
+                    result_announcement_date: formatDateTimeForInput( competition.result_announcement_date ),
+                    top_places: competition.top_places ?? '',
+                    high_commendation_number: competition.high_commendation_number ?? '',
+                    commendation_number: competition.commendation_number ?? '',
+                    prizes: competition.prizes || '',
+                    comments_and_critique: Boolean(competition.comments_and_critique),
+                    auto_generate_certificates: Boolean(competition.auto_generate_certificates),
+                    visible_judges_feedback: Boolean(competition.visible_judges_feedback),
                 });
             }
             else {
@@ -199,67 +163,25 @@ function CompetitionsEdit() {
         try {
             const payload = {
                 ...formData,
-                competition_type_id:
-                    formData.competition_type_id
-                        ? Number(formData.competition_type_id)
-                        : null,
-                judging_type_id:
-                    formData.judging_type_id
-                        ? Number(formData.judging_type_id)
-                        : null,
-                max_entries_digital:
-                    formData.max_entries_digital
-                        ? Number(formData.max_entries_digital)
-                        : null,
-                max_entries_print:
-                    formData.max_entries_print
-                        ? Number(formData.max_entries_print)
-                        : null,
-                max_file_size:
-                    formData.max_file_size
-                        ? Number(formData.max_file_size)
-                        : null,
-                theme_id:
-                    formData.theme_id
-                        ? Number(formData.theme_id)
-                        : null,
-                category_id:
-                    formData.category_id
-                        ? Number(formData.category_id)
-                        : null,
-                voting_method_id:
-                    formData.voting_method_id
-                        ? Number(formData.voting_method_id)
-                        : null,
-                top_places:
-                    formData.top_places
-                        ? Number(formData.top_places)
-                        : null,
-                high_commendation_number:
-                    formData.high_commendation_number
-                        ? Number(formData.high_commendation_number)
-                        : null,
-                commendation_number:
-                    formData.commendation_number
-                        ? Number(formData.commendation_number)
-                        : null,
+                competition_type_id: formData.competition_type_id ? Number(formData.competition_type_id) : null,
+                judging_type_id: formData.judging_type_id ? Number(formData.judging_type_id) : null,
+                max_entries_digital: formData.max_entries_digital ? Number(formData.max_entries_digital) : null,
+                max_entries_print: formData.max_entries_print ? Number(formData.max_entries_print) : null,
+                max_file_size: formData.max_file_size ? Number(formData.max_file_size) : null,
+                theme_id: formData.theme_id ? Number(formData.theme_id) : null,
+                category_id: formData.category_id ? Number(formData.category_id) : null,
+                voting_method_id: formData.voting_method_id ? Number(formData.voting_method_id) : null,
+                top_places: formData.top_places ? Number(formData.top_places) : null,
+                high_commendation_number: formData.high_commendation_number ? Number(formData.high_commendation_number) : null,
+                commendation_number: formData.commendation_number ? Number(formData.commendation_number) : null,
             };
-            console.log(
-                isEditMode
-                    ? 'UPDATE PAYLOAD:'
-                    : 'CREATE PAYLOAD:',
-                payload
-            );
+            console.log( isEditMode ? 'UPDATE PAYLOAD:' : 'CREATE PAYLOAD:', payload );
             if (isEditMode) {
                 await apiClient.put(`/competitions/${id}`, payload);
-                alert(
-                    'Competition updated successfully!'
-                );
+                alert( 'Competition updated successfully!' );
             } else {
                 await apiClient.post(`/competitions`, payload);
-                alert(
-                    'Competition created successfully!'
-                );
+                alert( 'Competition created successfully!' );
             }
             navigate('/competitions');
         } catch (error) {
@@ -369,7 +291,7 @@ function CompetitionsEdit() {
                                                 <label className="form-label text-muted">
                                                     Judging Type
                                                 </label>
-                                                <select name="judging_type_id" value={formData.judging_type_id} onChange={handleChange} className="form-select">
+                                                <select name="judging_type_id" value={formData.judging_type_id} onChange={handleChange} className="form-control form-select">
                                                     <option value="">Select Judging Type</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -381,7 +303,7 @@ function CompetitionsEdit() {
                                                 <label className="form-label text-muted">
                                                     Assign Judge
                                                 </label>
-                                                <select name="judge_id" value={formData.judge_id} onChange={handleChange} className="form-select">
+                                                <select name="judge_id" value={formData.judge_id} onChange={handleChange} className="form-control form-select">
                                                     <option value="">Select Judge</option>
                                                     <option value="Ammar">Ammar</option>
                                                     <option value="Sohaib">Sohaib</option>
@@ -397,11 +319,7 @@ function CompetitionsEdit() {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <div className="row mb-3">
-                                                    {[
-                                                        'scheduled',
-                                                        'draft',
-                                                        'postponed'
-                                                    ].map(status => (
+                                                    {[ 'scheduled', 'draft', 'postponed' ].map(status => (
                                                         <div className="col-md-4 mb-2" key={status}>
                                                             <div className="premium-radio">
                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -420,10 +338,7 @@ function CompetitionsEdit() {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="row mb-3">
-                                                    {[
-                                                        'cancelled',
-                                                        'completed'
-                                                    ].map(status => (
+                                                    {[ 'cancelled', 'completed' ].map(status => (
                                                         <div className="col-md-6 mb-2" key={status}>
                                                             <div className="premium-radio">
                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -486,7 +401,7 @@ function CompetitionsEdit() {
                                                 <label className="form-label text-muted">
                                                     Allowed Image Formats
                                                 </label>
-                                                <select name="allowed_image_formats" value={formData.allowed_image_formats} onChange={handleChange} className="form-select">
+                                                <select name="allowed_image_formats" value={formData.allowed_image_formats} onChange={handleChange} className="form-control form-select">
                                                     <option value="">Select Format</option>
                                                     <option value="JPEG">JPEG</option>
                                                     <option value="PNG">PNG</option>
@@ -519,7 +434,7 @@ function CompetitionsEdit() {
                                                 <label className="form-label text-muted">
                                                     Print vs Digital Submission
                                                 </label>
-                                                <select name="print_vs_digital" value={formData.print_vs_digital} onChange={handleChange} className="form-select">
+                                                <select name="print_vs_digital" value={formData.print_vs_digital} onChange={handleChange} className="form-control form-select">
                                                     <option value="">Select</option>
                                                     <option value="print">Print</option>
                                                     <option value="digital">Digital</option>
@@ -529,7 +444,7 @@ function CompetitionsEdit() {
                                                 <label className="form-label text-muted">
                                                     Colour vs. Monochrome
                                                 </label>
-                                                <select name="color_vs_mono" value={formData.color_vs_mono} onChange={handleChange} className="form-select">
+                                                <select name="color_vs_mono" value={formData.color_vs_mono} onChange={handleChange} className="form-control form-select">
                                                     <option value="">Select</option>
                                                     <option value="color">Color</option>
                                                     <option value="monochrome">Monochrome</option>

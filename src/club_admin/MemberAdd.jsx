@@ -44,31 +44,14 @@ function MemberAdd() {
                 phone: member?.phone || '',
                 description: member?.bio || '',
                 role: member?.role || 'Photographer',
-                facebook:
-                    member?.facebook ||
-                    member?.facebook_url ||
-                    '',
-                instagram:
-                    member?.instagram ||
-                    member?.social_link ||
-                    '',
-                flickr:
-                    member?.flickr ||
-                    member?.flickr_url ||
-                    '',
+                facebook: member?.facebook || member?.facebook_url || '',
+                instagram: member?.instagram || member?.social_link || '',
+                flickr: member?.flickr || member?.flickr_url || '',
             });
-            setExistingImage(
-                member?.profile_image_url ||
-                member?.image_url ||
-                member?.image ||
-                ''
-            );
+            setExistingImage( member?.profile_image_url || member?.image_url || member?.image || '' );
         } catch (error) {
             console.error('Error loading member:', error);
-            alert(
-                error?.response?.data?.message ||
-                'Unable to load member.'
-            );
+            alert( error?.response?.data?.message || 'Unable to load member.' );
             navigate('/members');
         } finally {
             setIsLoading(false);
@@ -129,18 +112,7 @@ function MemberAdd() {
             }
             let response;
             if (isEditMode) {
-                response = await apiClient.post(
-                    `/members/${id}`,
-                    payload,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
-                        params: {
-                            _method: 'PUT',
-                        },
-                    }
-                );
+                response = await apiClient.post( `/members/${id}`, payload, { headers: { 'Content-Type': 'multipart/form-data', }, params: { _method: 'PUT', }, } );
             } else {
                 response = await apiClient.post('/members', payload, {
                     headers: {
@@ -149,21 +121,14 @@ function MemberAdd() {
                 });
             }
             console.log('Save response:', response.data);
-            alert(
-                isEditMode
-                    ? 'Member updated successfully.'
-                    : 'Member added successfully.'
-            );
+            alert( isEditMode ? 'Member updated successfully.' : 'Member added successfully.' );
             navigate('/members');
         } catch (error) {
             console.error('Error saving member:', error);
             if (error?.response?.data?.errors) {
                 setErrors(error.response.data.errors);
             }
-            alert(
-                error?.response?.data?.message ||
-                'Unable to save member.'
-            );
+            alert( error?.response?.data?.message || 'Unable to save member.' );
         } finally {
             setIsSaving(false);
         }
@@ -173,7 +138,7 @@ function MemberAdd() {
         : existingImage;
     return (
         <>
-            <div style={{backgroundColor: 'white'}}>
+            <div style={{ backgroundColor: 'white' }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <>
@@ -181,21 +146,19 @@ function MemberAdd() {
                         <HeaderRoute title="" />
                         <div className="content">
                             <section>
-                                <div className="container mx-auto px-0" style={{maxWidth: '1810px'}}>
+                                <div className="container mx-auto px-0" style={{ maxWidth: '1810px' }}>
                                     <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
-                                        <div className="profile-card bg-white shadow-sm p-4 rounded d-flex align-items-center" style={{width: '100%', height: '100px'}}>
+                                        <div className="profile-card bg-white shadow-sm p-4 rounded d-flex align-items-center" style={{ width: '100%', height: '100px' }}>
                                             <div className="profile-info ms-3">
                                                 <h2 className="name m-0 text-dark head fs-3">
-                                                    {isEditMode
-                                                        ? 'Edit Member'
-                                                        : 'Add New Member'}
+                                                    {isEditMode ? 'Edit Member' : 'Add New Member'}
                                                 </h2>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </section>
-                            <div className="row container mx-auto px-0" style={{maxWidth: '1810px'}}>
+                            <div className="row container mx-auto px-0" style={{ maxWidth: '1810px' }}>
                                 <div className="col-md-8 px-0">
                                     <section className="bg-white p-4 rounded shadow-sm mb-5">
                                         <form onSubmit={submitForm}>
@@ -205,11 +168,11 @@ function MemberAdd() {
                                             <div className="row mb-4">
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Title</label>
-                                                    <input type="text" name="title" value={formData.title} onChange={handleChange} className="form-control" placeholder="Mr, Mrs, Dr..."/>
+                                                    <input type="text" name="title" value={formData.title} onChange={handleChange} className="form-control" placeholder="Mr, Mrs, Dr..." />
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Full Name</label>
-                                                    <input type="text" name="name" value={formData.name} onChange={handleChange} className={`form-control ${errors.name ? 'is-invalid' : ''}`} required/>
+                                                    <input type="text" name="name" value={formData.name} onChange={handleChange} className={`form-control ${errors.name ? 'is-invalid' : ''}`} required />
                                                     {errors.name && (
                                                         <div className="invalid-feedback">
                                                             {Array.isArray(errors.name)
@@ -222,7 +185,7 @@ function MemberAdd() {
                                             <div className="row mb-4">
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Email</label>
-                                                    <input type="email" name="email" value={formData.email} onChange={handleChange} className={`form-control ${errors.email ? 'is-invalid' : ''}`} required/>
+                                                    <input type="email" name="email" value={formData.email} onChange={handleChange} className={`form-control ${errors.email ? 'is-invalid' : ''}`} required />
                                                     {errors.email && (
                                                         <div className="invalid-feedback">
                                                             {Array.isArray(errors.email)
@@ -233,7 +196,7 @@ function MemberAdd() {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Phone</label>
-                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={`form-control ${errors.phone ? 'is-invalid' : ''}`} required/>
+                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={`form-control ${errors.phone ? 'is-invalid' : ''}`} required />
                                                     {errors.phone && (
                                                         <div className="invalid-feedback">
                                                             {Array.isArray(errors.phone)
@@ -246,14 +209,14 @@ function MemberAdd() {
                                             <div className="row mb-4">
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Description</label>
-                                                    <textarea name="description" value={formData.description} onChange={handleChange} className="form-control" rows="5" style={{resize: 'none'}}/>
+                                                    <textarea name="description" value={formData.description} onChange={handleChange} className="form-control" rows="5" style={{ resize: 'none' }} />
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label className="form-label text-muted">Image</label>
-                                                    <input type="file" accept="image/*" className="form-control bg-light" onChange={handleImageChange}/>
+                                                    <input type="file" accept="image/*" className="form-control bg-light" onChange={handleImageChange} />
                                                     {imagePreview && (
                                                         <div className="mt-3">
-                                                            <img src={imagePreview} alt="Member" style={{width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px',}}/>
+                                                            <img src={imagePreview} alt="Member" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', }} />
                                                         </div>
                                                     )}
                                                 </div>
@@ -261,7 +224,7 @@ function MemberAdd() {
                                             <div className="row mb-4">
                                                 <div className="col-md-12">
                                                     <label className="form-label text-muted">Role</label>
-                                                    <select name="role" value={formData.role} onChange={handleChange} className="form-select">
+                                                    <select name="role" value={formData.role} onChange={handleChange} className="form-control form-select">
                                                         <option value="Admin">Admin</option>
                                                         <option value="Photographer">Photographer</option>
                                                         <option value="Member">Member</option>
@@ -271,26 +234,26 @@ function MemberAdd() {
                                             <h5 className="head mb-4 border-top pt-4">Social Media Links</h5>
                                             <div className="mb-3">
                                                 <label className="form-label text-muted">Facebook</label>
-                                                <input type="text" name="facebook" value={formData.facebook} onChange={handleChange} className="form-control" placeholder="Facebook link..."/>
+                                                <input type="text" name="facebook" value={formData.facebook} onChange={handleChange} className="form-control" placeholder="Facebook link..." />
                                             </div>
                                             <div className="mb-3">
                                                 <label className="form-label text-muted">Instagram</label>
-                                                <input type="text" name="instagram" value={formData.instagram} onChange={handleChange} className="form-control" placeholder="Instagram link..."/>
+                                                <input type="text" name="instagram" value={formData.instagram} onChange={handleChange} className="form-control" placeholder="Instagram link..." />
                                             </div>
                                             <div className="mb-5">
                                                 <label className="form-label text-muted">Flickr</label>
-                                                <input type="text" name="flickr" value={formData.flickr} onChange={handleChange} className="form-control" placeholder="Flickr link..."/>
+                                                <input type="text" name="flickr" value={formData.flickr} onChange={handleChange} className="form-control" placeholder="Flickr link..." />
                                             </div>
                                             <div className="d-flex justify-content-between align-items-center">
                                                 <div className="button-group d-flex gap-2">
-                                                    <button type="submit" disabled={isSaving} className="btn text-white px-4" style={{backgroundColor: '#4c4036',}}>
+                                                    <button type="submit" disabled={isSaving} className="btn text-white px-4" style={{ backgroundColor: '#4c4036', }}>
                                                         {isSaving ? 'Saving...' : isEditMode ? 'Update' : 'Save'}
                                                     </button>
                                                     <button type="button" className="btn text-white px-4 bg-secondary" onClick={() => navigate('/members')} disabled={isSaving}>
                                                         Cancel
                                                     </button>
                                                 </div>
-                                                <button type="button" className="btn text-white px-4" style={{backgroundColor: '#99816b',}} onClick={() => navigate('/members')}>
+                                                <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#99816b', }} onClick={() => navigate('/members')}>
                                                     Back
                                                 </button>
                                             </div>

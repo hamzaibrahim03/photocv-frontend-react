@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Step1.css";
+import apiClient from "../src/api/axios";
 function Step1GeneralConfiguration() {
     const [noticeTypes, setNoticeTypes] = useState([]);
     const [noticeName, setNoticeName] = useState("");
@@ -9,34 +10,33 @@ function Step1GeneralConfiguration() {
     const [pageName, setPageName] = useState("");
     const [pageIcon, setPageIcon] = useState(null);
     const [pageOpen, setPageOpen] = useState(true);
-    const [seasons, setSeasons] = useState([
-        {
-            id: 1,
-            name: "2025-2026 Season",
-            status: true,
-            startDate: "2023-06-01",
-            endDate: "2024-06-01",
-        },
-        {
-            id: 2,
-            name: "2024-2025 Season",
-            status: false,
-            startDate: "2023-06-01",
-            endDate: "2024-06-01",
-        },
-        {
-            id: 3,
-            name: "2024-2025 Season",
-            status: false,
-            startDate: "2023-06-01",
-            endDate: "2024-06-01",
-        },
-    ]);
+    const [seasons, setSeasons] = useState([]);
     const [seasonName, setSeasonName] = useState("");
     const [seasonStatus, setSeasonStatus] = useState("enable");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [editingSeasonId, setEditingSeasonId] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+    useEffect(() => {
+        loadConfiguration();
+    }, []);
+    const loadConfiguration = async () => {
+        setIsLoading(true);
+        try {
+            const response = await apiClient.get('/club-configuration-general');
+            const data = response.data?.data || response.data;
+            if (data) {
+                setNoticeTypes(Array.isArray(data.noticeTypes) ? data.noticeTypes : []);
+                setPageTypes(Array.isArray(data.pageTypes) ? data.pageTypes : []);
+                setSeasons(Array.isArray(data.seasons) ? data.seasons : []);
+            }
+        } catch (error) {
+            console.error('Error loading general configuration:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
     const handleAddNotice = () => {
         if (!noticeName.trim()) return;
         const newNotice = {
@@ -119,27 +119,39 @@ function Step1GeneralConfiguration() {
         setEndDate("");
         setEditingSeasonId(null);
     };
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-        const data = {
-            noticeTypes,
-            pageTypes,
-            seasons,
-        };
-        console.log("General Configuration:", data);
-        alert("Configuration saved successfully!");
+        if (isSaving) return;
+        setIsSaving(true);
+        try {
+            const data = {
+                noticeTypes,
+                pageTypes,
+                seasons,
+            };
+            await apiClient.post('/club-configuration-general', data);
+            alert("Configuration saved successfully!");
+        } catch (error) {
+            console.error('Error saving general configuration:', error);
+            alert(error.response?.data?.message || 'Unable to save configuration.');
+        } finally {
+            setIsSaving(false);
+        }
     };
+    if (isLoading) {
+        return <div className="general-config-container">Loading...</div>;
+    }
     return (
         <div className="general-config-container">
             <form onSubmit={handleSave}>
-                <h5 className="general-config-title">
+                <h5 className="head role">
                     General Configurations
                 </h5>
                 <div className="config-section">
                     <div className="config-section-header" onClick={() => setNoticeOpen(!noticeOpen)}>
                         <span>Notice Types</span>
                         <span className={`arrow ${noticeOpen ? "rotate" : ""}`}>
-                            <i class="fa-solid fa-chevron-down"></i>
+                            <i className="fa-solid fa-chevron-down"></i>
                         </span>
                     </div>
                     {noticeOpen && (
@@ -155,14 +167,14 @@ function Step1GeneralConfiguration() {
                                 </div>
                             </div>
                             <button type="button" className="add-btn" id="e-view" onClick={handleAddNotice}>
-                                <i class="fa-solid fa-plus"></i> Add
+                                <i className="fa-solid fa-plus"></i> Add
                             </button>
                             {noticeTypes.length > 0 && (
                                 <div className="added-items">
                                     {noticeTypes.map((notice) => (
                                         <div className="added-item" key={notice.id}>
                                             {notice.icon && (
-                                                <img src={URL.createObjectURL(notice.icon)} alt="" />
+                                                <img src={notice.icon instanceof File ? URL.createObjectURL(notice.icon) : notice.icon} alt="" />
                                             )}
                                             <span>{notice.name}</span>
                                         </div>
@@ -176,7 +188,7 @@ function Step1GeneralConfiguration() {
                     <div className="config-section-header" onClick={() => setPageOpen(!pageOpen)}>
                         <span>Page Types</span>
                         <span className={`arrow ${pageOpen ? "rotate" : ""}`}>
-                            <i class="fa-solid fa-chevron-down"></i>
+                            <i className="fa-solid fa-chevron-down"></i>
                         </span>
                     </div>
                     {pageOpen && (
@@ -192,14 +204,14 @@ function Step1GeneralConfiguration() {
                                 </div>
                             </div>
                             <button type="button" className="add-btn" id="e-view" onClick={handleAddPage}>
-                                <i class="fa-solid fa-plus"></i> Add
+                                <i className="fa-solid fa-plus"></i> Add
                             </button>
                             {pageTypes.length > 0 && (
                                 <div className="added-items">
                                     {pageTypes.map((page) => (
                                         <div className="added-item" key={page.id}>
                                             {page.icon && (
-                                                <img src={URL.createObjectURL(page.icon)} alt="" />
+                                                <img src={page.icon instanceof File ? URL.createObjectURL(page.icon) : page.icon} alt="" />
                                             )}
                                             <span>{page.name}</span>
                                         </div>
@@ -210,7 +222,7 @@ function Step1GeneralConfiguration() {
                     )}
                 </div>
                 <div className="seasons-section">
-                    <h6 className="section-title">
+                    <h6 className="head">
                         Seasons
                     </h6>
                     <div className="seasons-list">
@@ -250,10 +262,10 @@ function Step1GeneralConfiguration() {
                                 </div>
                                 <div className="season-actions">
                                     <button type="button" className="icon-btn" onClick={() => handleEditSeason(season)} title="Edit">
-                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        <i className="fa-solid fa-pen-to-square"></i>
                                     </button>
                                     <button type="button" className="icon-btn" onClick={() => handleDeleteSeason(season.id)} title="Delete">
-                                        <i class="fa-solid fa-trash"></i>
+                                        <i className="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
                             </div>
@@ -274,8 +286,8 @@ function Step1GeneralConfiguration() {
                                     ].map(status => (
                                         <div className="col-md-6 mb-2" key={status}>
                                             <div className="premium-radio">
-                                                <input type="radio" id={`status-${status}`} name="seasonStatus" value={status} />
-                                                <label htmlFor={`status-${status}`}>
+                                                <input type="radio" id={`season-status-${status}`} name="seasonStatus" value={status.toLowerCase()} checked={seasonStatus === status.toLowerCase()} onChange={(e) => setSeasonStatus(e.target.value)} />
+                                                <label htmlFor={`season-status-${status}`}>
                                                     <div className="premium-radio-circle"></div>
                                                     <div className="premium-radio-content">
                                                         <div className="premium-radio-title">
@@ -304,7 +316,7 @@ function Step1GeneralConfiguration() {
                             </div>
                         </div>
                         <button type="button" className="add-btn" id="e-edit" onClick={handleAddSeason}>
-                            <i class="fa-solid fa-plus"></i>
+                            <i className="fa-solid fa-plus"></i>
                             {editingSeasonId ? " Update" : " Add"}
                         </button>
                         {editingSeasonId && (
@@ -318,8 +330,8 @@ function Step1GeneralConfiguration() {
                     <button type="button" className="cancel-main-btn" id="e-view" onClick={() => { resetSeasonForm(); }}>
                         Cancel
                     </button>
-                    <button type="submit" className="save-main-btn" id="e-edit">
-                        Save
+                    <button type="submit" className="save-main-btn" id="e-edit" disabled={isSaving}>
+                        {isSaving ? 'Saving...' : 'Save'}
                     </button>
                 </div>
             </form>
