@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
-import Calendar from "../React/extra/CalendarRyton"
+import Calendar from "../Ryton/extra/CalendarRyton"
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
 import { useEffect, useMemo, useState } from "react";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import Pro from "./assets/icons/event_list/pro.svg"
 import Cal from "./assets/icons/event_list/cal.svg"
 import Cam from "./assets/icons/event_list/cam.svg"
@@ -25,13 +25,15 @@ function PagesRoute() {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     useEffect(() => {
-        getPagesData();
-        getPagesExtra();
-    }, []);
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([getPagesData(), getPagesExtra()]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, []);
     async function getPagesData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/pages'
@@ -43,7 +45,7 @@ function PagesRoute() {
         });
         const data = await response.json();
         console.log(data);
-        setPagesData(data.data);
+        setPagesData(data.data || {});
     };
     console.log(pagesData.original?.data)
     async function getPagesExtra() {
@@ -56,7 +58,7 @@ function PagesRoute() {
         });
         const data = await response.json();
         console.log(data);
-        setPagesExtra(data.data);
+        setPagesExtra(data.data || {});
     };
     console.log(pagesExtra)
     const formatDate = (date) =>
@@ -107,7 +109,7 @@ function PagesRoute() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card">
+                                    <div className="dashboard-card" id="cl">
                                         <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
@@ -247,7 +249,7 @@ function PagesRoute() {
                                                     </div>
                                                     <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
                                                         <h5 className="head">More Pages</h5>
-                                                        {pagesExtra.random_pages.map((page) => (
+                                                        {(pagesExtra.random_pages || []).map((page) => (
                                                             <div className="event-list">
                                                                 <div className="event-item" style={{ marginBottom: '10px' }} key={page.id}>
                                                                     {page.featured_image_url ? (

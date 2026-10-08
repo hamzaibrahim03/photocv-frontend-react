@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import '../src/App.css'
-import Loader from '../src/React/extra/LoaderAll';
-import Calendar from '../src/React/extra/CalendarRyton';
+import Loader from '../src/Ryton/extra/LoaderAll';
+import Calendar from '../src/Ryton/extra/CalendarRyton';
 import apiClient from '../src/api/axios';
 function ResultToggle({ label, checked, onChange }) {
     return (
@@ -198,29 +198,29 @@ function Step1Competition() {
                 {!isLoading && (
                     <>
                         <section>
-                            <div className="container px-0 mx-auto" style={{ maxWidth: '1810px' }}>
-                                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
-                                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                            <div className="container" style={{ maxWidth: '1820px' }}>
+                                <div className="dashboard-card">
+                                    <div className="profile-card">
                                         <div className="profile-left">
                                             <div className="profile-info">
-                                                <small className="greeting text-muted fs-6">Planned and Regular Club Competition</small>
-                                                <h2 className="name m-0 text-dark head fs-3">2024 - 2025 Season</h2>
-                                                <small className="role text-danger fs-6">Any values selected here would become default for new competition  entry</small>
+                                                <small className="greeting">Planned and Regular Club Competition</small>
+                                                <h2 className="name">2024 - 2025 Season</h2>
+                                                <small className="role">Any values selected here would become default for new competition  entry</small>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
-                                            <small className="ca-details fs-5">Competitions</small>
-                                            <h3 className="number mt-4 fw-medium" style={{ fontSize: '48px' }}>{moreCompetitions.length}</h3>
+                                    <div className="card-section">
+                                        <div className="stat-card">
+                                            <small className="ca-details">Competitions</small>
+                                            <h3 className="number">{moreCompetitions.length}</h3>
                                         </div>
-                                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                                            <small className="ca-details fs-5">Next Competition</small>
-                                            <div className="row mt-4 align-items-center">
+                                        <div className="event-cards">
+                                            <small className="ca-details">Next Competition</small>
+                                            <div className="row">
                                                 <div className="col-md-5">
-                                                    <h3 className="number m-0 fw-medium" style={{ fontSize: '48px' }}>0</h3>
+                                                    <h3 className="number">0</h3>
                                                 </div>
-                                                <div className="days col-md-7 text-start">
+                                                <div className="days col-md-7">
                                                     <span>days to go</span>
                                                 </div>
                                             </div>
@@ -229,7 +229,7 @@ function Step1Competition() {
                                 </div>
                             </div>
                         </section>
-                        <div className="row container mx-auto px-0" style={{ maxWidth: '1810px' }}>
+                        <div className="row container" style={{ maxWidth: '1820px' }}>
                             <div className="col-md-8 px-0">
                                 <div className="bg-white p-4 rounded shadow-sm">
                                     <form onSubmit={submitForm}>

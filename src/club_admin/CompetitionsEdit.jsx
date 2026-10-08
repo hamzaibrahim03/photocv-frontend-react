@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
-import Loader from "../React/extra/LoaderAll";
-import Calendar from "../React/extra/CalendarRyton";
+import Loader from "../Ryton/extra/LoaderAll";
+import Calendar from "../Ryton/extra/CalendarRyton";
 import apiClient from '../api/axios';
 const initialFormData = {
     name: '',
@@ -74,11 +74,16 @@ function CompetitionsEdit() {
         }));
     };
     useEffect(() => {
-        loadPage();
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([loadPage(), getCompetitionExtra()]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, [id]);
-    useEffect(() => {
-        getCompetitionExtra();
-    }, []);
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -94,7 +99,6 @@ function CompetitionsEdit() {
         });
     };
     const loadPage = async () => {
-        setIsLoading(true);
         try {
             if (isEditMode) {
                 const response = await apiClient.get(`/competitions/${id}`);
@@ -105,8 +109,8 @@ function CompetitionsEdit() {
                     description: competition.description || '',
                     judging_type_id: competition.judging_type_id || '',
                     status: competition.status || '',
-                    start_date: formatDateTimeForInput( competition.start_date ),
-                    submission_deadline: formatDateTimeForInput( competition.submission_deadline ),
+                    start_date: formatDateTimeForInput(competition.start_date),
+                    submission_deadline: formatDateTimeForInput(competition.submission_deadline),
                     max_entries_digital: competition.max_entries_digital ?? '',
                     max_entries_print: competition.max_entries_print ?? '',
                     max_file_size: competition.max_file_size ?? '',
@@ -117,9 +121,9 @@ function CompetitionsEdit() {
                     color_vs_mono: competition.color_vs_mono || '',
                     judging_panel: competition.judging_panel || '',
                     voting_method_id: competition.voting_method_id ?? '',
-                    judging_start_date: formatDateTimeForInput( competition.judging_start_date ),
-                    judging_end_date: formatDateTimeForInput( competition.judging_end_date ),
-                    result_announcement_date: formatDateTimeForInput( competition.result_announcement_date ),
+                    judging_start_date: formatDateTimeForInput(competition.judging_start_date),
+                    judging_end_date: formatDateTimeForInput(competition.judging_end_date),
+                    result_announcement_date: formatDateTimeForInput(competition.result_announcement_date),
                     top_places: competition.top_places ?? '',
                     high_commendation_number: competition.high_commendation_number ?? '',
                     commendation_number: competition.commendation_number ?? '',
@@ -140,8 +144,6 @@ function CompetitionsEdit() {
             if (isEditMode) {
                 alert('Unable to load competition.');
             }
-        } finally {
-            setIsLoading(false);
         }
     };
     async function getCompetitionExtra() {
@@ -154,7 +156,7 @@ function CompetitionsEdit() {
         });
         const data = await response.json();
         console.log(data);
-        setCompetitionExtra(data.data);
+        setCompetitionExtra(data.data || {});
     };
     console.log(competitionExtra)
     const submitForm = async (e) => {
@@ -175,13 +177,13 @@ function CompetitionsEdit() {
                 high_commendation_number: formData.high_commendation_number ? Number(formData.high_commendation_number) : null,
                 commendation_number: formData.commendation_number ? Number(formData.commendation_number) : null,
             };
-            console.log( isEditMode ? 'UPDATE PAYLOAD:' : 'CREATE PAYLOAD:', payload );
+            console.log(isEditMode ? 'UPDATE PAYLOAD:' : 'CREATE PAYLOAD:', payload);
             if (isEditMode) {
                 await apiClient.put(`/competitions/${id}`, payload);
-                alert( 'Competition updated successfully!' );
+                alert('Competition updated successfully!');
             } else {
                 await apiClient.post(`/competitions`, payload);
-                alert( 'Competition created successfully!' );
+                alert('Competition created successfully!');
             }
             navigate('/competitions');
         } catch (error) {
@@ -201,15 +203,15 @@ function CompetitionsEdit() {
                     <HeaderRoute title="Competitions" />
                     <div className="content">
                         <section>
-                            <div className="container px-0 mx-auto" style={{ maxWidth: '1810px' }}>
-                                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
-                                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                            <div className="container px-0 mx-auto" style={{ maxWidth: '1820px' }}>
+                                <div className="dashboard-card">
+                                    <div className="profile-card">
                                         <div className="profile-left">
                                             <div className="profile-info">
                                                 <small className="greeting text-muted fs-6">
                                                     Planned and Regular Club Competition
                                                 </small>
-                                                <h2 className="name m-0 text-dark head fs-3">
+                                                <h2 className="name">
                                                     2024 - 2025 Season
                                                 </h2>
                                                 <small className="role text-danger fs-6">
@@ -259,7 +261,7 @@ function CompetitionsEdit() {
                                 </div>
                             </div>
                         </section>
-                        <div className="row container mx-auto px-0" style={{ maxWidth: '1810px' }}>
+                        <div className="row container mx-auto px-0" style={{ maxWidth: '1820px' }}>
                             <div className="col-md-8 px-0">
                                 <div className="bg-white p-4 rounded shadow-sm">
                                     <form onSubmit={submitForm}>
@@ -319,7 +321,7 @@ function CompetitionsEdit() {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <div className="row mb-3">
-                                                    {[ 'scheduled', 'draft', 'postponed' ].map(status => (
+                                                    {['scheduled', 'draft', 'postponed'].map(status => (
                                                         <div className="col-md-4 mb-2" key={status}>
                                                             <div className="premium-radio">
                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -338,7 +340,7 @@ function CompetitionsEdit() {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="row mb-3">
-                                                    {[ 'cancelled', 'completed' ].map(status => (
+                                                    {['cancelled', 'completed'].map(status => (
                                                         <div className="col-md-6 mb-2" key={status}>
                                                             <div className="premium-radio">
                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />

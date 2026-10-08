@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import NavigationRoute from './NavigationRoute';
 import HeaderRoute from './HeaderRoute';
-import Loader from '../React/extra/LoaderAll';
+import Loader from '../Ryton/extra/LoaderAll';
 import apiClient from '../api/axios';
 function MemberAdd() {
     const navigate = useNavigate();
@@ -48,10 +48,10 @@ function MemberAdd() {
                 instagram: member?.instagram || member?.social_link || '',
                 flickr: member?.flickr || member?.flickr_url || '',
             });
-            setExistingImage( member?.profile_image_url || member?.image_url || member?.image || '' );
+            setExistingImage(member?.profile_image_url || member?.image_url || member?.image || '');
         } catch (error) {
             console.error('Error loading member:', error);
-            alert( error?.response?.data?.message || 'Unable to load member.' );
+            alert(error?.response?.data?.message || 'Unable to load member.');
             navigate('/members');
         } finally {
             setIsLoading(false);
@@ -112,7 +112,7 @@ function MemberAdd() {
             }
             let response;
             if (isEditMode) {
-                response = await apiClient.post( `/members/${id}`, payload, { headers: { 'Content-Type': 'multipart/form-data', }, params: { _method: 'PUT', }, } );
+                response = await apiClient.post(`/members/${id}`, payload, { headers: { 'Content-Type': 'multipart/form-data', }, params: { _method: 'PUT', }, });
             } else {
                 response = await apiClient.post('/members', payload, {
                     headers: {
@@ -121,14 +121,14 @@ function MemberAdd() {
                 });
             }
             console.log('Save response:', response.data);
-            alert( isEditMode ? 'Member updated successfully.' : 'Member added successfully.' );
+            alert(isEditMode ? 'Member updated successfully.' : 'Member added successfully.');
             navigate('/members');
         } catch (error) {
             console.error('Error saving member:', error);
             if (error?.response?.data?.errors) {
                 setErrors(error.response.data.errors);
             }
-            alert( error?.response?.data?.message || 'Unable to save member.' );
+            alert(error?.response?.data?.message || 'Unable to save member.');
         } finally {
             setIsSaving(false);
         }
@@ -146,11 +146,11 @@ function MemberAdd() {
                         <HeaderRoute title="" />
                         <div className="content">
                             <section>
-                                <div className="container mx-auto px-0" style={{ maxWidth: '1810px' }}>
-                                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
-                                        <div className="profile-card bg-white shadow-sm p-4 rounded d-flex align-items-center" style={{ width: '100%', height: '100px' }}>
-                                            <div className="profile-info ms-3">
-                                                <h2 className="name m-0 text-dark head fs-3">
+                                <div className="container mx-auto px-0" style={{ maxWidth: '1820px' }}>
+                                    <div className="dashboard-card">
+                                        <div className="profile-card">
+                                            <div className="profile-info">
+                                                <h2 className="name">
                                                     {isEditMode ? 'Edit Member' : 'Add New Member'}
                                                 </h2>
                                             </div>
@@ -158,7 +158,7 @@ function MemberAdd() {
                                     </div>
                                 </div>
                             </section>
-                            <div className="row container mx-auto px-0" style={{ maxWidth: '1810px' }}>
+                            <div className="row container mx-auto px-0" style={{ maxWidth: '1820px' }}>
                                 <div className="col-md-8 px-0">
                                     <section className="bg-white p-4 rounded shadow-sm mb-5">
                                         <form onSubmit={submitForm}>
@@ -246,14 +246,14 @@ function MemberAdd() {
                                             </div>
                                             <div className="d-flex justify-content-between align-items-center">
                                                 <div className="button-group d-flex gap-2">
-                                                    <button type="submit" disabled={isSaving} className="btn text-white px-4" style={{ backgroundColor: '#4c4036', }}>
+                                                    <button type="submit" disabled={isSaving} className="btn" id="edit">
                                                         {isSaving ? 'Saving...' : isEditMode ? 'Update' : 'Save'}
                                                     </button>
                                                     <button type="button" className="btn text-white px-4 bg-secondary" onClick={() => navigate('/members')} disabled={isSaving}>
                                                         Cancel
                                                     </button>
                                                 </div>
-                                                <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#99816b', }} onClick={() => navigate('/members')}>
+                                                <button type="button" className="btn" id="e-view" onClick={() => navigate('/members')}>
                                                     Back
                                                 </button>
                                             </div>

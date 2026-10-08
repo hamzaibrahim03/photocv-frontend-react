@@ -5,8 +5,8 @@ import Image from "./assets/icons/dashboard/profile_image.svg";
 import Comment from "./assets/icons/dashboard/comment.svg";
 import Point from "./assets/icons/dashboard/point.svg";
 import HeaderRoute from "./HeaderRoute.jsx";
-import Calendar from "../React/extra/CalendarRyton.jsx"
-import Loader from "../React/extra/LoaderAll.jsx";
+import Calendar from "../Ryton/extra/CalendarRyton.jsx"
+import Loader from "../Ryton/extra/LoaderAll.jsx";
 function DashboardRoute() {
     const navigate = useNavigate();
     const [dashboardData, setDashboardData] = useState({})
@@ -16,22 +16,21 @@ function DashboardRoute() {
     useEffect(() => {
         getDashboardData();
     }, []);
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, []);
     async function getDashboardData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club/dashboard'
-        const response = await fetch(url, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
-        const data = await response.json();
-        console.log(data);
-        setDashboardData(data.data);
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            const data = await response.json();
+            console.log(data);
+            setDashboardData(data.data || {});
+        } finally {
+            setIsLoading(false);
+        }
     };
     console.log(dashboardData)
     const hour = new Date().getHours();
@@ -224,7 +223,7 @@ function DashboardRoute() {
                                                 <>
                                                     <div className="event-list">
                                                         {upcomingEvents.map((event, index) => (
-                                                            <div className="event-item" key={index} style={{ marginBottom: "10px" }}>
+                                                            <div className="event-item" key={index}>
                                                                 {event.featured_image_url ? (
                                                                     <img className="img-fluid event-img" src={event.featured_image_url} alt="Event" error="event.featured_image_url=null" />
                                                                 ) : (
@@ -258,7 +257,7 @@ function DashboardRoute() {
                                                     <span style={{ textAlign: 'center', width: '420px' }}>There are currently no events scheduled. Check back soon for updates!</span>
                                                 </div>
                                             )}
-                                            <div className="button-group mt-auto">
+                                            <div className="button-group">
                                                 <button className="btn btn-sm" id="aview" onClick={() => navigate('/event')}>
                                                     View All
                                                 </button>
@@ -309,11 +308,11 @@ function DashboardRoute() {
                                                     </span>
                                                 </div>
                                             )}
-                                            <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/competitions')}>
+                                            <div className="button-group">
+                                                <button className="btn" id="aview" onClick={() => navigate('/competitions')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/competitions/create')}>
+                                                <button className="btn" id="new" onClick={() => navigate('/competitions/create')}>
                                                     Add New
                                                 </button>
                                             </div>
@@ -358,7 +357,7 @@ function DashboardRoute() {
                                         <div className="card">
                                             <div className="d-flex justify-content-between align-items-center" style={{ padding: '10px' }}>
                                                 <h5 className="head">Member Galleries</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/member-gallery')}>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/gallery/member')}>
                                                     View All
                                                 </button>
                                             </div>
@@ -386,7 +385,7 @@ function DashboardRoute() {
                                         <div className="result-card d-flex flex-column">
                                             <div className="d-flex justify-content-between mb-2">
                                                 <h5 className="head">Recent Results</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/results')}>View All</button>
+                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/competitions/seasons')}>View All</button>
                                             </div>
                                             <div className="pic">
                                                 {dashboardData?.recent_results?.original?.data.slice(0, 6).map((item, index) => (
@@ -396,8 +395,13 @@ function DashboardRoute() {
                                                         )}
                                                         <div className={`pic-info ${getPositionedClass(index, dashboardData?.recent_results?.original?.data.slice(0, 6).length)}`} style={{ backgroundColor: hexToRgba('#7FA483', 0.7) }}>
                                                             <div>
-                                                                {item?.competition_members?.[0]?.entries?.[0]?.entry_image_title}
-                                                            </div>
+                                                                {(() => {
+                                                                    const title = item?.competition_members?.[0]?.entries?.[0]?.entry_image_title || "";
+                                                                    return title.length > 18
+                                                                        ? `${title.slice(0, 18)}...`
+                                                                        : title;
+                                                                })()}
+                                                            </div>                                                            
                                                         </div>
                                                     </div>
                                                 ))}
@@ -454,9 +458,9 @@ function DashboardRoute() {
                                         <div className="news-card d-flex flex-column">
                                             <h5 className="head">Latest News</h5>
                                             {latestNews.length > 0 ? (
-                                                <div className="event-list" style={{ paddingTop: "20px" }}>
+                                                <div className="event-list">
                                                     {dashboardData?.club_news.map((news, index) => (
-                                                        <div className="event-item" key={index} style={{ marginBottom: "10px" }}>
+                                                        <div className="event-item" key={index}>
                                                             {news.featured_image_url ? (
                                                                 <img className="img-fluid event-img" src={news.featured_image_url} alt="News" />
                                                             ) : (

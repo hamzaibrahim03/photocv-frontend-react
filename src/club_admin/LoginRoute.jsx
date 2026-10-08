@@ -35,18 +35,18 @@ function LoginRoute() {
             });
             const { user, token } = response.data.data;
             const role = user.roles[0].name;
-            console.log(role);
-            console.log(user);
-            console.log(token);
             localStorage.setItem("token", token);
             localStorage.setItem("user", JSON.stringify(user));
-            if (role === "club_admin") {
-                navigate("/dashboard");
-            } else if (role === "member") {
-                navigate("/about");
-            } else if (role === "Internal Comp Secretary") {
-                navigate("/");
-            }
+            const roleRoutes = {
+                club_admin: "/dashboard",
+                member: "/about",
+                judge: "/judge/dashboard",
+                speaker: "/speaker/dashboard",
+                secretary: "/secretary/dashboard",
+                Secretary: "/secretary/dashboard",
+                super_admin: "/super/dashboard",
+            };
+            navigate(roleRoutes[role] || "/");
         } catch (err) {
             setError(err.response?.data?.message || "Login failed.");
             console.error(err);
@@ -71,22 +71,7 @@ function LoginRoute() {
                             <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} aria-hidden="true"></i>
                         </button>
                     </div>
-                    <div className="strength-box">
-                        <div className="strength-header">
-                            <span>Password Strength</span>
-                            <span id="strengthText">{strengthLabel}</span>
-                        </div>
-                        <div className={`progress ${passwordStrength === passwordRules.length ? "strong" : ""}`} aria-label="Password strength">
-                            <div id="progressBar" style={{ width: `${passwordStrength * 20}%` }}></div>
-                        </div>
-                    </div>
-                    <ul className="rules">
-                        {passwordRules.map((rule) => (
-                            <li key={rule.label} className={rule.valid ? "valid" : "invalid"}>
-                                {rule.label}
-                            </li>
-                        ))}
-                    </ul>
+                    
                     <div className="remember-forgot">
                         <div className="remember-left">
                             <input type="checkbox" id="remember" />

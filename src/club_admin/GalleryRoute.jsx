@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import NavigationRoute from './NavigationRoute';
 import HeaderRoute from './HeaderRoute';
-import Loader from '../React/extra/LoaderAll';
+import Loader from '../Ryton/extra/LoaderAll';
 import Ima from './assets/icons/gallery/image.svg';
 import Hea from './assets/icons/gallery/heart.svg';
 import Com from './assets/icons/gallery/comment.svg';
 import Share from "./assets/icons/event_list/share.svg"
 import Book from "./assets/icons/event_list/bookmark.svg"
-import { API_URL, readApiResponse } from '../api/axios';
+import apiClient, { API_URL, readApiResponse } from '../api/axios';
 function GalleryRoute() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
@@ -18,11 +18,7 @@ function GalleryRoute() {
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
     const [shareOpenId, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
-    const [savedLibrary, setSavedLibrary] = useState(() => {
-        return JSON.parse(
-            localStorage.getItem("savedLibrary") || "[]"
-        );
-    });
+    const [savedLibrary, setSavedLibrary] = useState([]);
     useEffect(() => {
         function handleClickOutside(e) {
             if (popupRef.current && !popupRef.current.contains(e.target)) {
@@ -33,71 +29,53 @@ function GalleryRoute() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-    const toggleBookmark = (item, category) => {
-        const existingLibrary = JSON.parse(
-            localStorage.getItem("savedLibrary") || "[]"
-        );
+    useEffect(() => {
+        async function loadSavedLibrary() {
+            try {
+                const response = await apiClient.get('/saved-library-items');
+                const data = response.data?.data || response.data;
+                setSavedLibrary(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error('Error loading saved library:', error);
+            }
+        }
+        loadSavedLibrary();
+    }, []);
+    const toggleBookmark = async (item, category) => {
         const itemId = item.id ?? item.gallery_id;
-        const alreadySaved = existingLibrary.some(
-            saved =>
-                saved.id === itemId &&
-                saved.category === category
-        );
-        let updatedLibrary;
-        if (alreadySaved) {
-            updatedLibrary = existingLibrary.filter(
-                saved =>
-                    !(
-                        saved.id === itemId &&
-                        saved.category === category
-                    )
-            );
-        } else {
-            const isMemberGallery = item.gallery_type === "member" || Array.isArray(item.galleries);
-            const isClubGallery = item.gallery_type === "club" || Array.isArray(item.photos);
-            const memberGallery = isMemberGallery ? item.galleries?.[0] || {} : {};
-            const memberPhoto = memberGallery.photos?.[0] || {};
-            const clubPhoto = isClubGallery ? item.photos?.[0] || {} : {};
-            const title = isMemberGallery ? memberGallery.gallery_name || memberPhoto.title || "Gallery" : clubPhoto.title || item.gallery_name || "Gallery";
-            const image = isMemberGallery ? memberPhoto.image_url || memberPhoto.image || "" : clubPhoto.image || clubPhoto.image_url || "";
-            const totalPhotos = isMemberGallery ? item.gallery_total_photos ?? memberGallery.gallery_total_photos ?? memberGallery.photos?.length ?? 0 : item.total_photos ?? item.gallery_total_photos ?? item.photos?.length ?? 0;
-            const totalLikes = isMemberGallery ? item.gallery_total_likes ?? memberGallery.gallery_total_likes ?? 0 : item.gallery_total_likes ?? clubPhoto.likes_count ?? 0;
-            const totalComments = isMemberGallery ? item.gallery_total_comments ?? memberGallery.gallery_total_comments ?? 0 : item.gallery_total_comments ?? clubPhoto.comments_count ?? 0;
-            const libraryItem = {
-                id: itemId,
-                category: category,
-                gallery_type: isMemberGallery ? "member" : "club",
-                title: title,
+        const isMemberGallery = item.gallery_type === "member" || Array.isArray(item.galleries);
+        const isClubGallery = item.gallery_type === "club" || Array.isArray(item.photos);
+        const memberGallery = isMemberGallery ? item.galleries?.[0] || {} : {};
+        const memberPhoto = memberGallery.photos?.[0] || {};
+        const clubPhoto = isClubGallery ? item.photos?.[0] || {} : {};
+        const title = isMemberGallery ? memberGallery.gallery_name || memberPhoto.title || "Gallery" : clubPhoto.title || item.gallery_name || "Gallery";
+        const image = isMemberGallery ? memberPhoto.image_url || memberPhoto.image || "" : clubPhoto.image || clubPhoto.image_url || "";
+        try {
+            const response = await apiClient.post('/saved-library-items', {
+                category,
+                item_id: itemId,
+                title,
                 description: item.description || "",
                 date: item.created_at || "",
-                image: image,
-                profileImage: item.profile_image_url || "",
-                photos: totalPhotos,
-                likes: totalLikes,
-                comments: totalComments,
-                originalData: item,
-                savedAt: new Date().toISOString()
-            };
-            updatedLibrary = [
-                ...existingLibrary,
-                libraryItem
-            ];
-        }
-        localStorage.setItem(
-            "savedLibrary",
-            JSON.stringify(updatedLibrary)
-        );
-        setSavedLibrary(updatedLibrary);
-        navigate("/library");
-        setBookmarkOpenId(null);
-        if (!alreadySaved) {
+                image,
+            });
+            const saved = response.data?.data?.saved;
+            if (saved) {
+                const savedItem = response.data?.data?.item;
+                setSavedLibrary(prev => [...prev, savedItem || { item_id: itemId, category }]);
+            } else {
+                setSavedLibrary(prev => prev.filter((saved) => !(saved.item_id === itemId && saved.category === category)));
+            }
             navigate("/library");
+            setBookmarkOpenId(null);
+        } catch (error) {
+            console.error('Error toggling bookmark:', error);
         }
     };
     const isBookmarked = (id, category) => {
-        return savedLibrary.some( item =>
-                item.id === id &&
-                item.category === category
+        return savedLibrary.some(item =>
+            item.item_id === id &&
+            item.category === category
         );
     };
     async function getMemberGallery() {
@@ -143,13 +121,15 @@ function GalleryRoute() {
     }
     console.log(clubGallery)
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, []);
-    useEffect(() => {
-        getMemberGallery();
-        getClubGallery();
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([getMemberGallery(), getClubGallery()]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, []);
     const memberImages = memberGallery.reduce(
         (sum, member) => sum + (member.gallery_total_photos || 0),
@@ -190,12 +170,12 @@ function GalleryRoute() {
                     <div className="content">
                         <section>
                             <div className="container" style={{ maxWidth: '1820px' }}>
-                                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
-                                    <div className="profile-card bg-white shadow-sm rounded p-4 d-flex align-items-center justify-content-between" style={{ height: '148px', width: '65.8%' }}>
+                                <div className="dashboard-card">
+                                    <div className="profile-card">
                                         <div className="profile-left">
                                             <div className="profile-info">
                                                 <small className="greeting text-muted" style={{ fontSize: '18px' }}>Features Members & Club Galleries</small>
-                                                <h2 className="name m-0" style={{ fontSize: '30px', fontWeight: '500', color: '#4c4036' }}>{clubGallery.length} Club Galleries</h2>
+                                                <h2 className="name" style={{ fontSize: '30px', fontWeight: '500', color: '#4c4036' }}>{clubGallery.length} Club Galleries</h2>
                                                 <small className="role mt-2 d-block" style={{ fontSize: '18px', color: '#cc445e' }}>{memberGallery.length} Member Galleries</small>
                                             </div>
                                         </div>
@@ -227,7 +207,7 @@ function GalleryRoute() {
                             </div>
                         </section>
                         <section>
-                            <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                            <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
                                 <div className="card bg-white rounded p-4 mb-4 border-0">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <h4>Member Galleries</h4>
@@ -296,7 +276,7 @@ function GalleryRoute() {
                             </div>
                         </section>
                         <section>
-                            <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                            <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
                                 <div className="card bg-white rounded p-4 mb-4 border-0">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <h4>Club Galleries</h4>

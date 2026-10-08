@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
-import Calendar from "../React/extra/CalendarRyton"
+import Calendar from "../Ryton/extra/CalendarRyton"
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
 import { useEffect, useMemo, useState, useRef } from "react";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import Pro from "./assets/icons/event_list/pro.svg"
 import Cal from "./assets/icons/event_list/cal.svg"
 import Cam from "./assets/icons/event_list/cam.svg"
@@ -16,6 +16,7 @@ import Hand from "./assets/icons/quick_notice/hand.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Books from "./assets/icons/event_list/bookmark.svg"
 import Note from "./assets/icons/quick_notice/note.svg"
+import apiClient from "../api/axios";
 function NewsRoute() {
     const navigate = useNavigate();
     const [newsData, setNewsData] = useState({})
@@ -27,11 +28,7 @@ function NewsRoute() {
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
     const [shareOpenId, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
-    const [savedLibrary, setSavedLibrary] = useState(() => {
-        return JSON.parse(
-            localStorage.getItem("savedLibrary") || "[]"
-        );
-    });
+    const [savedLibrary, setSavedLibrary] = useState([]);
     useEffect(() => {
         function handleClickOutside(e) {
             if (popupRef.current && !popupRef.current.contains(e.target)) {
@@ -42,51 +39,44 @@ function NewsRoute() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-    const toggleBookmark = (item, category) => {
-        const existingLibrary = JSON.parse(
-            localStorage.getItem("savedLibrary") || "[]"
-        );
-        const alreadySaved = existingLibrary.some(
-            saved =>
-                saved.id === item.id &&
-                saved.category === category
-        );
-        let updatedLibrary;
-        if (alreadySaved) {
-            updatedLibrary = existingLibrary.filter(
-                saved =>
-                    !(
-                        saved.id === item.id &&
-                        saved.category === category
-                    )
-            );
-        } else {
-            const libraryItem = {
-                id: item.id,
+    useEffect(() => {
+        async function loadSavedLibrary() {
+            try {
+                const response = await apiClient.get('/saved-library-items');
+                const data = response.data?.data || response.data;
+                setSavedLibrary(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error('Error loading saved library:', error);
+            }
+        }
+        loadSavedLibrary();
+    }, []);
+    const toggleBookmark = async (item, category) => {
+        try {
+            const response = await apiClient.post('/saved-library-items', {
                 category: category,
+                item_id: item.id,
                 title: item.name || item.title || item.event_name || item.competition_name || "Untitled",
                 description: item.description || "",
                 date: item.event_date || item.competition_date || item.published_at || item.created_at || "",
                 image: item.featured_image_url || item.image || item.image_url || item.thumbnail_url || "",
-                originalData: item,
-                savedAt: new Date().toISOString()
-            };
-            updatedLibrary = [
-                ...existingLibrary,
-                libraryItem
-            ];
+            });
+            const saved = response.data?.data?.saved;
+            if (saved) {
+                const savedItem = response.data?.data?.item;
+                setSavedLibrary(prev => [...prev, savedItem || { item_id: item.id, category }]);
+            } else {
+                setSavedLibrary(prev => prev.filter(saved => !(saved.item_id === item.id && saved.category === category)));
+            }
+            navigate("/library");
+        } catch (error) {
+            console.error('Error toggling bookmark:', error);
         }
-        localStorage.setItem(
-            "savedLibrary",
-            JSON.stringify(updatedLibrary)
-        );
-        setSavedLibrary(updatedLibrary);
-        navigate("/library");
     };
     const isBookmarked = (id, category) => {
         return savedLibrary.some(
             item =>
-                item.id === id &&
+                item.item_id === id &&
                 item.category === category
         );
     };
@@ -119,13 +109,15 @@ function NewsRoute() {
         }
     };
     useEffect(() => {
-        getNewsData();
-        getNewsExtra();
-    }, []);
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([getNewsData(), getNewsExtra()]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, []);
     async function getNewsData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-news'
@@ -137,7 +129,7 @@ function NewsRoute() {
         });
         const data = await response.json();
         console.log(data);
-        setNewsData(data.data);
+        setNewsData(data.data || {});
     };
     console.log(newsData.original?.data)
     async function getNewsExtra() {
@@ -150,7 +142,7 @@ function NewsRoute() {
         });
         const data = await response.json();
         console.log(data);
-        setNewsExtra(data.data);
+        setNewsExtra(data.data || {});
     };
     console.log(newsExtra)
     const formatDate = (date) =>
@@ -201,7 +193,7 @@ function NewsRoute() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card">
+                                    <div className="dashboard-card" id="cl">
                                         <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
@@ -258,57 +250,57 @@ function NewsRoute() {
                                                     <div className="mt-4">
                                                         {paginatedNews.length > 0 ? (
                                                             <>
-                                                            {paginatedNews?.map((news) => (
-                                                                <div key={news.id} className="custom-card mb-3 p-3">
-                                                                    <div className="d-flex gap-3" style={{ flex: 1 }}>
-                                                                        {news.club_news_type.icon && (
-                                                                            <img src={news.featured_image} alt="News Image" />
-                                                                        )}
-                                                                        <div className="flex-grow-1 d-flex flex-column justify-content-between">
-                                                                            <div className="d-flex justify-content-between align-items-center">
-                                                                                <h5>{news.title || 'Untitled News'}</h5>
-                                                                                <div className="e-icon-container ms-3">
-                                                                                    <img src={Mess} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                                                    <img src={Cam} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                                                    <img src={Pro} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                                                    <img src={Cal} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                                                </div>
-                                                                            </div>
-                                                                            <p className="date">
-                                                                                {formatDate(news.publish_date) || 'Date Not Available'}
-                                                                            </p>
-                                                                            <p className="text-secondary" dangerouslySetInnerHTML={{ __html: news.description || 'No description provided.' }}>
-                                                                            </p>
-                                                                            <div className="d-flex justify-content-between align-items-center mt-3 w-100">
-                                                                                <div className="button-group d-flex align-items-center gap-2">
-                                                                                    <button className="btn me-2" id="e-view" onClick={() => navigate(`/news/${news.id}`)}>View</button>
-                                                                                    <button className="btn" id="e-edit" onClick={() => navigate(`/news/${news.id}/edit`)}>Edit</button>
-                                                                                </div>
-                                                                                <div className="d-flex align-items-center gap-2">
-                                                                                    <div className="library-bookmark">
-                                                                                        <img src={Books} alt="bookmark" style={{ width: '20px', height: '20px', cursor: 'pointer' }} className={isBookmarked(news.id, "News") ? "bookmark-icon active" : "bookmark-icon"} onClick={() => toggleBookmark(news, "News")} />
+                                                                {paginatedNews?.map((news) => (
+                                                                    <div key={news.id} className="custom-card mb-3 p-3">
+                                                                        <div className="d-flex gap-3" style={{ flex: 1 }}>
+                                                                            {news.club_news_type.icon && (
+                                                                                <img src={news.featured_image} alt="News Image" />
+                                                                            )}
+                                                                            <div className="flex-grow-1 d-flex flex-column justify-content-between">
+                                                                                <div className="d-flex justify-content-between align-items-center">
+                                                                                    <h5>{news.title || 'Untitled News'}</h5>
+                                                                                    <div className="e-icon-container ms-3">
+                                                                                        <img src={Mess} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Cam} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Pro} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                                                        <img src={Cal} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                                                     </div>
-                                                                                    <div style={{ position: "relative", display: "inline-block" }}>
-                                                                                        {bookmarkOpenId === news.id && (
-                                                                                            <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
-                                                                                                <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
-                                                                                                    Save to Library
-                                                                                                </p>
-                                                                                                {["Events", "Competitions", "Notices", "Galleries", "News"].map((cat) => (
-                                                                                                    <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(news, cat); }}>
-                                                                                                        📁 {cat}
-                                                                                                    </div>
-                                                                                                ))}
-                                                                                            </div>
-                                                                                        )}
+                                                                                </div>
+                                                                                <p className="date">
+                                                                                    {formatDate(news.publish_date) || 'Date Not Available'}
+                                                                                </p>
+                                                                                <p className="text-secondary" dangerouslySetInnerHTML={{ __html: news.description || 'No description provided.' }}>
+                                                                                </p>
+                                                                                <div className="d-flex justify-content-between align-items-center mt-3 w-100">
+                                                                                    <div className="button-group d-flex align-items-center gap-2">
+                                                                                        <button className="btn me-2" id="e-view" onClick={() => navigate(`/news/${news.id}`)}>View</button>
+                                                                                        <button className="btn" id="e-edit" onClick={() => navigate(`/news/${news.id}/edit`)}>Edit</button>
                                                                                     </div>
-                                                                                    <img src={Share} alt="icon" style={{ width: '20px', height: '20px', cursor: 'pointer' }} onClick={() => handleShare(news)} />
+                                                                                    <div className="d-flex align-items-center gap-2">
+                                                                                        <div className="library-bookmark">
+                                                                                            <img src={Books} alt="bookmark" style={{ width: '20px', height: '20px', cursor: 'pointer' }} className={isBookmarked(news.id, "News") ? "bookmark-icon active" : "bookmark-icon"} onClick={() => toggleBookmark(news, "News")} />
+                                                                                        </div>
+                                                                                        <div style={{ position: "relative", display: "inline-block" }}>
+                                                                                            {bookmarkOpenId === news.id && (
+                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                                                    <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
+                                                                                                        Save to Library
+                                                                                                    </p>
+                                                                                                    {["Events", "Competitions", "Notices", "Galleries", "News"].map((cat) => (
+                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(news, cat); }}>
+                                                                                                            📁 {cat}
+                                                                                                        </div>
+                                                                                                    ))}
+                                                                                                </div>
+                                                                                            )}
+                                                                                        </div>
+                                                                                        <img src={Share} alt="icon" style={{ width: '20px', height: '20px', cursor: 'pointer' }} onClick={() => handleShare(news)} />
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            ))}
+                                                                ))}
                                                             </>
                                                         ) : (
                                                             <div className="text-center text-muted">No news found.</div>
@@ -392,10 +384,10 @@ function NewsRoute() {
                                                                 </div>
                                                             ))}
                                                             <div className="button-group mt-auto">
-                                                                <button className="btn btn-sm" id="e-view" onClick="{() => navigate(/news)}">
+                                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/news')}>
                                                                     View All
                                                                 </button>
-                                                                <button className="btn btn-sm" id="new" onClick="{() => navigate(/news/create)}">
+                                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/news/create')}>
                                                                     Add New
                                                                 </button>
                                                             </div>

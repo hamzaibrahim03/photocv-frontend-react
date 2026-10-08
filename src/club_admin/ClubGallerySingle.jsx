@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router";
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import { readApiResponse } from "../api/axios";
 import Share from "./assets/icons/event_list/share.svg";
 import Info from "./assets/icons/event_list/information-circle.svg";
@@ -15,6 +15,9 @@ function ClubGallerySingle() {
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [showInfo, setShowInfo] = useState(false);
+    const thumbContainer = useRef(null);
+    const thumbRefs = useRef([]);
+
     useEffect(() => {
         const getClubGallery = async () => {
             if (!id) {
@@ -26,8 +29,7 @@ function ClubGallerySingle() {
             }
             try {
                 setIsLoading(true);
-                const response = await fetch(
-                    `http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-gallery/${id}`,
+                const response = await fetch(`http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-gallery/${id}`,
                     {
                         method: "GET",
                         headers: {
@@ -40,9 +42,7 @@ function ClubGallerySingle() {
                 const data = await readApiResponse(response);
                 console.log("CLUB GALLERY API RESPONSE:", data);
                 if (!response.ok) {
-                    throw new Error(
-                        data?.message || `API Error ${response.status}`
-                    );
+                    throw new Error(data?.message || `API Error ${response.status}`);
                 }
                 const galleryData = data?.data || null;
                 console.log("GALLERY DATA:", galleryData);
@@ -119,8 +119,7 @@ function ClubGallerySingle() {
         if (!photo) {
             return "";
         }
-        return (
-            photo?.large_url ||
+        return (photo?.large_url ||
             photo?.medium_url ||
             photo?.image ||
             photo?.original_url ||
@@ -198,16 +197,30 @@ function ClubGallerySingle() {
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, [isLightboxOpen, filteredImages.length]);
+
+    useEffect(() => {
+        const activeThumb = thumbRefs.current[currentIndex];
+        const container = thumbContainer.current;
+        if (activeThumb && container) {
+            const offset = activeThumb.offsetLeft -
+                container.clientWidth / 2 +
+                activeThumb.clientWidth / 2;
+            container.scrollTo({
+                left: offset,
+                behavior: "smooth",
+            });
+        }
+    }, [currentIndex]);
     return (
-        <div style={{ backgroundColor: "white", minHeight: "100vh", }}>
+        <>
             <Loader show={isLoading} />
             {!isLoading && (
                 <>
                     <NavigationRoute />
                     <HeaderRoute title={`${galleryName} Gallery`} />
                     <div className="content">
-                        <div className="container" style={{ maxWidth: "1810px", margin: "0 auto", padding: "0 15px", }}>
-                            <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                        <div className="container" style={{ maxWidth: "1820px", margin: "0 auto", padding: "0 15px", }}>
+                            <div className="dashboard-card">
                                 <div className="profile-card">
                                     <div className="profile-left">
                                         <div className="profile-info">
@@ -227,20 +240,20 @@ function ClubGallerySingle() {
                                         <i className="fas fa-search"></i>
                                     </div>
                                 </div>
-                                <div className="card-section d-flex gap-4">
-                                    <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: "#cc445e", width: "219px", height: "148px", }}>
-                                        <small className="ca-details" style={{ fontSize: "20px", }}>
+                                <div className="card-section">
+                                    <div className="stat-card">
+                                        <small className="ca-details">
                                             Likes
                                         </small>
-                                        <h3 className="number mt-4" style={{ fontSize: "48px", fontWeight: "500", }}>
+                                        <h3 className="number">
                                             {totalLikes}
                                         </h3>
                                     </div>
-                                    <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: "#755840", width: "219px", height: "148px", }}>
-                                        <small className="ca-details" style={{ fontSize: "20px", }}>
+                                    <div className="event-cards">
+                                        <small className="ca-details">
                                             Comments
                                         </small>
-                                        <h3 className="number mt-4" style={{ fontSize: "48px", fontWeight: "500", }} >
+                                        <h3 className="number" >
                                             {totalComments}
                                         </h3>
                                     </div>
@@ -309,12 +322,14 @@ function ClubGallerySingle() {
                                             &#10095;
                                         </button>
                                     </div>
-                                    <div className="lightbox-thumbnails d-flex gap-2 p-3 w-100 overflow-auto justify-content-center" style={{ maxHeight: "15vh", }} >
-                                        {filteredImages.map(
-                                            (image, index) => (
-                                                <img key={image?.photo_id ?? index} src={getImageUrl(image)} alt={`Thumbnail ${index + 1}`} className={`rounded cursor-pointer ${index === currentIndex ? "border border-3 border-light" : ""}`} style={{ width: "80px", height: "60px", objectFit: "cover", opacity: index === currentIndex ? 1 : 0.6, cursor: "pointer", }} onClick={() => setCurrentIndex(index)} />
-                                            )
-                                        )}
+                                    <div className="thumbs-wrapper">
+                                        <div className="thumbnails" ref={thumbContainer}>
+                                            {filteredImages.map((image, index) => (
+                                                <div key={image?.photo_id ?? index} className={`thumb ${index === currentIndex ? "active" : ""}`} onClick={() => goTo(index)} ref={(el) => (thumbRefs.current[index] = el)}>
+                                                    <img key={image?.photo_id ?? index} src={getImageUrl(image)} alt={`Thumbnail ${index + 1}`} className={`rounded cursor-pointer ${index === currentIndex ? "border border-3 border-light" : ""}`} onClick={() => setCurrentIndex(index)} />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -353,7 +368,7 @@ function ClubGallerySingle() {
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="comments-cards bg-white p-3 rounded">
+                                    <div className="comments-cards bg-white p-3 rounded" style={{width: '750px'}}>
                                         <h5>Likes</h5>
                                         <p className="text-muted mb-0">
                                             {Number(currentImage?.likes_count || 0)}{" "}
@@ -366,7 +381,7 @@ function ClubGallerySingle() {
                     </div>
                 </>
             )}
-        </div>
+        </>
     );
 }
 export default ClubGallerySingle;

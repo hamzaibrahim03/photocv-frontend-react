@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router";
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import { readApiResponse } from "../api/axios";
 import Share from "./assets/icons/event_list/share.svg";
 import Info from "./assets/icons/event_list/information-circle.svg";
@@ -16,6 +16,8 @@ function KamranGallerySingle() {
     const [showInfo, setShowInfo] = useState(false);
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const thumbContainer = useRef(null);
+    const thumbRefs = useRef([]);
 
     useEffect(() => {
         const getMemberGallery = async () => {
@@ -42,7 +44,7 @@ function KamranGallerySingle() {
                 const data = await readApiResponse(response);
                 console.log("MEMBER GALLERY API RESPONSE:", data);
                 if (!response.ok) {
-                    throw new Error( data?.message || `API Error ${response.status}` );
+                    throw new Error(data?.message || `API Error ${response.status}`);
                 }
                 const galleries = Array.isArray(data?.data?.galleries) ? data.data.galleries : [];
                 const memberData = data?.data?.member || null;
@@ -220,16 +222,29 @@ function KamranGallerySingle() {
         };
     }, [isLightboxOpen, filteredImages.length]);
 
+    useEffect(() => {
+        const activeThumb = thumbRefs.current[currentIndex];
+        const container = thumbContainer.current;
+        if (activeThumb && container) {
+            const offset = activeThumb.offsetLeft -
+                container.clientWidth / 2 +
+                activeThumb.clientWidth / 2;
+            container.scrollTo({
+                left: offset,
+                behavior: "smooth",
+            });
+        }
+    }, [currentIndex]);
     return (
-        <div style={{ backgroundColor: "white", minHeight: "100vh", }} >
+        <>
             <Loader show={isLoading} />
             {!isLoading && (
                 <>
                     <NavigationRoute />
                     <HeaderRoute title={`${memberName} Gallery`} />
                     <div className="content">
-                        <div className="container" style={{ maxWidth: "1810px", margin: "0 auto", padding: "0 15px", }} >
-                            <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                        <div className="container" style={{ maxWidth: "1820px", margin: "0 auto", padding: "0 15px", }} >
+                            <div className="dashboard-card">
                                 <div className="profile-card">
                                     <div className="profile-left">
                                         <div className="profile-info">
@@ -335,12 +350,16 @@ function KamranGallerySingle() {
                                             &#10095;
                                         </button>
                                     </div>
-                                    <div className="lightbox-thumbnails d-flex gap-2 p-3 w-100 overflow-auto justify-content-center" style={{ maxHeight: "15vh", }} >
-                                        {filteredImages.map((image, index) => (
-                                            <img key={image?.photo_id ?? index} src={getImageUrl(image)} alt={`Thumbnail ${index + 1}`} className={`rounded cursor-pointer ${index === currentIndex ? "border border-3 border-light" : ""}`} style={{ width: "80px", height: "60px", objectFit: "cover", opacity: index === currentIndex ? 1 : 0.6, cursor: "pointer", }} onClick={() => setCurrentIndex(index)} />
-                                        )
-                                        )}
+                                    <div className="thumbs-wrapper">
+                                        <div className="thumbnails" ref={thumbContainer}>
+                                            {filteredImages.map((image, index) => (
+                                                <div key={image?.photo_id ?? index} className={`thumb ${index === currentIndex ? "active" : ""}`} onClick={() => goTo(index)} ref={(el) => (thumbRefs.current[index] = el)}>
+                                                    <img key={image?.photo_id ?? index} src={getImageUrl(image)} alt={`Thumbnail ${index + 1}`} className={`rounded cursor-pointer ${index === currentIndex ? "border border-3 border-light" : ""}`} onClick={() => setCurrentIndex(index)} />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
+
                                 </div>
                             )}
 
@@ -351,7 +370,7 @@ function KamranGallerySingle() {
                                         {currentImage?.comments?.length ? (
                                             currentImage.comments.map(
                                                 (comment, index) => (
-                                                    <div key={ comment?.id ?? index } className="row mb-3 pb-3 border-bottom" >
+                                                    <div key={comment?.id ?? index} className="row mb-3 pb-3 border-bottom" >
                                                         <div className="col-md-1">
                                                             <div className="bg-secondary rounded-circle" style={{ width: "40px", height: "40px", }} ></div>
                                                         </div>
@@ -376,7 +395,7 @@ function KamranGallerySingle() {
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <div className="comments-cards bg-white p-3 rounded">
+                                    <div className="comments-cards bg-white p-3 rounded" style={{ width: '760px' }}>
                                         <h5>Likes</h5>
                                         <p className="text-muted mb-0">
                                             {Number(
@@ -391,7 +410,7 @@ function KamranGallerySingle() {
                     </div>
                 </>
             )}
-        </div>
+        </>
     );
 }
 export default KamranGallerySingle;

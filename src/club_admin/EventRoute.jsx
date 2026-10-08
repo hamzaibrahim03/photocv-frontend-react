@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import Calendar from "../React/extra/CalendarRyton"
+import Calendar from "../Ryton/extra/CalendarRyton"
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import { useEffect, useMemo, useState, useRef } from "react";
 import Video from "./assets/icons/quick_event/video.svg"
 import Star from "./assets/icons/quick_event/star.svg"
@@ -16,6 +16,7 @@ import Cam from "./assets/icons/event_list/cam.svg"
 import Mess from "./assets/icons/event_list/mess.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Book from "./assets/icons/event_list/bookmark.svg"
+import apiClient from "../api/axios";
 function EventRoute() {
     const navigate = useNavigate();
     const [eventData, setEventData] = useState({})
@@ -30,11 +31,7 @@ function EventRoute() {
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
     const [shareOpenId, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
-    const [savedLibrary, setSavedLibrary] = useState(() => {
-        return JSON.parse(
-            localStorage.getItem("savedLibrary") || "[]"
-        );
-    });
+    const [savedLibrary, setSavedLibrary] = useState([]);
     useEffect(() => {
         function handleClickOutside(e) {
             if (popupRef.current && !popupRef.current.contains(e.target)) {
@@ -45,48 +42,43 @@ function EventRoute() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-    const toggleBookmark = (item, category) => {
-        const existingLibrary = JSON.parse(
-            localStorage.getItem("savedLibrary") || "[]"
-        );
-        const alreadySaved = existingLibrary.some(saved =>
-            saved.id === item.id &&
-            saved.category === category
-        );
-        let updatedLibrary;
-        if (alreadySaved) {
-            updatedLibrary = existingLibrary.filter(saved =>
-                !(
-                    saved.id === item.id &&
-                    saved.category === category
-                )
-            );
-        } else {
-            const libraryItem = {
-                id: item.id,
+    useEffect(() => {
+        async function loadSavedLibrary() {
+            try {
+                const response = await apiClient.get('/saved-library-items');
+                const data = response.data?.data || response.data;
+                setSavedLibrary(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error('Error loading saved library:', error);
+            }
+        }
+        loadSavedLibrary();
+    }, []);
+    const toggleBookmark = async (item, category) => {
+        try {
+            const response = await apiClient.post('/saved-library-items', {
                 category: category,
+                item_id: item.id,
                 title: item.name || item.title || item.event_name || item.competition_name || "Untitled",
                 description: item.description || "",
                 date: item.event_date || item.competition_date || item.published_at || item.created_at || "",
                 image: item.featured_image_url || item.image || item.image_url || item.thumbnail_url || "",
-                originalData: item,
-                savedAt: new Date().toISOString()
-            };
-            updatedLibrary = [
-                ...existingLibrary,
-                libraryItem
-            ];
+            });
+            const saved = response.data?.data?.saved;
+            if (saved) {
+                const savedItem = response.data?.data?.item;
+                setSavedLibrary(prev => [...prev, savedItem || { item_id: item.id, category }]);
+            } else {
+                setSavedLibrary(prev => prev.filter(saved => !(saved.item_id === item.id && saved.category === category)));
+            }
+            navigate("/library");
+        } catch (error) {
+            console.error('Error toggling bookmark:', error);
         }
-        localStorage.setItem(
-            "savedLibrary",
-            JSON.stringify(updatedLibrary)
-        );
-        setSavedLibrary(updatedLibrary);
-        navigate("/library");
     };
     const isBookmarked = (id, category) => {
         return savedLibrary.some(item =>
-            item.id === id &&
+            item.item_id === id &&
             item.category === category
         );
     };
@@ -117,13 +109,15 @@ function EventRoute() {
         }
     };
     useEffect(() => {
-        getEventData();
-        getEventExtra();
-    }, []);
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([getEventData(), getEventExtra()]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, []);
     async function getEventData() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/events'
@@ -135,7 +129,7 @@ function EventRoute() {
         });
         const data = await response.json();
         console.log(data);
-        setEventData(data.data);
+        setEventData(data.data || {});
     };
     console.log(eventData.original?.data)
     async function getEventExtra() {
@@ -148,7 +142,7 @@ function EventRoute() {
         });
         const data = await response.json();
         console.log(data);
-        setEventExtra(data.data);
+        setEventExtra(data.data || {});
     };
     console.log(eventExtra)
     const formatDate = (date) =>
@@ -270,7 +264,7 @@ function EventRoute() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card">
+                                    <div className="dashboard-card" id="cl">
                                         <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
@@ -396,7 +390,7 @@ function EventRoute() {
                                                                             ))
                                                                         ) : (
                                                                             <div className="no-events">
-                                                                                {exportFilter === "selected" ? "No events selected" : exportFilter === "upcoming" ? "No upcoming events" : "No events found" }
+                                                                                {exportFilter === "selected" ? "No events selected" : exportFilter === "upcoming" ? "No upcoming events" : "No events found"}
                                                                             </div>
                                                                         )}
                                                                     </div>
@@ -497,7 +491,7 @@ function EventRoute() {
                                                         <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
                                                             <h5 className="head">Recent Comments</h5>
                                                             {eventData?.original?.data?.flatMap((event) => event.comments || [])?.slice(0, 5)?.map((comment) => (
-                                                                <div className="event-list" style={{ marginBottom: '10px' }}>
+                                                                <div className="event-list">
                                                                     <div key={comment.id} className="event-item">
                                                                         <div className="col-md-2">
                                                                             {comment.user?.profile_image_url ? (
@@ -512,7 +506,7 @@ function EventRoute() {
                                                                             <p className="text-secondary">{comment.comment}</p>
                                                                         </div>
                                                                         <div className="col-md-5">
-                                                                            <div className="event-time" style={{ textAlign: 'right', width: '90%' }}>
+                                                                            <div className="event-time" style={{ textAlign: 'left', width: '90%' }}>
                                                                                 <small className="event-date">{formatDate(comment.created_at)}</small><br />
                                                                                 <small className="event-time-details">{formatTime(comment.created_at)}</small>
                                                                             </div>

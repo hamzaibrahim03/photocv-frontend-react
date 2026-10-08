@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import NavigationRoute from './NavigationRoute';
 import HeaderRoute from './HeaderRoute';
-import Loader from "../React/extra/LoaderAll.jsx";
+import Loader from "../Ryton/extra/LoaderAll.jsx";
+import "../Super/assets/css/superstyle.css";
 import Image from "./assets/icons/dashboard/profile_image.svg";
 import Comment from "./assets/icons/dashboard/comment.svg";
 import Point from "./assets/icons/dashboard/point.svg";
@@ -52,6 +53,8 @@ function ClubRoute() {
     const selectSettingsStep = (index) => { setSettingsStep(index); };
     const selectConfigurationStep = (index) => { setConfigurationStep(index); };
     const selectDefaultsStep = (index) => { setDefaultsStep(index); };
+    const [openSection, setOpenSection] = useState("settings");
+    const toggleSection = (key) => setOpenSection((prev) => (prev === key ? null : key));
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
@@ -63,7 +66,7 @@ function ClubRoute() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
+                                    <div className="dashboard-card">
                                         <div className="profile-card">
                                             <div className="profile-left">
                                                 <img className="img-fluid" src={dashboardData?.user_details?.profile_image} alt="Profile Picture" />
@@ -135,101 +138,111 @@ function ClubRoute() {
                             </section>
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="more-card" style={{ width: '100%' }}>
-                                        <h5 className='head'>Settings</h5>
-                                        <h5 className='role'>Control the essential that shape your club</h5>
-                                        <h5 className='text-secondary'>Manage everything from general preferences to appearance, branding, memberships, content, and privacy. All in one place for your ease!</h5>
-                                        <hr />
-                                        <div className="tab-control d-flex justify-content-between mb-4 gap-3">
-                                            {settingsSteps.map((step, index) => (
-                                                <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 cursor-pointer ${index === settingsStep ? 'active' : ''}`} onClick={() => selectSettingsStep(index)} style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}>
-                                                    <span className="circle d-flex align-items-center justify-content-center rounded-circle head text-white mb-2" style={{ width: '40px', height: '40px', fontSize: '18px', backgroundColor: index === settingsStep ? '#CC445E' : '#ccc' }}>
-                                                        {index + 1}
-                                                    </span>
-                                                    <span className="label text-center" style={{ fontSize: '14px', color: index === settingsStep ? '#CC445E' : '#333', fontWeight: index === settingsStep ? 'bold' : 'normal' }}>
-                                                        {step}
-                                                    </span>
-                                                </div>
-                                            ))}
+                                    <div className="super-accordion-item">
+                                        <div className="super-accordion-head" onClick={() => toggleSection("settings")}>
+                                            Settings
+                                            <i className={`fa-solid fa-chevron-down super-accordion-caret${openSection === "settings" ? " open" : ""}`}></i>
                                         </div>
-                                    </div>
-                                    <div className="step-content mt-4">
-                                        {settingsStep === 0 && <Step1General />}
-                                        {settingsStep === 1 && <Step2Appearance />}
-                                        {settingsStep === 2 && <Step3Membership />}
-                                        {settingsStep === 3 && <Step4Content />}
-                                        {settingsStep === 4 && <Step5Privacy />}
-                                    </div>
-                                </div>
-                            </section>
-                            <section>
-                                <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="more-card" style={{ width: '100%' }}>
-                                        <h5 className='head'>Configuration</h5>
-                                        <h5 className='role'>Customise modules and make them work your way.</h5>
-                                        <h5 className='text-secondary'>Personalize your modules such as news, events, galleries, and competitions. Enable, disable, or adjust them to fit your club’s needs.</h5>
-                                        <hr />
-                                        <div className="tab-control d-flex justify-content-between mb-4 gap-3">
-                                            {configurationSteps.map((step, index) => (
-                                                <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 cursor-pointer ${index === configurationStep ? 'active' : ''}`} onClick={() => selectConfigurationStep(index)} style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}>
-                                                    <span className="circle d-flex align-items-center justify-content-center rounded-circle head text-white mb-2" style={{ width: '40px', height: '40px', fontSize: '18px', backgroundColor: index === configurationStep ? '#CC445E' : '#ccc' }}>
-                                                        {index + 1}
-                                                    </span>
-                                                    <span className="label text-center" style={{ fontSize: '14px', color: index === configurationStep ? '#CC445E' : '#333', fontWeight: index === configurationStep ? 'bold' : 'normal' }}>
-                                                        {step}
-                                                    </span>
+                                        {openSection === "settings" && (
+                                            <div className="super-accordion-body">
+                                                <p style={{ color: "#99816b", margin: "18px 0 4px" }}>Control the essentials that shape your club</p>
+                                                <p style={{ color: "#999", fontSize: 13, marginBottom: 18 }}>Manage everything from general preferences to appearance, branding, memberships, content, and privacy. All in one place for your ease!</p>
+                                                <div className="tab-control d-flex justify-content-between mb-4 gap-3">
+                                                    {settingsSteps.map((step, index) => (
+                                                        <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 cursor-pointer ${index === settingsStep ? 'active' : ''}`} onClick={() => selectSettingsStep(index)} style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}>
+                                                            <span className="circle d-flex align-items-center justify-content-center rounded-circle head text-white mb-2" style={{ width: '40px', height: '40px', fontSize: '18px', backgroundColor: index === settingsStep ? '#CC445E' : '#ccc' }}>
+                                                                {index + 1}
+                                                            </span>
+                                                            <span className="label text-center" style={{ fontSize: '14px', color: index === settingsStep ? '#CC445E' : '#333', fontWeight: index === settingsStep ? 'bold' : 'normal' }}>
+                                                                {step}
+                                                            </span>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="step-content mt-4">
-                                        {configurationStep === 0 && <Step1GeneralConfiguration />}
-                                        {configurationStep === 1 && <Step2News />}
-                                        {configurationStep === 2 && <Step3Events />}
-                                        {configurationStep === 3 && <Step4Galleries />}
-                                        {configurationStep === 4 && <Step5Competitions />}
-                                    </div>
-                                </div>
-                            </section>
-                            <section>
-                                <div className="container" style={{ maxWidth: "1820px" }}>
-                                    {defaultsStep === -1 ? (
-                                        <div className="more-card" style={{ width: "100%" }}>
-                                            <h5 className="head">Defaults</h5>
-                                            <h5 className="role">
-                                                Save time with smart presets.
-                                            </h5>
-                                            <h5 className="text-secondary">
-                                                Set up default values for new items so you don’t have to
-                                                repeat the same steps every time. Perfect for competitions,
-                                                events, or any recurring content.
-                                            </h5>
-                                            <hr />
-                                            <div className="tab-control d-flex justify-content-between mb-4 gap-3">
-                                                {defaultsSteps.map((step, index) => (
-                                                    <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 ${index === defaultsStep ? "active" : ""}`} onClick={() => selectDefaultsStep(index)} style={{ cursor: "pointer", transition: "all 0.3s ease", }}>
-                                                        <span className="circle d-flex align-items-center justify-content-center rounded-circle head text-white mb-2"
-                                                            style={{ width: "40px", height: "40px", fontSize: "18px", backgroundColor: index === defaultsStep ? "#CC445E" : "#ccc", }}>
-                                                            {index + 1}
-                                                        </span>
-                                                        <span className="label text-center" style={{ fontSize: "14px", color: index === defaultsStep ? "#CC445E" : "#333", fontWeight: index === defaultsStep ? "bold" : "normal", }}>
-                                                            {step}
-                                                        </span>
-                                                    </div>
-                                                ))}
+                                                <div className="step-content mt-4">
+                                                    {settingsStep === 0 && <Step1General />}
+                                                    {settingsStep === 1 && <Step2Appearance />}
+                                                    {settingsStep === 2 && <Step3Membership />}
+                                                    {settingsStep === 3 && <Step4Content />}
+                                                    {settingsStep === 4 && <Step5Privacy />}
+                                                </div>
                                             </div>
+                                        )}
+                                    </div>
+
+                                    <div className="super-accordion-item">
+                                        <div className="super-accordion-head" onClick={() => toggleSection("configuration")}>
+                                            Configuration
+                                            <i className={`fa-solid fa-chevron-down super-accordion-caret${openSection === "configuration" ? " open" : ""}`}></i>
                                         </div>
-                                    ) : (
-                                        <div className="step-screen">
-                                            <button type="button" className="btn btn-sm mb-3" onClick={() => setDefaultsStep(-1)}>
-                                                <i className="fa-solid fa-arrow-left"></i>
-                                                &nbsp; Back
-                                            </button>
-                                            {defaultsStep === 0 && (
-                                                <Step1Competition />
-                                            )}
+                                        {openSection === "configuration" && (
+                                            <div className="super-accordion-body">
+                                                <p style={{ color: "#99816b", margin: "18px 0 4px" }}>Customise modules and make them work your way</p>
+                                                <p style={{ color: "#999", fontSize: 13, marginBottom: 18 }}>Personalize your modules such as news, events, galleries, and competitions. Enable, disable, or adjust them to fit your club's needs.</p>
+                                                <div className="tab-control d-flex justify-content-between mb-4 gap-3">
+                                                    {configurationSteps.map((step, index) => (
+                                                        <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 cursor-pointer ${index === configurationStep ? 'active' : ''}`} onClick={() => selectConfigurationStep(index)} style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}>
+                                                            <span className="circle d-flex align-items-center justify-content-center rounded-circle head text-white mb-2" style={{ width: '40px', height: '40px', fontSize: '18px', backgroundColor: index === configurationStep ? '#CC445E' : '#ccc' }}>
+                                                                {index + 1}
+                                                            </span>
+                                                            <span className="label text-center" style={{ fontSize: '14px', color: index === configurationStep ? '#CC445E' : '#333', fontWeight: index === configurationStep ? 'bold' : 'normal' }}>
+                                                                {step}
+                                                            </span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <div className="step-content mt-4">
+                                                    {configurationStep === 0 && <Step1GeneralConfiguration />}
+                                                    {configurationStep === 1 && <Step2News />}
+                                                    {configurationStep === 2 && <Step3Events />}
+                                                    {configurationStep === 3 && <Step4Galleries />}
+                                                    {configurationStep === 4 && <Step5Competitions />}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="super-accordion-item">
+                                        <div className="super-accordion-head" onClick={() => toggleSection("defaults")}>
+                                            Defaults
+                                            <i className={`fa-solid fa-chevron-down super-accordion-caret${openSection === "defaults" ? " open" : ""}`}></i>
                                         </div>
-                                    )}
+                                        {openSection === "defaults" && (
+                                            <div className="super-accordion-body">
+                                                {defaultsStep === -1 ? (
+                                                    <>
+                                                        <p style={{ color: "#99816b", margin: "18px 0 4px" }}>Save time with smart presets</p>
+                                                        <p style={{ color: "#999", fontSize: 13, marginBottom: 18 }}>
+                                                            Set up default values for new items so you don't have to repeat the same steps every time. Perfect for competitions, events, or any recurring content.
+                                                        </p>
+                                                        <div className="tab-control d-flex justify-content-between mb-4 gap-3">
+                                                            {defaultsSteps.map((step, index) => (
+                                                                <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 ${index === defaultsStep ? "active" : ""}`} onClick={() => selectDefaultsStep(index)} style={{ cursor: "pointer", transition: "all 0.3s ease", }}>
+                                                                    <span className="circle d-flex align-items-center justify-content-center rounded-circle head text-white mb-2"
+                                                                        style={{ width: "40px", height: "40px", fontSize: "18px", backgroundColor: index === defaultsStep ? "#CC445E" : "#ccc", }}>
+                                                                        {index + 1}
+                                                                    </span>
+                                                                    <span className="label text-center" style={{ fontSize: "14px", color: index === defaultsStep ? "#CC445E" : "#333", fontWeight: index === defaultsStep ? "bold" : "normal", }}>
+                                                                        {step}
+                                                                    </span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <div className="step-screen mt-4">
+                                                        <button type="button" className="btn btn-sm mb-3" onClick={() => setDefaultsStep(-1)}>
+                                                            <i className="fa-solid fa-arrow-left"></i>
+                                                            &nbsp; Back
+                                                        </button>
+                                                        {defaultsStep === 0 && (
+                                                            <Step1Competition />
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </section>
                         </div>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import dayjs from 'dayjs';
-import Calendar from "../React/extra/CalendarRyton";
+import Calendar from "../Ryton/extra/CalendarRyton";
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import Pro from './assets/icons/event_list/pro.svg';
 import Cal from './assets/icons/event_list/cal.svg';
 import Cam from './assets/icons/event_list/cam.svg';
@@ -44,7 +44,6 @@ function EventSingle() {
     }, [event?.event_date]);
     const getEventData = async () => {
         try {
-            setIsLoading(true);
             setError(null);
             const url = `http://rytonlocal-staging.cameraclub.website:8000/api/v1/events/${id}`;
             const response = await fetch(url, {
@@ -54,7 +53,7 @@ function EventSingle() {
                 }
             });
             if (!response.ok) {
-                throw new Error( `Failed to load event. Status: ${response.status}` );
+                throw new Error(`Failed to load event. Status: ${response.status}`);
             }
             const data = await response.json();
             console.log("EVENT API RESPONSE:", data);
@@ -62,8 +61,6 @@ function EventSingle() {
         } catch (error) {
             console.error("EVENT API ERROR:", error);
             setError(error.message);
-        } finally {
-            setIsLoading(false);
         }
     };
     async function getEventExtra() {
@@ -76,20 +73,26 @@ function EventSingle() {
         });
         const data = await response.json();
         console.log(data);
-        setEventExtra(data.data);
+        setEventExtra(data.data || {});
     };
     useEffect(() => {
-        if (id) {
-            getEventData();
-        }
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([
+                    id ? getEventData() : Promise.resolve(),
+                    getEventExtra(),
+                ]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, [id]);
-    useEffect(() => {
-        getEventExtra();
-    }, []);
     const comments = event?.comments || [];
     const eventTypes = event?.types || [];
     const eventTags = event?.tags || [];
-    const keywords = event?.tags_keywords ? event.tags_keywords .split(',') .map(keyword => keyword.trim()) .filter(Boolean) : [];
+    const keywords = event?.tags_keywords ? event.tags_keywords.split(',').map(keyword => keyword.trim()).filter(Boolean) : [];
     if (!isLoading && error) {
         return (
             <div className="container py-5">
@@ -127,9 +130,9 @@ function EventSingle() {
                         <HeaderRoute title="Events" />
                         <div className="content">
                             <section>
-                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
-                                    <div className="dashboard-card d-flex align-items-center justify-content-between" style={{ padding: '20px 0 40px', gap: '15px' }}>
-                                        <div className="profile-card d-flex align-items-center justify-content-between shadow-sm p-4 bg-white rounded" style={{ height: '148px', width: '65.8%' }}>
+                                <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
+                                    <div className="dashboard-card">
+                                        <div className="profile-card">
                                             <div className="profile-left d-flex align-items-center">
                                                 <div className="profile-info">
                                                     <small className="greeting text-muted" style={{ fontSize: '16px' }}>
@@ -184,7 +187,7 @@ function EventSingle() {
                                 </div>
                             </section>
                             <section>
-                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                                <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
                                     <div className="row">
                                         <div className="col-md-8">
                                             <section>
@@ -264,9 +267,9 @@ function EventSingle() {
                                                                         </h5>
                                                                     </div>
                                                                     <div className="col-md-6">
-                                                                        <h5 className="namess" style={{ fontSize: '16px', color: '#4c4036' }}>
+                                                                        <span style={{ fontSize: '16px', color: '#4c4036' }}>
                                                                             {event.duration || 'N/A'}
-                                                                        </h5>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <hr className="my-3" />
@@ -277,9 +280,9 @@ function EventSingle() {
                                                                         </h5>
                                                                     </div>
                                                                     <div className="col-md-6">
-                                                                        <h5 className="namess" style={{ fontSize: '16px', color: '#4c4036' }}>
+                                                                        <span style={{ fontSize: '16px', color: '#4c4036' }}>
                                                                             {event.speaker || 'N/A'}
-                                                                        </h5>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <hr className="my-3" />
@@ -290,9 +293,9 @@ function EventSingle() {
                                                                         </h5>
                                                                     </div>
                                                                     <div className="col-md-6">
-                                                                        <h5 className="namess" style={{ fontSize: '16px', color: '#4c4036' }}>
+                                                                        <span style={{ fontSize: '16px', color: '#4c4036' }}>
                                                                             {event.speaker_club || 'N/A'}
-                                                                        </h5>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <hr className="my-3" />
@@ -303,9 +306,9 @@ function EventSingle() {
                                                                         </h5>
                                                                     </div>
                                                                     <div className="col-md-6">
-                                                                        <h5 className="namess" style={{ fontSize: '16px', color: '#4c4036' }}>
+                                                                        <span style={{ fontSize: '16px', color: '#4c4036' }}>
                                                                             {event.speaker_qualification || 'N/A'}
-                                                                        </h5>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <hr className="my-3" />
@@ -316,9 +319,9 @@ function EventSingle() {
                                                                         </h5>
                                                                     </div>
                                                                     <div className="col-md-6">
-                                                                        <h5 className="namess" style={{ fontSize: '16px', color: '#4c4036' }}>
+                                                                        <span style={{ fontSize: '16px', color: '#4c4036' }}>
                                                                             {event.status || 'N/A'}
-                                                                        </h5>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <hr className="my-3" />
@@ -329,9 +332,9 @@ function EventSingle() {
                                                                         </h5>
                                                                     </div>
                                                                     <div className="col-md-6">
-                                                                        <h5 className="namess" style={{ fontSize: '16px', color: '#4c4036' }}>
+                                                                        <span style={{ fontSize: '16px', color: '#4c4036' }}>
                                                                             {event.required_gear || 'N/A'}
-                                                                        </h5>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <hr className="my-3" />
@@ -377,9 +380,9 @@ function EventSingle() {
                                                                         </h5>
                                                                     </div>
                                                                     <div className="col-md-6">
-                                                                        <h5 className="namess" style={{ fontSize: '16px', color: '#4c4036' }}>
+                                                                        <span style={{ fontSize: '16px', color: '#4c4036' }}>
                                                                             {event.rsvp_detail || 'N/A'}
-                                                                        </h5>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <div className="row mt-3">
@@ -430,7 +433,7 @@ function EventSingle() {
                                                                                 <p className="text-secondary">{comment.comment}</p>
                                                                             </div>
                                                                             <div className="col-md-5">
-                                                                                <div className="event-time" style={{ textAlign: 'right', width: '90%' }}>
+                                                                                <div className="event-time" style={{ textAlign: 'left', width: '90%' }}>
                                                                                     <small className="event-date">{formatDate(comment.created_at)}</small>
                                                                                     <br />
                                                                                     <small className="event-time-details">{formatTime(comment.created_at)}</small>
@@ -459,7 +462,7 @@ function EventSingle() {
                                                                             <p className="text-secondary">{event.name}</p>
                                                                         </div>
                                                                         <div className="col-md-5">
-                                                                            <div className="event-time" style={{ textAlign: 'right', width: '90%' }}>
+                                                                            <div className="event-time" style={{ textAlign: 'left', width: '90%' }}>
                                                                                 <small className="event-date">{formatDate(event.event_date)}</small><br />
                                                                                 <small className="event-time-details">{formatTime(event.event_date)}</small>
                                                                             </div>

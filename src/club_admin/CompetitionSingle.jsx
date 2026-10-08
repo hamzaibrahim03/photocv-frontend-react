@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
-import Loader from "../React/extra/LoaderAll";
-import Calendar from "../React/extra/CalendarRyton"
+import Loader from "../Ryton/extra/LoaderAll";
+import Calendar from "../Ryton/extra/CalendarRyton"
 import { useNavigate, useParams } from 'react-router';
 function CompetitionSingle() {
     const { id } = useParams();
@@ -11,17 +11,8 @@ function CompetitionSingle() {
     const [competition, setCompetition] = useState(null);
     const [competitionExtra, setCompetitionExtra] = useState({});
     const [error, setError] = useState("");
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, []);
-    useEffect(() => {
-        getCompetitionExtra();
-    }, []);
     const getCompetitionData = async () => {
         try {
-            setIsLoading(true);
             setError(null);
             const url = `http://rytonlocal-staging.cameraclub.website:8000/api/v1/competitions/${id}`;
             const response = await fetch(url, {
@@ -31,7 +22,7 @@ function CompetitionSingle() {
                 }
             });
             if (!response.ok) {
-                throw new Error( `Failed to load competition. Status: ${response.status}` );
+                throw new Error(`Failed to load competition. Status: ${response.status}`);
             }
             const data = await response.json();
             console.log("COMPETITION API RESPONSE:", data);
@@ -39,8 +30,6 @@ function CompetitionSingle() {
         } catch (error) {
             console.error("COMPETITION API ERROR:", error);
             setError(error.message);
-        } finally {
-            setIsLoading(false);
         }
     };
     async function getCompetitionExtra() {
@@ -53,13 +42,22 @@ function CompetitionSingle() {
         });
         const data = await response.json();
         console.log(data);
-        setCompetitionExtra(data.data);
+        setCompetitionExtra(data.data || {});
     };
     console.log(competitionExtra)
     useEffect(() => {
-        if (id) {
-            getCompetitionData();
-        }
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([
+                    id ? getCompetitionData() : Promise.resolve(),
+                    getCompetitionExtra(),
+                ]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, [id]);
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
@@ -119,8 +117,8 @@ function CompetitionSingle() {
                         <HeaderRoute title="Competitions" />
                         <div className="content">
                             <section>
-                                <div className="container px-0 mx-auto" style={{ maxWidth: '1810px' }}>
-                                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
+                                <div className="container px-0 mx-auto" style={{ maxWidth: '1820px' }}>
+                                    <div className="dashboard-card">
                                         <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
@@ -169,7 +167,7 @@ function CompetitionSingle() {
                                     </div>
                                 </div>
                             </section>
-                            <div className="row container mx-auto px-0" style={{ maxWidth: '1810px' }}>
+                            <div className="row container mx-auto px-0" style={{ maxWidth: '1820px' }}>
                                 <div className="col-md-8 px-0">
                                     <section className="bg-white p-4 rounded shadow-sm">
                                         <div id="news" className="w-100">

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import NavigationRoute from './NavigationRoute';
 import HeaderRoute from './HeaderRoute';
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import Ima from './assets/icons/member/image.svg';
 import Com from './assets/icons/member/comment.svg';
 import Lik from './assets/icons/member/like.svg';
@@ -15,12 +15,15 @@ const MembersRoute = () => {
     const [search, setSearch] = useState("");
     const [itemsPerPage] = useState(24);
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, []);
-    useEffect(() => {
-        getMembersData();
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await getMembersData();
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
         const handleClickOutside = () => setOpenMenuIndex(null);
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
@@ -35,7 +38,7 @@ const MembersRoute = () => {
         });
         const data = await response.json();
         console.log(data);
-        setMemberData(data.data);
+        setMemberData(data.data || []);
     };
     console.log(memberData?.original?.data)
     const toggleMenu = (index) => {
@@ -82,7 +85,7 @@ const MembersRoute = () => {
         return textarea.value;
     };
     return (
-        <div style={{ backgroundColor: 'white', minHeight: '100vh' }}>
+        <>
             <Loader show={isLoading} />
             {!isLoading && (
                 <>
@@ -91,11 +94,11 @@ const MembersRoute = () => {
                     <div className="content">
                         <section>
                             <div className="container" style={{ maxWidth: '1820px' }}>
-                                <div className="dashboard-card d-flex align-items-center justify-content-between" style={{ gap: '15px' }}>
-                                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                                <div className="dashboard-card">
+                                    <div className="profile-card">
                                         <div className="profile-left d-flex flex-column justify-content-center">
                                             <small className="greeting text-muted" style={{ fontSize: '18px' }}>List of members in the club</small>
-                                            <h2 className="name m-0 text-dark" style={{ fontSize: '30px', fontWeight: '500' }}>All Members</h2>
+                                            <h2 className="name" style={{ fontSize: '30px', fontWeight: '500' }}>All Members</h2>
                                             <small className="role text-danger" style={{ fontSize: '18px' }}>{memberData?.original?.data?.length} Member Galleries</small>
                                         </div>
                                         <div className="d-flex justify-content-end">
@@ -132,7 +135,7 @@ const MembersRoute = () => {
                             </div>
                         </section>
                         <section>
-                            <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                            <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
                                 {chunkedCards.length > 0 ? (
                                     chunkedCards.map((row, rowIndex) => (
                                         <div key={rowIndex} className="row-wrapper d-flex mb-4">
@@ -234,7 +237,7 @@ const MembersRoute = () => {
                     </div>
                 </>
             )}
-        </div >
+        </>
     );
 };
 export default MembersRoute;

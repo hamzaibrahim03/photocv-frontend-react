@@ -15,47 +15,49 @@ function HeaderRoute({ title = "Dashboard", dashboardData }) {
     return (
         <>
             <div className="nav-header">
-                <div className="left-header">
-                    <h2>{title}</h2>
-                </div>
-                <div className="right-header">
-                    <div className="icon">
-                        {/* <NotificationBell /> */}
+                <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="left-header">
+                        <h2 style={{ fontFamily: 'Inter', fontWeight: '300', fontStyle: 'Light', fontSize: '36px', color: '#4C4036', lineHeight: '100%', marginBottom: '0%' }}>{title}</h2>
                     </div>
-                    <div className="admin-dropdown">
-                        {isLoggedIn && profileImage ? (
-                            <img src={profileImage} alt="Profile" style={{ cursor: "pointer" }} />
-                        ) : (
-                            <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
-                        )}
-                        <span>
-                            {isLoggedIn ? firstName : "Login"}
-                            <i className="fa-solid fa-chevron-down ms-2"></i>
-                        </span>
-                        <div className="dropdown-menu">
-                            {isLoggedIn ? (
-                                <>
-                                    <a onClick={() => navigate("/dashboard/profile")}>
-                                        Profile
-                                    </a>
-                                    <a onClick={handleLogout}>
-                                        Log Out
-                                    </a>
-                                </>
+                    <div className="right-header">
+                        <div className="icon">
+                            {/* <NotificationBell /> */}
+                        </div>
+                        <div className="admin-dropdown">
+                            {isLoggedIn && profileImage ? (
+                                <img src={profileImage} alt="Profile" style={{ cursor: "pointer" }} />
                             ) : (
-                                <>
-                                    <a onClick={() => navigate("/login")}>
-                                        Login
-                                    </a>
-                                    <a onClick={() => navigate("/register")}>
-                                        Register
-                                    </a>
-                                </>
+                                <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
                             )}
+                            <span>
+                                {isLoggedIn ? firstName : "Login"}
+                                <i className="fa-solid fa-chevron-down ms-2"></i>
+                            </span>
+                            <div className="dropdown-menu">
+                                {isLoggedIn ? (
+                                    <>
+                                        <a onClick={() => navigate("/dashboard/profile")}>
+                                            Profile
+                                        </a>
+                                        <a onClick={handleLogout}>
+                                            Log Out
+                                        </a>
+                                    </>
+                                ) : (
+                                    <>
+                                        <a onClick={() => navigate("/login")}>
+                                            Login
+                                        </a>
+                                        <a onClick={() => navigate("/register")}>
+                                            Register
+                                        </a>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }

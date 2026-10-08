@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import NavigationRoute from "./NavigationRoute";
 import HeaderRoute from "./HeaderRoute";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import Ima from "./assets/icons/gallery/image.svg";
 import Hea from "./assets/icons/gallery/heart.svg";
 import Com from "./assets/icons/gallery/comment.svg";
 import Share from "./assets/icons/event_list/share.svg";
 import Book from "./assets/icons/event_list/bookmark.svg";
-import { API_URL, readApiResponse } from "../api/axios";
+import apiClient, { API_URL, readApiResponse } from "../api/axios";
 import { useNavigate } from "react-router";
 function MemberGalleryRoute() {
     const [isLoading, setIsLoading] = useState(true);
@@ -17,59 +17,49 @@ function MemberGalleryRoute() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
-    const [savedLibrary, setSavedLibrary] = useState(() => {
-        try {
-            return JSON.parse(
-                localStorage.getItem("savedLibrary") || "[]"
-            );
-        } catch {
-            return [];
+    const [savedLibrary, setSavedLibrary] = useState([]);
+    useEffect(() => {
+        async function loadSavedLibrary() {
+            try {
+                const response = await apiClient.get('/saved-library-items');
+                const data = response.data?.data || response.data;
+                setSavedLibrary(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error('Error loading saved library:', error);
+            }
         }
-    });
-    const toggleBookmark = (item, category) => {
+        loadSavedLibrary();
+    }, []);
+    const toggleBookmark = async (item, category) => {
         const itemId = item.id ?? item.gallery_id;
-        const alreadySaved = savedLibrary.some(
-            (saved) =>
-                saved.id === itemId &&
-                saved.category === category
-        );
-        let updatedLibrary;
-        if (alreadySaved) {
-            updatedLibrary = savedLibrary.filter(
-                (saved) =>
-                    !(
-                        saved.id === itemId &&
-                        saved.category === category
-                    )
-            );
-        } else {
-            const firstPhoto = item?.photos?.[0] || {};
-            const libraryItem = {
-                id: itemId,
+        const firstPhoto = item?.photos?.[0] || {};
+        try {
+            const response = await apiClient.post('/saved-library-items', {
                 category,
-                gallery_type: "member",
+                item_id: itemId,
                 title: item?.gallery_name || firstPhoto?.title || "Gallery",
                 description: item?.description || firstPhoto?.description || "",
                 date: item?.created_at || firstPhoto?.created_at || "",
                 image: firstPhoto?.image_url || firstPhoto?.image || firstPhoto?.large_url || firstPhoto?.medium_url || "",
-                photos: item?.total_photos ?? item?.photos?.length ?? 0,
-                likes: item?.total_likes ?? firstPhoto?.likes_count ?? 0,
-                comments: item?.total_comments ?? firstPhoto?.comments_count ?? firstPhoto?.comments?.length ?? 0,
-                originalData: item,
-                savedAt: new Date().toISOString(),
-            };
-            updatedLibrary = [...savedLibrary, libraryItem];
+            });
+            const saved = response.data?.data?.saved;
+            if (saved) {
+                const savedItem = response.data?.data?.item;
+                setSavedLibrary(prev => [...prev, savedItem || { item_id: itemId, category }]);
+            } else {
+                setSavedLibrary(prev => prev.filter((saved) => !(saved.item_id === itemId && saved.category === category)));
+            }
+            navigate("/library");
+        } catch (error) {
+            console.error('Error toggling bookmark:', error);
         }
-        localStorage.setItem("savedLibrary", JSON.stringify(updatedLibrary));
-        setSavedLibrary(updatedLibrary);
-        navigate("/library");
     };
     const isBookmarked = (id, category) => {
-        return savedLibrary.some((item) => item.id === id && item.category === category);
+        return savedLibrary.some((item) => item.item_id === id && item.category === category);
     };
     const getMemberGallery = async () => {
         try {
-            const response = await fetch( `${API_URL}/members-galleries`,
+            const response = await fetch(`${API_URL}/members-galleries`,
                 {
                     headers: {
                         Accept: "application/json",
@@ -177,14 +167,14 @@ function MemberGalleryRoute() {
                     <div className="content">
                         <section>
                             <div className="container" style={{ maxWidth: "1820px" }}>
-                                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
-                                    <div className="profile-card bg-white shadow-sm rounded p-4 d-flex align-items-center justify-content-between" style={{ height: "148px", width: "65.8%" }}>
+                                <div className="dashboard-card">
+                                    <div className="profile-cardbg-white shadow-sm rounded p-4 d-flex align-items-center justify-content-between" style={{ height: "148px", width: "65.8%" }}>
                                         <div className="profile-left">
                                             <div className="profile-info">
                                                 <small className="greeting text-muted" style={{ fontSize: "18px" }}>
                                                     Galleries uploaded by Club Members
                                                 </small>
-                                                <h2 className="name m-0" style={{ fontSize: "30px", fontWeight: "500", color: "#4c4036" }}>
+                                                <h2 className="name" style={{ fontSize: "30px", fontWeight: "500", color: "#4c4036" }}>
                                                     {allMemberGalleries.length}{" "}Member Galleries
                                                 </h2>
                                                 <small className="role mt-2 d-block" style={{ fontSize: "18px", color: "#cc445e" }}>
@@ -222,7 +212,7 @@ function MemberGalleryRoute() {
                             </div>
                         </section>
                         <section>
-                            <div className="container" style={{ maxWidth: "1810px", margin: "0 auto", padding: "0 15px" }}>
+                            <div className="container" style={{ maxWidth: "1820px", margin: "0 auto", padding: "0 15px" }}>
                                 <div className="card bg-white rounded p-4 mb-4 border-0">
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <h4>Member Galleries</h4>

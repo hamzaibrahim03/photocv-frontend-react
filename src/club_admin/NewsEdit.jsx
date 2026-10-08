@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
-import Loader from "../React/extra/LoaderAll";
-import Calendar from "../React/extra/CalendarRyton";
+import Loader from "../Ryton/extra/LoaderAll";
+import Calendar from "../Ryton/extra/CalendarRyton";
 import apiClient from '../api/axios';
 const initialFormData = {
     title: '',
@@ -67,12 +67,16 @@ function NewsEdit() {
         }));
     };
     useEffect(() => {
-        loadPage();
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([loadPage(), getNewsData(), getNewsExtras()]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, [id]);
-    useEffect(() => {
-        getNewsData();
-        getNewsExtras();
-    }, []);
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -88,7 +92,6 @@ function NewsEdit() {
         });
     };
     const loadPage = async () => {
-        setIsLoading(true);
         try {
             if (isEditMode) {
                 const response = await apiClient.get(`/club-news/${id}`);
@@ -127,12 +130,10 @@ function NewsEdit() {
                 setExistingDocuments([]);
             }
         } catch (error) {
-            console.error( 'Error loading news:', error );
+            console.error('Error loading news:', error);
             if (isEditMode) {
                 alert('Unable to load news.');
             }
-        } finally {
-            setIsLoading(false);
         }
     };
     async function getNewsData() {
@@ -145,7 +146,7 @@ function NewsEdit() {
         });
         const data = await response.json();
         console.log(data);
-        setNewsData(data.data);
+        setNewsData(data.data || {});
     };
     console.log(newsData.original?.data)
     async function getNewsExtras() {
@@ -158,7 +159,7 @@ function NewsEdit() {
         });
         const data = await response.json();
         console.log(data);
-        setNewsExtra(data.data);
+        setNewsExtra(data.data || {});
     };
     console.log(newsExtra)
     const submitForm = async (e) => {
@@ -292,8 +293,8 @@ function NewsEdit() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card">
-                                        <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                                    <div className="dashboard-card" id="cl">
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     <small className="greeting">
@@ -349,7 +350,7 @@ function NewsEdit() {
                                                                         <h5>Basic Information</h5>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="title"> News Title </label>
+                                                                                <label htmlFor="title"> News Title </label>
                                                                                 <input type="text" name='title' id='title' className="form-control" value={formData.title} onChange={handleChange} required />
                                                                             </div>
                                                                             <div className="col-md-6">
@@ -379,11 +380,11 @@ function NewsEdit() {
                                                                         <div className="divider3"></div>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="link"> Location </label>
+                                                                                <label htmlFor="link"> Location </label>
                                                                                 <input type="text" id="location" name="location" className="form-control" value={formData.location} onChange={handleChange} />
                                                                             </div>
                                                                             <div className="col-md-6">
-                                                                                <label for="link"> Link to related Page </label>
+                                                                                <label htmlFor="link"> Link to related Page </label>
                                                                                 <input type="url" id="link" name="link" className="form-control" value={formData.link_url} onChange={handleChange} />
                                                                             </div>
                                                                         </div>
@@ -409,18 +410,18 @@ function NewsEdit() {
                                                                         <div className="divider3"></div>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="image"> Image to be chosen </label>
+                                                                                <label htmlFor="image"> Image to be chosen </label>
                                                                                 <input type="file" id="imageUpload" className="form-control" accept="image/*" multiple disabled={images.length >= 4} onChange={handleImageUpload} />
                                                                             </div>
                                                                             <div className="col-md-6">
-                                                                                <label for="image"> Documents to be download </label>
+                                                                                <label htmlFor="image"> Documents to be download </label>
                                                                                 <input type="file" id="docUpload" className="form-control" multiple disabled={documents.length >= 4} onChange={handleDocumentUpload} />
                                                                             </div>
                                                                         </div>
                                                                         <div className="divider3"></div>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="upload"> Uploaded Images </label>
+                                                                                <label htmlFor="upload"> Uploaded Images </label>
                                                                                 <div className="row mt-2">
                                                                                     <div className="col-md-12">
                                                                                         <div id="imagePreview" className="d-flex gap-2 flex-wrap">
@@ -437,7 +438,7 @@ function NewsEdit() {
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-md-6">
-                                                                                <label for="Attachments"> Attachments </label>
+                                                                                <label htmlFor="Attachments"> Attachments </label>
                                                                                 <div className="row mt-2">
                                                                                     <div className="col-md-12">
                                                                                         <div className="d-flex gap-2 flex-wrap">
@@ -465,7 +466,7 @@ function NewsEdit() {
                                                                         <div className="row">
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[ 'active', 'draft', 'deleted' ].map(status => (
+                                                                                    {['active', 'draft', 'deleted'].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -484,8 +485,8 @@ function NewsEdit() {
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[ 'scheduled', 'pending' ].map(status => (
-                                                                                        <div className="col-md-4 mb-3" key={status}>
+                                                                                    {['scheduled', 'pending'].map(status => (
+                                                                                        <div className="col-md-6 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
                                                                                                 <label htmlFor={`status-${status}`}>
@@ -507,7 +508,7 @@ function NewsEdit() {
                                                                             News Poll
                                                                         </label>
                                                                         <div className="row">
-                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
+                                                                            {['public', 'none', 'anonymous'].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`poll-${value}`} name="poll" value={value} checked={formData.poll === value} onChange={handleChange} />
@@ -524,9 +525,9 @@ function NewsEdit() {
                                                                             ))}
                                                                         </div>
                                                                         <div className="divider3"></div>
-                                                                        <label for="news_comment">News Comment Allowed</label>
+                                                                        <label htmlFor="news_comment">News Comment Allowed</label>
                                                                         <div className="row">
-                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
+                                                                            {['public', 'none', 'anonymous'].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`comment-${value}`} name="comment_allowed" value={value} checked={formData.comment_allowed === value} onChange={handleChange} />

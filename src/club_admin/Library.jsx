@@ -1,42 +1,52 @@
 import { useEffect, useState } from "react";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
 import SavedLibraryCard from "./SavedLibrary";
-import Calendar from "../React/extra/CalendarRyton";
+import Calendar from "../Ryton/extra/CalendarRyton";
+import apiClient from "../api/axios";
 function Library() {
     const [isLoading, setIsLoading] = useState(true);
-    const [savedLibrary, setSavedLibrary] = useState(() => JSON.parse(localStorage.getItem("savedLibrary") || "[]"));
+    const [savedLibrary, setSavedLibrary] = useState([]);
     const [dashboardData, setDashboardData] = useState([]);
     const [activeFilter, setActiveFilter] = useState("Events");
     const [search, setSearch] = useState("");
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+        async function loadSavedLibrary() {
+            setIsLoading(true);
+            try {
+                const response = await apiClient.get('/saved-library-items');
+                const data = response.data?.data || response.data;
+                const rows = Array.isArray(data) ? data : [];
+                setSavedLibrary(rows.map(row => ({
+                    ...row,
+                    id: row.item_id,
+                    savedId: row.id,
+                })));
+            } catch (error) {
+                console.error('Error loading saved library:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        loadSavedLibrary();
     }, []);
-    const filters = [ "Events", "Competitions", "Galleries", "Notices", "News" ];
+    const filters = ["Events", "Competitions", "Galleries", "Notices", "News"];
     const filteredItems = savedLibrary.filter(item => {
         const categoryMatch = item.category === activeFilter;
-        const searchMatch = item.title ?.toLowerCase() .includes( search.toLowerCase() );
+        const searchMatch = item.title?.toLowerCase().includes(search.toLowerCase());
         return (
             categoryMatch &&
             searchMatch
         );
     });
-    const removeItem = (item) => {
-        const updated = savedLibrary.filter(
-            saved =>
-                !(
-                    saved.id === item.id &&
-                    saved.category === item.category
-                )
-        );
-        localStorage.setItem(
-            "savedLibrary",
-            JSON.stringify(updated)
-        );
-        setSavedLibrary(updated);
+    const removeItem = async (item) => {
+        try {
+            await apiClient.delete(`/saved-library-items/${item.savedId}`);
+            setSavedLibrary(prev => prev.filter(saved => saved.savedId !== item.savedId));
+        } catch (error) {
+            console.error('Error removing saved item:', error);
+        }
     };
     useEffect(() => {
         async function loadDashboardData() {
@@ -47,7 +57,7 @@ function Library() {
                 },
             });
             const data = await response.json();
-            setDashboardData(data.data);
+            setDashboardData(data.data || []);
         }
         loadDashboardData();
     }, []);
@@ -63,7 +73,7 @@ function Library() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: "1820px" }}>
-                                    <div className="dashboard-card">
+                                    <div className="dashboard-card" id="cl">
                                         <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
@@ -138,7 +148,7 @@ function Library() {
                                             ) : (
                                                 <div className="library-empty">
                                                     <h4>
-                                                        No saved{" "} { activeFilter }
+                                                        No saved{" "} {activeFilter}
                                                     </h4>
                                                     <p>
                                                         Your bookmarked{" "}

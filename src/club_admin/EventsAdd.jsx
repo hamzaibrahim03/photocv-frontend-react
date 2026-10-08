@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import NavigationRoute from './NavigationRoute';
 import HeaderRoute from './HeaderRoute';
-import Calendar from "../React/extra/CalendarRyton.jsx"
-import Loader from "../React/extra/LoaderAll";
+import Calendar from "../Ryton/extra/CalendarRyton.jsx"
+import Loader from "../Ryton/extra/LoaderAll";
 import apiClient from '../api/axios';
 function EventsAdd() {
     const { id } = useParams();
@@ -69,17 +69,17 @@ function EventsAdd() {
         });
         const data = await response.json();
         console.log(data);
-        setDashboardData(data.data);
+        setDashboardData(data.data || {});
     };
     async function getEventTypes() {
         try {
             const response = await apiClient.get('/catalogs');
             const data = response.data?.data || response.data || [];
-            const types = data.filter( item => item.catalog_type === 'event_type' );
+            const types = data.filter(item => item.catalog_type === 'event_type');
             setEventTypes(types);
             console.log("EVENT TYPES:", types);
         } catch (error) {
-            console.error( "Failed to fetch event types:", error.response?.data || error.message );
+            console.error("Failed to fetch event types:", error.response?.data || error.message);
         }
     }
     async function getEventTags() {
@@ -124,7 +124,7 @@ function EventsAdd() {
             console.log('EVENT TAGS:', tags);
             console.log('EVENT KEYWORDS:', keywords);
         } catch (error) {
-            console.error( 'Failed to fetch event tags:', error.response?.data || error.message );
+            console.error('Failed to fetch event tags:', error.response?.data || error.message);
             setEventTags([]);
         }
     }
@@ -147,7 +147,7 @@ function EventsAdd() {
             setEventData(event);
             if (id && event) {
                 setName(event.name || '');
-                setEventDate( event.event_date ? event.event_date.substring(0, 10) : '' );
+                setEventDate(event.event_date ? event.event_date.substring(0, 10) : '');
                 setDescription(event.description || '');
                 const typeIds = Array.isArray(event.types) ? event.types.map(type => Number(type.id)).filter(Number.isFinite) : event.event_type_id != null ? [Number(event.event_type_id)] : [];
                 setSelectedEventTypes(typeIds);
@@ -161,21 +161,21 @@ function EventsAdd() {
                 setRequiredGear(event.required_gear || '');
                 setUrl(event.url || '');
                 setRsvpDetail(event.rsvp_detail || '');
-                setFeaturedThumbUrl( event.featured_thumb_url || event.featured_thumb_url || '' );
+                setFeaturedThumbUrl(event.featured_thumb_url || event.featured_thumb_url || '');
                 let tags = [];
                 if (Array.isArray(event.tags_keywords)) {
                     tags = event.tags_keywords;
                 } else if (typeof event.tags_keywords === 'string') {
                     try {
                         const parsed = JSON.parse(event.tags_keywords);
-                        tags = Array.isArray(parsed) ? parsed : event.tags_keywords .split(',') .map(tag => tag.trim()) .filter(Boolean);
+                        tags = Array.isArray(parsed) ? parsed : event.tags_keywords.split(',').map(tag => tag.trim()).filter(Boolean);
                     } catch {
-                        tags = event.tags_keywords .split(',') .map(tag => tag.trim()) .filter(Boolean);
+                        tags = event.tags_keywords.split(',').map(tag => tag.trim()).filter(Boolean);
                     }
                 }
                 setSelectedTags(tags);
                 if (typeof event.tags_keywords === 'string') {
-                    const currentKeywords = event.tags_keywords .split(',') .map(value => value.trim()) .filter(Boolean);
+                    const currentKeywords = event.tags_keywords.split(',').map(value => value.trim()).filter(Boolean);
                     setAvailableKeywords(prev => [...new Set([...prev, ...currentKeywords])]);
                 }
                 if (Array.isArray(event.tags) && event.tags.length) {
@@ -189,7 +189,7 @@ function EventsAdd() {
                 }
             }
         } catch (error) {
-            console.error( "Failed to fetch event:", error.response?.data || error.message );
+            console.error("Failed to fetch event:", error.response?.data || error.message);
         }
     }
     console.log(eventData.original?.data)
@@ -203,7 +203,7 @@ function EventsAdd() {
         });
         const data = await response.json();
         console.log(data);
-        setEventExtra(data.data);
+        setEventExtra(data.data || {});
     };
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -213,7 +213,7 @@ function EventsAdd() {
         };
         document.addEventListener('click', handleClickOutside);
         return () => {
-            document.removeEventListener( 'click', handleClickOutside );
+            document.removeEventListener('click', handleClickOutside);
         };
     }, []);
     const formatsDate = (date) => {
@@ -325,15 +325,15 @@ function EventsAdd() {
             console.error('API RESPONSE:', error.response?.data);
             const errors = error.response?.data?.errors;
             if (errors) {
-                const messages = Object.entries(errors) .flatMap(([field, messages]) =>
-                        Array.isArray(messages)
-                            ? messages.map(message => `${field}: ${message}`)
-                            : [`${field}: ${messages}`]
-                    )
+                const messages = Object.entries(errors).flatMap(([field, messages]) =>
+                    Array.isArray(messages)
+                        ? messages.map(message => `${field}: ${message}`)
+                        : [`${field}: ${messages}`]
+                )
                     .join('\n');
                 alert(messages);
             } else {
-                alert( error.response?.data?.message || 'Failed to save event.' );
+                alert(error.response?.data?.message || 'Failed to save event.');
             }
         }
     };
@@ -351,7 +351,7 @@ function EventsAdd() {
     };
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const validFiles = files.filter(file => [ "image/jpeg", "image/jpg", "image/png", "image/gif" ].includes(file.type) );
+        const validFiles = files.filter(file => ["image/jpeg", "image/jpg", "image/png", "image/gif"].includes(file.type));
         if (validFiles.length !== files.length) {
             alert("Only JPG, JPEG, PNG and GIF images are allowed.");
         }
@@ -403,7 +403,7 @@ function EventsAdd() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card">
+                                    <div className="dashboard-card" id="cl">
                                         <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
@@ -482,7 +482,7 @@ function EventsAdd() {
                                                                     return (
                                                                         <div className="col-md-3" key={type.id}>
                                                                             <label className="w-100 border rounded p-2 d-flex align-items-center" style={{ cursor: "pointer", minHeight: "42px" }}>
-                                                                                <input type="checkbox" className="form-check-input me-2" checked={selectedEventTypes.includes(typeId)} onChange={() => { setSelectedEventTypes(prev => { if (prev.includes(typeId)) { return prev.filter( id => id !== typeId ); } return [...prev, typeId]; }); }} />
+                                                                                <input type="checkbox" className="form-check-input me-2" checked={selectedEventTypes.includes(typeId)} onChange={() => { setSelectedEventTypes(prev => { if (prev.includes(typeId)) { return prev.filter(id => id !== typeId); } return [...prev, typeId]; }); }} />
                                                                                 {type.icon_url && (
                                                                                     <img src={type.icon_url} alt="" style={{ width: "18px", height: "18px", objectFit: "contain", marginRight: "6px" }} />
                                                                                 )}
@@ -614,7 +614,7 @@ function EventsAdd() {
                                                                     <div key={index} className="position-relative border p-1 rounded" style={{ width: "150px" }} >
                                                                         <button type="button" className="btn-close position-absolute top-0 end-0 m-1 bg-white" onClick={() => removeImage(index)} />
                                                                         <img src={img.preview} className="img-fluid w-100 object-fit-cover" style={{ height: "100px" }} alt="upload" />
-                                                                        <textarea className="form-control form-control-sm mt-1" rows="2" placeholder="Caption..." value={img.caption} onChange={(e) => { setImages(prev => prev.map((item, i) => i === index ? { ...item, caption: e.target.value } : item ) ); }} />
+                                                                        <textarea className="form-control form-control-sm mt-1" rows="2" placeholder="Caption..." value={img.caption} onChange={(e) => { setImages(prev => prev.map((item, i) => i === index ? { ...item, caption: e.target.value } : item)); }} />
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -672,7 +672,7 @@ function EventsAdd() {
                                                                                 <p className="text-secondary">{comment.comment}</p>
                                                                             </div>
                                                                             <div className="col-md-5">
-                                                                                <div className="event-time" style={{ textAlign: 'right', width: '90%' }}>
+                                                                                <div className="event-time" style={{ textAlign: 'left', width: '90%' }}>
                                                                                     <small className="event-date">{formatDate(comment.created_at)}</small>
                                                                                     <br />
                                                                                     <small className="event-time-details">{formatTime(comment.created_at)}</small>
@@ -701,7 +701,7 @@ function EventsAdd() {
                                                                             <p className="text-secondary">{event.name}</p>
                                                                         </div>
                                                                         <div className="col-md-5">
-                                                                            <div className="event-time" style={{ textAlign: 'right', width: '90%' }}>
+                                                                            <div className="event-time" style={{ textAlign: 'left', width: '90%' }}>
                                                                                 <small className="event-date">{formatDate(event.event_date)}</small><br />
                                                                                 <small className="event-time-details">{formatTime(event.event_date)}</small>
                                                                             </div>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import Calendar from "../React/extra/CalendarRyton"
+import Calendar from "../Ryton/extra/CalendarRyton"
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import c1 from '../assets/images/dashboard/c1.jpg';
 import c2 from '../assets/images/dashboard/c2.jpg';
 function ClubMemberGallery() {
@@ -12,7 +12,7 @@ function ClubMemberGallery() {
         { src: c1, description: "Beautiful landscape" },
         { src: c2, description: "Urban night scene" },
     ]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const handleImageClick = (index) => {
         const imgArray = galleryImages.map(img => img.src);
         const descArray = galleryImages.map(img => img.description || "");
@@ -23,12 +23,6 @@ function ClubMemberGallery() {
             navigate("/club_gallery_single");
         }, 100);
     };
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
-        return () => clearTimeout(timer);
-    }, []);
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
@@ -38,7 +32,7 @@ function ClubMemberGallery() {
                         <NavigationRoute />
                         <HeaderRoute title="Galleries" />
                         <div className="content">
-                            <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3 w-100">
+                            <div className="dashboard-card">
                                 <div className="profile-card">
                                     <div className="profile-left">
                                         <div className="profile-info">
@@ -51,7 +45,7 @@ function ClubMemberGallery() {
                                         <input type="search" className="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                                     </div>
                                 </div>
-                                <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
+                                <div className="card-section" style={{ width: '32%' }}>
                                     <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
                                         <small className="ca-details fs-5">Images</small>
                                         <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>64</h3>

@@ -1,25 +1,25 @@
 import './App.css'
-import HomeRoute from './React/HomeRoute'
-import EventPublic from './React/EventPublic'
+import HomeRoute from './Ryton/HomeRoute'
+import EventPublic from './Ryton/EventPublic'
 import { Route, Routes } from "react-router";
-import CompetitionPublic from './React/CompetitionPublic'
-import GalleryPublic from './React/GalleryPublic'
-import ClubPublic from './React/ClubPublic'
-import NewsPublic from './React/NewsPublic'
-import NoticePublic from './React/NoticePublic'
-import EventSinglePublic from './React/EventSinglePublic'
-import CompetitionSinglePublic from './React/CompetitionSinglePublic'
-import NewsSinglePublic from './React/NewsSinglePublic'
-import NoticeSinglePublic from './React/NoticeSinglePublic'
-import ClubGalleryPublic from './React/ClubGalleryPublic'
-import RytonClubGallerySingle from './React/RytonClubGallerySingle'
-import MemberGalleryPublic from './React/MemberGalleryPublic'
-import RytonMemberGallerySingle from './React/MemberGallerySingle'
-import RytonCompetitionResults from './React/RytonCompetitionResults';
-import RytonClubSlide from './React/RytonClubSlide';
-import RytonMemberSlide from './React/RytonMemberSlide';
-import RytonSingleResults from './React/RytonSingleResults';
-import RytonResultSlide from './React/RytonResultSlide';
+import CompetitionPublic from './Ryton/CompetitionPublic'
+import GalleryPublic from './Ryton/GalleryPublic'
+import ClubPublic from './Ryton/ClubPublic'
+import NewsPublic from './Ryton/NewsPublic'
+import NoticePublic from './Ryton/NoticePublic'
+import EventSinglePublic from './Ryton/EventSinglePublic'
+import CompetitionSinglePublic from './Ryton/CompetitionSinglePublic'
+import NewsSinglePublic from './Ryton/NewsSinglePublic'
+import NoticeSinglePublic from './Ryton/NoticeSinglePublic'
+import ClubGalleryPublic from './Ryton/ClubGalleryPublic'
+import RytonClubGallerySingle from './Ryton/RytonClubGallerySingle'
+import MemberGalleryPublic from './Ryton/MemberGalleryPublic'
+import RytonMemberGallerySingle from './Ryton/MemberGallerySingle'
+import RytonCompetitionResults from './Ryton/RytonCompetitionResults';
+import RytonClubSlide from './Ryton/RytonClubSlide';
+import RytonMemberSlide from './Ryton/RytonMemberSlide';
+import RytonSingleResults from './Ryton/RytonSingleResults';
+import RytonResultSlide from './Ryton/RytonResultSlide';
 import LoginRoute from './club_admin/LoginRoute';
 import DashboardRoute from './club_admin/DashboardRoute';
 import EventRoute from './club_admin/EventRoute';
@@ -36,7 +36,6 @@ import MemberSingleRequest from './club_admin/MemberSingleRequest';
 import GalleryRoute from './club_admin/GalleryRoute';
 import ClubGalleryRoute from './club_admin/ClubGallery';
 import MemberGalleryRoute from './club_admin/MemberGallery';
-import KamranGallery from './club_admin/KamranGallery';
 import NoticeRoute from './club_admin/NoticeRoute';
 import NewsRoute from './club_admin/NewsRoute';
 import NewsEdit from './club_admin/NewsEdit';
@@ -46,9 +45,24 @@ import Library from './club_admin/Library';
 import ProfileDashboard from './photographer/ProfileDashboard';
 import PhotographerPortfolio from './photographer/PhotographerPortfolio';
 import PhotographerGear from './photographer/PhotographerGear';
+import PhotographerGearAdd from './photographer/PhotographerGearAdd';
+import PhotographerGearSingle from './photographer/PhotographerGearSingle';
+import PhotographerGearLibrary from './photographer/PhotographerGearLibrary';
 import PhotographerLearning from './photographer/PhotographerLearning';
+import PhotographerLearningAdd from './photographer/PhotographerLearningAdd';
+import PhotographerInsights from './photographer/PhotographerInsights';
+import LearningNotes from './photographer/LearningNotes';
 import PostView from './photographer/PostView';
 import PhotographerPlans from './photographer/PhotographerPlans';
+import PhotographerPlanAdd from './photographer/PhotographerPlanAdd';
+import PhotographerGallery from './photographer/PhotographerGallery';
+import PhotographerGallerySingle from './photographer/PhotographerGallerySingle';
+import PhotographerEvent from './photographer/PhotographerEvent';
+import PhotographerEventSingle from './photographer/PhotographerEventSingle';
+import PostNotice from './photographer/PostNotice';
+import PhotographerCalendar from './photographer/PhotographerCalendar';
+import PhotographerCalendarAdd from './photographer/PhotographerCalendarAdd';
+import PhotographerCalendarSingle from './photographer/PhotographerCalendarSingle';
 import NoticeSingle from './club_admin/NoticeSingle';
 import NoticeEdit from './club_admin/NoticeEdit';
 import NewsSingle from './club_admin/NewsSingle';
@@ -57,6 +71,41 @@ import PageEdit from './club_admin/PageEdit';
 import ClubSignup from './club_admin/ClubSignup';
 import ClubGallerySingle from './club_admin/ClubGallerySingle';
 import KamranGallerySingle from './club_admin/KamranGallerySingle';
+import Seasons from './club_admin/Seasons';
+import SingleSeason from './club_admin/SingleSeason';
+import SingleMemberEntries from './club_admin/SingleMemberEntries';
+import SingleEntryJudging from './club_admin/SingleEntryJudging';
+import JudgeDashboard from './Judge/JudgeDashboard';
+import JudgeClubCompetitions from './Judge/JudgeClubCompetitions';
+import JudgeCompetitionDetail from './Judge/JudgeCompetitionDetail';
+import JudgeCompetitionEdit from './Judge/JudgeCompetitionEdit';
+import JudgeCompetitionSubmissions from './Judge/JudgeCompetitionSubmissions';
+import JudgeImageScoring from './Judge/JudgeImageScoring';
+import SpeakerDashboard from './Speaker/SpeakerDashboard';
+import SpeakerClubEvents from './Speaker/SpeakerClubEvents';
+import SpeakerEventDetail from './Speaker/SpeakerEventDetail';
+import SpeakerEventEdit from './Speaker/SpeakerEventEdit';
+import ClubPublicHome from './ClubPublic/ClubPublicHome';
+import SuperDashboard from './Super/SuperDashboard';
+import SuperClubsList from './Super/SuperClubsList';
+import SuperClubEdit from './Super/SuperClubEdit';
+import SuperClubMembers from './Super/SuperClubMembers';
+import SuperProfilesList from './Super/SuperProfilesList';
+import SuperProfileDetail from './Super/SuperProfileDetail';
+import SuperProfileEdit from './Super/SuperProfileEdit';
+import SuperRoles from './Super/SuperRoles';
+import SuperGlobalSettings from './Super/SuperGlobalSettings';
+import SecretaryDashboard from './Secretary/SecretaryDashboard';
+import SecretaryCompetitionsList from './Secretary/SecretaryCompetitionsList';
+import SecretaryCompetitionDetail from './Secretary/SecretaryCompetitionDetail';
+import SecretaryCompetitionEdit from './Secretary/SecretaryCompetitionEdit';
+import SecretarySeasonResults from './Secretary/SecretarySeasonResults';
+import SecretaryCompetitionResults from './Secretary/SecretaryCompetitionResults';
+import SecretaryImageLightbox from './Secretary/SecretaryImageLightbox';
+import AdminWelcome from './Admin/AdminWelcome';
+import AdminLogin from './Admin/AdminLogin';
+import AdminSignup from './Admin/AdminSignup';
+import AdminClubOnboarding from './Admin/AdminClubOnboarding';
 function App() {
     return (
         <>
@@ -64,24 +113,24 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/" element={<HomeRoute />} />
                 <Route path="/rytonevent" element={<EventPublic />} />
+                <Route path="/rytonevent/:id" element={<EventSinglePublic />} />
                 <Route path="/rytoncomp" element={<CompetitionPublic />} />
+                <Route path="/rytoncomp/:id" element={<CompetitionSinglePublic />} />
                 <Route path="/rytongal" element={<GalleryPublic />} />
                 <Route path="/rytongal/club" element={<ClubGalleryPublic />} />
                 <Route path="/rytongal/club/:id" element={<RytonClubGallerySingle />} />
-                <Route path="/rytonclubslide" element={<RytonClubSlide />} />
                 <Route path="/rytongal/member" element={<MemberGalleryPublic />} />
                 <Route path="/rytongal/member/:id" element={<RytonMemberGallerySingle />} />
+                <Route path="/rytonnews" element={<NewsPublic />} />
+                <Route path="/rytonnews/:id" element={<NewsSinglePublic />} />
+                <Route path="/rytonnotice" element={<NoticePublic />} />
+                <Route path="/rytonnotice/:id" element={<NoticeSinglePublic />} />
                 <Route path="/rytonmemberslide" element={<RytonMemberSlide />} />
                 <Route path="/rytonclub" element={<ClubPublic />} />
-                <Route path="/rytonnews" element={<NewsPublic />} />
-                <Route path="/rytonnotice" element={<NoticePublic />} />
-                <Route path="/rytonevent/:id" element={<EventSinglePublic />} />
-                <Route path="/rytoncomp/:id" element={<CompetitionSinglePublic />} />
-                <Route path="/rytonnews/:id" element={<NewsSinglePublic />} />
-                <Route path="/rytonnotice/:id" element={<NoticeSinglePublic />} />
                 <Route path="/rytoncomp/results" element={<RytonCompetitionResults />} />
                 <Route path="/rytoncomp/results/:id" element={<RytonSingleResults />} />
                 <Route path="/rytoncomp/result/slide" element={<RytonResultSlide />} />
+                <Route path="/rytonclubslide" element={<RytonClubSlide />} />
                 {/* Club Admin */}
                 <Route path="/login" element={<LoginRoute />} />
                 <Route path="/signup" element={<ClubSignup />} />
@@ -94,6 +143,10 @@ function App() {
                 <Route path="/competitions/:id/edit" element={<CompetitionsEdit />} />
                 <Route path="/competitions/create" element={<CompetitionsEdit />} />
                 <Route path="/competitions/:id" element={<CompetitionSingle />} />
+                <Route path="/competitions/seasons" element={<Seasons />} />
+                <Route path="/competitions/seasons/:id" element={<SingleSeason />} />
+                <Route path="/competitions/seasons/:id/:memberCompId" element={<SingleMemberEntries />} />
+                <Route path="/competitions/seasons/:id/:memberCompId/:entryId" element={<SingleEntryJudging />} />
                 <Route path="/members" element={<MembersRoute />} />
                 <Route path="/members/create" element={<MemberAdd />} />
                 <Route path="/members/:id/edit" element={<MemberAdd />} />
@@ -113,7 +166,6 @@ function App() {
                 <Route path="/news/:id/edit" element={<NewsEdit />} />
                 <Route path="/news/create" element={<NewsEdit />} />
                 <Route path="/news/:id" element={<NewsSingle />} />
-                <Route path="/kamran" element={<KamranGallery />} />
                 <Route path="/pages" element={<PageRoute />} />
                 <Route path="/pages/:id" element={<PageSingle />} />
                 <Route path="/pages/create" element={<PageEdit />} />
@@ -124,9 +176,74 @@ function App() {
                 <Route path="/about" element={<ProfileDashboard />} />
                 <Route path="/portfolio" element={<PhotographerPortfolio />} />
                 <Route path="/gear" element={<PhotographerGear />} />
+                <Route path="/gear/add" element={<PhotographerGearAdd />} />
+                <Route path="/gear/library" element={<PhotographerGearLibrary />} />
+                <Route path="/gear/:id" element={<PhotographerGearSingle />} />
+                <Route path="/gear/:id/edit" element={<PhotographerGearAdd />} />
                 <Route path="/learn" element={<PhotographerLearning />} />
+                <Route path="/learn/add" element={<PhotographerLearningAdd />} />
+                <Route path="/learn/:id/edit" element={<PhotographerLearningAdd />} />
+                <Route path="/notebook" element={<LearningNotes />} />
+                <Route path="/insights" element={<PhotographerInsights />} />
                 <Route path="/post" element={<PostView />} />
                 <Route path="/plans" element={<PhotographerPlans />} />
+                <Route path="/plans/add" element={<PhotographerPlanAdd />} />
+                <Route path="/my-gallery" element={<PhotographerGallery />} />
+                <Route path="/my-gallery/:id" element={<PhotographerGallerySingle />} />
+                <Route path="/my-events" element={<PhotographerEvent />} />
+                <Route path="/my-events/:id" element={<PhotographerEventSingle />} />
+                <Route path="/post-notice" element={<PostNotice />} />
+                <Route path="/calendar" element={<PhotographerCalendar />} />
+                <Route path="/calendar/create" element={<PhotographerCalendarAdd />} />
+                <Route path="/calendar/:id" element={<PhotographerCalendarSingle />} />
+                <Route path="/calendar/:id/edit" element={<PhotographerCalendarAdd />} />
+                {/* Judge */}
+                <Route path="/judge" element={<JudgeDashboard />} />
+                <Route path="/judge/dashboard" element={<JudgeDashboard />} />
+                <Route path="/judge/competitions" element={<JudgeClubCompetitions />} />
+                <Route path="/judge/clubs/:clubId/competitions" element={<JudgeClubCompetitions />} />
+                <Route path="/judge/competitions/:competitionId" element={<JudgeCompetitionDetail />} />
+                <Route path="/judge/competitions/:competitionId/edit" element={<JudgeCompetitionEdit />} />
+                <Route path="/judge/competitions/:competitionId/submissions" element={<JudgeCompetitionSubmissions />} />
+                <Route path="/judge/competitions/:competitionId/submissions/:entryId" element={<JudgeImageScoring />} />
+                {/* Speaker */}
+                <Route path="/speaker" element={<SpeakerDashboard />} />
+                <Route path="/speaker/dashboard" element={<SpeakerDashboard />} />
+                <Route path="/speaker/events" element={<SpeakerClubEvents />} />
+                <Route path="/speaker/clubs/:clubId/events" element={<SpeakerClubEvents />} />
+                <Route path="/speaker/events/create" element={<SpeakerEventEdit />} />
+                <Route path="/speaker/events/:eventId" element={<SpeakerEventDetail />} />
+                <Route path="/speaker/events/:eventId/edit" element={<SpeakerEventEdit />} />
+                {/* Club Public */}
+                <Route path="/club-public" element={<ClubPublicHome />} />
+                {/* Super Admin */}
+                <Route path="/super" element={<SuperDashboard />} />
+                <Route path="/super/dashboard" element={<SuperDashboard />} />
+                <Route path="/super/clubs" element={<SuperClubsList />} />
+                <Route path="/super/clubs/create" element={<SuperClubEdit />} />
+                <Route path="/super/clubs/:clubId/edit" element={<SuperClubEdit />} />
+                <Route path="/super/clubs/:clubId/members" element={<SuperClubMembers />} />
+                <Route path="/super/profiles" element={<SuperProfilesList />} />
+                <Route path="/super/profiles/:profileId" element={<SuperProfileDetail />} />
+                <Route path="/super/profiles/:profileId/edit" element={<SuperProfileEdit />} />
+                <Route path="/super/roles" element={<SuperRoles />} />
+                <Route path="/super/settings" element={<SuperGlobalSettings />} />
+                {/* Competition Secretary */}
+                <Route path="/secretary" element={<SecretaryDashboard />} />
+                <Route path="/secretary/dashboard" element={<SecretaryDashboard />} />
+                <Route path="/secretary/competitions" element={<SecretaryCompetitionsList />} />
+                <Route path="/secretary/clubs/:clubId/competitions" element={<SecretaryCompetitionsList />} />
+                <Route path="/secretary/competitions/:competitionId" element={<SecretaryCompetitionDetail />} />
+                <Route path="/secretary/competitions/:competitionId/edit" element={<SecretaryCompetitionEdit />} />
+                <Route path="/secretary/competitions/:competitionId/results" element={<SecretarySeasonResults />} />
+                <Route path="/secretary/competitions/:competitionId/scores" element={<SecretaryCompetitionResults />} />
+                <Route path="/secretary/competitions/:competitionId/results/:entryId" element={<SecretaryImageLightbox />} />
+                {/* Admin (auth + club onboarding) */}
+                <Route path="/admin" element={<AdminWelcome />} />
+                <Route path="/admin/welcome" element={<AdminWelcome />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/signup" element={<AdminSignup />} />
+                <Route path="/admin/onboarding" element={<AdminClubOnboarding />} />
             </Routes>
         </>
     )

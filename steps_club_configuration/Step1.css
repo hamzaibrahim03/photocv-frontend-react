@@ -19,7 +19,7 @@
     margin-bottom: 19px;
     overflow: hidden;
     width: 1344px;
-    height: 302px;
+    height: auto;
 }
 
 .config-section-header {
@@ -62,10 +62,12 @@
     transition: transform 0.2s ease;
     width: 32px;
     height: 32px;
+    display: inline-block;
+    transform: rotate(0deg);
 }
 
 .arrow.rotate {
-    transform: rotate(0deg);
+    transform: rotate(180deg);
 }
 
 .custom-input {

@@ -2,10 +2,11 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router';
 import NavigationRoute from '../club_admin/NavigationRoute';
 import HeaderRoute from '../club_admin/HeaderRoute';
-import CalendarDashboard from '../club_admin/Calendars/CalendarDashboard';
 import RecentSubmissions from '../club_admin/competitions/RecentSubmissions';
 import MoreCompetitions from '../club_admin/competitions/MoreCompetitions';
+import Loader from '../Ryton/extra/LoaderAll';
 import apiClient from '../../api/axios';
+import Calendar from '../Ryton/extra/CalendarRyton';
 function PhotographerCompetitions() {
     const navigate = useNavigate();
     const [competitions, setCompetitions] = useState([]);
@@ -13,12 +14,15 @@ function PhotographerCompetitions() {
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 4;
     const [eventDay, setEventDay] = useState(25);
+    const [isLoading, setIsLoading] = useState(true);
     const fetchCompetitions = async () => {
         try {
             const res = await apiClient.get('/competitions');
             setCompetitions(res.data.data);
         } catch (e) {
             console.error(e);
+        } finally {
+            setIsLoading(false);
         }
     };
     useEffect(() => {
@@ -67,16 +71,19 @@ function PhotographerCompetitions() {
         return isNaN(d) ? '' : d.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
     };
     return (
-        <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}>
-            <NavigationRoute />
-            <HeaderRoute title="Competitions" />
-            <section className="content" style={{ padding: '0 30px' }}>
-                <div className="dashboard-card d-flex align-items-center justify-content-between py-4 gap-3">
-                    <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+        <>
+            <Loader show={isLoading} />
+            {!isLoading && (
+                <>
+                    <NavigationRoute />
+                    <HeaderRoute title="Competitions" />
+                    <div className="content">
+                <div className="dashboard-card">
+                    <div className="profile-card">
                         <div className="profile-left">
                             <div className="profile-info">
                                 <small className="greeting text-muted" style={{ fontSize: '18px' }}>Planned and regular club competition</small>
-                                <h2 className="name m-0 text-dark head" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
+                                <h2 className="name" style={{ fontSize: '30px' }}>2024 - 2025 Season</h2>
                             </div>
                         </div>
                         <div className="search-bar position-relative" style={{ width: '250px' }}>
@@ -168,7 +175,7 @@ function PhotographerCompetitions() {
                     <div className="col-md-4">
                         <section className="d-flex flex-column gap-4">
                             <div className="bg-white rounded shadow-sm">
-                                <CalendarDashboard />
+                                <Calendar />
                             </div>
                             <div className="d-flex flex-column gap-4">
                                 <RecentSubmissions />
@@ -177,8 +184,10 @@ function PhotographerCompetitions() {
                         </section>
                     </div>
                 </div>
-            </section>
-        </div>
+                    </div>
+                </>
+            )}
+        </>
     );
 };
 export default PhotographerCompetitions;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
-import Loader from "../React/extra/LoaderAll";
-import Calendar from "../React/extra/CalendarRyton";
+import Loader from "../Ryton/extra/LoaderAll";
+import Calendar from "../Ryton/extra/CalendarRyton";
 import apiClient from '../api/axios';
 const initialFormData = {
     title: '',
@@ -68,12 +68,16 @@ function NoticeEdit() {
         }));
     };
     useEffect(() => {
-        loadPage();
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([loadPage(), getNoticeData(), getNoticeExtras()]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, [id]);
-    useEffect(() => {
-        getNoticeData();
-        getNoticeExtras();
-    }, []);
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -89,7 +93,6 @@ function NoticeEdit() {
         });
     };
     const loadPage = async () => {
-        setIsLoading(true);
         try {
             if (isEditMode) {
                 const response = await apiClient.get(`/notices/${id}`);
@@ -111,8 +114,8 @@ function NoticeEdit() {
                     comment_allowed: notice.comment_allowed || 'none',
                     created_at: formatDateTimeForInput(notice.created_at),
                 });
-                setExistingImages( Array.isArray(notice.images) ? notice.images : [] );
-                setExistingDocuments( Array.isArray(notice.documents) ? notice.documents : [] );
+                setExistingImages(Array.isArray(notice.images) ? notice.images : []);
+                setExistingDocuments(Array.isArray(notice.documents) ? notice.documents : []);
             } else {
                 setFormData(initialFormData);
                 setImages([]);
@@ -128,8 +131,6 @@ function NoticeEdit() {
             if (isEditMode) {
                 alert('Unable to load notice.');
             }
-        } finally {
-            setIsLoading(false);
         }
     };
     async function getNoticeData() {
@@ -142,7 +143,7 @@ function NoticeEdit() {
         });
         const data = await response.json();
         console.log(data);
-        setNoticeData(data.data);
+        setNoticeData(data.data || {});
     };
     console.log(noticeData.original?.data)
     async function getNoticeExtras() {
@@ -155,7 +156,7 @@ function NoticeEdit() {
         });
         const data = await response.json();
         console.log(data);
-        setNoticeExtra(data.data);
+        setNoticeExtra(data.data || {});
     };
     console.log(noticeExtra)
     const submitForm = async (e) => {
@@ -173,7 +174,7 @@ function NoticeEdit() {
             payload.append('poll', formData.poll);
             payload.append('urgency_importance', formData.urgency_importance);
             payload.append('comment_allowed', formData.comment_allowed);
-            formData.tags.forEach( (tag, index) => { payload.append( `tags[${index}]`, tag ); } );
+            formData.tags.forEach((tag, index) => { payload.append(`tags[${index}]`, tag); });
             if (formData.featured_image) {
                 payload.append(
                     'featured_image',
@@ -282,8 +283,8 @@ function NoticeEdit() {
                         <div className="content">
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card">
-                                        <div className="profile-card d-flex align-items-center justify-content-between bg-white shadow-sm p-4 rounded" style={{ width: '65.8%', height: '148px' }}>
+                                    <div className="dashboard-card" id="cl">
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     <small className="greeting">
@@ -332,7 +333,7 @@ function NoticeEdit() {
                                                                         <h5>Basic Information</h5>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="title"> Notice Title </label>
+                                                                                <label htmlFor="title"> Notice Title </label>
                                                                                 <input type="text" name='title' id='title' className="form-control" value={formData.title} onChange={handleChange} required />
                                                                             </div>
                                                                             <div className="col-md-6">
@@ -362,11 +363,11 @@ function NoticeEdit() {
                                                                         <div className="divider3"></div>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="link"> Location </label>
+                                                                                <label htmlFor="link"> Location </label>
                                                                                 <input type="text" id="location" name="location" className="form-control" value={formData.location} onChange={handleChange} />
                                                                             </div>
                                                                             <div className="col-md-6">
-                                                                                <label for="link"> Link to related Page </label>
+                                                                                <label htmlFor="link"> Link to related Page </label>
                                                                                 <input type="url" id="link" name="link" className="form-control" value={formData.link_url} onChange={handleChange} />
                                                                             </div>
                                                                         </div>
@@ -392,18 +393,18 @@ function NoticeEdit() {
                                                                         <div className="divider3"></div>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="image"> Image to be chosen </label>
+                                                                                <label htmlFor="image"> Image to be chosen </label>
                                                                                 <input type="file" id="imageUpload" className="form-control" accept="image/*" multiple disabled={images.length >= 4} onChange={handleImageUpload} />
                                                                             </div>
                                                                             <div className="col-md-6">
-                                                                                <label for="image"> Documents to be download </label>
+                                                                                <label htmlFor="image"> Documents to be download </label>
                                                                                 <input type="file" id="docUpload" className="form-control" multiple disabled={documents.length >= 4} onChange={handleDocumentUpload} />
                                                                             </div>
                                                                         </div>
                                                                         <div className="divider3"></div>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
-                                                                                <label for="upload"> Uploaded Images </label>
+                                                                                <label htmlFor="upload"> Uploaded Images </label>
                                                                                 <div className="row mt-2">
                                                                                     <div className="col-md-12">
                                                                                         <div id="imagePreview" className="d-flex gap-2 flex-wrap">
@@ -420,7 +421,7 @@ function NoticeEdit() {
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-md-6">
-                                                                                <label for="Attachments"> Attachments </label>
+                                                                                <label htmlFor="Attachments"> Attachments </label>
                                                                                 <div className="row mt-2">
                                                                                     <div className="col-md-12">
                                                                                         <div className="d-flex gap-2 flex-wrap">
@@ -448,7 +449,7 @@ function NoticeEdit() {
                                                                         <div className="row">
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[ 'active', 'draft', 'deleted' ].map(status => (
+                                                                                    {['active', 'draft', 'deleted'].map(status => (
                                                                                         <div className="col-md-4 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
@@ -467,8 +468,8 @@ function NoticeEdit() {
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="row">
-                                                                                    {[ 'scheduled', 'pending' ].map(status => (
-                                                                                        <div className="col-md-4 mb-3" key={status}>
+                                                                                    {['scheduled', 'pending'].map(status => (
+                                                                                        <div className="col-md-6 mb-3" key={status}>
                                                                                             <div className="premium-radio">
                                                                                                 <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
                                                                                                 <label htmlFor={`status-${status}`}>
@@ -490,7 +491,7 @@ function NoticeEdit() {
                                                                             Notice Poll
                                                                         </label>
                                                                         <div className="row">
-                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
+                                                                            {['public', 'none', 'anonymous'].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`poll-${value}`} name="poll" value={value} checked={formData.poll === value} onChange={handleChange} />
@@ -507,9 +508,9 @@ function NoticeEdit() {
                                                                             ))}
                                                                         </div>
                                                                         <div className="divider3"></div>
-                                                                        <label for="notice_urgency">Notice Urgency and Importance</label>
+                                                                        <label htmlFor="notice_urgency">Notice Urgency and Importance</label>
                                                                         <div className="row">
-                                                                            {[ 'general', 'urgent', 'important' ].map(value => (
+                                                                            {['general', 'urgent', 'important'].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`urgency-${value}`} name="urgency_importance" value={value} checked={formData.urgency_importance === value} onChange={handleChange} />
@@ -526,9 +527,9 @@ function NoticeEdit() {
                                                                             ))}
                                                                         </div>
                                                                         <div className="divider3"></div>
-                                                                        <label for="notice_comment">Notice Comment Allowed</label>
+                                                                        <label htmlFor="notice_comment">Notice Comment Allowed</label>
                                                                         <div className="row">
-                                                                            {[ 'public', 'none', 'anonymous' ].map(value => (
+                                                                            {['public', 'none', 'anonymous'].map(value => (
                                                                                 <div className="col-md-4" key={value}>
                                                                                     <div className="premium-radio">
                                                                                         <input type="radio" id={`comment-${value}`} name="comment_allowed" value={value} checked={formData.comment_allowed === value} onChange={handleChange} />

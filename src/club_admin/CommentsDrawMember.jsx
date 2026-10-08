@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import apiClient from "../api/axios";
-import "../React/assets/css/rytonstyle.css";
+import "../Ryton/assets/css/rytonstyle.css";
 function CommentsDrawMember({ photo, onClose }) {
     const [newComment, setNewComment] = useState("");
     const [comments, setComments] = useState([]);
     const [exifOpen, setExifOpen] = useState(true);
     const [commentsOpen, setCommentsOpen] = useState(true);
     const [posting, setPosting] = useState(false);
+    const [postError, setPostError] = useState("");
     const commentsRef = useRef(null);
     const exif = photo?.exif || {};
     const like = Number(photo?.likes_count || 0);
@@ -23,18 +24,16 @@ function CommentsDrawMember({ photo, onClose }) {
         }
         try {
             setPosting(true);
-            const response = await apiClient.post( `/photos/${photo.photo_id}/comments`,
+            setPostError("");
+            const response = await apiClient.post(`/photos/${photo.photo_id}/comments`,
                 {
                     body: newComment.trim(),
                 }
             );
-            console.log("Comment Response:", response.data);
-            const comment = response.data?.data || {
-                id: Date.now(),
-                comment: newComment.trim(),
-                posted_by: "You",
-                posted_at: new Date().toISOString(),
-            };
+            const comment = response.data?.data;
+            if (!comment) {
+                throw new Error("Comment was not saved. Please try again.");
+            }
             setComments((previous) => [
                 ...previous,
                 comment,
@@ -48,10 +47,9 @@ function CommentsDrawMember({ photo, onClose }) {
             }, 100);
         } catch (err) {
             console.error("Error posting comment:", err);
-            if (err.response) {
-                console.error( "Status:", err.response.status );
-                console.error( "Response:", err.response.data );
-            }
+            setPostError(
+                err.response?.data?.message || err.message || "Failed to post comment. Please try again."
+            );
         } finally {
             setPosting(false);
         }
@@ -74,7 +72,7 @@ function CommentsDrawMember({ photo, onClose }) {
         };
         window.addEventListener("keydown", handleKeyDown);
         return () => {
-            window.removeEventListener( "keydown", handleKeyDown );
+            window.removeEventListener("keydown", handleKeyDown);
         };
     }, [onClose]);
     return (
@@ -101,7 +99,7 @@ function CommentsDrawMember({ photo, onClose }) {
                 </div>
 
                 <div className="block">
-                    <div className="block-head" onClick={() => setExifOpen( (previous) => !previous ) } >
+                    <div className="block-head" onClick={() => setExifOpen((previous) => !previous)} >
                         <span>
                             EXIF Details
                         </span>
@@ -179,7 +177,7 @@ function CommentsDrawMember({ photo, onClose }) {
                 </div>
 
                 <div className="block comments-block">
-                    <div className="block-head" onClick={() => setCommentsOpen( (previous) => !previous ) } >
+                    <div className="block-head" onClick={() => setCommentsOpen((previous) => !previous)} >
                         <span>
                             Comments
                         </span>
@@ -193,7 +191,7 @@ function CommentsDrawMember({ photo, onClose }) {
                                 {comments.length > 0 ? (
                                     comments.map(
                                         (comment, index) => (
-                                            <div className="comment" key={ comment?.id ?? index } >
+                                            <div className="comment" key={comment?.id ?? index} >
                                                 <strong style={{ color: 'white' }}>
                                                     {comment?.posted_by || "User"}
                                                 </strong>
@@ -201,7 +199,7 @@ function CommentsDrawMember({ photo, onClose }) {
                                                     {comment?.comment || ""}
                                                 </p>
                                                 <small>
-                                                    {time( comment?.posted_at )}
+                                                    {time(comment?.posted_at)}
                                                 </small>
                                             </div>
                                         )
@@ -213,8 +211,13 @@ function CommentsDrawMember({ photo, onClose }) {
                                 )}
                             </div>
 
+                            {postError ? (
+                                <p className="empty" style={{ color: "#e74c3c" }}>
+                                    {postError}
+                                </p>
+                            ) : null}
                             <div className="input-bar">
-                                <input type="text" value={newComment} placeholder="Add a comment..." onChange={(event) => setNewComment( event.target.value ) } onKeyDown={(event) => { if ( event.key === "Enter" ) { postComment(); } }} />
+                                <input type="text" value={newComment} placeholder="Add a comment..." onChange={(event) => setNewComment(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { postComment(); } }} />
                                 <button type="button" onClick={postComment} disabled={posting} >
                                     {posting ? "..." : "➤"}
                                 </button>

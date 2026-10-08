@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import dayjs from 'dayjs';
-import Calendar from "../React/extra/CalendarRyton";
+import Calendar from "../Ryton/extra/CalendarRyton";
 import HeaderRoute from "./HeaderRoute";
 import NavigationRoute from "./NavigationRoute";
-import Loader from "../React/extra/LoaderAll";
+import Loader from "../Ryton/extra/LoaderAll";
 import Pro from './assets/icons/event_list/pro.svg';
 import Cal from './assets/icons/event_list/cal.svg';
 import Cam from './assets/icons/event_list/cam.svg';
@@ -44,7 +44,6 @@ function NoticeSingle() {
     }, [notice?.created_at]);
     const getNoticeData = async () => {
         try {
-            setIsLoading(true);
             setError(null);
             const url = `http://rytonlocal-staging.cameraclub.website:8000/api/v1/notices/${id}`;
             const response = await fetch(url, {
@@ -64,8 +63,6 @@ function NoticeSingle() {
         } catch (error) {
             console.error("NOTICE API ERROR:", error);
             setError(error.message);
-        } finally {
-            setIsLoading(false);
         }
     };
     async function getNoticeExtra() {
@@ -78,16 +75,22 @@ function NoticeSingle() {
         });
         const data = await response.json();
         console.log(data);
-        setNoticeExtra(data.data);
+        setNoticeExtra(data.data || {});
     };
     useEffect(() => {
-        if (id) {
-            getNoticeData();
-        }
+        const loadData = async () => {
+            setIsLoading(true);
+            try {
+                await Promise.all([
+                    id ? getNoticeData() : Promise.resolve(),
+                    getNoticeExtra(),
+                ]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadData();
     }, [id]);
-    useEffect(() => {
-        getNoticeExtra();
-    }, []);
     if (!isLoading && error) {
         return (
             <div className="container py-5">
@@ -125,8 +128,8 @@ function NoticeSingle() {
                         <HeaderRoute title="Notices" />
                         <div className="content">
                             <section>
-                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
-                                    <div className="dashboard-card d-flex align-items-center justify-content-between py-4" style={{ gap: '15px' }}>
+                                <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
+                                    <div className="dashboard-card">
                                         <div class="profile-card">
                                             <div class="profile-left">
                                                 <div class="profile-info">
@@ -157,7 +160,7 @@ function NoticeSingle() {
                                 </div>
                             </section>
                             <section>
-                                <div className="container" style={{ maxWidth: '1810px', margin: '0 auto', padding: '0 15px' }}>
+                                <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
                                     <div className="row">
                                         <div className="col-md-8">
                                             <div id="news">
@@ -261,10 +264,10 @@ function NoticeSingle() {
                                                                 </div>
                                                             ))}
                                                             <div className="button-group mt-auto">
-                                                                <button className="btn btn-sm" id="e-view" onClick="{() => navigate(/notices)}">
+                                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/notices')}>
                                                                     View All
                                                                 </button>
-                                                                <button className="btn btn-sm" id="new" onClick="{() => navigate(/notices/create)}">
+                                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/notices/create')}>
                                                                     Add New
                                                                 </button>
                                                             </div>
