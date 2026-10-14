@@ -321,7 +321,7 @@ h3 {
     top: 0;
     left: 0;
     margin-left: 340px;
-    width: calc(100%-340px);
+    width: calc(100% - 340px);
     background-color: #ebe6e1;
     padding: 15px;
     
@@ -402,6 +402,68 @@ h3 {
     display: block;
 }
 
+.hr-user-dropdown {
+    position: relative;
+}
+
+.hr-user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.hr-user-trigger img {
+    width: 45px;
+    height: 45px;
+    max-width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.hr-user-trigger span {
+    display: flex;
+    align-items: center;
+    font-family: Inter;
+    font-size: 16px;
+    color: #4c4036;
+    white-space: nowrap;
+}
+
+.hr-user-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    min-width: 160px;
+    z-index: 200;
+    overflow: hidden;
+}
+
+.hr-user-menu.open {
+    display: block;
+}
+
+.hr-user-menu a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: #4c4036;
+    font-family: Inter;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.hr-user-menu a:hover {
+    background-color: #f5f0eb;
+}
+
 a.icon {
     color: black;
     text-decoration: none;
@@ -437,7 +499,7 @@ a.icon {
     background: white;
     padding: 15px 20px 15px 30px;
     border-radius: 12px;
-    width: 65.8%;
+    width: 68%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     height: 148px;
 }
@@ -552,8 +614,10 @@ a.icon {
     color: white;
     padding: 20px;
     border-radius: 8px;
-    text-align: left;
-    width: 219px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
     font-family: Inter;
     font-size: 1.2rem;
     height: 148px;
@@ -565,10 +629,12 @@ a.icon {
     padding: 20px;
     height: 148px;
     border-radius: 8px;
-    text-align: left;
     font-family: Inter;
     font-size: 1.2rem;
-    width: 219px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
 }
 
 .number {
@@ -624,7 +690,7 @@ a.icon {
 .comp-card,
 .notice-card {
     background: white;
-    width: 31.5%;
+    width: 32%;
     padding: 30px;
     height: 368px;
     border-radius: 10px;
@@ -1123,6 +1189,354 @@ a.icon {
     font-family: Inter;
 }
 
+/* My Social Links / My Contact cards (photographer dashboard) */
+.profile-links-card h5 {
+    color: #4c4036;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.social-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+}
+
+.social-contact-row + .social-contact-row {
+    border-top: 1px solid #f2eee9;
+}
+
+.social-media-icones {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 15px;
+}
+
+.social-media-icones--facebook {
+    background: #1877f2;
+}
+
+.social-media-icones--instagram {
+    background: #cc2366;
+}
+
+.social-media-icones--twitter {
+    background: #1da1f2;
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #99816b;
+    font-size: 17px;
+}
+
+.social-contact-row .row-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.social-contact-row .row-title {
+    margin: 0 0 2px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4c4036;
+}
+
+.social-contact-row .row-sub {
+    margin: 0;
+    font-size: 13px;
+    color: #9a9a9a;
+}
+
+.social-contact-row .row-sub--solo {
+    font-size: 14px;
+    color: #4c4036;
+}
+
+.social-contact-row .btn-edit {
+    flex-shrink: 0;
+    padding: 7px 20px;
+    border: 1px solid #e1d9cd;
+    border-radius: 20px;
+    background: #fff;
+    color: #4c4036;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.social-contact-row .btn-edit:hover {
+    border-color: #99816b;
+    color: #99816b;
+}
+
+.profile-links-card .button-group {
+    margin-top: 10px;
+}
+
+/* My Sales / Photo Requests / My QR Code (photographer dashboard) */
+.btn-sales-add {
+    border: 1px solid #99816b;
+    background: #fff;
+    color: #99816b;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: .2s ease;
+}
+
+.btn-sales-add:hover {
+    background: #99816b;
+    color: #fff;
+}
+
+.btn-sales-add:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.add-listing-form {
+    background: #faf8f5;
+    border: 1px solid #f2eee9;
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.sales-list {
+    max-height: 560px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 4px;
+}
+
+/* Full "My Sales" page grid (as opposed to the narrow dashboard-widget
+   list above, which stays a single column). */
+.my-sales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.my-sales-grid .sale-card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-sales-grid .btn-sales-view,
+.my-sales-grid .btn-sales-add {
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.sale-card {
+    border: 1px solid #f2eee9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.sale-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.sale-card-body {
+    padding: 12px 14px;
+}
+
+.sale-card-body h6 {
+    color: #4c4036;
+    font-weight: 600;
+}
+
+.sale-price {
+    color: #cc445e;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.sale-desc {
+    color: #9a9a9a;
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.btn-sales-view {
+    border: 1px solid #e1d9cd;
+    background: #fff;
+    color: #4c4036;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 12.5px;
+    font-weight: 500;
+}
+
+.btn-sales-view:hover {
+    border-color: #99816b;
+    color: #99816b;
+}
+
+.btn-sales-view:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.requests-panel {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.request-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+}
+
+.request-row + .request-row {
+    border-top: 1px solid #f2eee9;
+}
+
+.request-row img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.request-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.request-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4c4036;
+}
+
+.request-sub {
+    font-size: 12.5px;
+    color: #9a9a9a;
+}
+
+.btn-accept,
+.btn-reject {
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12.5px;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.btn-accept {
+    background: #99816b;
+    color: #fff;
+}
+
+.btn-accept:hover {
+    background: #7e6a58;
+}
+
+.btn-reject {
+    background: #fff;
+    border-color: #e1d9cd;
+    color: #4c4036;
+}
+
+.btn-reject:hover {
+    border-color: #cc445e;
+    color: #cc445e;
+}
+
+.request-status {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 5px 14px;
+    border-radius: 20px;
+}
+
+.request-status--accepted {
+    background: #e8f5ec;
+    color: #2f9e5c;
+}
+
+.request-status--rejected {
+    background: #fbe9ec;
+    color: #cc445e;
+}
+
+.qr-panel-img {
+    width: 110px;
+}
+
+/* My Portfolio tiles (photographer dashboard) - large 3-up tiles with a
+   plain text label, distinct from the small 5-up .pics grid used
+   elsewhere so they don't fight over the same class names. */
+.portfolio-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.portfolio-tile {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 493 / 455;
+}
+
+.portfolio-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.portfolio-tile-label {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+}
+
+@media (max-width: 900px) {
+    .portfolio-tiles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .portfolio-tiles-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .e-icon-container {
     display: flex;
     gap: 10px;
@@ -1296,6 +1710,7 @@ a.icon {
     flex-wrap: wrap;
     gap: 40px;
     margin-bottom: 20px;
+    width: 1820px;
 }
 
 .photographer-card {
@@ -1303,7 +1718,7 @@ a.icon {
     justify-content: center;
     text-align: center;
     border-radius: 10px;
-    width: 340px;
+    width: 23.2%;
     height: 500px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid #99816b;

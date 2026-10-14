@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import "./assets/css/adminstyle.css"
+
 function HeaderRoute({ title = "Dashboard", dashboardData }) {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
@@ -7,11 +9,20 @@ function HeaderRoute({ title = "Dashboard", dashboardData }) {
     const isLoggedIn = !!token;
     const firstName = storedUser?.first_name || dashboardData?.data?.user_details?.first_name || "";
     const profileImage = storedUser?.profile_image_url || dashboardData?.data?.user_details?.profile_image_url || "";
+    const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef(null);
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/");
     };
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (menuRef.current && !menuRef.current.contains(e.target)) setIsOpen(false);
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
     return (
         <>
             <div className="nav-header">
@@ -23,32 +34,40 @@ function HeaderRoute({ title = "Dashboard", dashboardData }) {
                         <div className="icon">
                             {/* <NotificationBell /> */}
                         </div>
-                        <div className="admin-dropdown">
-                            {isLoggedIn && profileImage ? (
-                                <img src={profileImage} alt="Profile" style={{ cursor: "pointer" }} />
-                            ) : (
-                                <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
-                            )}
-                            <span>
-                                {isLoggedIn ? firstName : "Login"}
-                                <i className="fa-solid fa-chevron-down ms-2"></i>
-                            </span>
-                            <div className="dropdown-menu">
+                        <div className="hr-user-dropdown" ref={menuRef}>
+                            <div
+                                className="hr-user-trigger"
+                                onClick={() => setIsOpen((prev) => !prev)}
+                                role="button"
+                                aria-haspopup="true"
+                                aria-expanded={isOpen}
+                            >
+                                {isLoggedIn && profileImage ? (
+                                    <img src={profileImage} alt="Profile" />
+                                ) : (
+                                    <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
+                                )}
+                                <span>
+                                    {isLoggedIn ? firstName : "Login"}
+                                    <i className="fa-solid fa-chevron-down ms-2"></i>
+                                </span>
+                            </div>
+                            <div className={`hr-user-menu${isOpen ? " open" : ""}`}>
                                 {isLoggedIn ? (
                                     <>
-                                        <a onClick={() => navigate("/dashboard/profile")}>
+                                        <a onClick={() => { setIsOpen(false); navigate("/dashboard/profile"); }}>
                                             Profile
                                         </a>
-                                        <a onClick={handleLogout}>
+                                        <a onClick={() => { setIsOpen(false); handleLogout(); }}>
                                             Log Out
                                         </a>
                                     </>
                                 ) : (
                                     <>
-                                        <a onClick={() => navigate("/login")}>
+                                        <a onClick={() => { setIsOpen(false); navigate("/login"); }}>
                                             Login
                                         </a>
-                                        <a onClick={() => navigate("/register")}>
+                                        <a onClick={() => { setIsOpen(false); navigate("/register"); }}>
                                             Register
                                         </a>
                                     </>
