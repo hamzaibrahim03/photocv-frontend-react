@@ -29,7 +29,7 @@ function EventRoute() {
     const [exportFilter, setExportFilter] = useState("selected");
     const [selectedEvents, setSelectedEvents] = useState([]);
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
-    const [shareOpenId, setShareOpenId] = useState(null);
+    const [, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
     const [savedLibrary, setSavedLibrary] = useState([]);
     useEffect(() => {
@@ -409,7 +409,7 @@ function EventRoute() {
                                                             <>
                                                                 {paginatedEvents?.map((event) => (
                                                                     <div key={event.id} className="custom-card mb-3">
-                                                                        <div className="d-flex gap-3" style={{ flex: 1 }}>
+                                                                        <div className="d-flex gap-3" style={{ flex: '1' }}>
                                                                             <img src={event.featured_image_url} alt="Event Image" />
                                                                             <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                                                                 <div>
@@ -436,7 +436,7 @@ function EventRoute() {
                                                                                         </div>
                                                                                         <div style={{ position: "relative", display: "inline-block" }}>
                                                                                             {bookmarkOpenId === event.id && (
-                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: '100', minWidth: "170px" }}>
                                                                                                     <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
                                                                                                         Save to Library
                                                                                                     </p>
@@ -524,6 +524,8 @@ function EventRoute() {
                             </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div>

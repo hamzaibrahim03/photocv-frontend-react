@@ -32,16 +32,9 @@ function HeaderRoute({ title = "Dashboard", dashboardData }) {
                     </div>
                     <div className="right-header">
                         <div className="icon">
-                            {/* <NotificationBell /> */}
                         </div>
                         <div className="hr-user-dropdown" ref={menuRef}>
-                            <div
-                                className="hr-user-trigger"
-                                onClick={() => setIsOpen((prev) => !prev)}
-                                role="button"
-                                aria-haspopup="true"
-                                aria-expanded={isOpen}
-                            >
+                            <div className="hr-user-trigger" onClick={() => setIsOpen((prev) => !prev)} role="button" aria-haspopup="true" aria-expanded={isOpen} >
                                 {isLoggedIn && profileImage ? (
                                     <img src={profileImage} alt="Profile" />
                                 ) : (
@@ -55,7 +48,7 @@ function HeaderRoute({ title = "Dashboard", dashboardData }) {
                             <div className={`hr-user-menu${isOpen ? " open" : ""}`}>
                                 {isLoggedIn ? (
                                     <>
-                                        <a onClick={() => { setIsOpen(false); navigate("/dashboard/profile"); }}>
+                                        <a onClick={() => { setIsOpen(false); navigate("/about"); }}>
                                             Profile
                                         </a>
                                         <a onClick={() => { setIsOpen(false); handleLogout(); }}>
@@ -67,7 +60,7 @@ function HeaderRoute({ title = "Dashboard", dashboardData }) {
                                         <a onClick={() => { setIsOpen(false); navigate("/login"); }}>
                                             Login
                                         </a>
-                                        <a onClick={() => { setIsOpen(false); navigate("/register"); }}>
+                                        <a onClick={() => { setIsOpen(false); navigate("/signup"); }}>
                                             Register
                                         </a>
                                     </>
@@ -76,7 +69,7 @@ function HeaderRoute({ title = "Dashboard", dashboardData }) {
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     );
 }

@@ -14,14 +14,16 @@ function SuperProfileDetail() {
     const [profile, setProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 16;
     const getSocialLink = (name) => {
         return (
             (profile?.socialLinks || []).find((item) => item?.social_media_name?.toLowerCase() === name.toLowerCase())?.social_link || "#"
         );
     };
     useEffect(() => {
+        setCurrentPage(1);
         loadProfile();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileId]);
 
     async function loadProfile() {
@@ -37,13 +39,14 @@ function SuperProfileDetail() {
             setIsLoading(false);
         }
     }
+    const totalPages = Math.max(Math.ceil((profile?.galleries?.length || 0) / rowsPerPage), 1);
 
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
                 <Loader show={isLoading} />
                 {!isLoading && !profile && (
-                    <p className="super-empty-note" style={{ padding: 30 }}>Profile not found.</p>
+                    <p className="super-empty-note" style={{ padding: '30px' }}>Profile not found.</p>
                 )}
                 {!isLoading && profile && (
                     <>
@@ -54,7 +57,7 @@ function SuperProfileDetail() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     <h2 className="name">Member Profile</h2>
@@ -107,7 +110,7 @@ function SuperProfileDetail() {
                                                 <h5 style={{ color: "#cc445e", fontSize: "15px", marginBottom: "12px", }}>
                                                     {profile.bio}
                                                 </h5>
-                                                <p style={{ color: "#625b55", lineHeight: 1.55, marginBottom: "15px", }}>
+                                                <p style={{ color: "#625b55", lineHeight: '1.55px', marginBottom: "15px", }}>
                                                     {profile.about}
                                                 </p>
                                                 <div className="row" style={{ color: "#625b55", }}>
@@ -128,7 +131,7 @@ function SuperProfileDetail() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div style={{ background: "#cc445e", color: "#fff", padding: "12px 30px", display: "flex", justifyContent: "space-between", fontSize: 13.5 }}>
+                                        <div style={{ background: "#cc445e", color: "#fff", padding: "12px 30px", display: "flex", justifyContent: "space-between", fontSize: '13px' }}>
                                             <span>{profile.photoCount ?? 0} <i className="fa-regular fa-image"></i>&nbsp;&nbsp;{profile.comments?.length ?? 0} <i className="fa-regular fa-comment"></i></span>
                                             <span>Status: {profile.status ? "Active" : "Inactive"}</span>
                                         </div>
@@ -146,13 +149,13 @@ function SuperProfileDetail() {
                                                 </h5>
                                                 {(profile.clubs || []).length === 0 && <p className="super-empty-note">Not a member of any club yet.</p>}
                                                 {(profile.clubs || []).map((c, i) => (
-                                                    <div key={`${c.name}-${i}`} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid #f2eee9" }}>
+                                                    <div key={`${c.name}-${i}`} style={{ display: "flex", alignItems: "center", gap: '12px', padding: "10px 0", borderBottom: "1px solid #f2eee9" }}>
                                                         <img src={c.image || "/placeholder.jpg"} alt={c.name} style={{ width: '44px', height: '34px', borderRadius: '6px', objectFit: "cover" }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                        <div style={{ flex: 1 }}>
-                                                            <div style={{ color: "#4c4036", fontWeight: 500 }}>{c.name}</div>
+                                                        <div style={{ flex: '1' }}>
+                                                            <div style={{ color: "#4c4036", fontWeight: '500' }}>{c.name}</div>
                                                             <small style={{ color: "#999" }}>Member since {c.since}</small>
                                                         </div>
-                                                        <span style={{ color: "#2f9e5c", fontSize: 12 }}>● Active</span>
+                                                        <span style={{ color: "#2f9e5c", fontSize: '12px' }}>● Active</span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -205,7 +208,7 @@ function SuperProfileDetail() {
                                                 </h5>
                                                 {(profile.entries || []).length === 0 && <p className="super-empty-note">No competition entries yet.</p>}
                                                 {(profile.entries || []).map((entry, entryIndex) => (
-                                                    <div key={`${entry.name}-${entryIndex}`} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: "1px solid #f2eee9", flexWrap: "wrap" }}>
+                                                    <div key={`${entry.name}-${entryIndex}`} style={{ display: "flex", alignItems: "center", gap: '10px', padding: "10px 0", borderBottom: "1px solid #f2eee9", flexWrap: "wrap" }}>
                                                         {entry.images.slice(0, 3).map((img, i) => (
                                                             <div key={i} style={{ position: "relative" }} title={img.award?.standing || ""}>
                                                                 <img src={img.image} alt="" style={{ width: '60px', height: '45px', borderRadius: '7px', objectFit: "cover" }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
@@ -222,11 +225,13 @@ function SuperProfileDetail() {
                                                     {profile.name.split(" ")[0]}'s Awards
                                                 </h5>
                                                 {(profile.awards || []).length === 0 && <p className="super-empty-note">No awards yet.</p>}
-                                                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+                                                <div style={{ display: "flex", flexWrap: 'wrap', gap: '20px' }}>
                                                     {(profile.awards || []).map((award, i) => (
                                                         <div key={i} style={{ position: "relative" }} title={award.standing}>
                                                             <img src={award.image || "/placeholder.jpg"} alt={award.standing || ""} style={{ width: "107px", height: '80px', objectFit: "cover", borderRadius: '7px' }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                            <span style={{ position: "relative", bottom: 4, right: 4, fontSize: 16 }}>🏅</span>
+                                                            <span style={{ position: 'absolute', bottom: '-14px', left: '50%', transform: 'translateX(-50%)', fontSize: '14px', padding: '4px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '30px', height: '30px' }}>
+                                                                🏅
+                                                            </span>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -238,15 +243,15 @@ function SuperProfileDetail() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="bg-white rounded shadow-sm" style={{ marginTop: "20px", padding: "0", overflow: "hidden", }}>
+                                    <div className="bg-white rounded shadow-sm" style={{ marginTop: "20px", padding: "10px", overflow: "hidden", }}>
                                         <div style={{ padding: "15px 20px", borderBottom: "1px solid #eee", }}>
-                                            <h4 style={{ margin: 0, color: "#4d4742", fontSize: "20px", }}>
+                                            <h4 style={{ margin: '0', color: "#4d4742", fontSize: "20px", }}>
                                                 {profile.name}'s Gallery ({profile.photoCount ?? 0})
                                             </h4>
                                         </div>
                                         {(profile.galleries || []).length === 0 && <p className="super-empty-note">No galleries yet.</p>}
                                         <div className="galleriy" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
-                                            {(profile.galleries || []).map((g, i) => (
+                                            {(profile.galleries || []).slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage).map((g, i) => (
                                                 <div className="galleriy-item" key={`${g.label}-${i}`} title={g.award?.standing || ""}>
                                                     <img src={g.image || "/placeholder.jpg"} alt={g.label} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
                                                     <div className="galleriy-info">
@@ -275,11 +280,26 @@ function SuperProfileDetail() {
                                                 </div>
                                             ))}
                                         </div>
+                                        {totalPages > 1 && (
+                                            <div className="super-dt-paging">
+                                                <button disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>‹</button>
+                                                {Array.from({ length: totalPages }, (_, i) => (
+                                                    <button key={i + 1} className={currentPage === i + 1 ? "current" : ""} onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
+                                                ))}
+                                                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}>›</button>
+                                            </div>
+                                        )}
                                     </div>
 
-                                    <button type="button" className="btn" id="e-view" style={{ marginTop: 20 }} onClick={() => navigate(-1)}>Back</button>
+                                    <button type="button" className="btn" id="e-view" style={{ marginTop: '20px' }} onClick={() => navigate(-1)}>Back</button>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

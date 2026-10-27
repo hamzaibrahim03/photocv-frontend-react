@@ -4,12 +4,6 @@ import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
 import "./assets/css/judgestyle.css";
 import NavigationRoute from "../club_admin/NavigationRoute";
-import Flo from "../club_admin/assets/icons/quick_comp/flower.svg";
-import Ima from "../club_admin/assets/icons/quick_comp/image.svg";
-import Fax from "../club_admin/assets/icons/quick_comp/fax.svg";
-import Pri from "../club_admin/assets/icons/quick_comp/print.svg";
-import Pai from "../club_admin/assets/icons/quick_comp/paint.svg";
-import Prof from "../club_admin/assets/icons/quick_comp/profile.svg";
 
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 
@@ -18,25 +12,37 @@ const authHeaders = () => ({
     Authorization: `Bearer ${localStorage.getItem("token")}`,
 });
 
-// JudgePanelRepository::entryCard() stores the judge's own vote as a numeric
-// `position` (1/2/3); the UI works with the "1st"/"2nd"/"3rd" award keys.
-const POSITION_TO_KEY = { 1: "1st", 2: "2nd", 3: "3rd" };
+const RANK_ORDER = {
+    "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9,
+    "C": 10, "H": 11, "I": 12,
+};
 
-// Map the JudgePanelController::submissions() entryCard shape into the flat
-// fields this screen's markup expects.
 function mapEntry(raw) {
+    const thumbSources = [raw.thumb_url, raw.image_medium_url, raw.image_url].filter(Boolean);
+    const positionLabel = raw.my_score?.position ?? null;
     return {
         id: raw.id,
         title: raw.title,
-        image: raw.image_url,
-        thumb: raw.thumb_url || raw.image_medium_url || raw.image_url,
+        thumb: thumbSources[0],
+        thumbSources,
         member_name: raw.member?.name || "",
-        position: raw.final_position,
         score: raw.my_score?.is_scored ? raw.my_score.score : null,
-        award_position: raw.my_score?.position ? POSITION_TO_KEY[raw.my_score.position] ?? null : null,
+        award_rank: positionLabel ? RANK_ORDER[positionLabel] ?? null : null,
+        award_position: positionLabel,
         comment: raw.my_score?.comment ?? "",
         bookmarked: Boolean(raw.my_score?.is_bookmarked),
     };
+}
+
+function handleImageFallback(e, sources) {
+    const tried = Number(e.currentTarget.dataset.fallbackIndex || 0) + 1;
+    const next = sources?.[tried];
+    if (next) {
+        e.currentTarget.dataset.fallbackIndex = tried;
+        e.currentTarget.src = next;
+    } else {
+        e.currentTarget.src = "/placeholder.jpg";
+    }
 }
 
 async function postBookmark(entryId, isBookmarked) {
@@ -56,6 +62,10 @@ function JudgeCompetitionSubmissions() {
     const { competitionId } = useParams();
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
+    const [awardedOnly, setAwardedOnly] = useState(false);
+    const [bookmarkedOnly, setBookmarkedOnly] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 12;
 
     const [isLoading, setIsLoading] = useState(true);
     const [club, setClub] = useState(null);
@@ -79,8 +89,6 @@ function JudgeCompetitionSubmissions() {
         async function load() {
             setIsLoading(true);
             try {
-                // per_page is set high so the grid/filter/navigation behave as if every
-                // submission were loaded at once, matching the previous (unpaginated) UX.
                 const response = await fetch(`${API_BASE}/judge/competitions/${competitionId}/submissions?per_page=500`, {
                     headers: authHeaders(),
                 });
@@ -108,14 +116,28 @@ function JudgeCompetitionSubmissions() {
         let list = entries;
         if (filter === "scored") list = list.filter((e) => e.score !== null);
         if (filter === "unscored") list = list.filter((e) => e.score === null);
+        if (awardedOnly) list = list.filter((e) => e.award_position !== null);
+        if (bookmarkedOnly) list = list.filter((e) => e.bookmarked);
         const term = search.trim().toLowerCase();
         if (term) {
             list = list.filter(
                 (e) => e.title?.toLowerCase().includes(term) || e.member_name?.toLowerCase().includes(term)
             );
         }
-        return list;
-    }, [entries, filter, search]);
+        return [...list].sort((a, b) => {
+            if (a.award_rank !== null && b.award_rank !== null) return a.award_rank - b.award_rank;
+            if (a.award_rank !== null) return -1;
+            if (b.award_rank !== null) return 1;
+            return 0;
+        });
+    }, [entries, filter, search, awardedOnly, bookmarkedOnly]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [filter, search, awardedOnly, bookmarkedOnly]);
+
+    const totalPages = Math.max(Math.ceil(filtered.length / rowsPerPage), 1);
+    const paginated = filtered.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
     if (isLoading) {
         return <Loader show={true} />;
@@ -126,7 +148,7 @@ function JudgeCompetitionSubmissions() {
             <div style={{ backgroundColor: 'white' }}>
                 <NavigationRoute activeClubId={club?.id} />
                 <HeaderRoute title="Season Results" />
-                <div className="judge-content" style={{ paddingTop: 25 }}>
+                <div className="judge-content" style={{ paddingTop: '25px' }}>
                     <p>Competition not found.</p>
                 </div>
             </div>
@@ -136,13 +158,11 @@ function JudgeCompetitionSubmissions() {
     const handleBookmark = async (entryId) => {
         const current = entries.find((e) => e.id === entryId);
         const next = !current?.bookmarked;
-        // Optimistic UI update, then persist to the real endpoint.
         setEntries((prev) => prev.map((e) => (e.id === entryId ? { ...e, bookmarked: next } : e)));
         try {
             await postBookmark(entryId, next);
         } catch (error) {
             console.error("Judge bookmark error:", error);
-            // Roll back on failure.
             setEntries((prev) => prev.map((e) => (e.id === entryId ? { ...e, bookmarked: !next } : e)));
         }
     };
@@ -153,113 +173,120 @@ function JudgeCompetitionSubmissions() {
                 <NavigationRoute activeClubId={club?.id} />
                 <HeaderRoute title="Season Results" />
                 <div className="content">
-                            <section>
-                                <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="dashboard-card" id="cl">
-                                        <div className="profile-card">
-                                            <div className="profile-left">
-                                                <div className="profile-info">
-                                                    <small className="greeting">Galleries uploaded by Club Members</small>
-                                                    <h2 className="name">{competition.name}</h2>
-                                                    <p className="role"> {club?.name}</p>
-                                                </div>
-                                            </div>
-                                            <div className="search-bar d-flex justify-content-space-between">
-                                                <input type="search" className="search-input" id="dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
-                                                <i className="fas fa-search"></i>
-                                            </div>
-                                            <div className="e-quick-filter text-end">
-                                                <strong>Quick Filter</strong>
-                                                <small className="d-block">(Click icons to filter)</small>
-                                                <div className="d-flex gap-2 justify-content-end">
-                                                    <img src={Pri} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Fax} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Pai} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                </div>
-                                                <div className="d-flex gap-2 justify-content-end mt-2">
-                                                    <img src={Flo} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Prof} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Ima} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                </div>
-                                            </div>
+                    <section>
+                        <div className="container" style={{ maxWidth: '1820px' }}>
+                            <div className="dashboard-card" id="cl">
+                                <div className="profile-card">
+                                    <div className="profile-left">
+                                        <div className="profile-info">
+                                            <small className="greeting">Galleries uploaded by Club Members</small>
+                                            <h2 className="name">{competition.name}</h2>
+                                            <p className="role"> {club?.name}</p>
                                         </div>
-                                        <div className="card-section">
-                                            <div className="stat-card">
-                                                <small className="ca-details">Images</small>
-                                                <h3 className="number">{entries.length}</h3>
-                                            </div>
+                                    </div>
+                                    <div className="search-bar d-flex justify-content-space-between">
+                                        <input type="search" className="search-input" id="dt-search-1" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                        <i className="fas fa-search"></i>
+                                    </div>
+                                    <div className="e-quick-filter text-end">
+                                        <strong>Quick Filter</strong>
+                                        <small className="d-block">(Click icons to filter)</small>
+                                        <div className="d-flex gap-2 justify-content-end mt-2">
+                                            <button type="button" className={`judge-quick-filter-btn${awardedOnly ? " active" : ""}`} title="Awarded only" onClick={() => setAwardedOnly((v) => !v)} >
+                                                <i className={awardedOnly ? "fa-solid fa-star" : "fa-regular fa-star"}></i>
+                                            </button>
+                                            <button type="button" className={`judge-quick-filter-btn${bookmarkedOnly ? " active" : ""}`} title="Bookmarked only" onClick={() => setBookmarkedOnly((v) => !v)} >
+                                                <i className={bookmarkedOnly ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </section>
-
-                            <section>
-                                <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="judge-filter-tabs" style={{ marginTop: 24 }}>
-                                        <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>All</button>
-                                        <button className={filter === "scored" ? "active" : ""} onClick={() => setFilter("scored")}>Scored</button>
-                                        <button className={filter === "unscored" ? "active" : ""} onClick={() => setFilter("unscored")}>Unscored</button>
+                                <div className="card-section">
+                                    <div className="stat-card" style={{ width: '100%' }}>
+                                        <small className="ca-details">Images</small>
+                                        <h3 className="number">{entries.length}</h3>
                                     </div>
                                 </div>
-                            </section>
-
-                            <section>
-                                <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <h5 style={{ color: "#4c4036", marginBottom: 18 }}>Competition Submissions</h5>
-                                    {filtered.length === 0 ? (
-                                        <p style={{ color: "#999", textAlign: "center", padding: 40 }}>No submissions match these filters.</p>
-                                    ) : (
-                                        <div className="judge-submission-grid">
-                                            {filtered.map((entry) => (
-                                                <div className="judge-submission-card" key={entry.id}>
-                                                    <div className="thumb-wrap" onClick={() => navigate(`/judge/competitions/${competitionId}/submissions/${entry.id}`)}>
-                                                        <img src={entry.thumb} alt={entry.title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                        {entry.position && <span className="judge-position-badge">🏅 {entry.position}</span>}
-                                                        <button
-                                                            type="button"
-                                                            className={`judge-bookmark-btn${entry.bookmarked ? " active" : ""}`}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                handleBookmark(entry.id);
-                                                            }}
-                                                        >
-                                                            <i className={entry.bookmarked ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}></i>
-                                                        </button>
-                                                    </div>
-                                                    <div className="card-body">
-                                                        <div className="card-title-row">
-                                                            <h5>{entry.title}</h5>
-                                                            <span className={`judge-status-pill ${entry.score !== null ? "scored" : "unscored"}`}>
-                                                                {entry.score !== null ? "Scored" : "Unscored"}
-                                                            </span>
-                                                        </div>
-                                                        <div className="score-label">
-                                                            <span>Score (out of 100)</span>
-                                                            <span>{entry.score ?? "--"}</span>
-                                                        </div>
-                                                        <div className="judge-score-progress">
-                                                            <span style={{ width: `${entry.score ?? 0}%` }}></span>
-                                                        </div>
-                                                        <button
-                                                            type="button"
-                                                            className="score-cta"
-                                                            onClick={() => navigate(`/judge/competitions/${competitionId}/submissions/${entry.id}`)}
-                                                        >
-                                                            {entry.score !== null ? "Edit Score" : "Score"}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div style={{ display: "flex", justifyContent: "flex-start", marginTop: 24 }}> <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: 8, padding: "11px 28px" }} onClick={() => navigate(`/judge/competitions/${competitionId}`)} >
-                                    Back
-                                </button>
-                                </div>
-                            </section>
+                            </div>
                         </div>
+                    </section>
+
+                    <section>
+                        <div className="container" style={{ maxWidth: '1820px' }}>
+                            <div className="judge-filter-tabs" style={{ marginTop: '24px' }}>
+                                <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>All</button>
+                                <button className={filter === "scored" ? "active" : ""} onClick={() => setFilter("scored")}>Scored</button>
+                                <button className={filter === "unscored" ? "active" : ""} onClick={() => setFilter("unscored")}>Unscored</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div className="container" style={{ maxWidth: '1820px' }}>
+                            <h5 style={{ color: "#4c4036", marginBottom: '18px' }}>Competition Submissions</h5>
+                            {filtered.length === 0 ? (
+                                <p style={{ color: "#999", textAlign: "center", padding: '40px' }}>No submissions match these filters.</p>
+                            ) : (
+                                <div className="judge-submission-grid">
+                                    {paginated.map((entry) => (
+                                        <div className="judge-submission-card" key={entry.id}>
+                                            <div className="thumb-wrap" onClick={() => navigate(`/judge/competitions/${competitionId}/submissions/${entry.id}`)}>
+                                                <img src={entry.thumb} alt={entry.title} onError={(e) => handleImageFallback(e, entry.thumbSources)} />
+                                                {entry.award_position && <span className="judge-position-badge">🏅 {entry.award_position}</span>}
+                                                <button type="button" className={`judge-bookmark-btn${entry.bookmarked ? " active" : ""}`} onClick={(e) => { e.stopPropagation(); handleBookmark(entry.id); }} >
+                                                    <i className={entry.bookmarked ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}></i>
+                                                </button>
+                                            </div>
+                                            <div className="card-body" style={{ marginLeft: '0' }}>
+                                                <div className="card-title-row">
+                                                    <h5>{entry.title}</h5>
+                                                    <span className={`judge-status-pill ${entry.score !== null ? "scored" : "unscored"}`}>
+                                                        {entry.score !== null ? "Scored" : "Unscored"}
+                                                    </span>
+                                                </div>
+                                                <div className="score-label">
+                                                    <span>Score (out of 100)</span>
+                                                    <span>{entry.score ?? "--"}</span>
+                                                </div>
+                                                <div className="judge-score-progress">
+                                                    <span style={{ width: `${entry.score ?? 0}%` }}></span>
+                                                </div>
+                                                <button type="button" className="score-cta" onClick={() => navigate(`/judge/competitions/${competitionId}/submissions/${entry.id}`)} >
+                                                    {entry.score !== null ? "Edit Score" : "Score"}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {totalPages > 1 && (
+                                <div className="dt-paging" style={{ marginTop: '18px', display: "flex", justifyContent: "flex-end" }}>
+                                    <nav aria-label="pagination">
+                                        <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>‹</button>
+                                        {Array.from({ length: totalPages }, (_, i) => (
+                                            <button key={i + 1} className={`dt-paging-button ${currentPage === i + 1 ? "current" : ""}`} onClick={() => setCurrentPage(i + 1)}>
+                                                {i + 1}
+                                            </button>
+                                        ))}
+                                        <button className="dt-paging-button next" disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}>›</button>
+                                    </nav>
+                                </div>
+                            )}
+                        </div>
+
+                        <div style={{ display: "flex", justifyContent: "flex-start", marginTop: '24px' }}> <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: '8px', padding: "11px 28px" }} onClick={() => navigate(`/judge/competitions/${competitionId}`)} >
+                            Back
+                        </button>
+                        </div>
+                    </section>
+                    <footer className="site-footer">
+                        <div className="footer-content">
+                            <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                            <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                        </div>
+                    </footer>
+                </div>
             </div>
         </>
     );

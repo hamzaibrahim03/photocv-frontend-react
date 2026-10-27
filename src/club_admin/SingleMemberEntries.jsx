@@ -149,7 +149,7 @@ function SingleMemberEntries() {
                                         <h3 style={{ margin: "0 0 10px", }} >
                                             No entries found
                                         </h3>
-                                        <p style={{ margin: 0, color: "#777", }} >
+                                        <p style={{ margin: '0', color: "#777", }} >
                                             No entries were found for this member in this season.
                                         </p>
                                         <button type="button" onClick={() => navigate(`/competitions/seasons/${id}`)} style={{ marginTop: "20px", border: "none", background: "#4C4036", color: "#fff", padding: "11px 20px", borderRadius: "8px", cursor: "pointer", fontWeight: "600", }} >
@@ -163,18 +163,18 @@ function SingleMemberEntries() {
                                 <section>
                                     <div className="container" style={{ maxWidth: "1820px", }} >
                                         <div className="dashboard-card" id="cl" >
-                                            <div className="profile-card" style={{ width: '170%' }} >
+                                            <div className="profile-card">
                                                 <div className="profile-left">
                                                     <img src={member.member_profile_image} alt={member.member_name || "Member"} style={{ width: "90px", height: "90px", borderRadius: "50%", objectFit: "cover", border: "1px solid #ddd", }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
                                                     <div className="profile-info">
                                                         <div style={{ marginLeft: '10px' }}>
-                                                            <h2 style={{ margin: 0, fontSize: "26px", fontWeight: "700", color: "#222", }} >
+                                                            <h2 style={{ margin: '0', fontSize: "26px", fontWeight: "700", color: "#222", }} >
                                                                 {member.member_name}
                                                             </h2>
                                                             <p style={{ margin: "6px 0", color: "#777", fontSize: "14px", }} >
                                                                 {member.member_title}
                                                             </p>
-                                                            <p style={{ margin: 0, color: "#999", fontSize: "13px", }} >
+                                                            <p style={{ margin: '0', color: "#999", fontSize: "13px", }} >
                                                                 Competition ID:{" "} {member.member_comp_id}
                                                             </p>
                                                         </div>
@@ -261,6 +261,11 @@ function SingleMemberEntries() {
                                 </section>
                             </>
                         )}
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )

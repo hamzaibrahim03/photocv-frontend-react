@@ -339,7 +339,7 @@ function EventPublic() {
                                                         {eventData?.clubSettings?.original?.data?.seasons.length > 0 ? (
                                                             <div className="session-container">
                                                                 {eventData?.clubSettings?.original?.data?.seasons?.map((seas) => (
-                                                                    <div key={seas.id} className={`session-card ${seas.status?.toLowerCase()}`} style={{ backgroundColor: eventData?.clubSettings?.original?.data?.settings?.background_color, opacity: 0.7, }}>
+                                                                    <div key={seas.id} className={`session-card ${seas.status?.toLowerCase()}`} style={{ backgroundColor: eventData?.clubSettings?.original?.data?.settings?.background_color, opacity: '0.7', }}>
                                                                         <div className="session-header">
                                                                             <h3 className="clubhead">
                                                                                 {formatedDate(seas.start_date)} - {formatedDate(seas.end_date)}
@@ -409,7 +409,7 @@ function EventPublic() {
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">
-                                                <h5 className="head mb-4" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                                <h5 className="head mt-5 mb-5" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}> {eventData?.clubSettings?.original?.data?.club.address} </p>
                                                     <div className="icon-circles ms-3" style={{ color: eventData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: eventData?.clubSettings?.original?.data?.settings?.accent_color }}>
@@ -441,7 +441,7 @@ function EventPublic() {
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <p className="footer-text head" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
                                                         <a href="fb_link" target="_blank" className="footer-link" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {eventData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
@@ -452,7 +452,7 @@ function EventPublic() {
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <p className="footer-text head" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
                                                         <a href="insta_link" target="_blank" className="footer-link" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {eventData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
@@ -463,7 +463,7 @@ function EventPublic() {
                                                         <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <p className="footer-text head" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
                                                         <a href="flickr_link" className="footer-link" style={{ color: eventData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {eventData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>

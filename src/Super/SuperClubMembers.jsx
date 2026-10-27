@@ -21,7 +21,6 @@ function SuperClubMembers() {
     useEffect(() => {
         fetchClubsSummary();
         fetchClubAndMembers();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clubId]);
 
     const fetchClubsSummary = async () => {
@@ -99,21 +98,16 @@ function SuperClubMembers() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card">
                                             <div className="profile-left">
-                                                <div className="profile-info" ref={menuRef} style={{position: 'relative'}}>
-                                                    <h2 className="name" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }} onClick={() => setDropdownOpen((v) => !v)}>
-                                                        {club?.name} <i className="fa-solid fa-chevron-down" style={{ fontSize: 13 }}></i>
+                                                <div className="profile-info" ref={menuRef} style={{ position: 'relative' }}>
+                                                    <h2 className="name" style={{ display: "flex", alignItems: "center", gap: '8px', cursor: "pointer" }} onClick={() => setDropdownOpen((v) => !v)}>
+                                                        {club?.name} <i className="fa-solid fa-chevron-down" style={{ fontSize: '13px' }}></i>
                                                     </h2>
                                                     {dropdownOpen && (
-                                                        <div style={{ position: "absolute", top: "100%", left: 0, background: "#fff", border: "1px solid #eee", borderRadius: 8, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", zIndex: 30, minWidth: 220 }}>
+                                                        <div style={{ position: "absolute", top: "100%", left: '0', background: "#fff", border: "1px solid #eee", borderRadius: '8px', boxShadow: "0 8px 24px rgba(0,0,0,0.12)", zIndex: '30', minWidth: '220px' }}>
                                                             {clubs.map((c) => (
-                                                                <button
-                                                                    key={c.id}
-                                                                    type="button"
-                                                                    style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 14px", border: "none", background: "none", cursor: "pointer", color: "#4c4036" }}
-                                                                    onClick={() => { navigate(`/super/clubs/${c.id}/members`); setDropdownOpen(false); }}
-                                                                >
+                                                                <button key={c.id} type="button" style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 14px", border: "none", background: "none", cursor: "pointer", color: "#4c4036" }} onClick={() => { navigate(`/super/clubs/${c.id}/members`); setDropdownOpen(false); }} >
                                                                     {c.name}
                                                                 </button>
                                                             ))}
@@ -142,7 +136,7 @@ function SuperClubMembers() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="super-view-toggle" style={{ marginBottom: 14 }}>
+                                    <div className="super-view-toggle" style={{ marginBottom: '14px' }}>
                                         <button className={view === "grid" ? "active" : ""} onClick={() => setView("grid")}><i className="fa-solid fa-table-cells-large"></i></button>
                                         <button className={view === "table" ? "active" : ""} onClick={() => setView("table")}><i className="fa-solid fa-table"></i></button>
                                         <button className={view === "list" ? "active" : ""} onClick={() => setView("list")}><i className="fa-solid fa-list"></i></button>
@@ -177,14 +171,14 @@ function SuperClubMembers() {
                                                             </td>
                                                             <td>
                                                                 {m.templatePreview ? (
-                                                                    <img src={m.templatePreview} alt="Template preview" style={{ width: 90, height: 56, objectFit: "cover", borderRadius: 4, border: "1px solid #eee" }} />
+                                                                    <img src={m.templatePreview} alt="Template preview" style={{ width: '90px', height: '56px', objectFit: "cover", borderRadius: '4px', border: "1px solid #eee" }} />
                                                                 ) : (
                                                                     <span>---</span>
                                                                 )}
                                                             </td>
                                                             <td>{m.role}</td>
                                                             <td>{m.establishedYear || "---"}</td>
-                                                            <td>{m.website ? <a href={m.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: 11 }}></i></a> : "---"}</td>
+                                                            <td>{m.website ? <a href={m.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i></a> : "---"}</td>
                                                             <td>
                                                                 <button type="button" className={`super-toggle${m.status ? " on" : ""}`} onClick={() => toggleStatus(m.id)}>
                                                                     <span></span>
@@ -224,7 +218,7 @@ function SuperClubMembers() {
                                                             </td>
                                                             <td>{m.role}</td>
                                                             <td>{m.images}</td>
-                                                            <td>{m.website ? <a href={m.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: 11 }}></i></a> : "---"}</td>
+                                                            <td>{m.website ? <a href={m.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i></a> : "---"}</td>
                                                             <td>
                                                                 <button type="button" className={`super-toggle${m.status ? " on" : ""}`} onClick={() => toggleStatus(m.id)}>
                                                                     <span></span>
@@ -243,6 +237,12 @@ function SuperClubMembers() {
                                     )}
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

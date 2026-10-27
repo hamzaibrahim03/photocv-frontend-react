@@ -89,7 +89,6 @@ function EventSingle() {
         };
         loadData();
     }, [id]);
-    const comments = event?.comments || [];
     const eventTypes = event?.types || [];
     const eventTags = event?.tags || [];
     const keywords = event?.tags_keywords ? event.tags_keywords.split(',').map(keyword => keyword.trim()).filter(Boolean) : [];
@@ -133,15 +132,15 @@ function EventSingle() {
                                 <div className="container" style={{ maxWidth: '1820px', margin: '0 auto', padding: '0 15px' }}>
                                     <div className="dashboard-card">
                                         <div className="profile-card">
-                                            <div className="profile-left d-flex align-items-center">
+                                            <div className="profile-left">
                                                 <div className="profile-info">
-                                                    <small className="greeting text-muted" style={{ fontSize: '16px' }}>
+                                                    <small className="greeting">
                                                         Viewing event
                                                     </small>
-                                                    <h2 className="name" style={{ fontSize: '30px', fontWeight: '500', color: '#4c4036' }}>
+                                                    <h2 className="name">
                                                         {event.name}
                                                     </h2>
-                                                    <p className="role" style={{ fontSize: '16px', color: '#cc445e' }}>
+                                                    <p className="role">
                                                         {formattedStartDate}
                                                     </p>
                                                 </div>
@@ -194,7 +193,7 @@ function EventSingle() {
                                                 <div className="container">
                                                     <div id="news">
                                                         <div className="news-list">
-                                                            <div className="custom-cards" style={{ display: 'flex', borderRadius: '10px', width: '100%', height: '310px', margin: 'auto', flexDirection: 'column' }}>
+                                                            <div className="custom-cards" style={{ display: 'flex', borderRadius: '10px', width: '100%', margin: 'auto', flexDirection: 'column', backgroundColor: 'white', padding: '20px' }}>
                                                                 <div className="row">
                                                                     <div className="col-md-4">
                                                                         {event.featured_image_url ? (
@@ -394,10 +393,10 @@ function EventSingle() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="button-group mt-4">
-                                                                    <button className="btn text-white me-3" style={{ backgroundColor: '#99816b', width: '120px' }} onClick={() => navigate(-1)}>
+                                                                    <button className="btn" id="e-view" onClick={() => navigate(-1)}>
                                                                         Back
                                                                     </button>
-                                                                    <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }} onClick={() => navigate(`/event/${event.id}/edit`)}>
+                                                                    <button className="btn" id="edit" onClick={() => navigate(`/event/${event.id}/edit`)}>
                                                                         Edit
                                                                     </button>
                                                                 </div>
@@ -478,6 +477,12 @@ function EventSingle() {
                                     </div>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

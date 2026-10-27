@@ -23,6 +23,7 @@ function JudgeCompetitionEdit() {
     const [form, setForm] = useState({ name: "", competition_type_id: "", description: "", status: "" });
     const [isSaving, setIsSaving] = useState(false);
     const [search, setSearch] = useState("");
+    const [competitionTypes, setCompetitionTypes] = useState([]);
 
     useEffect(() => {
         async function getClub() {
@@ -65,9 +66,21 @@ function JudgeCompetitionEdit() {
                 setIsLoading(false);
             }
         }
+        async function getCompetitionTypes() {
+            try {
+                const response = await fetch(`${API_BASE}/club/public/catalog/all-grouped`, {
+                    headers: { Accept: "application/json" },
+                });
+                const json = await response.json();
+                setCompetitionTypes(json?.data?.competition_type || []);
+            } catch (error) {
+                console.error("Judge competition types load error:", error);
+            }
+        }
         if (competitionId) {
             getClub();
             getCompetitionData();
+            getCompetitionTypes();
         }
     }, [competitionId]);
 
@@ -80,7 +93,7 @@ function JudgeCompetitionEdit() {
             <div style={{ backgroundColor: 'white' }}>
                 <NavigationRoute activeClubId={club?.id} />
                 <HeaderRoute title="Competition" />
-                <div className="judge-content" style={{ paddingTop: 25 }}>
+                <div className="judge-content" style={{ paddingTop: '25px' }}>
                     <p>Competition not found.</p>
                 </div>
             </div>
@@ -96,8 +109,6 @@ function JudgeCompetitionEdit() {
         e.preventDefault();
         setIsSaving(true);
         try {
-            // The judge endpoint only accepts these four "Basic Information" fields
-            // (see JudgeCompetitionUpdateRequest) — anything else is ignored/validated out.
             const payload = {
                 name: form.name,
                 competition_type_id: form.competition_type_id ? Number(form.competition_type_id) : null,
@@ -155,55 +166,33 @@ function JudgeCompetitionEdit() {
                         <section>
                             <div className="container" style={{ maxWidth: '1820px' }}>
 
-                                <form onSubmit={handleSave} style={{ background: "#fff", borderRadius: 12, boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: 30, marginTop: 22 }}>
-                                    <h5 className="head" style={{ color: "#4c4036", marginBottom: 22 }}>Basic Information</h5>
+                                <form onSubmit={handleSave} style={{ background: "#fff", borderRadius: '12px', boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: '30px', marginTop: '22px' }}>
+                                    <h5 className="head" style={{ color: "#4c4036", marginBottom: '22px' }}>Basic Information</h5>
                                     <div className="row mb-4">
                                         <div className="col-md-6">
                                             <label className="form-label text-muted">Competition Name</label>
-                                            <input
-                                                type="text"
-                                                name="name"
-                                                className="form-control"
-                                                value={form.name}
-                                                onChange={handleChange}
-                                                required
-                                            />
+                                            <input type="text" name="name" className="form-control" value={form.name} onChange={handleChange} required />
                                         </div>
                                         <div className="col-md-6">
                                             <label className="form-label text-muted">Competition Type</label>
-                                            <input
-                                                type="number"
-                                                name="competition_type_id"
-                                                className="form-control"
-                                                value={form.competition_type_id}
-                                                onChange={handleChange}
-                                            />
+                                            <select name="competition_type_id" className="form-select" value={form.competition_type_id} onChange={handleChange}>
+                                                <option value="">- Select -</option>
+                                                {competitionTypes.map((type) => (
+                                                    <option key={type.id} value={type.id}>{type.name}</option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <label className="form-label text-muted">Competition Description</label>
-                                    <textarea
-                                        name="description"
-                                        className="form-control mb-4"
-                                        style={{ height: 160, resize: "none" }}
-                                        placeholder="Text here..."
-                                        value={form.description}
-                                        onChange={handleChange}
-                                    />
+                                    <textarea name="description" className="form-control mb-4" style={{ height: '160px', resize: "none" }} placeholder="Text here..." value={form.description} onChange={handleChange} />
 
                                     <label className="form-label text-muted mb-3 d-block">Status</label>
                                     <div className="row mb-4">
                                         {STATUS_OPTIONS.map((status) => (
                                             <div className="col" key={status}>
                                                 <div className="premium-radio">
-                                                    <input
-                                                        type="radio"
-                                                        id={`status-${status}`}
-                                                        name="status"
-                                                        value={status}
-                                                        checked={form.status === status}
-                                                        onChange={handleChange}
-                                                    />
+                                                    <input type="radio" id={`status-${status}`} name="status" value={status} checked={form.status === status} onChange={handleChange} />
                                                     <label htmlFor={`status-${status}`}>
                                                         <div className="premium-radio-circle"></div>
                                                         <div className="premium-radio-content">
@@ -217,27 +206,23 @@ function JudgeCompetitionEdit() {
                                         ))}
                                     </div>
 
-                                    <div className="button-group d-flex gap-2" style={{ marginTop: 30 }}>
-                                        <button
-                                            type="button"
-                                            className="btn text-white px-4"
-                                            style={{ backgroundColor: "#99816b" }}
-                                            onClick={() => navigate(-1)}
-                                        >
+                                    <div className="button-group d-flex gap-2" style={{ marginTop: '30px' }}>
+                                        <button type="button" className="btn" id="e-view" onClick={() => navigate(-1)} >
                                             Back
                                         </button>
-                                        <button
-                                            type="submit"
-                                            className="btn text-white px-4"
-                                            style={{ backgroundColor: "#4c4036" }}
-                                            disabled={isSaving}
-                                        >
+                                        <button type="submit" className="btn" id="edit" disabled={isSaving} >
                                             {isSaving ? "Saving..." : "Save"}
                                         </button>
                                     </div>
                                 </form>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

@@ -20,7 +20,6 @@ function SuperClubsList() {
             fetchClubs(search);
         }, search ? 300 : 0);
         return () => clearTimeout(delayDebounce);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search]);
 
     const fetchClubs = async (searchTerm) => {
@@ -78,7 +77,7 @@ function SuperClubsList() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     <small className="name">List of clubs</small>
@@ -142,7 +141,7 @@ function SuperClubsList() {
                                                             </td>
                                                             <td>{c.membersCount}</td>
                                                             <td>{c.established}</td>
-                                                            <td><a href="#" onClick={(e) => e.preventDefault()}>Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: 11 }}></i></a></td>
+                                                            <td><a href="#" onClick={(e) => e.preventDefault()}>Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i></a></td>
                                                             <td>
                                                                 <button type="button" className={`super-toggle${c.status === "active" ? " on" : ""}`} onClick={() => toggleStatus(c.id)}>
                                                                     <span></span>
@@ -168,7 +167,6 @@ function SuperClubsList() {
                                                     </div>
                                                     <div className="body">
                                                         <h4>
-                                                            {c.logo ? <img className="logo" src={c.logo} alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} /> : <span style={{ width: 28, height: 28, borderRadius: "50%", background: "#eee", display: "inline-block" }}></span>}
                                                             {c.name}
                                                         </h4>
                                                         <p className="tagline">{c.tagline}</p>
@@ -200,6 +198,12 @@ function SuperClubsList() {
                                     <button disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}>›</button>
                                 </div>
                             )}
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

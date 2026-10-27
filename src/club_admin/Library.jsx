@@ -171,6 +171,12 @@ function Library() {
                                     </div>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

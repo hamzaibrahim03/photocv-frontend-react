@@ -1,28 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState } from 'react';
 import Calendar from "../Ryton/extra/CalendarRyton"
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
 import Loader from "../Ryton/extra/LoaderAll";
-import c1 from '../assets/images/dashboard/c1.jpg';
-import c2 from '../assets/images/dashboard/c2.jpg';
+import "./assets/css/adminstyle.css"
 function ClubMemberGallery() {
-    const navigate = useNavigate();
-    const [galleryImages] = useState([
-        { src: c1, description: "Beautiful landscape" },
-        { src: c2, description: "Urban night scene" },
-    ]);
-    const [isLoading, setIsLoading] = useState(false);
-    const handleImageClick = (index) => {
-        const imgArray = galleryImages.map(img => img.src);
-        const descArray = galleryImages.map(img => img.description || "");
-        localStorage.setItem("selectedImageIndex", index);
-        localStorage.setItem("imageList", JSON.stringify(imgArray));
-        localStorage.setItem("imageDescriptions", JSON.stringify(descArray));
-        setTimeout(() => {
-            navigate("/club_gallery_single");
-        }, 100);
-    };
+    const [isLoading] = useState(false);
     return (
         <>
             <div style={{ backgroundColor: 'white' }}>
@@ -32,89 +15,104 @@ function ClubMemberGallery() {
                         <NavigationRoute />
                         <HeaderRoute title="Galleries" />
                         <div className="content">
-                            <div className="dashboard-card">
-                                <div className="profile-card">
-                                    <div className="profile-left">
-                                        <div className="profile-info">
-                                            <small className="greeting">Galleries uploaded by Club</small>
-                                            <h2 className="name">Sunset</h2>
-                                            <small className="role">20 Images</small>
-                                        </div>
-                                    </div>
-                                    <div className="dt-search mx-auto">
-                                        <input type="search" className="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
-                                    </div>
-                                </div>
-                                <div className="card-section" style={{ width: '32%' }}>
-                                    <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
-                                        <small className="ca-details fs-5">Images</small>
-                                        <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>64</h3>
-                                    </div>
-                                    <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                                        <small className="ca-details fs-5">Interactions</small>
-                                        <div className="row mt-4 align-items-center">
-                                            <div className="col-md-5">
-                                                <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>1k</h3>
-                                            </div>
-                                            <div className="days col-md-7 text-start">
-                                                <span>Likes & Comments</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card">
-                                <div className="d-flex justify-content-between align-items-center mb-3" style={{ padding: '15px' }}>
-                                    <h4>Club Gallery - Food</h4>
-                                </div>
-                                <div className="row-wrapper">
-                                    <div className="galleriy">
-                                        <div className="galleriy-item">
-                                            <img src={mage} alt="Gallery Image" className="gallery-img" />
-                                            <div className="galleriy-infos">
-                                                <div className="gal-item">
-                                                    <div className="gal-details">
-                                                        <span>{item.create}</span>
-                                                    </div>
+                            <section>
+                                <div className='container' style={{ maxWidth: '1820px' }}>
+                                    <div className="dashboard-card">
+                                        <div className="profile-card">
+                                            <div className="profile-left">
+                                                <div className="profile-info">
+                                                    <small className="greeting">Galleries uploaded by Club</small>
+                                                    <h2 className="name">Sunset</h2>
+                                                    <small className="role">20 Images</small>
                                                 </div>
-                                                <div className="profile-icon">
-                                                    <div className="icons">
-                                                        <span>20</span>
-                                                        <i className="fas fa-image"></i>
+                                            </div>
+                                            <div className="dt-search mx-auto">
+                                                <input type="search" className="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
+                                            </div>
+                                        </div>
+                                        <div className="card-section" style={{ width: '32%' }}>
+                                            <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                                                <small className="ca-details fs-5">Images</small>
+                                                <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>64</h3>
+                                            </div>
+                                            <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
+                                                <small className="ca-details fs-5">Interactions</small>
+                                                <div className="row mt-4 align-items-center">
+                                                    <div className="col-md-5">
+                                                        <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>1k</h3>
                                                     </div>
-                                                    <div className="icons">
-                                                        <span>53</span>
-                                                        <i className="fas fa-heart"></i>
-                                                    </div>
-                                                    <div className="icons">
-                                                        <span>39</span>
-                                                        <i className="fas fa-comment"></i>
+                                                    <div className="days col-md-7 text-start">
+                                                        <span>Likes & Comments</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="dt-paging">
-                                <nav aria-label="pagination">
-                                    <button className={`dt-paging-button first ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(1)} aria-label="First">
-                                        «
-                                    </button>
-                                    <button className={`dt-paging-button previous ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous">
-                                        ‹
-                                    </button>
-                                    <button className={`dt-paging-button ${currentPage === page ? 'current' : ''}`} onClick={() => goToPage(page)}>
-                                        {page}
-                                    </button>
-                                    <button className={`dt-paging-button next ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next">
-                                        ›
-                                    </button>
-                                    <button className={`dt-paging-button last ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(totalPages)} aria-label="Last">
-                                        »
-                                    </button>
-                                </nav>
-                            </div>
+                            </section>
+
+                            <section>
+                                <div className='container' style={{ maxWidth: '1820px' }}>
+                                    <div className="card">
+                                        <div className="d-flex justify-content-between align-items-center mb-3" style={{ padding: '15px' }}>
+                                            <h4>Club Gallery - Food</h4>
+                                        </div>
+                                        <div className="row-wrapper">
+                                            <div className="galleriy">
+                                                <div className="galleriy-item">
+                                                    <img src={mage} alt="Gallery Image" className="gallery-img" />
+                                                    <div className="galleriy-infos">
+                                                        <div className="gal-item">
+                                                            <div className="gal-details">
+                                                                <span>{item.create}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="profile-icon">
+                                                            <div className="icons">
+                                                                <span>20</span>
+                                                                <i className="fas fa-image"></i>
+                                                            </div>
+                                                            <div className="icons">
+                                                                <span>53</span>
+                                                                <i className="fas fa-heart"></i>
+                                                            </div>
+                                                            <div className="icons">
+                                                                <span>39</span>
+                                                                <i className="fas fa-comment"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="dt-paging">
+                                        <nav aria-label="pagination">
+                                            <button className={`dt-paging-button first ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(1)} aria-label="First">
+                                                «
+                                            </button>
+                                            <button className={`dt-paging-button previous ${currentPage === 1 ? 'disabled' : ''}`} disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)} aria-label="Previous">
+                                                ‹
+                                            </button>
+                                            <button className={`dt-paging-button ${currentPage === page ? 'current' : ''}`} onClick={() => goToPage(page)}>
+                                                {page}
+                                            </button>
+                                            <button className={`dt-paging-button next ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)} aria-label="Next">
+                                                ›
+                                            </button>
+                                            <button className={`dt-paging-button last ${currentPage === totalPages ? 'disabled' : ''}`} disabled={currentPage === totalPages} onClick={() => goToPage(totalPages)} aria-label="Last">
+                                                »
+                                            </button>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

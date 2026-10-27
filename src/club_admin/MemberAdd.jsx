@@ -158,109 +158,120 @@ function MemberAdd() {
                                     </div>
                                 </div>
                             </section>
-                            <div className="row container mx-auto px-0" style={{ maxWidth: '1820px' }}>
-                                <div className="col-md-8 px-0">
-                                    <section className="bg-white p-4 rounded shadow-sm mb-5">
-                                        <form onSubmit={submitForm}>
-                                            <h5 className="head mb-4">
-                                                General Information
-                                            </h5>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="form-label text-muted">Title</label>
-                                                    <input type="text" name="title" value={formData.title} onChange={handleChange} className="form-control" placeholder="Mr, Mrs, Dr..." />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="form-label text-muted">Full Name</label>
-                                                    <input type="text" name="name" value={formData.name} onChange={handleChange} className={`form-control ${errors.name ? 'is-invalid' : ''}`} required />
-                                                    {errors.name && (
-                                                        <div className="invalid-feedback">
-                                                            {Array.isArray(errors.name)
-                                                                ? errors.name[0]
-                                                                : errors.name}
+
+                            <section>
+                                <div className='container' style={{ maxWidth: '1820px' }}>
+                                    <div className="row mx-auto px-0">
+                                        <div className="col-md-8 px-0">
+                                            <section className="bg-white p-4 rounded shadow-sm mb-5">
+                                                <form onSubmit={submitForm}>
+                                                    <h5 className="head mt-5 mb-5">
+                                                        General Information
+                                                    </h5>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="form-label text-muted">Title</label>
+                                                            <input type="text" name="title" value={formData.title} onChange={handleChange} className="form-control" placeholder="Mr, Mrs, Dr..." />
                                                         </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="form-label text-muted">Email</label>
-                                                    <input type="email" name="email" value={formData.email} onChange={handleChange} className={`form-control ${errors.email ? 'is-invalid' : ''}`} required />
-                                                    {errors.email && (
-                                                        <div className="invalid-feedback">
-                                                            {Array.isArray(errors.email)
-                                                                ? errors.email[0]
-                                                                : errors.email}
+                                                        <div className="col-md-6">
+                                                            <label className="form-label text-muted">Full Name</label>
+                                                            <input type="text" name="name" value={formData.name} onChange={handleChange} className={`form-control ${errors.name ? 'is-invalid' : ''}`} required />
+                                                            {errors.name && (
+                                                                <div className="invalid-feedback">
+                                                                    {Array.isArray(errors.name)
+                                                                        ? errors.name[0]
+                                                                        : errors.name}
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                    )}
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="form-label text-muted">Phone</label>
-                                                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={`form-control ${errors.phone ? 'is-invalid' : ''}`} required />
-                                                    {errors.phone && (
-                                                        <div className="invalid-feedback">
-                                                            {Array.isArray(errors.phone)
-                                                                ? errors.phone[0]
-                                                                : errors.phone}
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="form-label text-muted">Email</label>
+                                                            <input type="email" name="email" value={formData.email} onChange={handleChange} className={`form-control ${errors.email ? 'is-invalid' : ''}`} required />
+                                                            {errors.email && (
+                                                                <div className="invalid-feedback">
+                                                                    {Array.isArray(errors.email)
+                                                                        ? errors.email[0]
+                                                                        : errors.email}
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="form-label text-muted">Description</label>
-                                                    <textarea name="description" value={formData.description} onChange={handleChange} className="form-control" rows="5" style={{ resize: 'none' }} />
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="form-label text-muted">Image</label>
-                                                    <input type="file" accept="image/*" className="form-control bg-light" onChange={handleImageChange} />
-                                                    {imagePreview && (
-                                                        <div className="mt-3">
-                                                            <img src={imagePreview} alt="Member" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', }} />
+                                                        <div className="col-md-6">
+                                                            <label className="form-label text-muted">Phone</label>
+                                                            <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={`form-control ${errors.phone ? 'is-invalid' : ''}`} required />
+                                                            {errors.phone && (
+                                                                <div className="invalid-feedback">
+                                                                    {Array.isArray(errors.phone)
+                                                                        ? errors.phone[0]
+                                                                        : errors.phone}
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-12">
-                                                    <label className="form-label text-muted">Role</label>
-                                                    <select name="role" value={formData.role} onChange={handleChange} className="form-control form-select">
-                                                        <option value="Admin">Admin</option>
-                                                        <option value="Photographer">Photographer</option>
-                                                        <option value="Member">Member</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <h5 className="head mb-4 border-top pt-4">Social Media Links</h5>
-                                            <div className="mb-3">
-                                                <label className="form-label text-muted">Facebook</label>
-                                                <input type="text" name="facebook" value={formData.facebook} onChange={handleChange} className="form-control" placeholder="Facebook link..." />
-                                            </div>
-                                            <div className="mb-3">
-                                                <label className="form-label text-muted">Instagram</label>
-                                                <input type="text" name="instagram" value={formData.instagram} onChange={handleChange} className="form-control" placeholder="Instagram link..." />
-                                            </div>
-                                            <div className="mb-5">
-                                                <label className="form-label text-muted">Flickr</label>
-                                                <input type="text" name="flickr" value={formData.flickr} onChange={handleChange} className="form-control" placeholder="Flickr link..." />
-                                            </div>
-                                            <div className="d-flex justify-content-between align-items-center">
-                                                <div className="button-group d-flex gap-2">
-                                                    <button type="submit" disabled={isSaving} className="btn" id="edit">
-                                                        {isSaving ? 'Saving...' : isEditMode ? 'Update' : 'Save'}
-                                                    </button>
-                                                    <button type="button" className="btn text-white px-4 bg-secondary" onClick={() => navigate('/members')} disabled={isSaving}>
-                                                        Cancel
-                                                    </button>
-                                                </div>
-                                                <button type="button" className="btn" id="e-view" onClick={() => navigate('/members')}>
-                                                    Back
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </section>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="form-label text-muted">Description</label>
+                                                            <textarea name="description" value={formData.description} onChange={handleChange} className="form-control" rows="5" style={{ resize: 'none' }} />
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="form-label text-muted">Image</label>
+                                                            <input type="file" accept="image/*" className="form-control bg-light" onChange={handleImageChange} />
+                                                            {imagePreview && (
+                                                                <div className="mt-3">
+                                                                    <img src={imagePreview} alt="Member" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', }} />
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-12">
+                                                            <label className="form-label text-muted">Role</label>
+                                                            <select name="role" value={formData.role} onChange={handleChange} className="form-control form-select">
+                                                                <option value="Admin">Admin</option>
+                                                                <option value="Photographer">Photographer</option>
+                                                                <option value="Member">Member</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <h5 className="head mt-5 mb-5 border-top pt-4">Social Media Links</h5>
+                                                    <div className="mb-3">
+                                                        <label className="form-label text-muted">Facebook</label>
+                                                        <input type="text" name="facebook" value={formData.facebook} onChange={handleChange} className="form-control" placeholder="Facebook link..." />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label className="form-label text-muted">Instagram</label>
+                                                        <input type="text" name="instagram" value={formData.instagram} onChange={handleChange} className="form-control" placeholder="Instagram link..." />
+                                                    </div>
+                                                    <div className="mb-5">
+                                                        <label className="form-label text-muted">Flickr</label>
+                                                        <input type="text" name="flickr" value={formData.flickr} onChange={handleChange} className="form-control" placeholder="Flickr link..." />
+                                                    </div>
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        <div className="button-group d-flex gap-2">
+                                                            <button type="submit" disabled={isSaving} className="btn" id="edit">
+                                                                {isSaving ? 'Saving...' : isEditMode ? 'Update' : 'Save'}
+                                                            </button>
+                                                            <button type="button" className="btn" id="e-view" onClick={() => navigate('/members')} disabled={isSaving}>
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+                                                        <button type="button" className="btn" id="e-view" onClick={() => navigate('/members')}>
+                                                            Back
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </section>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

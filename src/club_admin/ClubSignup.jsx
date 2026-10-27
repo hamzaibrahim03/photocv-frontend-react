@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import apiClient from '../api/axios';
+import './assets/css/signupstyle.css';
+import sample from './assets/images/sample.png';
+import club from './assets/images/club.png';
 import Step1GeneralSignup from '../../steps_signup/Step1General';
 import Step2AppearanceSignup from '../../steps_signup/Step2Appearance';
 import Step3MembershipSignup from '../../steps_signup/Step3Membership';
 import Step4ContentSignup from '../../steps_signup/Step4Content';
 import Step5AccountSignup from '../../steps_signup/Step5Account';
+import "./assets/css/adminstyle.css"
 const components = [
     Step1GeneralSignup,
     Step2AppearanceSignup,
@@ -44,7 +48,7 @@ function ClubSignup() {
     const [submitError, setSubmitError] = useState('');
     const updateFormData = (fields) => { setFormData((prev) => ({ ...prev, ...fields })); };
     const selectStep = (index) => {
-        if (index >= 0 && index < steps.length) {
+        if (index >= 0 && index < steps.length && index <= currentStep) {
             setCurrentStep(index);
         }
     };
@@ -76,7 +80,7 @@ function ClubSignup() {
             if (formData.banner instanceof File) payload.append('club[banner]', formData.banner);
 
             await apiClient.post('/sign-up', payload, { headers: { 'Content-Type': 'multipart/form-data' } });
-            navigate('/admin/login');
+            navigate('/login');
         } catch (error) {
             const status = error?.response?.status;
             const message = error?.response?.data?.message;
@@ -92,51 +96,51 @@ function ClubSignup() {
 
     const CurrentComponent = components[currentStep];
     return (
-        <section className="signup-container m-0 p-0 vw-100 vh-100 d-flex overflow-hidden">
-            <div className="container">
-                <div className="content-wrapper d-flex w-100 flex-row">
-                    <div className="form-section d-flex flex-column justify-content-center bg-white" style={{ flex: '0.7', padding: '60px 50px 40px 50px' }}>
-                        <div className="logo-wrapper d-flex justify-content-center align-items-center mb-4">
-                        </div>
-                        <h2 className="title text-center" style={{ fontSize: '48px', fontWeight: '600', color: '#4c4036' }}>{titles[currentStep]}</h2>
-                        <p className="subtitle text-center mb-4" style={{ fontSize: '20px', color: '#4c4036' }}>{subtitles[currentStep]}</p>
-                        <div className="tab-control position-relative d-flex my-4 px-2">
-                            {steps.map((step, index) => (
-                                <div key={index} className="step-wrapper d-flex align-items-center position-relative flex-grow-1">
-                                    <div className={`step d-flex flex-column align-items-center cursor-pointer ${index === currentStep ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`} onClick={() => selectStep(index)} style={{ zIndex: 2, cursor: 'pointer', transition: 'all 0.3s ease' }}>
-                                        <span className="circle d-flex align-items-center justify-content-center rounded-circle head mb-2" style={{ width: '32px', height: '32px', backgroundColor: index <= currentStep ? '#cc445e' : '#eae0d6', color: index <= currentStep ? '#fff' : '#555', transition: 'background-color 0.3s, color 0.3s' }}>
-                                            {index + 1}
-                                        </span>
-                                        <span className="label text-center" style={{ fontSize: '11px', color: index <= currentStep ? '#cc445e' : '#999', fontWeight: index <= currentStep ? '500' : 'normal', transition: 'color 0.3s' }}>
-                                            {step}
-                                        </span>
-                                    </div>
-                                    {index < steps.length - 1 && (
-                                        <div className="line rounded flex-grow-1 mx-1" style={{ height: '3px', marginTop: '-20px', backgroundColor: index < currentStep ? '#cc445e' : '#eae0d6', zIndex: 1, transition: 'background-color 0.3s' }}></div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                        {submitError && (
-                            <div className="alert alert-danger" role="alert" style={{ fontSize: 14 }}>{submitError}</div>
-                        )}
-                        <div className="component-container mt-4">
-                            <CurrentComponent
-                                formData={formData}
-                                updateFormData={updateFormData}
-                                onNext={handleNext}
-                                onPrevious={handlePrevious}
-                                onSkip={handleSkip}
-                                onSubmit={handleSubmit}
-                                submitting={submitting}
-                            />
-                        </div>
+        <div className="sp-page">
+            <div className="sp-form-side">
+                <div className="sp-card" style={{maxWidth: '1000%'}}>
+                    <img src={club} alt=""/>
+
+                    <div className="sp-step-header" key={`header-${currentStep}`} style={{justifyContent: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <h2 className="sp-title">{titles[currentStep]}</h2>
+                        <p className="sp-subtitle">{subtitles[currentStep]}</p>
                     </div>
-                    <div className="image-section bg-dark d-flex align-items-center overflow-hidden justify-content-end" style={{ flex: '0.3' }}>
+                    
+                    <div className="sp-stepper">
+                        {steps.map((step, index) => (
+                            <div key={index} className="sp-step-wrap">
+                                <button type="button" className={`sp-step ${index === currentStep ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`} onClick={() => selectStep(index)} disabled={index > currentStep} >
+                                    <span className="sp-step-circle">
+                                        {index < currentStep ? <i className="fa-solid fa-check sp-check"></i> : index + 1}
+                                    </span>
+                                    <span className="sp-step-label">{step}</span>
+                                </button>
+                                {index < steps.length - 1 && (
+                                    <div className={`sp-step-line ${index < currentStep ? 'done' : ''}`}></div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    
+
+                    {submitError && <div className="sp-error">{submitError}</div>}
+
+                    <div className="sp-step-body" key={`body-${currentStep}`}>
+                        <CurrentComponent formData={formData} updateFormData={updateFormData} onNext={handleNext} onPrevious={handlePrevious} onSkip={handleSkip} onSubmit={handleSubmit} submitting={submitting} />
                     </div>
                 </div>
             </div>
-        </section>
+            <div className="sp-image-side">
+                <img src={sample} alt="" />
+                <div className="sp-image-overlay">
+                    <div className="sp-image-caption">
+                        <h4>Bring your club online</h4>
+                        <p>Set up galleries, competitions, events and members in a few guided steps.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 export default ClubSignup;

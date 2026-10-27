@@ -34,19 +34,8 @@ function NoticeEdit() {
     const [tagInput, setTagInput] = useState('');
     const [images, setImages] = useState([]);
     const [documents, setDocuments] = useState([]);
-    const [existingImages, setExistingImages] = useState([]);
-    const [existingDocuments, setExistingDocuments] = useState([]);
-    const formatDateForInput = (date) => {
-        if (!date) return '';
-        const d = new Date(date);
-        if (Number.isNaN(d.getTime())) {
-            return '';
-        }
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
+    const [, setExistingImages] = useState([]);
+    const [, setExistingDocuments] = useState([]);
     const formatDateTimeForInput = (date) => {
         if (!date) return '';
         const d = new Date(date);
@@ -411,7 +400,7 @@ function NoticeEdit() {
                                                                                             {images.map((img, index) => (
                                                                                                 <div key={index} className="position-relative border rounded p-1" style={{ width: '70px', height: '70px', background: '#f8f9fa' }}>
                                                                                                     <img src={URL.createObjectURL(img)} alt={`Preview ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
-                                                                                                    <button type="button" className="btn btn-sm btn-danger position-absolute top-0 end-0" onClick={() => removeImage(index)}>
+                                                                                                    <button type="button" className="btn btn-danger position-absolute top-0 end-0" onClick={() => removeImage(index)}>
                                                                                                         ×
                                                                                                     </button>
                                                                                                 </div>
@@ -429,7 +418,7 @@ function NoticeEdit() {
                                                                                                 <div key={index} className="border rounded p-2 position-relative">
                                                                                                     <i className="fa-regular fa-file me-2"></i>
                                                                                                     {doc.name}
-                                                                                                    <button type="button" className="btn btn-sm ms-2" onClick={() => removeDocument(index)}>
+                                                                                                    <button type="button" className="btn ms-2" onClick={() => removeDocument(index)}>
                                                                                                         ×
                                                                                                     </button>
                                                                                                 </div>
@@ -555,11 +544,11 @@ function NoticeEdit() {
                                                                             </button>
                                                                         </div>
                                                                     </form >
-                                                                </div >
-                                                            </div >
-                                                        </div >
-                                                    </div >
-                                                </div >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </section>
                                         </div>
                                         <div className="col-md-4">
@@ -623,10 +612,10 @@ function NoticeEdit() {
                                                                 </div>
                                                             ))}
                                                             <div className="button-group mt-auto">
-                                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/notices')}>
+                                                                <button className="btn" id="e-view" onClick={() => navigate('/notices')}>
                                                                     View All
                                                                 </button>
-                                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/notices/create')}>
+                                                                <button className="btn" id="new" onClick={() => navigate('/notices/create')}>
                                                                     Add New
                                                                 </button>
                                                             </div>
@@ -635,19 +624,20 @@ function NoticeEdit() {
                                                 </div>
                                             </section>
                                         </div>
-                                    </div >
-                                </div >
-                            </section >
+                                    </div>
+                                </div>
+                            </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
-                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
                                 </div>
                             </footer>
-                        </div >
+                        </div>
                     </>
                 )
                 }
-            </div >
+            </div>
         </>
     );
 }

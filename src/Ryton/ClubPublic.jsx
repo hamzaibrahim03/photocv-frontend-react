@@ -2,7 +2,6 @@ import Navbar from "./extra/Navbar";
 import "./assets/css/rytonstyle.css"
 import { useEffect, useState } from "react";
 import Loader from './extra/LoaderAll';
-import he from "he";
 import { useNavigate } from "react-router";
 function ClubPublic() {
     const navigate = useNavigate();
@@ -27,22 +26,6 @@ function ClubPublic() {
         }
     }
     console.log(clubData)
-    const hexToRgba = (hex, alpha) => {
-        if (!hex) return `rgba(0,0,0,${alpha})`;
-        let r = 0,
-            g = 0,
-            b = 0;
-        if (hex.length === 4) {
-            r = parseInt(hex[1] + hex[1], 16);
-            g = parseInt(hex[2] + hex[2], 16);
-            b = parseInt(hex[3] + hex[3], 16);
-        } else if (hex.length === 7) {
-            r = parseInt(hex[1] + hex[2], 16);
-            g = parseInt(hex[3] + hex[4], 16);
-            b = parseInt(hex[5] + hex[6], 16);
-        }
-        return `rgba(${r},${g},${b},${alpha})`;
-    };
     const getByRole = (role) => {
         return clubData?.clubOfficials?.filter((person) =>
             person.roles?.includes(role)
@@ -341,7 +324,7 @@ function ClubPublic() {
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">
-                                                <h5 className="head mb-4" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                                <h5 className="head mt-5 mb-5" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}> {clubData?.clubSettings?.original?.data?.club.address} </p>
                                                     <div className="icon-circles ms-3" style={{ color: clubData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubData?.clubSettings?.original?.data?.settings?.accent_color }}>
@@ -373,7 +356,7 @@ function ClubPublic() {
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <p className="footer-text head" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
                                                         <a href="fb_link" target="_blank" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
@@ -384,7 +367,7 @@ function ClubPublic() {
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <p className="footer-text head" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
                                                         <a href="insta_link" target="_blank" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
@@ -395,7 +378,7 @@ function ClubPublic() {
                                                         <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <p className="footer-text head" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
                                                         <a href="flickr_link" className="footer-link" style={{ color: clubData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {clubData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>

@@ -187,15 +187,9 @@ function Step5Competitions() {
                 </h5>
                 {Object.entries(sections).map(([sectionKey, section]) => (
                     <div className="config-section" key={sectionKey}>
-                        <div
-                            className="config-section-header"
-                            onClick={() => toggleSection(sectionKey)}
-                        >
+                        <div className="config-section-header" onClick={() => toggleSection(sectionKey)} >
                             <span>{section.title}</span>
-                            <span
-                                className={`arrow ${section.open ? "rotate" : ""
-                                    }`}
-                            >
+                            <span className={`arrow ${section.open ? "rotate" : "" }`} >
                                 <i className="fa-solid fa-chevron-down"></i>
                             </span>
                         </div>
@@ -204,74 +198,30 @@ function Step5Competitions() {
                                 <div className="row">
                                     <div className="col-md-6">
                                         <label>Name</label>
-                                        <input
-                                            type="text"
-                                            className="form-control custom-input"
-                                            placeholder={`Enter ${section.title}`}
-                                            value={section.name}
-                                            onChange={(e) =>
-                                                handleNameChange(
-                                                    sectionKey,
-                                                    e.target.value
-                                                )
-                                            }
-                                        />
+                                        <input type="text" className="form-control custom-input" placeholder={`Enter ${section.title}`} value={section.name} onChange={(e) => handleNameChange( sectionKey, e.target.value ) } />
                                     </div>
                                     <div className="col-md-6">
                                         <label>Upload Icon</label>
-                                        <input
-                                            type="file"
-                                            className="form-control custom-file"
-                                            accept="image/*"
-                                            onChange={(e) =>
-                                                handleIconChange(
-                                                    sectionKey,
-                                                    e.target.files?.[0] || null
-                                                )
-                                            }
-                                        />
+                                        <input type="file" className="form-control custom-file" accept="image/*" onChange={(e) => handleIconChange( sectionKey, e.target.files?.[0] || null ) } />
                                     </div>
                                 </div>
-                                <button
-                                    type="button"
-                                    className="add-btn"
-                                    id="e-view"
-                                    onClick={() => handleAdd(sectionKey)}
-                                >
+                                <button type="button" className="add-btn" id="e-view" onClick={() => handleAdd(sectionKey)} >
                                     <i className="fa-solid fa-plus"></i>{" "}
                                     Add
                                 </button>
                                 {section.items.length > 0 && (
                                     <div className="added-items">
                                         {section.items.map((item) => (
-                                            <div
-                                                className="added-item"
-                                                key={item.id}
-                                            >
+                                            <div className="added-item" key={item.id} >
                                                 <div className="added-item-info">
                                                     {item.icon && (
-                                                        <img
-                                                            src={URL.createObjectURL(
-                                                                item.icon
-                                                            )}
-                                                            alt={item.name}
-                                                            className="added-item-icon"
-                                                        />
+                                                        <img src={URL.createObjectURL( item.icon )} alt={item.name} className="added-item-icon" />
                                                     )}
                                                     <span>
                                                         {item.name}
                                                     </span>
                                                 </div>
-                                                <button
-                                                    type="button"
-                                                    className="delete-item-btn"
-                                                    onClick={() =>
-                                                        handleDelete(
-                                                            sectionKey,
-                                                            item.id
-                                                        )
-                                                    }
-                                                >
+                                                <button type="button" className="delete-item-btn" onClick={() => handleDelete( sectionKey, item.id ) } >
                                                     <i className="fa-solid fa-trash"></i>
                                                 </button>
                                             </div>
@@ -283,20 +233,10 @@ function Step5Competitions() {
                     </div>
                 ))}
                 <div className="bottom-buttons">
-                    <button
-                        type="button"
-                        className="cancel-main-btn"
-                        id="e-view"
-                        onClick={handleCancel}
-                    >
+                    <button type="button" className="cancel-main-btn" id="e-view" onClick={handleCancel} >
                         Cancel
                     </button>
-                    <button
-                        type="submit"
-                        className="save-main-btn"
-                        id="e-edit"
-                        disabled={isSaving}
-                    >
+                    <button type="submit" className="save-main-btn" id="e-edit" disabled={isSaving} >
                         {isSaving ? 'Saving...' : 'Save'}
                     </button>
                 </div>

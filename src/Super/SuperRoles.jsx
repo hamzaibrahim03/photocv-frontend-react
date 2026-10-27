@@ -138,16 +138,16 @@ function SuperRoles() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     {(() => {
                                                         const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
                                                         return (
-                                                            <>
-                                                                <i className="fa-regular fa-circle-user" style={{ fontSize: 54, color: "#e5ded7" }}></i>
+                                                            <div className="d-flex gap-4">
+                                                                <i className="fa-regular fa-circle-user" style={{ fontSize: '54px', color: "#e5ded7" }}></i>
                                                                 <h2>{storedUser.first_name || "Admin"} {storedUser.last_name || ""}</h2>
-                                                            </>
+                                                            </div>
                                                         );
                                                     })()}
                                                 </div>
@@ -169,116 +169,124 @@ function SuperRoles() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 16 }}>
-                                        <button type="button" className="super-btn dark" onClick={() => setModalOpen(true)}>Add New Role</button>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section>
-                                <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="super-panel">
-                                        <table className="super-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Role Name</th>
-                                                    <th>Description</th>
-                                                    <th>Assigned In (Clubs)</th>
-                                                    <th>Permissions</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {roles.length === 0 ? (
-                                                    <tr><td colSpan={6}>No roles found.</td></tr>
-                                                ) : roles.map((r) => (
-                                                    <tr key={r.id}>
-                                                        <td>{r.name}</td>
-                                                        <td>{r.description}</td>
-                                                        <td>{r.assignedClubs}</td>
-                                                        <td>{r.permissions}</td>
-                                                        <td>
-                                                            <button type="button" className={`super-toggle${r.status ? " on" : ""}`} onClick={() => toggleStatus(r.id)}>
-                                                                <span></span>
-                                                            </button>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" className="super-action-icon edit" onClick={() => handleEditOpen(r)}><i className="fa-solid fa-pen"></i></button>
-                                                            <button type="button" className="super-action-icon delete" onClick={() => handleDelete(r.id)}><i className="fa-solid fa-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section>
-                                <div className="container" style={{ maxWidth: '1820px' }}>
-                                    {modalOpen && (
-                                        <div className="super-modal-overlay" onClick={() => setModalOpen(false)}>
-                                            <div className="super-modal" onClick={(e) => e.stopPropagation()}>
-                                                <button type="button" className="close-btn" onClick={() => setModalOpen(false)}>×</button>
-                                                <h2>Create New Role</h2>
-                                                <form onSubmit={handleCreate}>
-                                                    <div className="super-form-group" style={{ marginBottom: 20 }}>
-                                                        <label>Role Name</label>
-                                                        <input type="text" placeholder="Text here..." value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
-                                                    </div>
-                                                    <div className="super-form-group" style={{ marginBottom: 20 }}>
-                                                        <label>Description</label>
-                                                        <textarea rows={4} placeholder="Text here..." value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}></textarea>
-                                                    </div>
-                                                    <div className="super-form-group" style={{ marginBottom: 26 }}>
-                                                        <label>Permissions</label>
-                                                        <select value={form.permissions} onChange={(e) => setForm((p) => ({ ...p, permissions: e.target.value }))}>
-                                                            <option value="">- Select -</option>
-                                                            {PERMISSION_OPTIONS.map((p) => <option key={p} value={p}>{p}</option>)}
-                                                        </select>
-                                                    </div>
-                                                    <div style={{ textAlign: "right" }}>
-                                                        <button type="submit" className="super-btn dark">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {editingRole && (
-                                        <div className="super-modal-overlay" onClick={() => setEditingRole(null)}>
-                                            <div className="super-modal" onClick={(e) => e.stopPropagation()}>
-                                                <button type="button" className="close-btn" onClick={() => setEditingRole(null)}>×</button>
-                                                <h2>Edit Role</h2>
-                                                <form onSubmit={handleUpdate}>
-                                                    <div className="super-form-group" style={{ marginBottom: 20 }}>
-                                                        <label>Role Name</label>
-                                                        <input type="text" placeholder="Text here..." value={editForm.name} onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))} />
-                                                    </div>
-                                                    <div className="super-form-group" style={{ marginBottom: 20 }}>
-                                                        <label>Description</label>
-                                                        <textarea rows={4} placeholder="Text here..." value={editForm.description} onChange={(e) => setEditForm((p) => ({ ...p, description: e.target.value }))}></textarea>
-                                                    </div>
-                                                    <div className="super-form-group" style={{ marginBottom: 26 }}>
-                                                        <label>Permissions</label>
-                                                        <select value={editForm.permissions} onChange={(e) => setEditForm((p) => ({ ...p, permissions: e.target.value }))}>
-                                                            <option value="">- Select -</option>
-                                                            {PERMISSION_OPTIONS.map((p) => <option key={p} value={p}>{p}</option>)}
-                                                        </select>
-                                                    </div>
-                                                    <div style={{ textAlign: "right" }}>
-                                                        <button type="submit" className="super-btn dark">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </section>
+                                    <div style={{
+                                        display: "flex", justifyContent: "flex-end", marginBottom: '16px' }}>
+                                            <button type = "button" className = "super-btn dark" onClick = { () => setModalOpen(true) }>Add New Role</button>
                         </div>
+                    </div>
+            </section>
+
+            <section>
+                <div className="container" style={{ maxWidth: '1820px' }}>
+                    <div className="super-panel">
+                        <table className="super-table">
+                            <thead>
+                                <tr>
+                                    <th>Role Name</th>
+                                    <th>Description</th>
+                                    <th>Assigned In (Clubs)</th>
+                                    <th>Permissions</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {roles.length === 0 ? (
+                                    <tr><td colSpan={6}>No roles found.</td></tr>
+                                ) : roles.map((r) => (
+                                    <tr key={r.id}>
+                                        <td>{r.name}</td>
+                                        <td>{r.description}</td>
+                                        <td>{r.assignedClubs}</td>
+                                        <td>{r.permissions}</td>
+                                        <td>
+                                            <button type="button" className={`super-toggle${r.status ? " on" : ""}`} onClick={() => toggleStatus(r.id)}>
+                                                <span></span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" className="super-action-icon edit" onClick={() => handleEditOpen(r)}><i className="fa-solid fa-pen"></i></button>
+                                            <button type="button" className="super-action-icon delete" onClick={() => handleDelete(r.id)}><i className="fa-solid fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div className="container" style={{ maxWidth: '1820px' }}>
+                    {modalOpen && (
+                        <div className="super-modal-overlay" onClick={() => setModalOpen(false)}>
+                            <div className="super-modal" onClick={(e) => e.stopPropagation()}>
+                                <button type="button" className="close-btn" onClick={() => setModalOpen(false)}>×</button>
+                                <h2>Create New Role</h2>
+                                <form onSubmit={handleCreate}>
+                                    <div className="super-form-group" style={{ marginBottom: '20px' }}>
+                                        <label>Role Name</label>
+                                        <input type="text" placeholder="Text here..." value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
+                                    </div>
+                                    <div className="super-form-group" style={{ marginBottom: '20px' }}>
+                                        <label>Description</label>
+                                        <textarea rows={4} placeholder="Text here..." value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}></textarea>
+                                    </div>
+                                    <div className="super-form-group" style={{ marginBottom: '26px' }}>
+                                        <label>Permissions</label>
+                                        <select value={form.permissions} onChange={(e) => setForm((p) => ({ ...p, permissions: e.target.value }))}>
+                                            <option value="">- Select -</option>
+                                            {PERMISSION_OPTIONS.map((p) => <option key={p} value={p}>{p}</option>)}
+                                        </select>
+                                    </div>
+                                    <div style={{ textAlign: "right" }}>
+                                        <button type="submit" className="btn" id="edit">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+                    {editingRole && (
+                        <div className="super-modal-overlay" onClick={() => setEditingRole(null)}>
+                            <div className="super-modal" onClick={(e) => e.stopPropagation()}>
+                                <button type="button" className="close-btn" onClick={() => setEditingRole(null)}>×</button>
+                                <h2>Edit Role</h2>
+                                <form onSubmit={handleUpdate}>
+                                    <div className="super-form-group" style={{ marginBottom: '20px' }}>
+                                        <label>Role Name</label>
+                                        <input type="text" placeholder="Text here..." value={editForm.name} onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))} />
+                                    </div>
+                                    <div className="super-form-group" style={{ marginBottom: '20px' }}>
+                                        <label>Description</label>
+                                        <textarea rows={4} placeholder="Text here..." value={editForm.description} onChange={(e) => setEditForm((p) => ({ ...p, description: e.target.value }))}></textarea>
+                                    </div>
+                                    <div className="super-form-group" style={{ marginBottom: '26px' }}>
+                                        <label>Permissions</label>
+                                        <select value={editForm.permissions} onChange={(e) => setEditForm((p) => ({ ...p, permissions: e.target.value }))}>
+                                            <option value="">- Select -</option>
+                                            {PERMISSION_OPTIONS.map((p) => <option key={p} value={p}>{p}</option>)}
+                                        </select>
+                                    </div>
+                                    <div style={{ textAlign: "right" }}>
+                                        <button type="submit" className="btn" id="edit">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </section>
+            <footer className="site-footer">
+                <div className="footer-content">
+                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                </div>
+            </footer>
+        </div >
                     </>
-                )}
-            </div>
+                )
+}
+            </div >
         </>
     );
 }

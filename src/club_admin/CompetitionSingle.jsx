@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
 import Loader from "../Ryton/extra/LoaderAll";
 import Calendar from "../Ryton/extra/CalendarRyton"
 import { useNavigate, useParams } from 'react-router';
+import "./assets/css/adminstyle.css"
 function CompetitionSingle() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -167,230 +168,240 @@ function CompetitionSingle() {
                                     </div>
                                 </div>
                             </section>
-                            <div className="row container mx-auto px-0" style={{ maxWidth: '1820px' }}>
-                                <div className="col-md-8 px-0">
-                                    <section className="bg-white p-4 rounded shadow-sm">
-                                        <div id="news" className="w-100">
-                                            <h5 className="head mb-4">Basic Information</h5>
-                                            <div className="row mb-3">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Name</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.name}</h2>
+
+                            <section>
+                                <div className='container' style={{ maxWidth: '1820px' }}>
+                                    <div className="row mx-auto px-0">
+                                        <div className="col-md-8 px-0">
+                                            <section className="bg-white p-4 rounded shadow-sm">
+                                                <div id="news" className="w-100">
+                                                    <h5 className="head mt-5 mb-5">Basic Information</h5>
+                                                    <div className="row mb-3">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Name</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.name}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Type</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.competition_type_id}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mb-4">
+                                                        <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Description</label>
+                                                        <div className="text-dark fs-5 fw-normal" dangerouslySetInnerHTML={{ __html: competition.description }}></div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging Type</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.judging_type_id}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Status</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.status}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <h5 className="head mb-4 mt-5">Submission Rules</h5>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Start Date & Time</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.start_date)} {formatTimes(competition.start_date)}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Deadlines for Submissions</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.submission_deadline)} {formatTimes(competition.submission_deadline)}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Max Number of Entries Per Participant</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.max_entries_print}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Allowed Image Formats</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.allowed_image_formats}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Max File Size</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.max_file_size} MB/Image</h2>
+                                                        </div>
+                                                    </div>
+                                                    <h5 className="head mb-4 mt-5">Categories and Themes</h5>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Theme (If applicable)</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.theme_id}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Categories</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.category_id}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Print vs Digital Submission</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.print_vs_digital}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Colour vs. Monochrome</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.color_vs_mono}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <h5 className="head mb-4 mt-5">Judging and Scoring</h5>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging Panels</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.judging_panel}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Voting Method</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.voting_method_id}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging Start Date & Time</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.judging_start_date)} {formatTimes(competition.judging_start_date)}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging End Date & Time</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.judging_end_date)} {formatTimes(competition.judging_end_date)}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <h5 className="head mb-4 mt-5">Results & Awards</h5>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Announcement Date</label>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Awards - Top Places Available</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.top_places}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Award - No of High Comm. Available</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.high_commendation_number}</h2>
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Awards - No of Comm. Available</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.commendation_number}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-4">
+                                                        <div className="col-md-6">
+                                                            <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Prizes (if any)</label>
+                                                            <h2 className="text-dark fs-5 fw-normal">{competition.prizes}</h2>
+                                                        </div>
+                                                    </div>
+                                                    <h5 className="head mb-4 mt-5">Additional Features</h5>
+                                                    <div className="d-flex flex-column gap-3 mb-5">
+                                                        <h2 className="text-dark fs-6 fw-normal m-0 d-flex align-items-center gap-2">
+                                                            <input type="checkbox" className="form-check-input mt-0" />
+                                                            Comments & Critique Section (For Consecutive Purpose)
+                                                        </h2>
+                                                        <h2 className="text-dark fs-6 fw-normal m-0 d-flex align-items-center gap-2">
+                                                            <input type="checkbox" className="form-check-input mt-0" />
+                                                            Auto generated Certificates (For Winners & Participants)
+                                                        </h2>
+                                                        <h2 className="text-dark fs-6 fw-normal m-0 d-flex align-items-center gap-2">
+                                                            <input type="checkbox" className="form-check-input mt-0" />
+                                                            Allow Feedback from the judges to be visible to participants
+                                                        </h2>
+                                                    </div>
+                                                    <div className="button-group d-flex gap-2">
+                                                        <button className="btn" id="e-view" style={{ backgroundColor: '#99816b' }} onClick={() => navigate(-1)}>Back</button>
+                                                        <button className="btn" id="e-edit" style={{ backgroundColor: '#4c4036' }} onClick={() => navigate(`/competitions/${competition.id}/edit`)}>Edit</button>
+                                                    </div>
                                                 </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Type</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.competition_type_id}</h2>
-                                                </div>
-                                            </div>
-                                            <div className="mb-4">
-                                                <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Description</label>
-                                                <div className="text-dark fs-5 fw-normal" dangerouslySetInnerHTML={{ __html: competition.description }}></div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging Type</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.judging_type_id}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Status</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.status}</h2>
-                                                </div>
-                                            </div>
-                                            <h5 className="head mb-4 mt-5">Submission Rules</h5>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Start Date & Time</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.start_date)} {formatTimes(competition.start_date)}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Deadlines for Submissions</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.submission_deadline)} {formatTimes(competition.submission_deadline)}</h2>
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Max Number of Entries Per Participant</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.max_entries_print}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Allowed Image Formats</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.allowed_image_formats}</h2>
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Max File Size</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.max_file_size} MB/Image</h2>
-                                                </div>
-                                            </div>
-                                            <h5 className="head mb-4 mt-5">Categories and Themes</h5>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Theme (If applicable)</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.theme_id}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Competition Categories</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.category_id}</h2>
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Print vs Digital Submission</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.print_vs_digital}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Colour vs. Monochrome</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.color_vs_mono}</h2>
-                                                </div>
-                                            </div>
-                                            <h5 className="head mb-4 mt-5">Judging and Scoring</h5>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging Panels</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.judging_panel}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Voting Method</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.voting_method_id}</h2>
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging Start Date & Time</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.judging_start_date)} {formatTimes(competition.judging_start_date)}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Judging End Date & Time</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{formatDate(competition.judging_end_date)} {formatTimes(competition.judging_end_date)}</h2>
-                                                </div>
-                                            </div>
-                                            <h5 className="head mb-4 mt-5">Results & Awards</h5>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Announcement Date</label>
-                                                    {/* <h2 className="text-dark fs-5 fw-normal">{formattedResultDate}</h2> */}
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Awards - Top Places Available</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.top_places}</h2>
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Award - No of High Comm. Available</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.high_commendation_number}</h2>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Awards - No of Comm. Available</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.commendation_number}</h2>
-                                                </div>
-                                            </div>
-                                            <div className="row mb-4">
-                                                <div className="col-md-6">
-                                                    <label className="text-danger mb-1 d-block" style={{ fontSize: '18px' }}>Prizes (if any)</label>
-                                                    <h2 className="text-dark fs-5 fw-normal">{competition.prizes}</h2>
-                                                </div>
-                                            </div>
-                                            <h5 className="head mb-4 mt-5">Additional Features</h5>
-                                            <div className="d-flex flex-column gap-3 mb-5">
-                                                <h2 className="text-dark fs-6 fw-normal m-0 d-flex align-items-center gap-2">
-                                                    <input type="checkbox" className="form-check-input mt-0" />
-                                                    Comments & Critique Section (For Consecutive Purpose)
-                                                </h2>
-                                                <h2 className="text-dark fs-6 fw-normal m-0 d-flex align-items-center gap-2">
-                                                    <input type="checkbox" className="form-check-input mt-0" />
-                                                    Auto generated Certificates (For Winners & Participants)
-                                                </h2>
-                                                <h2 className="text-dark fs-6 fw-normal m-0 d-flex align-items-center gap-2">
-                                                    <input type="checkbox" className="form-check-input mt-0" />
-                                                    Allow Feedback from the judges to be visible to participants
-                                                </h2>
-                                            </div>
-                                            <div className="button-group d-flex gap-2">
-                                                <button className="btn text-white px-4" id="e-view" style={{ backgroundColor: '#99816b' }} onClick={() => navigate(-1)}>Back</button>
-                                                <button className="btn text-white px-4" id="e-edit" style={{ backgroundColor: '#4c4036' }} onClick={() => navigate(`/competitions/${competition.id}/edit`)}>Edit</button>
-                                            </div>
+                                            </section>
                                         </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4">
-                                    <section>
-                                        <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
-                                            <div className="calendar-card d-flex flex-column" style={{ width: '100%' }}>
-                                                <Calendar />
-                                            </div>
-                                            <div id="news">
-                                                <div className="more-card d-flex flex-column" style={{ padding: '35px', height: 'auto' }}>
-                                                    <h5 className="head">Recent Submissions</h5>
-                                                    <div className="event-list">
-                                                        {competitionExtra?.recent_submissions?.map((submission) => (
-                                                            <div className="event-item" key={submission.id} style={{ marginBottom: '10px' }}>
-                                                                {submission.entry_image ? (
-                                                                    <img className="img-fluid event-img" src={submission.entry_image} alt="Event" />
-                                                                ) : (
-                                                                    <div className="event-img fallback-box d-flex justify-content-center align-items-center">
-                                                                    </div>
-                                                                )}
-                                                                <div className="event-details" style={{ display: 'flex' }}>
-                                                                    <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                        <span id="ename">{submission.member_username}</span>
-                                                                        <span id="espeaker">{submission.competition_name}</span>
-                                                                    </div>
-                                                                    <div className="event-time" id="edate">
-                                                                        <small className="event-date galtext">{formatDate(submission.submitted_at)}</small><br />
-                                                                        <small className="event-time-details galtext">{formatTime(submission.submitted_at)}</small>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        ))}
+                                        <div className="col-md-4">
+                                            <section>
+                                                <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
+                                                    <div className="calendar-card d-flex flex-column" style={{ width: '100%' }}>
+                                                        <Calendar />
                                                     </div>
-                                                    <div className="button-group mt-auto">
-                                                        <button className="btn btn-sm" id="e-view">
-                                                            View All
-                                                        </button>
-                                                        <button className="btn btn-sm" id="new">
-                                                            Add New
-                                                        </button>
+                                                    <div id="news">
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px', height: 'auto' }}>
+                                                            <h5 className="head">Recent Submissions</h5>
+                                                            <div className="event-list">
+                                                                {competitionExtra?.recent_submissions?.map((submission) => (
+                                                                    <div className="event-item" key={submission.id} style={{ marginBottom: '10px' }}>
+                                                                        {submission.entry_image ? (
+                                                                            <img className="img-fluid event-img" src={submission.entry_image} alt="Event" />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details" style={{ display: 'flex' }}>
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span id="ename">{submission.member_username}</span>
+                                                                                <span id="espeaker">{submission.competition_name}</span>
+                                                                            </div>
+                                                                            <div className="event-time" id="edate">
+                                                                                <small className="event-date galtext">{formatDate(submission.submitted_at)}</small><br />
+                                                                                <small className="event-time-details galtext">{formatTime(submission.submitted_at)}</small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                            <div className="button-group mt-auto">
+                                                                <button className="btn" id="e-view" onClick={() => navigate('/competitions')}>
+                                                                    View All
+                                                                </button>
+                                                                <button className="btn" id="new" onClick={() => navigate('/competitions/create')}>
+                                                                    Add New
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                            <h5 className="head">More Competitions</h5>
+                                                            <div className="event-list">
+                                                                {competitionExtra?.random_competitions?.map((competition) => (
+                                                                    <div className="event-item" style={{ marginBottom: '10px' }}>
+                                                                        {competition.featured_thumb_url ? (
+                                                                            <img className="img-fluid event-img" src={competition.featured_thumb_url} alt="Comp" />
+                                                                        ) : (
+                                                                            <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="event-details">
+                                                                            <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                                <span id="ename">{competition.name}</span>
+                                                                            </div>
+                                                                            <div className="event-time" id="edate">
+                                                                                <small className="event-date galtext">{formatDate(competition.start_date)}</small><br />
+                                                                                <small className="event-time-details galtext">{formatTime(competition.start_date)}</small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                            <div className="button-group mt-auto">
+                                                                <button className="btn" id="e-view" onClick={() => navigate('/competitions')}>
+                                                                    View All
+                                                                </button>
+                                                                <button className="btn" id="new" onClick={() => navigate('/competitions/create')}>
+                                                                    Add New
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
-                                                    <h5 className="head">More Competitions</h5>
-                                                    <div className="event-list">
-                                                        {competitionExtra?.random_competitions?.map((competition) => (
-                                                            <div className="event-item" style={{ marginBottom: '10px' }}>
-                                                                {competition.featured_thumb_url ? (
-                                                                    <img className="img-fluid event-img" src={competition.featured_thumb_url} alt="Comp" />
-                                                                ) : (
-                                                                    <div className="event-img fallback-box d-flex justify-content-center align-items-center">
-                                                                    </div>
-                                                                )}
-                                                                <div className="event-details">
-                                                                    <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                        <span id="ename">{competition.name}</span>
-                                                                    </div>
-                                                                    <div className="event-time" id="edate">
-                                                                        <small className="event-date galtext">{formatDate(competition.start_date)}</small><br />
-                                                                        <small className="event-time-details galtext">{formatTime(competition.start_date)}</small>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                    <div className="button-group mt-auto">
-                                                        <button className="btn btn-sm" id="e-view">
-                                                            View All
-                                                        </button>
-                                                        <button className="btn btn-sm" id="new">
-                                                            Add New
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </section>
                                         </div>
-                                    </section>
+                                    </div>
                                 </div>
-                            </div>
+                            </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

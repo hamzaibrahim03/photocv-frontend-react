@@ -566,8 +566,8 @@ function Step1Competition() {
                                             </div>
                                         </div>
                                         <div className="button-group d-flex gap-2">
-                                            <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#99816b' }} onClick={() => navigate(-1)}>Back</button>
-                                            <button type="submit" className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }} disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
+                                            <button type="button" className="btn" id="e-view" onClick={() => navigate(-1)}>Back</button>
+                                            <button type="submit" className="btn" id="edit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -608,10 +608,10 @@ function Step1Competition() {
                                                     ))}
                                                 </div>
                                                 <div className="button-group mt-auto">
-                                                    <button type="button" className="btn btn-sm" id="e-view" onClick={() => navigate('/competitions')}>
+                                                    <button type="button" className="btn" id="e-view" onClick={() => navigate('/competitions')}>
                                                         View All
                                                     </button>
-                                                    <button type="button" className="btn btn-sm" id="new" onClick={() => navigate('/competitions/create')}>
+                                                    <button type="button" className="btn" id="new" onClick={() => navigate('/competitions/create')}>
                                                         Add New
                                                     </button>
                                                 </div>
@@ -644,10 +644,10 @@ function Step1Competition() {
                                                     ))}
                                                 </div>
                                                 <div className="button-group mt-auto">
-                                                    <button type="button" className="btn btn-sm" id="e-view" onClick={() => navigate('/competitions')}>
+                                                    <button type="button" className="btn" id="e-view" onClick={() => navigate('/competitions')}>
                                                         View All
                                                     </button>
-                                                    <button type="button" className="btn btn-sm" id="new" onClick={() => navigate('/competitions/create')}>
+                                                    <button type="button" className="btn" id="new" onClick={() => navigate('/competitions/create')}>
                                                         Add New
                                                     </button>
                                                 </div>

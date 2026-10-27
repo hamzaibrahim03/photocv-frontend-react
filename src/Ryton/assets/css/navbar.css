@@ -4,7 +4,9 @@
     margin: 0 auto;
   }
 }
+
 @media only screen and (max-width: 991px) {
+
   .right-header .profile-mobile,
   .right-header .divider,
   .notification-desktop,
@@ -12,27 +14,33 @@
   .down {
     display: none !important;
   }
+
   .notification-mobile {
     display: inline-flex !important;
     margin-right: 10px;
   }
+
   .login {
     padding: 0px 15px 20px 45px;
     display: flex;
     font-size: 18px;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
   }
+
   .navbar .right-header {
     margin-left: 0;
   }
 }
+
 .notification-mobile {
   display: none;
 }
+
 .notification-wrapper {
   position: relative;
 }
+
 .bell-btn {
   background: none;
   border: none;
@@ -40,6 +48,7 @@
   cursor: pointer;
   position: relative;
 }
+
 .badge {
   position: absolute;
   top: 0px;
@@ -49,6 +58,7 @@
   font-size: 11px;
   border-radius: 50%;
 }
+
 .dropdown {
   position: absolute;
   right: 0;
@@ -60,6 +70,7 @@
   z-index: 999;
   height: 576px;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -69,8 +80,9 @@
   width: 100%;
   border-radius: 23px;
 }
+
 .header h4 {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 18.98px;
@@ -78,6 +90,7 @@
   letter-spacing: 0%;
   text-align: center;
 }
+
 .close {
   background-color: white;
   color: black;
@@ -87,8 +100,9 @@
   top: 10px;
   right: 41px
 }
+
 .tab {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 16.47px;
@@ -99,23 +113,27 @@
   border-bottom: 2px solid #6aa96a;
   padding-bottom: 4px;
 }
+
 .list {
   max-height: 360px;
   overflow-y: auto;
 }
+
 .item {
   display: flex;
   gap: 20px;
   padding: 10px 31px;
   position: relative;
 }
+
 .avatar {
   width: 30.84px;
   height: 30.84px;
   border-radius: 50%;
 }
+
 .note {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 14.23px;
@@ -123,6 +141,7 @@
   letter-spacing: 0px;
   color: #333333
 }
+
 .dot {
   width: 9px;
   height: 9px;
@@ -131,6 +150,7 @@
   position: absolute;
   right: 14px;
 }
+
 .footer {
   display: flex;
   text-align: center;
@@ -150,6 +170,7 @@
   border-top: 1px solid #ccc;
   border-top-width: 100%
 }
+
 #logo {
   width: 211.0194854736328px;
   height: 60px;
@@ -158,38 +179,45 @@
   opacity: 1;
   margin-left: 60px;
 }
+
 .profile-img {
   width: 35px;
   height: 35px;
   border-radius: 50%;
   object-fit: cover;
 }
+
 .custom-nav {
   margin-left: 315px;
 }
+
 .divider {
   width: 2px;
   height: 46px;
   margin: 0 10px;
   border: 1px solid #ddd
 }
+
 .fcopy {
   margin-bottom: 10px
 }
+
 .login {
   padding: 0px;
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
 }
+
 .right-header {
   font-size: 1rem;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   justify-content: flex-end;
   position: relative;
 }
+
 .dropdown-menu {
   background: #fff;
   padding: 8px 14px;
@@ -197,6 +225,15 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
+
+.admin-dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  margin-top: 14px;
+}
+
 .dropdown-menu .nav-link {
   display: block;
   font-size: 14px;
@@ -204,99 +241,116 @@
   text-decoration: none;
   transition: all 0.3s ease;
 }
+
 .dropdown-menu .nav-link:hover {
   color: #007bff;
   transform: translateX(6px);
 }
+
 .navbar-nav .nav-link {
   font-weight: 400;
   font-size: 18px;
   padding: 10px 15px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-style: Regular;
   line-height: 100%;
   letter-spacing: 0%;
 }
+
 .custom-nav .nav-item {
   margin-right: 10px;
 }
+
 .custom-nav .nav-item:last-child {
   margin-right: 0;
 }
+
 .nav-link.active {
   color: #DD9757 !important;
 }
+
 .nav-item {
   padding: 15px 15px;
   gap: 60px
 }
+
 .nav-link {
   line-height: 1.2;
   transition: color 0.3s ease;
 }
+
 .nav-link:hover {
   color: #DD9757 !important;
 }
+
 .container {
   width: 100%;
   padding: 0 15px;
   margin: 0 auto;
   max-width: 1820px;
 }
+
 .navbar .right-header {
   margin-left: auto;
   display: flex;
   align-items: center;
 }
-/* 1399px and below */
+
 @media only screen and (max-width: 1399px) {
   .custom-nav {
     margin-left: 35px;
   }
+
   .custom-nav .nav-item {
     margin-right: 0;
   }
+
   .admin-dropdown {
     width: 180px;
   }
+
   .right-header {
     font-size: 1rem;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     display: flex;
     justify-content: flex-end;
     position: relative;
   }
 }
-/* 1199px and below */
+
 @media only screen and (max-width: 1199px) {
   .admin-dropdown {
     width: 100%;
   }
+
   .custom-nav {
     margin-left: 5px;
   }
+
   .navbar-nav .nav-link {
     font-weight: 400;
     font-size: 14px;
     padding: 8px 13px;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-style: Regular;
     line-height: 100%;
     letter-spacing: 0%;
   }
+
   .right-header {
     font-size: 1rem;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     display: flex;
     justify-content: flex-end;
     position: relative;
   }
+
   .nav-item {
     padding: 15px 7px;
     gap: 100px
   }
 }
-/* 991px and below */
+
 @media only screen and (max-width: 991px) {
   .custom-nav {
     position: relative;
@@ -304,26 +358,31 @@
     width: 100%;
     margin-left: 10px;
   }
+
   .navbar-nav .nav-link {
     padding: 12px;
     display: block;
   }
+
   .navbar-brand img {
     max-height: 40px;
     align-items: center;
   }
+
   .navbar .right-header {
     width: 100px;
   }
+
   .nav-item {
     padding: 5px 22px;
   }
 }
-/* 575px and below (mobile) */
+
 @media only screen and (max-width: 575px) {
   .navbar-brand img {
     width: 100%;
   }
+
   .navbar .right-header {
     width: 100%;
   }

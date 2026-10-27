@@ -18,6 +18,7 @@ import Step3Events from '../../steps_club_configuration/Step3Events.jsx';
 import Step4Galleries from '../../steps_club_configuration/Step4Galleries.jsx';
 import Step5Competitions from '../../steps_club_configuration/Step5Competitions.jsx';
 import Step1Competition from '../../steps_club_defaults/Step1Competition.jsx';
+import "./assets/css/adminstyle.css"
 function ClubRoute() {
     const [dashboardData, setDashboardData] = useState({})
     const [isLoading, setIsLoading] = useState(true);
@@ -146,7 +147,7 @@ function ClubRoute() {
                                         {openSection === "settings" && (
                                             <div className="super-accordion-body">
                                                 <p style={{ color: "#99816b", margin: "18px 0 4px" }}>Control the essentials that shape your club</p>
-                                                <p style={{ color: "#999", fontSize: 13, marginBottom: 18 }}>Manage everything from general preferences to appearance, branding, memberships, content, and privacy. All in one place for your ease!</p>
+                                                <p style={{ color: "#999", fontSize: '13px', marginBottom: '18px' }}>Manage everything from general preferences to appearance, branding, memberships, content, and privacy. All in one place for your ease!</p>
                                                 <div className="tab-control d-flex justify-content-between mb-4 gap-3">
                                                     {settingsSteps.map((step, index) => (
                                                         <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 cursor-pointer ${index === settingsStep ? 'active' : ''}`} onClick={() => selectSettingsStep(index)} style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}>
@@ -178,7 +179,7 @@ function ClubRoute() {
                                         {openSection === "configuration" && (
                                             <div className="super-accordion-body">
                                                 <p style={{ color: "#99816b", margin: "18px 0 4px" }}>Customise modules and make them work your way</p>
-                                                <p style={{ color: "#999", fontSize: 13, marginBottom: 18 }}>Personalize your modules such as news, events, galleries, and competitions. Enable, disable, or adjust them to fit your club's needs.</p>
+                                                <p style={{ color: "#999", fontSize: '13px', marginBottom: '18px' }}>Personalize your modules such as news, events, galleries, and competitions. Enable, disable, or adjust them to fit your club's needs.</p>
                                                 <div className="tab-control d-flex justify-content-between mb-4 gap-3">
                                                     {configurationSteps.map((step, index) => (
                                                         <div key={index} className={`step d-flex flex-column align-items-center flex-grow-1 cursor-pointer ${index === configurationStep ? 'active' : ''}`} onClick={() => selectConfigurationStep(index)} style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}>
@@ -212,7 +213,7 @@ function ClubRoute() {
                                                 {defaultsStep === -1 ? (
                                                     <>
                                                         <p style={{ color: "#99816b", margin: "18px 0 4px" }}>Save time with smart presets</p>
-                                                        <p style={{ color: "#999", fontSize: 13, marginBottom: 18 }}>
+                                                        <p style={{ color: "#999", fontSize: '13px', marginBottom: '18px' }}>
                                                             Set up default values for new items so you don't have to repeat the same steps every time. Perfect for competitions, events, or any recurring content.
                                                         </p>
                                                         <div className="tab-control d-flex justify-content-between mb-4 gap-3">
@@ -231,7 +232,7 @@ function ClubRoute() {
                                                     </>
                                                 ) : (
                                                     <div className="step-screen mt-4">
-                                                        <button type="button" className="btn btn-sm mb-3" onClick={() => setDefaultsStep(-1)}>
+                                                        <button type="button" className="btn mb-3" id="e-view" onClick={() => setDefaultsStep(-1)}>
                                                             <i className="fa-solid fa-arrow-left"></i>
                                                             &nbsp; Back
                                                         </button>
@@ -245,6 +246,12 @@ function ClubRoute() {
                                     </div>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )

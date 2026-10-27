@@ -104,7 +104,7 @@ function SuperProfilesList() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     <h2 className="name">All Users</h2>
@@ -131,13 +131,13 @@ function SuperProfilesList() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div style={{ display: "flex", gap: 10 }} ref={menuRef}>
+                                    <div style={{ display: "flex", gap: '10px' }} ref={menuRef}>
                                         <div style={{ position: "relative" }}>
                                             <button type="button" className="super-btn dark" onClick={() => setCategoryOpen((v) => !v)}>
-                                                {categoryFilter} <i className="fa-solid fa-chevron-down" style={{ marginLeft: 8, fontSize: 11 }}></i>
+                                                {categoryFilter} <i className="fa-solid fa-chevron-down" style={{ marginLeft: '8px', fontSize: '11px' }}></i>
                                             </button>
                                             {categoryOpen && (
-                                                <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, background: "#fff", border: "1px solid #eee", borderRadius: 8, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", zIndex: 30, minWidth: 160 }}>
+                                                <div style={{ position: "absolute", top: "calc(100% + 4px)", left: '0', background: "#fff", border: "1px solid #eee", borderRadius: '8px', boxShadow: "0 8px 24px rgba(0,0,0,0.12)", zIndex: '30', minWidth: '160px' }}>
                                                     {["All", "Club Members", "Photographer"].map((opt) => (
                                                         <button key={opt} type="button" style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 14px", border: "none", background: "none", cursor: "pointer", color: "#4c4036" }} onClick={() => { setCategoryFilter(opt); setCategoryOpen(false); setCurrentPage(1); }}>
                                                             {opt}
@@ -175,11 +175,11 @@ function SuperProfilesList() {
                                                             <a href="#" className="d-flex align-items-center justify-content-center rounded-circle" style={{ backgroundColor: '#99816b', color: 'white', width: '34px', height: '34px' }}><i className="fab fa-twitter"></i></a>
                                                         </div>
                                                         <h3 style={{ fontFamily: 'Inter', fontStyle: 'Medium', fontSize: '24px', lineHeight: '100%', letterSpacing: '0%', marginBottom: '10px', marginTop: '10px' }}>{p.name}</h3>
-                                                        <small className="role" style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', marginBottom: '18px' }}>{p.role}</small>
+                                                        <small className="role" style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', marginBottom: '18px' }}>{p.role}</small>
                                                         <div className="social-icons d-flex justify-content-center gap-3 text-white" style={{ backgroundColor: '#d64561' }}>
-                                                            <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{p.photoCount || 0}</span><img src={Ima} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
-                                                            <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{p.commentsCount || 0}</span><img src={Com} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
-                                                            <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{p.likesCount || 0}</span><img src={Lik} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
+                                                            <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{p.photoCount || 0}</span><img src={Ima} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
+                                                            <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{p.commentsCount || 0}</span><img src={Com} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
+                                                            <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{p.likesCount || 0}</span><img src={Lik} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
                                                         </div>
                                                     </div>
                                                     <div className="gallery-preview d-flex">
@@ -204,33 +204,33 @@ function SuperProfilesList() {
                                             <table className="super-table">
                                                 <thead>
                                                     <tr>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Name</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Role</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Images</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Website</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Status</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Actions</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Name</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Role</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Images</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Website</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Status</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {paginated.map((p) => (
                                                         <tr key={p.id}>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 {p.name}
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>{p.role}</td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>{p.photoCount || "---"}</td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>{p.role}</td>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>{p.photoCount || "---"}</td>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 {p.website ? (
-                                                                    <a href={p.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: 11 }}></i></a>
+                                                                    <a href={p.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i></a>
                                                                 ) : "---"}
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 <button type="button" className={`super-toggle${p.status ? " on" : ""}`} onClick={() => toggleStatus(p.id)}>
                                                                     <span></span>
                                                                 </button>
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 <button type="button" className="super-action-icon view" onClick={() => navigate(`/super/profiles/${p.id}`)}>View Details</button>
                                                                 <button type="button" className="super-action-icon edit" onClick={() => navigate(`/super/profiles/${p.id}/edit`)}><i className="fa-solid fa-pen"></i></button>
                                                                 <button type="button" className="super-action-icon delete" onClick={() => handleDelete(p.id)}><i className="fa-solid fa-trash"></i></button>
@@ -245,46 +245,46 @@ function SuperProfilesList() {
                                             <table className="super-table">
                                                 <thead>
                                                     <tr>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Name</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Template</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Role</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Established</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Website</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Status</th>
-                                                        <th style={{ fontWeight: '600' ,fontStyle: 'Semi Bold' ,fontSize: '23.55px' ,lineHeight: '23.55px' ,color: '#4C4036'}}>Actions</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Name</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Template</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Role</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Established</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Website</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Status</th>
+                                                        <th style={{ fontWeight: '600', fontStyle: 'Semi Bold', fontSize: '23.55px', lineHeight: '23.55px', color: '#4C4036' }}>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {paginated.map((p) => (
                                                         <tr key={p.id}>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 <div className="row-name" style={{ alignItems: "center" }}>
                                                                     <img className="row-avatar" src={p.avatar || "/placeholder.jpg"} alt={p.name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} style={{ width: '119px', height: '120px', borderRadius: "4px" }} />
                                                                     <div>
-                                                                        <div style={{ fontWeight: 600 }}>{p.name}</div>
+                                                                        <div style={{ fontWeight: '600' }}>{p.name}</div>
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 {p.templatePreview ? (
-                                                                    <img src={p.templatePreview} alt="Template preview" style={{ width: 90, height: 56, objectFit: "cover", borderRadius: 4, border: "1px solid #eee" }} />
+                                                                    <img src={p.templatePreview} alt="Template preview" style={{ width: '90px', height: '56px', objectFit: "cover", borderRadius: '4px', border: "1px solid #eee" }} />
                                                                 ) : "---"}
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 {p.role}
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>{p.establishedYear || "---"}</td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>{p.establishedYear || "---"}</td>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 {p.website ? (
-                                                                    <a href={p.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: 11 }}></i></a>
+                                                                    <a href={p.website} target="_blank" rel="noreferrer">Visit <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i></a>
                                                                 ) : "---"}
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 <button type="button" className={`super-toggle${p.status ? " on" : ""}`} onClick={() => toggleStatus(p.id)}>
                                                                     <span></span>
                                                                 </button>
                                                             </td>
-                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036'}}>
+                                                            <td style={{ fontWeight: '400', fontStyle: 'Regular', fontSize: '20px', lineHeight: '23.55px', color: '#4C4036' }}>
                                                                 <button type="button" className="super-action-icon view" onClick={() => navigate(`/super/profiles/${p.id}`)}>View Details</button>
                                                                 <button type="button" className="super-action-icon edit" onClick={() => navigate(`/super/profiles/${p.id}/edit`)}><i className="fa-solid fa-pen"></i></button>
                                                                 <button type="button" className="super-action-icon delete" onClick={() => handleDelete(p.id)}><i className="fa-solid fa-trash"></i></button>
@@ -307,11 +307,17 @@ function SuperProfilesList() {
                                     )}
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )
                 }
-            </div >
+            </div>
         </>
     );
 }

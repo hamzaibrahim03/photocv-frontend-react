@@ -8,15 +8,11 @@ import Pro from "./assets/icons/event_list/pro.svg"
 import Cal from "./assets/icons/event_list/cal.svg"
 import Cam from "./assets/icons/event_list/cam.svg"
 import Mess from "./assets/icons/event_list/mess.svg"
-import Book from "./assets/icons/quick_notice/book.svg"
-import Cale from "./assets/icons/quick_notice/calender.svg"
-import Com from "./assets/icons/quick_notice/com.svg"
-import Cup from "./assets/icons/quick_notice/cup.svg"
-import Hand from "./assets/icons/quick_notice/hand.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Books from "./assets/icons/event_list/bookmark.svg"
-import Note from "./assets/icons/quick_notice/note.svg"
 import apiClient from "../api/axios";
+
+const CATALOG_API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 function NoticeRoute() {
     const navigate = useNavigate();
     const [noticeData, setNoticeData] = useState({})
@@ -26,9 +22,29 @@ function NoticeRoute() {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
-    const [shareOpenId, setShareOpenId] = useState(null);
+    const [, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
     const [savedLibrary, setSavedLibrary] = useState([]);
+    const [noticeTypes, setNoticeTypes] = useState([]);
+    const [quickFilterType, setQuickFilterType] = useState(null);
+    useEffect(() => {
+        async function loadNoticeTypes() {
+            try {
+                const response = await fetch(`${CATALOG_API_BASE}/club/public/catalog/all-grouped`, {
+                    headers: { Accept: 'application/json' },
+                });
+                const json = await response.json();
+                setNoticeTypes(json?.data?.notice_type || []);
+            } catch (error) {
+                console.error('Error loading notice types:', error);
+            }
+        }
+        loadNoticeTypes();
+    }, []);
+    const toggleQuickFilter = (id) => {
+        setQuickFilterType((prev) => (prev === id ? null : id));
+        setCurrentPage(1);
+    };
     useEffect(() => {
         function handleClickOutside(e) {
             if (popupRef.current && !popupRef.current.contains(e.target)) {
@@ -126,10 +142,8 @@ function NoticeRoute() {
             },
         });
         const data = await response.json();
-        console.log(data);
         setNoticeData(data.data || {});
     };
-    console.log(noticeData.original?.data)
     async function getNoticeExtra() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/notices-extras'
         const response = await fetch(url, {
@@ -139,10 +153,8 @@ function NoticeRoute() {
             },
         });
         const data = await response.json();
-        console.log(data);
         setNoticeExtra(data.data || {});
     };
-    console.log(noticeExtra)
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -158,13 +170,14 @@ function NoticeRoute() {
         });
     };
     const filteredNotices = useMemo(() => {
-        const notices = noticeData.original?.data || [];
+        let notices = noticeData.original?.data || [];
+        if (quickFilterType) notices = notices.filter((n) => n.notice_type?.id === quickFilterType);
         return notices.filter((notice) =>
-            notice.name?.toLowerCase().includes(search.toLowerCase()) ||
-            notice.event_date?.toLowerCase().includes(search.toLowerCase()) ||
+            notice.title?.toLowerCase().includes(search.toLowerCase()) ||
+            notice.created_at?.toLowerCase().includes(search.toLowerCase()) ||
             notice.description?.toLowerCase().includes(search.toLowerCase())
         );
-    }, [noticeData, search]);
+    }, [noticeData, search, quickFilterType]);
     const totalPages = useMemo(() => {
         return Math.max(
             Math.ceil(filteredNotices.length / rowsPerPage),
@@ -207,15 +220,10 @@ function NoticeRoute() {
                                             <div className="e-quick-filter text-end">
                                                 <strong>Quick Filter</strong>
                                                 <small className="d-block">(Click icons to filter)</small>
-                                                <div className="d-flex gap-2 justify-content-end">
-                                                    <img src={Com} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Cale} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Book} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                </div>
-                                                <div className="d-flex gap-2 justify-content-end mt-2">
-                                                    <img src={Cup} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Hand} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Note} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                <div className="d-flex gap-2 justify-content-end flex-wrap" style={{ maxWidth: '140px', marginLeft: 'auto' }}>
+                                                    {noticeTypes.map((type) => (
+                                                        <img key={type.id} src={type.icon_url} alt={type.name} title={type.name} role="button" onClick={() => toggleQuickFilter(type.id)} style={{ width: '20px', height: '20px', cursor: 'pointer', opacity: quickFilterType && quickFilterType !== type.id ? 0.4 : 1, outline: quickFilterType === type.id ? '2px solid #cc445e' : 'none', borderRadius: '4px' }} />
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +258,7 @@ function NoticeRoute() {
                                                             <>
                                                                 {paginatedNotices.map((notice) => (
                                                                     <div key={notice.id} className="custom-card mb-3 p-3">
-                                                                        <div className="d-flex gap-3" style={{ flex: 1 }}>
+                                                                        <div className="d-flex gap-3" style={{ flex: '1' }}>
                                                                             <img src={notice.featured_image} alt="Notice Image" />
                                                                             <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                                                                 <div className="d-flex justify-content-between align-items-center">
@@ -277,12 +285,12 @@ function NoticeRoute() {
                                                                                         </div>
                                                                                         <div style={{ position: "relative", display: "inline-block" }}>
                                                                                             {bookmarkOpenId === notice.id && (
-                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: '100', minWidth: "170px" }}>
                                                                                                     <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
                                                                                                         Save to Library
                                                                                                     </p>
                                                                                                     {["Events", "Competitions", "Notices", "Galleries", "News"].map((cat) => (
-                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(notice, cat); }}>
+                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { toggleBookmark(notice, cat); }}>
                                                                                                             📁 {cat}
                                                                                                         </div>
                                                                                                     ))}
@@ -379,10 +387,10 @@ function NoticeRoute() {
                                                                 </div>
                                                             ))}
                                                             <div className="button-group mt-auto">
-                                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/notices')}>
+                                                                <button className="btn" id="e-view" onClick={() => navigate('/notices')}>
                                                                     View All
                                                                 </button>
-                                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/notices/create')}>
+                                                                <button className="btn" id="new" onClick={() => navigate('/notices/create')}>
                                                                     Add New
                                                                 </button>
                                                             </div>
@@ -396,7 +404,8 @@ function NoticeRoute() {
                             </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
-                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div>

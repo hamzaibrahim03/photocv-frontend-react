@@ -143,16 +143,16 @@ function SuperGlobalSettings() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     {(() => {
                                                         const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
                                                         return (
-                                                            <>
-                                                                <i className="fa-regular fa-circle-user" style={{ fontSize: 54, color: "#e5ded7" }}></i>
+                                                            <div className="d-flex gap-4">
+                                                                <i className="fa-regular fa-circle-user" style={{ fontSize: '54px', color: "#e5ded7" }}></i>
                                                                 <h2>{storedUser.first_name || "Admin"} {storedUser.last_name || ""}</h2>
-                                                            </>
+                                                            </div>
                                                         );
                                                     })()}
                                                 </div>
@@ -200,9 +200,9 @@ function SuperGlobalSettings() {
                                                             <Toggle on={settings[key]} onClick={() => update(key, !settings[key])} />
                                                         </div>
                                                     ))}
-                                                    <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-                                                        <button type="submit" className="super-btn dark" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
-                                                        <button type="button" className="super-btn outline" onClick={handleCancel}>Cancel</button>
+                                                    <div style={{ display: "flex", gap: '12px', marginTop: '24px' }}>
+                                                        <button type="submit" className="btn" id="edit" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
+                                                        <button type="button" className="btn" id="e-view" onClick={handleCancel}>Cancel</button>
                                                     </div>
                                                 </div>
                                             )}
@@ -244,17 +244,11 @@ function SuperGlobalSettings() {
                                                             </div>
                                                             <Toggle on={settings.customSignupEnabled} onClick={() => update("customSignupEnabled", !settings.customSignupEnabled)} />
                                                         </div>
-                                                        <textarea
-                                                            rows={3}
-                                                            placeholder="Text here..."
-                                                            value={settings.customSignupMessage}
-                                                            onChange={(e) => update("customSignupMessage", e.target.value)}
-                                                            style={{ marginTop: 14, width: "100%", border: "1px solid #e5ded7", borderRadius: 8, padding: 12, fontFamily: "inherit" }}
-                                                        ></textarea>
+                                                        <textarea rows={3} placeholder="Text here..." value={settings.customSignupMessage} onChange={(e) => update("customSignupMessage", e.target.value)} style={{ marginTop: '14px', width: "100%", border: "1px solid #e5ded7", borderRadius: '8px', padding: '12px', fontFamily: "inherit" }} ></textarea>
                                                     </div>
-                                                    <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-                                                        <button type="submit" className="super-btn dark" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
-                                                        <button type="button" className="super-btn outline" onClick={handleCancel}>Cancel</button>
+                                                    <div style={{ display: "flex", gap: '12px', marginTop: '24px' }}>
+                                                        <button type="submit" className="btn" id="edit" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
+                                                        <button type="button" className="btn" id="e-view" onClick={handleCancel}>Cancel</button>
                                                     </div>
                                                 </div>
                                             )}
@@ -274,20 +268,14 @@ function SuperGlobalSettings() {
                                                         </div>
                                                         <Toggle on={settings.cookieConsentEnabled} onClick={() => update("cookieConsentEnabled", !settings.cookieConsentEnabled)} />
                                                     </div>
-                                                    <div style={{ marginTop: 20 }}>
-                                                        <label style={{ display: "block", color: "#4c4036", fontWeight: 500, marginBottom: 4 }}>Cookie Message Text</label>
+                                                    <div style={{ marginTop: '20px' }}>
+                                                        <label style={{ display: "block", color: "#4c4036", fontWeight: '500', marginBottom: '4px'}}>Cookie Message Text</label>
                                                         <small style={{ color: "#999" }}>Customizable consent message shown to users</small>
-                                                        <textarea
-                                                            rows={5}
-                                                            placeholder="Text here..."
-                                                            value={settings.cookieMessage}
-                                                            onChange={(e) => update("cookieMessage", e.target.value)}
-                                                            style={{ marginTop: 10, width: "100%", border: "1px solid #e5ded7", borderRadius: 8, padding: 12, fontFamily: "inherit" }}
-                                                        ></textarea>
+                                                        <textarea rows={5} placeholder="Text here..." value={settings.cookieMessage} onChange={(e) => update("cookieMessage", e.target.value)} style={{ marginTop: '10px', width: "100%", border: "1px solid #e5ded7", borderRadius: '8px', padding: '12px', fontFamily: "inherit" }} ></textarea>
                                                     </div>
-                                                    <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-                                                        <button type="submit" className="super-btn dark" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
-                                                        <button type="button" className="super-btn outline" onClick={handleCancel}>Cancel</button>
+                                                    <div style={{ display: "flex", gap: '12px', marginTop: '24px' }}>
+                                                        <button type="submit" className="btn" id="edit" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
+                                                        <button type="button" className="btn" id="e-view" onClick={handleCancel}>Cancel</button>
                                                     </div>
                                                 </div>
                                             )}
@@ -300,25 +288,13 @@ function SuperGlobalSettings() {
                                             </div>
                                             {openSection === "privacy" && (
                                                 <div className="super-accordion-body">
-                                                    <label style={{ display: "block", color: "#4c4036", fontWeight: 500, margin: "18px 0 8px" }}>Privacy Policy Content</label>
-                                                    <textarea
-                                                        rows={7}
-                                                        placeholder="Text here..."
-                                                        value={settings.privacyPolicy}
-                                                        onChange={(e) => update("privacyPolicy", e.target.value)}
-                                                        style={{ width: "100%", border: "1px solid #e5ded7", borderRadius: 8, padding: 12, fontFamily: "inherit" }}
-                                                    ></textarea>
-                                                    <label style={{ display: "block", color: "#4c4036", fontWeight: 500, margin: "20px 0 8px" }}>Terms &amp; Conditions</label>
-                                                    <textarea
-                                                        rows={7}
-                                                        placeholder="Text here..."
-                                                        value={settings.termsConditions}
-                                                        onChange={(e) => update("termsConditions", e.target.value)}
-                                                        style={{ width: "100%", border: "1px solid #e5ded7", borderRadius: 8, padding: 12, fontFamily: "inherit" }}
-                                                    ></textarea>
-                                                    <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-                                                        <button type="submit" className="super-btn dark" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
-                                                        <button type="button" className="super-btn outline" onClick={handleCancel}>Cancel</button>
+                                                    <label style={{ display: "block", color: "#4c4036", fontWeight: '500', margin: "18px 0 8px" }}>Privacy Policy Content</label>
+                                                    <textarea rows={7} placeholder="Text here..." value={settings.privacyPolicy} onChange={(e) => update("privacyPolicy", e.target.value)} style={{ width: "100%", border: "1px solid #e5ded7", borderRadius: '8px', padding: '12px', fontFamily: "inherit" }} ></textarea>
+                                                    <label style={{ display: "block", color: "#4c4036", fontWeight: '500', margin: "20px 0 8px" }}>Terms &amp; Conditions</label>
+                                                    <textarea rows={7} placeholder="Text here..." value={settings.termsConditions} onChange={(e) => update("termsConditions", e.target.value)} style={{ width: "100%", border: "1px solid #e5ded7", borderRadius: '8px', padding: '12px', fontFamily: "inherit" }} ></textarea>
+                                                    <div style={{ display: "flex", gap: '12px', marginTop: '24px' }}>
+                                                        <button type="submit" className="btn" id="edit" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
+                                                        <button type="button" className="btn" id="e-view" onClick={handleCancel}>Cancel</button>
                                                     </div>
                                                 </div>
                                             )}
@@ -326,6 +302,12 @@ function SuperGlobalSettings() {
                                     </form>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

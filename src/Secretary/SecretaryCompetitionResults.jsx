@@ -34,7 +34,7 @@ function SecretaryCompetitionResults() {
     const navigate = useNavigate();
     const { competitionId } = useParams();
     const [isLoading, setIsLoading] = useState(true);
-    const [club, setClub] = useState(null);
+    const [club] = useState(null);
     const [competition, setCompetition] = useState(null);
     const [entries, setEntries] = useState([]);
     const [published, setPublished] = useState(false);
@@ -42,17 +42,6 @@ function SecretaryCompetitionResults() {
     const [publishError, setPublishError] = useState("");
 
     useEffect(() => {
-        async function getClub() {
-            try {
-                const response = await fetch(`${API_BASE}/club/public/home`, { headers: { "Content-Type": "application/json" } });
-                const json = await response.json();
-                const data = json?.data || {};
-                const clubInfo = data?.clubSettings?.original?.data?.club || data?.user?.club || {};
-                setClub({ id: data?.user?.id ?? 1, name: clubInfo.club_name || "My Club" });
-            } catch (error) {
-                console.error("Secretary club load error:", error);
-            }
-        }
         async function getCompetition() {
             try {
                 const response = await fetch(`${API_BASE}/competitions/${competitionId}`, { headers: authHeaders() });
@@ -136,64 +125,78 @@ function SecretaryCompetitionResults() {
         <>
             <NavigationRoute activeClubId={club?.id} />
             <HeaderRoute title="Season Results" />
-            <div className="secretary-content" style={{ paddingTop: 25 }}>
-                <div className="dashboard-card" style={{ width: "100%" }}>
-                    <div className="profile-card" style={{ width: "70%" }}>
-                        <div className="profile-left">
-                            <div className="profile-info">
-                                <small className="greeting">Galleries uploaded by Club Members</small>
-                                <h2 className="name">{competition?.name || "Season Results"}</h2>
-                                <p className="secretary-breadcrumb">Average {entries.length} images</p>
+            <div className="content">
+                <section>
+                    <div className="container" style={{ maxWidth: '1820px' }}>
+                        <div className="dashboard-card">
+                            <div className="profile-card">
+                                <div className="profile-left">
+                                    <div className="profile-info">
+                                        <small className="greeting">Galleries uploaded by Club Members</small>
+                                        <h2 className="name">{competition?.name || "Season Results"}</h2>
+                                        <p className="secretary-breadcrumb">Average {entries.length} images</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card-section">
+                                <div className="stat-card">
+                                    <small className="ca-details">Images</small>
+                                    <h3 className="number">{entries.length}</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="card-section">
-                        <div className="stat-card">
-                            <small className="ca-details">Images</small>
-                            <h3 className="number">{entries.length}</h3>
+                </section>
+
+                <section>
+                    <div className="container">
+                        <div style={{ background: "#fff", borderRadius: '12px', boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: '26px', marginTop: '22px' }}>
+                            <h5 style={{ color: "#4c4036", marginBottom: '18px' }}>Competition Results</h5>
+                            {rows.length === 0 ? (
+                                <p className="secretary-empty-note">No results recorded yet.</p>
+                            ) : (
+                                <table className="secretary-results-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Title</th>
+                                            {[1, 2, 3, 4, 5].map((n) => <th key={n}>Judge {n}</th>)}
+                                            <th>Total</th>
+                                            <th>Position</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {rows.map(({ entry, judges, total, maxTotal }, index) => (
+                                            <tr key={entry.entry_id} style={{ cursor: "pointer" }} onClick={() => navigate(`/secretary/competitions/${competitionId}/results/${entry.entry_id}`)}>
+                                                <td><img className="row-thumb" src={entry.entry_image} alt={entry.entry_image_title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} /></td>
+                                                <td>{entry.entry_image_title}</td>
+                                                {[0, 1, 2, 3, 4].map((i) => (
+                                                    <td key={i}>{judges[i] ? `${judges[i].score}/${judges[i].maxScore}` : "---"}</td>
+                                                ))}
+                                                <td>{total}/{maxTotal}</td>
+                                                <td>{ordinal(entry.position) || `${index + 1}${index === 0 ? "st" : index === 1 ? "nd" : index === 2 ? "rd" : "th"}`}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
+
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: '24px' }}>
+                            <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: '8px', padding: "11px 28px" }} onClick={() => navigate(-1)}>Back</button>
+                            {publishError ? <span style={{ color: "#c0392b" }}>{publishError}</span> : null}
+                            <button type="button" className="btn" disabled={isPublishing} style={{ background: "#4c4036", color: "#fff", border: "none", borderRadius: '8px', padding: "11px 28px", opacity: isPublishing ? 0.7 : 1 }} onClick={handlePublish}>
+                                {isPublishing ? "Publishing..." : published ? "Published!" : "Publish Results"}
+                            </button>
                         </div>
                     </div>
-                </div>
-
-                <div style={{ background: "#fff", borderRadius: 12, boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: 26, marginTop: 22 }}>
-                    <h5 style={{ color: "#4c4036", marginBottom: 18 }}>Competition Results</h5>
-                    {rows.length === 0 ? (
-                        <p className="secretary-empty-note">No results recorded yet.</p>
-                    ) : (
-                        <table className="secretary-results-table">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    {[1, 2, 3, 4, 5].map((n) => <th key={n}>Judge {n}</th>)}
-                                    <th>Total</th>
-                                    <th>Position</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {rows.map(({ entry, judges, total, maxTotal }, index) => (
-                                    <tr key={entry.entry_id} style={{ cursor: "pointer" }} onClick={() => navigate(`/secretary/competitions/${competitionId}/results/${entry.entry_id}`)}>
-                                        <td><img className="row-thumb" src={entry.entry_image} alt={entry.entry_image_title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} /></td>
-                                        <td>{entry.entry_image_title}</td>
-                                        {[0, 1, 2, 3, 4].map((i) => (
-                                            <td key={i}>{judges[i] ? `${judges[i].score}/${judges[i].maxScore}` : "---"}</td>
-                                        ))}
-                                        <td>{total}/{maxTotal}</td>
-                                        <td>{ordinal(entry.position) || `${index + 1}${index === 0 ? "st" : index === 1 ? "nd" : index === 2 ? "rd" : "th"}`}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
-
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 24 }}>
-                    <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: 8, padding: "11px 28px" }} onClick={() => navigate(-1)}>Back</button>
-                    {publishError ? <span style={{ color: "#c0392b" }}>{publishError}</span> : null}
-                    <button type="button" className="btn" disabled={isPublishing} style={{ background: "#4c4036", color: "#fff", border: "none", borderRadius: 8, padding: "11px 28px", opacity: isPublishing ? 0.7 : 1 }} onClick={handlePublish}>
-                        {isPublishing ? "Publishing..." : published ? "Published!" : "Publish Results"}
-                    </button>
-                </div>
+                </section>
+                <footer className="site-footer">
+                    <div className="footer-content">
+                        <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                        <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                    </div>
+                </footer>
             </div>
         </>
     );

@@ -14,7 +14,6 @@ function MemberSingle() {
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [galleryPage, setGalleryPage] = useState(1);
-    const galleriesPerPage = 8;
     useEffect(() => {
         loadMember();
     }, [id]);
@@ -147,25 +146,6 @@ function MemberSingle() {
         const days = Math.floor(hours / 24);
         return `${days} day${days > 1 ? "s" : ""} ago`;
     };
-    const getGalleryComments = (gallery) => {
-        return (gallery?.photos || []).reduce(
-            (total, photo) =>
-                total + (photo?.comments?.length || 0),
-            0
-        );
-    };
-    const getGalleryLikes = (gallery) => {
-        return 0;
-    };
-    const getGalleryImage = (gallery) => {
-        return (
-            gallery?.photos?.map((photo) => ({
-                image:
-                    photo?.image_url ||
-                    PLACEHOLDER_IMAGE,
-            })) || []
-        );
-    };
     if (!isLoading && !member) {
         return (
             <div style={{ minHeight: "100vh", background: "#eee9e4", display: "flex", alignItems: "center", justifyContent: "center", }}>
@@ -190,11 +170,13 @@ function MemberSingle() {
                             <div className="container" style={{ maxWidth: "1820px", }}>
                                 <div className="dashboard-card">
                                     <div className="profile-card">
-                                        <div className="profile-left d-flex flex-column justify-content-center">
-                                            <small className="greeting text-muted" style={{ fontSize: '18px' }}>List of members in the club</small>
-                                            <h2 className="name" style={{ fontSize: '30px', fontWeight: '500' }}>Member</h2>
-                                            <small className="role text-danger" style={{ fontSize: '18px' }}>{member?.galleries?.length || 0}{" "}Member Galleries</small>
-                                            <div style={{ position: "absolute", opacity: 0, pointerEvents: "none", }}>{searchMatches}</div>
+                                        <div className="profile-left">
+                                            <div className="profile-info">
+                                                <small className="greeting">List of members in the club</small>
+                                                <h2 className="name">Member</h2>
+                                                <small className="role">{member?.galleries?.length || 0}{" "}Member Galleries</small>
+                                                <div style={{ position: "absolute", opacity: '0', pointerEvents: "none", }}>{searchMatches}</div>
+                                            </div>
                                         </div>
                                         <div className="d-flex justify-content-end">
                                             <div className="search-bar d-flex justify-content-space-between">
@@ -203,16 +185,16 @@ function MemberSingle() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
+                                    <div className="card-section">
+                                        <div className="stat-card">
                                             <small className="ca-details" style={{ fontSize: '20px' }}>Total Images</small>
-                                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{member?.gallery_total_photos || 0}</h3>
+                                            <h3 className="number">{member?.gallery_total_photos || 0}</h3>
                                         </div>
-                                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                                            <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
-                                            <div className="row mt-4 align-items-center">
+                                        <div className="event-cards">
+                                            <small className="ca-details">Interactions</small>
+                                            <div className="row align-items-center">
                                                 <div className="col-md-5">
-                                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{totalInteractions}</h3>
+                                                    <h3 className="number">{totalInteractions}</h3>
                                                 </div>
                                                 <div className="days col-md-7 text-start">
                                                     <span>Likes & Comments</span>
@@ -251,7 +233,7 @@ function MemberSingle() {
                                             <h5 style={{ color: "#cc445e", fontSize: "15px", marginBottom: "12px", }}>
                                                 {member?.tag_line || "Photographer"}
                                             </h5>
-                                            <p style={{ color: "#625b55", lineHeight: 1.55, marginBottom: "15px", }}>
+                                            <p style={{ color: "#625b55", lineHeight: '1.55px', marginBottom: "15px", }}>
                                                 {member?.bio || member?.about || "No biography available."}
                                             </p>
                                             <div className="row" style={{ color: "#625b55", }}>
@@ -431,7 +413,7 @@ function MemberSingle() {
                             <div className="container" style={{ maxWidth: "1820px", }}>
                                 <div className="bg-white rounded shadow-sm" style={{ marginTop: "20px", padding: "0", overflow: "hidden", }}>
                                     <div style={{ padding: "15px 20px", borderBottom: "1px solid #eee", }}>
-                                        <h4 style={{ margin: 0, color: "#4d4742", fontSize: "20px", }}>
+                                        <h4 style={{ margin: '0', color: "#4d4742", fontSize: "20px", }}>
                                             {fullName}'s Gallery
                                         </h4>
                                     </div>
@@ -496,6 +478,11 @@ function MemberSingle() {
                                 </button>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

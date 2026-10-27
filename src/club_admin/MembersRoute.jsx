@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import NavigationRoute from './NavigationRoute';
 import HeaderRoute from './HeaderRoute';
 import Loader from "../Ryton/extra/LoaderAll";
+import apiClient from '../api/axios';
 import Ima from './assets/icons/member/image.svg';
 import Com from './assets/icons/member/comment.svg';
 import Lik from './assets/icons/member/like.svg';
@@ -29,32 +30,38 @@ const MembersRoute = () => {
         return () => document.removeEventListener('click', handleClickOutside);
     }, []);
     async function getMembersData() {
-        const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/members'
-        const response = await fetch(url, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
-        const data = await response.json();
-        console.log(data);
-        setMemberData(data.data || []);
+        try {
+            const response = await apiClient.get('/members');
+            setMemberData(response.data?.data || {});
+        } catch (error) {
+            console.error('Error loading members:', error);
+            setMemberData({});
+        }
     };
-    console.log(memberData?.original?.data)
     const toggleMenu = (index) => {
         setOpenMenuIndex(prev => prev === index ? null : index);
     };
-    const editItem = (member) => {
-        alert("Edit " + (member.username || ''));
+    const shareItem = async (member) => {
         setOpenMenuIndex(null);
+        const url = `${window.location.origin}/members/${member.id}`;
+        try {
+            await navigator.clipboard.writeText(url);
+            alert('Profile link copied to clipboard.');
+        } catch (error) {
+            console.error('Error copying link:', error);
+            alert(url);
+        }
     };
-    const shareItem = (member) => {
-        alert("Share " + (member.username || ''));
+    const deleteItem = async (member) => {
         setOpenMenuIndex(null);
-    };
-    const deleteItem = (member) => {
-        alert("Delete " + (member.username || ''));
-        setOpenMenuIndex(null);
+        if (!window.confirm(`Remove ${member.username || 'this member'}?`)) return;
+        try {
+            await apiClient.delete(`/members/${member.id}`);
+            await getMembersData();
+        } catch (error) {
+            console.error('Error deleting member:', error);
+            alert(error.response?.data?.message || 'Unable to remove this member.');
+        }
     };
     const totalPages = useMemo(() => {
         return Math.max(
@@ -96,10 +103,12 @@ const MembersRoute = () => {
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="dashboard-card">
                                     <div className="profile-card">
-                                        <div className="profile-left d-flex flex-column justify-content-center">
-                                            <small className="greeting text-muted" style={{ fontSize: '18px' }}>List of members in the club</small>
-                                            <h2 className="name" style={{ fontSize: '30px', fontWeight: '500' }}>All Members</h2>
-                                            <small className="role text-danger" style={{ fontSize: '18px' }}>{memberData?.original?.data?.length} Member Galleries</small>
+                                        <div className="profile-left">
+                                            <div className='profle-info'>
+                                                <small className="greeting">List of members in the club</small>
+                                                <h2 className="name" style={{ fontSize: '30px', fontWeight: '500' }}>All Members</h2>
+                                                <small className="role">{memberData?.original?.data?.length} Member Galleries</small>
+                                            </div>
                                         </div>
                                         <div className="d-flex justify-content-end">
                                             <div className="search-bar d-flex justify-content-space-between">
@@ -108,16 +117,16 @@ const MembersRoute = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
-                                            <small className="ca-details" style={{ fontSize: '20px' }}>Members</small>
-                                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{memberData?.original?.data?.length}</h3>
+                                    <div className="card-section">
+                                        <div className="stat-card">
+                                            <small className="ca-details">Members</small>
+                                            <h3 className="number">{memberData?.original?.data?.length}</h3>
                                         </div>
-                                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                                            <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
-                                            <div className="row mt-4 align-items-center">
+                                        <div className="event-cards">
+                                            <small className="ca-details">Interactions</small>
+                                            <div className="row align-items-center">
                                                 <div className="col-md-5">
-                                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{memberData.original?.data?.reduce(
+                                                    <h3 className="number">{memberData.original?.data?.reduce(
                                                         (total, item) =>
                                                             total +
                                                             (Number(item.gallery_total_comments) || 0) +
@@ -144,13 +153,13 @@ const MembersRoute = () => {
                                                     const menuKey = member.id ?? `${currentPage}-${rowIndex}-${index}`;
                                                     return (
                                                         <div key={menuKey} className="photographer-card bg-white text-center shadow-sm position-relative" onClick={() => navigate(`/members/${member.id}`)}>
-                                                            <div className="three-dots-wrapper position-absolute cursor-pointer" style={{ top: '10px', right: '10px', width: '6px', height: '30px', zIndex: 100 }} onClick={(e) => { e.stopPropagation(); toggleMenu(menuKey); }}>
+                                                            <div className="three-dots-wrapper position-absolute cursor-pointer" style={{ top: '10px', right: '10px', width: '6px', height: '30px', zIndex: '100' }} onClick={(e) => { e.stopPropagation(); toggleMenu(menuKey); }}>
                                                                 <div className="three-dots bg-secondary" style={{ width: '6px', height: '6px', boxShadow: '0 6px 0 #555, 0 -6px 0 #555', marginTop: '12px' }}></div>
                                                                 {openMenuIndex === menuKey && (
-                                                                    <div className="dropdown-menu-custom position-absolute bg-white shadow-sm" style={{ top: '25px', right: '0', zIndex: 1000 }}>
-                                                                        <button className="btn btn-sm w-100 text-start border-0 bg-transparent rounded-0" onClick={() => navigate(`/members/${member.id}/edit`)}>Edit</button>
-                                                                        <button className="btn btn-sm w-100 text-start border-0 bg-transparent rounded-0" onClick={() => shareItem(member)}>Share</button>
-                                                                        <button className="btn btn-sm w-100 text-start border-0 bg-transparent rounded-0" onClick={() => deleteItem(member)}>Delete</button>
+                                                                    <div className="dropdown-menu-custom position-absolute bg-white shadow-sm" style={{ top: '25px', right: '0', zIndex: '1000' }}>
+                                                                        <button className="btn w-100 text-start border-0 bg-transparent rounded-0" onClick={() => navigate(`/members/${member.id}/edit`)}>Edit</button>
+                                                                        <button className="btn w-100 text-start border-0 bg-transparent rounded-0" onClick={() => shareItem(member)}>Share</button>
+                                                                        <button className="btn w-100 text-start border-0 bg-transparent rounded-0" onClick={() => deleteItem(member)}>Delete</button>
                                                                     </div>
                                                                 )}
                                                             </div>
@@ -167,11 +176,11 @@ const MembersRoute = () => {
                                                                 <a href="#" className="d-flex align-items-center justify-content-center rounded-circle" style={{ backgroundColor: '#99816b', color: 'white', width: '34px', height: '34px' }}><i className="fab fa-twitter"></i></a>
                                                             </div>
                                                             <h3 style={{ fontFamily: 'Inter', fontStyle: 'Medium', fontSize: '24px', lineHeight: '100%', letterSpacing: '0%', marginBottom: '10px', marginTop: '10px' }}>{member.first_name + ' ' + member.last_name || 'Username'}</h3>
-                                                            <small className="role" style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', marginBottom: '18px' }}>{member?.roles?.[0]?.name}</small>
+                                                            <small className="role" style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', marginBottom: '18px' }}>{member?.roles?.[0]?.name}</small>
                                                             <div className="social-icons d-flex justify-content-center gap-3 text-white" style={{ backgroundColor: '#d64561' }}>
-                                                                <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{member.gallery_total_photos || 0}</span><img src={Ima} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
-                                                                <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{member.gallery_total_comments || 0}</span><img src={Com} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
-                                                                <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: 400, fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{member.gallery_total_likes || 0}</span><img src={Lik} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
+                                                                <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{member.gallery_total_photos || 0}</span><img src={Ima} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
+                                                                <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{member.gallery_total_comments || 0}</span><img src={Com} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
+                                                                <div className="icon d-flex align-items-center gap-2"><span style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '14px', lineHeight: '100%', letterSpacing: '0%', textAlign: 'right', }}>{member.gallery_total_likes || 0}</span><img src={Lik} alt="icon" style={{ width: '20px', height: '20px', borderRadius: '0px' }} /></div>
                                                             </div>
                                                             <div className="gallery-preview d-flex">
                                                                 {member?.galleries?.[0]?.photos?.length > 0 ? (
@@ -211,7 +220,7 @@ const MembersRoute = () => {
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="button-group ms-3">
-                                        <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }} onClick={() => navigate('/members/create')}>Add New</button>
+                                        <button className="btn" id="edit" onClick={() => navigate('/members/create')}>Add New</button>
                                     </div>
                                     <div className="dt-paging">
                                         <nav aria-label="pagination">
@@ -234,6 +243,11 @@ const MembersRoute = () => {
                                 </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

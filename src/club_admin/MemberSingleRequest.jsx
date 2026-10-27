@@ -147,10 +147,12 @@ function MemberSingleRequest() {
                             <div className="container" style={{ maxWidth: '1820px' }} >
                                 <div className="dashboard-card" >
                                     <div className="profile-card" >
-                                        <div className="profile-left d-flex flex-column justify-content-center">
-                                            <h2 className="name" style={{ fontSize: '30px', fontWeight: '500' }} >
-                                                Member Request
-                                            </h2>
+                                        <div className="profile-left">
+                                            <div className="profile-info">
+                                                <h2 className="name" >
+                                                    Member Request
+                                                </h2>
+                                            </div>
                                         </div>
                                         <div className="d-flex justify-content-end">
                                             <div className="search-bar d-flex justify-content-space-between">
@@ -159,12 +161,12 @@ function MemberSingleRequest() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-section d-flex gap-4" style={{ width: '32%' }} >
-                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '463px', height: '148px' }} >
-                                            <small className="ca-details" style={{ fontSize: '20px' }} >
+                                    <div className="card-section" >
+                                        <div className="stat-card" >
+                                            <small className="ca-details" >
                                                 Total Members Requests
                                             </small>
-                                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }} >
+                                            <h3 className="number" >
                                                 {memberRequestData?.original?.data?.length ?? 0}
                                             </h3>
                                         </div>
@@ -208,7 +210,7 @@ function MemberSingleRequest() {
                                                 <h3 style={{ fontFamily: 'Inter', fontSize: '24px', marginBottom: '10px' }} >
                                                     {`${member.first_name || ''} ${member.last_name || ''}`.trim() || 'Full Name'}
                                                 </h3>
-                                                <small className="role" style={{ fontFamily: 'Inter', fontWeight: 400, fontSize: '14px' }} >
+                                                <small className="role" style={{ fontFamily: 'Inter', fontWeight: '400', fontSize: '14px' }} >
                                                     {member.title || 'Title'}
                                                 </small>
                                             </div>
@@ -245,7 +247,7 @@ function MemberSingleRequest() {
                                 </div>
                                 {member && (
                                     <div className="d-flex gap-3 mt-4">
-                                        <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#4c4036', minWidth: '110px' }} onClick={handleAccept} disabled={isProcessing} >
+                                        <button type="button" className="btn" id="edit" onClick={handleAccept} disabled={isProcessing} >
                                             {isProcessing ? (
                                                 <>
                                                     <span className="spinner-border spinner-border-sm me-2" role="status" ></span>
@@ -255,13 +257,18 @@ function MemberSingleRequest() {
                                                 'Accept'
                                             )}
                                         </button>
-                                        <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#99816b', minWidth: '110px' }} onClick={handleReject} disabled={isProcessing} >
+                                        <button type="button" className="btn" id="e-view" onClick={handleReject} disabled={isProcessing} >
                                             Reject
                                         </button>
                                     </div>
                                 )}
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

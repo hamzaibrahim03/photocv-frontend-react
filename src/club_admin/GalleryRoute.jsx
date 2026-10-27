@@ -16,7 +16,7 @@ function GalleryRoute() {
     const [clubGallery, setClubGallery] = useState([]);
     const [search, setSearch] = useState("");
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
-    const [shareOpenId, setShareOpenId] = useState(null);
+    const [, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
     const [savedLibrary, setSavedLibrary] = useState([]);
     useEffect(() => {
@@ -186,16 +186,16 @@ function GalleryRoute() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '219px', height: '148px' }}>
-                                            <small className="ca-details" style={{ fontSize: '20px' }}>Images</small>
-                                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>{totalImages}</h3>
+                                    <div className="card-section">
+                                        <div className="stat-card">
+                                            <small className="ca-details">Images</small>
+                                            <h3 className="number">{totalImages}</h3>
                                         </div>
-                                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: '#755840', width: '219px', height: '148px' }}>
-                                            <small className="ca-details" style={{ fontSize: '20px' }}>Interactions</small>
-                                            <div className="row mt-4">
+                                        <div className="event-cards">
+                                            <small className="ca-details">Interactions</small>
+                                            <div className="row">
                                                 <div className="col-md-5">
-                                                    <h3 className="number m-0" style={{ fontSize: '48px', fontWeight: '500' }}>{totalInter}</h3>
+                                                    <h3 className="number">{totalInter}</h3>
                                                 </div>
                                                 <div className="days col-md-7 text-start">
                                                     <span style={{ fontSize: '16px' }}>Likes & Comments</span>
@@ -226,7 +226,7 @@ function GalleryRoute() {
                                                                 </div>
                                                                 <div style={{ position: "relative", display: "inline-block" }}>
                                                                     {bookmarkOpenId === gallery.id && (
-                                                                        <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                        <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: '100', minWidth: "170px" }}>
                                                                             <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
                                                                                 Save to Library
                                                                             </p>
@@ -295,7 +295,7 @@ function GalleryRoute() {
                                                                 </div>
                                                                 <div style={{ position: "relative", display: "inline-block" }}>
                                                                     {bookmarkOpenId === (cgallery.gallery_id ?? cgallery.id) && (
-                                                                        <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                        <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: '100', minWidth: "170px" }}>
                                                                             <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
                                                                                 Save to Library
                                                                             </p>
@@ -337,6 +337,11 @@ function GalleryRoute() {
                                 </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

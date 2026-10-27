@@ -11,7 +11,6 @@ function RytonClubGallerySingle() {
     const [clubgallerydata, setclubgalleryData] = useState([]);
     const [randomMemberGallery, setrandomMemberGallery] = useState([]);
     const [randomClubGallery, setrandomClubGallery] = useState([]);
-    const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         Promise.all([
@@ -217,9 +216,9 @@ function RytonClubGallerySingle() {
                                                         <div className="suggestion-section" style={{ maxWidth: '1820px' }}>
                                                             <div className="suggestion-header d-flex justify-content-between align-items-center" style={{ padding: '0px' }}>
                                                                 <h3 className="heading" style={{ fontWeight: '500' }}>You may also like</h3>
-                                                                <button id="view" style={{ color: clubgallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubgallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: "none" }}>View All</button>
+                                                                <button id="view" onClick={() => navigate('/rytongal/club')} style={{ color: clubgallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: clubgallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: "none" }}>View All</button>
                                                             </div>
-                                                            <div className="suggestion-gallery" style={{ padding: 0 }}>
+                                                            <div className="suggestion-gallery" style={{ padding: '0' }}>
                                                                 {suggestion.slice(0, 4).map((item) => (
                                                                     <div className="suggestion-card" key={item.photo_id}>
                                                                         <img src={item.image} alt={item.title} />

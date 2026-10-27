@@ -56,8 +56,8 @@ function Step1General() {
         <>
             <div className="form-container">
                 <form style={{ marginLeft: '2%', marginRight: '2%' }} onSubmit={submitForm}>
-                    <h5 className="role" style={{ fontFamily: 'Inter', fontWeight: 400, fontSize: '32px', lineHeight: '100%', letterSpacing: '0%' }}>General Settings</h5>
-                    <p style={{ fontFamily: 'Inter', fontWeight: 400, fontSize: '22.88px', lineHeight: '100%', letterSpacing: '0%', color: '#4C4036' }}>We need just a few basic details of the club</p>
+                    <h5 className="role" style={{ fontFamily: 'Inter', fontWeight: '400', fontSize: '32px', lineHeight: '100%', letterSpacing: '0%' }}>General Settings</h5>
+                    <p style={{ fontFamily: 'Inter', fontWeight: '400', fontSize: '22.88px', lineHeight: '100%', letterSpacing: '0%', color: '#4C4036' }}>We need just a few basic details of the club</p>
                     <br /><br />
                     <div className="row">
                         <div className="col-md-6 mb-3">
@@ -191,8 +191,8 @@ function Step1General() {
                         </div>
                     </div>
                     <div className="button-group">
-                        <button type="button" className="btn btn-sm" id="e-view" onClick={loadSettings}>Cancel</button>
-                        <button type="submit" className="btn btn-sm" id="edit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
+                        <button type="button" className="btn" id="e-view" onClick={loadSettings}>Cancel</button>
+                        <button type="submit" className="btn" id="edit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
                     </div>
                 </form>
             </div>

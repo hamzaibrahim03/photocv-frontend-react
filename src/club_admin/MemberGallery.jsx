@@ -168,16 +168,16 @@ function MemberGalleryRoute() {
                         <section>
                             <div className="container" style={{ maxWidth: "1820px" }}>
                                 <div className="dashboard-card">
-                                    <div className="profile-cardbg-white shadow-sm rounded p-4 d-flex align-items-center justify-content-between" style={{ height: "148px", width: "65.8%" }}>
+                                    <div className="profile-card">
                                         <div className="profile-left">
                                             <div className="profile-info">
-                                                <small className="greeting text-muted" style={{ fontSize: "18px" }}>
+                                                <small className="greeting">
                                                     Galleries uploaded by Club Members
                                                 </small>
-                                                <h2 className="name" style={{ fontSize: "30px", fontWeight: "500", color: "#4c4036" }}>
+                                                <h2 className="name">
                                                     {allMemberGalleries.length}{" "}Member Galleries
                                                 </h2>
-                                                <small className="role mt-2 d-block" style={{ fontSize: "18px", color: "#cc445e" }}>
+                                                <small className="role">
                                                     Average {totalImages} Images
                                                 </small>
                                             </div>
@@ -187,23 +187,23 @@ function MemberGalleryRoute() {
                                             <i className="fas fa-search"></i>
                                         </div>
                                     </div>
-                                    <div className="card-section d-flex gap-4" style={{ width: "32%" }}>
-                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: "#cc445e", width: "219px", height: "148px" }}>
-                                            <small style={{ fontSize: "20px" }}>
+                                    <div className="card-section">
+                                        <div className="stat-card">
+                                            <small className="ca-details">
                                                 Images
                                             </small>
-                                            <h3 className="mt-4" style={{ fontSize: "48px", fontWeight: "500" }}>
+                                            <h3 className="number">
                                                 {totalImages}
                                             </h3>
                                         </div>
-                                        <div className="event-card text-white text-center rounded p-4" style={{ backgroundColor: "#755840", width: "219px", height: "148px" }}>
-                                            <small style={{ fontSize: "20px" }}>Interactions</small>
+                                        <div className="event-cards">
+                                            <small className="ca-details">Interactions</small>
                                             <div className="row mt-4">
                                                 <div className="col-md-5">
-                                                    <h3 className="m-0" style={{ fontSize: "48px", fontWeight: "500" }}>{totalInteractions}</h3>
+                                                    <h3 className="number">{totalInteractions}</h3>
                                                 </div>
                                                 <div className="col-md-7 text-start">
-                                                    <span style={{ fontSize: "16px" }}>Likes & Comments</span>
+                                                    <span className="days">Likes & Comments</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -301,6 +301,11 @@ function MemberGalleryRoute() {
                                 </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

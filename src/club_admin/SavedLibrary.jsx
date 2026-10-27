@@ -114,7 +114,7 @@ function SavedLibraryCard({ item, index, onRemove }) {
     return (
         <>
             <div className="custom-card mb-3 p-3">
-                <div className="d-flex gap-3" style={{ flex: 1 }}>
+                <div className="d-flex gap-3" style={{ flex: '1' }}>
                     {item.image ? (
                         <img src={item.image} alt={item.title} />
                     ) : (

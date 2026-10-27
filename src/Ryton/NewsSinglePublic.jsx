@@ -9,7 +9,7 @@ function NewsSinglePublic() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [sinnewsData, setsinnewsData] = useState([]);
-    const [sinnewsList, setsinnewsList] = useState([]);
+    const [, setsinnewsList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState("");
     useEffect(() => {
@@ -49,19 +49,6 @@ function NewsSinglePublic() {
             day % 10 === 2 && day !== 12 ? "nd" :
                 day % 10 === 3 && day !== 13 ? "rd" : "th";
         return `${day}${suffix} ${month} ${year}`;
-    };
-    const formatsDate = (dateString) => {
-        const date = new Date(dateString);
-        if (isNaN(date)) return "";
-        const month = date.toLocaleString("en-GB", { month: "short" });
-        const year = date.getFullYear();
-        return ` ${month} ${year}`;
-    };
-    const formatedDate = (dateString) => {
-        const date = new Date(dateString);
-        if (isNaN(date)) return "";
-        const year = date.getFullYear();
-        return ` ${year}`;
     };
     console.log(sinnewsData.news)
     return (
@@ -137,7 +124,7 @@ function NewsSinglePublic() {
                                                     <div className="card" style={{ border: 'none' }}>
                                                         <img src={sinnewsData?.news?.original?.data?.featured_image_url} alt="Meeting" style={{ maxWidth: '850px', marginBottom: '50px', width: '850px', height: '350px', borderRadius: '8px' }} />
                                                         <div className="d-flex justify-content-between" style={{ width: '850px' }}>
-                                                            <h5 className="head" style={{ fontFamily: 'Inter', fontWeight: 500, fontStyle: "Medium", fontSize: "28px", lineHeight: "100%", letterSpacing: "0%", color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>{sinnewsData?.news?.original?.data.title}</h5>
+                                                            <h5 className="head" style={{ fontFamily: 'Inter', fontWeight: '500', fontStyle: "Medium", fontSize: "28px", lineHeight: "100%", letterSpacing: "0%", color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>{sinnewsData?.news?.original?.data.title}</h5>
                                                             <div className="d-flex align-items-center gap-2 mb-1">
                                                                 <img src={sinnewsData?.news?.original?.data?.club_news_type?.icon_url} style={{ width: '20px', height: '20px' }} />
                                                                 <h5 className="head m-0" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: '400', fontStyle: 'Regular', fontSize: '18px', lineHeight: '100%', letterSpacing: '0%' }}>{sinnewsData?.news?.original?.data?.club_news_type?.name}</h5>
@@ -287,7 +274,7 @@ function NewsSinglePublic() {
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">
-                                                <h5 className="head mb-4" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                                <h5 className="head mt-5 mb-5" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}> {sinnewsData?.clubSettings?.original?.data?.club.address} </p>
                                                     <div className="icon-circles ms-3" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: sinnewsData?.clubSettings?.original?.data?.settings?.accent_color }}>
@@ -319,7 +306,7 @@ function NewsSinglePublic() {
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <p className="footer-text head" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
                                                         <a href="fb_link" target="_blank" className="footer-link" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {sinnewsData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
@@ -330,7 +317,7 @@ function NewsSinglePublic() {
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <p className="footer-text head" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
                                                         <a href="insta_link" target="_blank" className="footer-link" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {sinnewsData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
@@ -341,7 +328,7 @@ function NewsSinglePublic() {
                                                         <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <p className="footer-text head" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
                                                         <a href="flickr_link" className="footer-link" style={{ color: sinnewsData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {sinnewsData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>

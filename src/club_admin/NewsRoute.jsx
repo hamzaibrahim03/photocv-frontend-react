@@ -8,15 +8,11 @@ import Pro from "./assets/icons/event_list/pro.svg"
 import Cal from "./assets/icons/event_list/cal.svg"
 import Cam from "./assets/icons/event_list/cam.svg"
 import Mess from "./assets/icons/event_list/mess.svg"
-import Book from "./assets/icons/quick_notice/book.svg"
-import Cale from "./assets/icons/quick_notice/calender.svg"
-import Com from "./assets/icons/quick_notice/com.svg"
-import Cup from "./assets/icons/quick_notice/cup.svg"
-import Hand from "./assets/icons/quick_notice/hand.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Books from "./assets/icons/event_list/bookmark.svg"
-import Note from "./assets/icons/quick_notice/note.svg"
 import apiClient from "../api/axios";
+
+const CATALOG_API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 function NewsRoute() {
     const navigate = useNavigate();
     const [newsData, setNewsData] = useState({})
@@ -26,9 +22,29 @@ function NewsRoute() {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
-    const [shareOpenId, setShareOpenId] = useState(null);
+    const [, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
     const [savedLibrary, setSavedLibrary] = useState([]);
+    const [newsTypes, setNewsTypes] = useState([]);
+    const [quickFilterType, setQuickFilterType] = useState(null);
+    useEffect(() => {
+        async function loadNewsTypes() {
+            try {
+                const response = await fetch(`${CATALOG_API_BASE}/club/public/catalog/all-grouped`, {
+                    headers: { Accept: 'application/json' },
+                });
+                const json = await response.json();
+                setNewsTypes(json?.data?.news_type || []);
+            } catch (error) {
+                console.error('Error loading news types:', error);
+            }
+        }
+        loadNewsTypes();
+    }, []);
+    const toggleQuickFilter = (id) => {
+        setQuickFilterType((prev) => (prev === id ? null : id));
+        setCurrentPage(1);
+    };
     useEffect(() => {
         function handleClickOutside(e) {
             if (popupRef.current && !popupRef.current.contains(e.target)) {
@@ -128,10 +144,8 @@ function NewsRoute() {
             },
         });
         const data = await response.json();
-        console.log(data);
         setNewsData(data.data || {});
     };
-    console.log(newsData.original?.data)
     async function getNewsExtra() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/club-news-extras'
         const response = await fetch(url, {
@@ -141,10 +155,8 @@ function NewsRoute() {
             },
         });
         const data = await response.json();
-        console.log(data);
         setNewsExtra(data.data || {});
     };
-    console.log(newsExtra)
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -160,13 +172,14 @@ function NewsRoute() {
         });
     };
     const filteredNews = useMemo(() => {
-        const news = newsData.original?.data || [];
-        return news.filter((news) =>
-            news.name?.toLowerCase().includes(search.toLowerCase()) ||
-            news.event_date?.toLowerCase().includes(search.toLowerCase()) ||
-            news.description?.toLowerCase().includes(search.toLowerCase())
+        let news = newsData.original?.data || [];
+        if (quickFilterType) news = news.filter((n) => n.club_news_type?.id === quickFilterType);
+        return news.filter((n) =>
+            n.title?.toLowerCase().includes(search.toLowerCase()) ||
+            n.publish_date?.toLowerCase().includes(search.toLowerCase()) ||
+            n.description?.toLowerCase().includes(search.toLowerCase())
         );
-    }, [newsData, search]);
+    }, [newsData, search, quickFilterType]);
     const totalPages = useMemo(() => {
         return Math.max(
             Math.ceil(filteredNews.length / rowsPerPage),
@@ -209,15 +222,10 @@ function NewsRoute() {
                                             <div className="e-quick-filter text-end">
                                                 <strong>Quick Filter</strong>
                                                 <small className="d-block">(Click icons to filter)</small>
-                                                <div className="d-flex gap-2 justify-content-end">
-                                                    <img src={Com} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Cale} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Book} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                </div>
-                                                <div className="d-flex gap-2 justify-content-end mt-2">
-                                                    <img src={Cup} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Hand} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Note} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                <div className="d-flex gap-2 justify-content-end flex-wrap" style={{ maxWidth: '140px', marginLeft: 'auto' }}>
+                                                    {newsTypes.map((type) => (
+                                                        <img key={type.id} src={type.icon_url} alt={type.name} title={type.name} role="button" onClick={() => toggleQuickFilter(type.id)} style={{ width: '20px', height: '20px', cursor: 'pointer', opacity: quickFilterType && quickFilterType !== type.id ? 0.4 : 1, outline: quickFilterType === type.id ? '2px solid #cc445e' : 'none', borderRadius: '4px' }} />
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
@@ -252,7 +260,7 @@ function NewsRoute() {
                                                             <>
                                                                 {paginatedNews?.map((news) => (
                                                                     <div key={news.id} className="custom-card mb-3 p-3">
-                                                                        <div className="d-flex gap-3" style={{ flex: 1 }}>
+                                                                        <div className="d-flex gap-3" style={{ flex: '1'}}>
                                                                             {news.club_news_type.icon && (
                                                                                 <img src={news.featured_image} alt="News Image" />
                                                                             )}
@@ -282,12 +290,12 @@ function NewsRoute() {
                                                                                         </div>
                                                                                         <div style={{ position: "relative", display: "inline-block" }}>
                                                                                             {bookmarkOpenId === news.id && (
-                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: '100', minWidth: "170px" }}>
                                                                                                     <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
                                                                                                         Save to Library
                                                                                                     </p>
                                                                                                     {["Events", "Competitions", "Notices", "Galleries", "News"].map((cat) => (
-                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(news, cat); }}>
+                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { toggleBookmark(news, cat); }}>
                                                                                                             📁 {cat}
                                                                                                         </div>
                                                                                                     ))}
@@ -384,10 +392,10 @@ function NewsRoute() {
                                                                 </div>
                                                             ))}
                                                             <div className="button-group mt-auto">
-                                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/news')}>
+                                                                <button className="btn" id="e-view" onClick={() => navigate('/news')}>
                                                                     View All
                                                                 </button>
-                                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/news/create')}>
+                                                                <button className="btn" id="new" onClick={() => navigate('/news/create')}>
                                                                     Add New
                                                                 </button>
                                                             </div>
@@ -399,12 +407,13 @@ function NewsRoute() {
                                     </div>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
-                        <footer className="site-footer">
-                            <div className="footer-content">
-                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
-                            </div>
-                        </footer>
                     </>
                 )
                 }

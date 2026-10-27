@@ -4,6 +4,7 @@ import { NavLink, Outlet } from "react-router"
 import "../assets/css/navbar.css"
 function Navbar() {
     const [homeData, sethomeData] = useState([]);
+    const [navOpen, setNavOpen] = useState(false);
     useEffect(() => {
         gethomeData();
         const carouselEl = document.querySelector('#carouselExampleIndicators')
@@ -17,6 +18,37 @@ function Navbar() {
         response = await response.json()
         sethomeData(response.data)
     }
+
+    useEffect(() => {
+        const settings = homeData?.clubSettings?.original?.data?.settings;
+        if (!settings) return;
+
+        const root = document.documentElement.style;
+        const vars = {
+            '--club-text': settings.text_color,
+            '--club-primary': settings.primary_color,
+            '--club-background': settings.background_color,
+            '--club-secondary': settings.secondary_color,
+            '--club-accent': settings.accent_color,
+        };
+        Object.entries(vars).forEach(([key, value]) => {
+            if (value) root.setProperty(key, value);
+        });
+
+        let bodyFont = settings.typography || null;
+        try {
+            const parsedFonts = settings.fonts ? JSON.parse(settings.fonts) : null;
+            if (parsedFonts?.body) bodyFont = parsedFonts.body;
+        } catch { /* fonts wasn't valid JSON (e.g. a plain font name) - keep typography */ }
+
+        if (bodyFont) {
+            root.setProperty('--club-body-font', `'${bodyFont}', Inter, sans-serif`);
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = `https://fonts.googleapis.com/css2?family=${bodyFont.replace(/ /g, '+')}:wght@400;600;700&display=swap`;
+            document.head.appendChild(link);
+        }
+    }, [homeData]);
     return (
         <>
             <section>
@@ -25,11 +57,11 @@ function Navbar() {
                         <a className="navbar-brand d-flex align-items-center" href="/">
                             <img src={homeData?.clubSettings?.original?.data?.settings?.logo_url} id="logo" alt="Ryton" />
                         </a>
-                        <button className="navbar-toggler me-2" type="button">
+                        <button className="navbar-toggler me-2" type="button" onClick={() => setNavOpen((prev) => !prev)} aria-expanded={navOpen} aria-controls="navbarSupportedContent" aria-label="Toggle navigation" >
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div className="collapse navbar-collapse custom-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mb-2 mb-lg-0 custom-nav" style={{ gap: '10px' }}>
+                        <div className={`collapse navbar-collapse custom-collapse${navOpen ? " show" : ""}`} id="navbarSupportedContent">
+                            <ul className="navbar-nav mb-2 mb-lg-0 custom-nav" style={{ gap: '10px' }} onClick={() => setNavOpen(false)}>
                                 <div>
                                     <li className="nav-item active">
                                         <NavLink to="/" className="nav-link" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>

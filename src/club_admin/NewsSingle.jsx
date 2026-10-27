@@ -193,15 +193,15 @@ function NewsSingle() {
                                                                     {formattedStartDate}
                                                                 </p>
                                                                 <p className="text-secondary" dangerouslySetInnerHTML={{ __html: news.description || '' }} />
+                                                                <div className="button-group">
+                                                                    <button className="btn" id="edit" onClick={() => navigate(-1)}>
+                                                                        Back
+                                                                    </button>
+                                                                    <button className="btn" id="e-view" onClick={() => navigate(`/news/${news.id}/edit`)} style={{ backgroundColor: '#4c4036', width: '120px' }}>
+                                                                        Edit
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="button-group mt-4" style={{ position: 'absolute', bottom: '20px' }}>
-                                                            <button className="btn text-white me-3" style={{ backgroundColor: '#99816b', width: '120px' }} onClick={() => navigate(-1)}>
-                                                                Back
-                                                            </button>
-                                                            <button className="btn text-white" onClick={() => navigate(`/news/${news.id}/edit`)} style={{ backgroundColor: '#4c4036', width: '120px' }}>
-                                                                Edit
-                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -264,10 +264,10 @@ function NewsSingle() {
                                                                 </div>
                                                             ))}
                                                             <div className="button-group mt-auto">
-                                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/news')}>
+                                                                <button className="btn" id="e-view" onClick={() => navigate('/news')}>
                                                                     View All
                                                                 </button>
-                                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/news/create')}>
+                                                                <button className="btn" id="new" onClick={() => navigate('/news/create')}>
                                                                     Add New
                                                                 </button>
                                                             </div>
@@ -279,6 +279,12 @@ function NewsSingle() {
                                     </div>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

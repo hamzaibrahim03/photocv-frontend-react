@@ -30,7 +30,6 @@ function SuperClubEdit() {
         } else {
             setIsLoading(false);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clubId]);
 
     const fetchClubsSummary = async () => {
@@ -140,14 +139,14 @@ function SuperClubEdit() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card">
                                             <div className="profile-left">
                                                 <div className="profile-info">
                                                     {(() => {
                                                         const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
                                                         return (
                                                             <>
-                                                                <i className="fa-regular fa-circle-user" style={{ fontSize: 54, color: "#e5ded7" }}></i>
+                                                                <i className="fa-regular fa-circle-user" style={{ fontSize: '54px', color: "#e5ded7" }}></i>
                                                                 <h2 className="name">{storedUser.first_name || "Admin"} {storedUser.last_name || ""}</h2>
                                                             </>
                                                         );
@@ -209,7 +208,7 @@ function SuperClubEdit() {
                                                 <label className="super-upload-box">
                                                     {logoPreview ? <img className="preview" src={logoPreview} alt="logo" /> : (
                                                         <>
-                                                            <i className="fa-regular fa-image" style={{ fontSize: 24 }}></i>
+                                                            <i className="fa-regular fa-image" style={{ fontSize: '24px' }}></i>
                                                             <span>Upload Logo</span>
                                                         </>
                                                     )}
@@ -221,7 +220,7 @@ function SuperClubEdit() {
                                                 <label className="super-upload-box">
                                                     {thumbPreview ? <img className="preview" src={thumbPreview} alt="thumbnail" /> : (
                                                         <>
-                                                            <i className="fa-regular fa-image" style={{ fontSize: 24 }}></i>
+                                                            <i className="fa-regular fa-image" style={{ fontSize: '24px' }}></i>
                                                             <span>Upload Thumbnail</span>
                                                         </>
                                                     )}
@@ -229,13 +228,19 @@ function SuperClubEdit() {
                                                 </label>
                                             </div>
                                         </div>
-                                        <div style={{ display: "flex", gap: 12, marginTop: 10 }}>
+                                        <div style={{ display: "flex", gap: '12px', marginTop: '10px' }}>
                                             <button type="submit" className="btn" id="e-view" disabled={isSaving}>{isSaving ? "Saving..." : "Save"}</button>
                                             <button type="button" className="btn" id="edit" onClick={() => navigate("/super/clubs")} disabled={isSaving}>Cancel</button>
                                         </div>
                                     </form>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

@@ -78,24 +78,11 @@ function NavigationRoute({ activeClubId, onClubChange }) {
             <i className="fa-solid fa-chevron-down" style={{ fontSize: "12px" }}></i>
             {clubMenuOpen && (
                 <div className={`${prefix}-club-dropdown`} onClick={(e) => e.stopPropagation()}>
-                    <button
-                        className={!activeClubId ? "active" : ""}
-                        onClick={() => {
-                            onClubChange?.(null);
-                            setClubMenuOpen(false);
-                        }}
-                    >
+                    <button className={!activeClubId ? "active" : ""} onClick={() => { onClubChange?.(null); setClubMenuOpen(false); }} >
                         All Club
                     </button>
                     {clubs.map((club) => (
-                        <button
-                            key={club.id}
-                            className={String(activeClubId) === String(club.id) ? "active" : ""}
-                            onClick={() => {
-                                onClubChange?.(club.id);
-                                setClubMenuOpen(false);
-                            }}
-                        >
+                        <button key={club.id} className={String(activeClubId) === String(club.id) ? "active" : ""} onClick={() => { onClubChange?.(club.id); setClubMenuOpen(false); }} >
                             {club.name}
                         </button>
                     ))}
@@ -103,6 +90,21 @@ function NavigationRoute({ activeClubId, onClubChange }) {
             )}
         </div>
     );
+
+
+    const roleSettingsRoutes = {
+        club_admin: "/club",
+        member: "/settings/photo",
+        photographer: "/settings/photo",
+        judge: "/judge/settings",
+        secretary: "/secretary/settings",
+        speaker: "/speaker/settings",
+        super_admin: "/super/settings",
+    };
+
+    const settingsPath =
+        roleSettingsRoutes[role.trim().toLowerCase()] || "/settings";
+
 
     return (
         <div className="sidebar" style={{ height: '950px', overflowY: 'auto' }}>
@@ -165,8 +167,14 @@ function NavigationRoute({ activeClubId, onClubChange }) {
                     <NavLink to="/learn" className="nav-link" href="/learn">
                         <img src={Learn} style={{ width: '20px', height: '20px' }} /> Learning
                     </NavLink>
+                    <NavLink to="/cheatsheet" className="nav-link" href="/cheatsheet">
+                        <img src={Learn} style={{ width: '20px', height: '20px' }} /> Cheatsheet
+                    </NavLink>
                     <NavLink to="/post" className="nav-link" href="/post">
                         <img src={Post} style={{ width: '20px', height: '20px' }} /> Posts
+                    </NavLink>
+                    <NavLink to="/notice" className="nav-link" href="/notice">
+                        <img src={Notice} style={{ width: '20px', height: '20px' }} /> Notices
                     </NavLink>
                     <NavLink to="/plans" className="nav-link" href="/plans">
                         <img src={Plan} style={{ width: '20px', height: '20px' }} /> Plans
@@ -177,8 +185,25 @@ function NavigationRoute({ activeClubId, onClubChange }) {
                     <NavLink to="/calendar" className="nav-link" href="/calendar">
                         <img src={Event} style={{ width: '20px', height: '20px' }} /> Calendar
                     </NavLink>
-
-
+                    <NavLink to="/my-events" className="nav-link" href="/my-events">
+                        <img src={Event} style={{ width: '20px', height: '20px' }} /> Events
+                    </NavLink>
+                    <NavLink to="/my-competitions" className="nav-link" href="/my-competitions">
+                        <img src={Competition} style={{ width: '20px', height: '20px' }} /> Competitions
+                    </NavLink>
+                    <NavLink to="/notebook" className="nav-link" href="/notebook">
+                        <img src={Competition} style={{ width: '20px', height: '20px' }} /> Notebook
+                    </NavLink>
+                    <NavLink to="/photo-library" className="nav-link" href="/photo-library">
+                        <i className="fas fa-bookmark" style={{ width: '20px', textAlign: 'center' }}></i> Library
+                    </NavLink>
+                </>
+            )}
+            {/* SECRETARY - this block was previously only reachable when
+                role === "member" (a copy/paste of the section above), so a
+                Secretary-only account got an empty sidebar. */}
+            {role === "Secretary" && (
+                <>
                     <NavLink to="/secretary/dashboard" className={({ isActive }) => `secretary-nav-link${isActive ? " active" : ""}`}>
                         <span className="secretary-nav-icon"><i className="fa-solid fa-gauge"></i></span>
                         Dashboard
@@ -191,9 +216,9 @@ function NavigationRoute({ activeClubId, onClubChange }) {
                     <div className="secretary-section-label">
                         <i className="fa-solid fa-user"></i> My Profile
                     </div>
-                    <NavLink to="/dashboard/profile" className={({ isActive }) => `secretary-nav-link${isActive ? " active" : ""}`}>
+                    <NavLink to="/secretary/profile" className={({ isActive }) => `secretary-nav-link${isActive ? " active" : ""}`}>
                         <span className="secretary-nav-icon"><i className="fa-solid fa-crosshairs"></i></span>
-                        My CV
+                        My Profile
                     </NavLink>
                     <NavLink to="/secretary/calendar" className={({ isActive }) => `secretary-nav-link${isActive ? " active" : ""}`}>
                         <span className="secretary-nav-icon"><i className="fa-regular fa-circle-user"></i></span>
@@ -229,9 +254,9 @@ function NavigationRoute({ activeClubId, onClubChange }) {
                     <div className="judge-section-label">
                         <i className="fa-solid fa-user"></i> My Profile
                     </div>
-                    <NavLink to="/dashboard/profile" className={({ isActive }) => `judge-nav-link${isActive ? " active" : ""}`}>
+                    <NavLink to="/judge/profile" className={({ isActive }) => `judge-nav-link${isActive ? " active" : ""}`}>
                         <span className="judge-nav-icon"><i className="fa-solid fa-crosshairs"></i></span>
-                        My CV
+                        My Profile
                     </NavLink>
                     <NavLink to="/judge/calendar" className={({ isActive }) => `judge-nav-link${isActive ? " active" : ""}`}>
                         <span className="judge-nav-icon"><i className="fa-regular fa-circle-user"></i></span>
@@ -290,9 +315,9 @@ function NavigationRoute({ activeClubId, onClubChange }) {
                     <div className="speaker-section-label">
                         <i className="fa-solid fa-user"></i> My Profile
                     </div>
-                    <NavLink to="/dashboard/profile" className={({ isActive }) => `speaker-nav-link${isActive ? " active" : ""}`}>
+                    <NavLink to="/speaker/profile" className={({ isActive }) => `speaker-nav-link${isActive ? " active" : ""}`}>
                         <span className="speaker-nav-icon"><i className="fa-solid fa-crosshairs"></i></span>
-                        My CV
+                        My Profile
                     </NavLink>
                     <NavLink to="/speaker/calendar" className={({ isActive }) => `speaker-nav-link${isActive ? " active" : ""}`}>
                         <span className="speaker-nav-icon"><i className="fa-regular fa-circle-user"></i></span>
@@ -306,13 +331,19 @@ function NavigationRoute({ activeClubId, onClubChange }) {
                         <span className="speaker-nav-icon"><i className="fa-regular fa-image"></i></span>
                         Gallery
                     </NavLink>
+                    <NavLink to="/speaker/settings" className={({ isActive }) => `speaker-nav-link${isActive ? " active" : ""}`}>
+                        <span className="speaker-nav-icon"><i className="fa-solid fa-gear"></i></span>
+                        Settings
+                    </NavLink>
                 </>
             )}
             <div className="side-divider1"></div>
             <div className="nav-end">
-                <NavLink to="/settings" className="nav-link" href="/settings">
-                    <img src={Settings} style={{ width: '20px', height: '20px' }} /> Settings
+
+                <NavLink to={settingsPath} className="nav-link">
+                    <img src={Settings} style={{ width: "20px", height: "20px" }} alt="" /> Settings
                 </NavLink>
+
                 <NavLink to="/logout" className="nav-link" href="#" onClick={(e) => { e.preventDefault(); handleLogout(); }}>
                     <img src={Logout} style={{ width: '20px', height: '20px' }} /> Logout
                 </NavLink>

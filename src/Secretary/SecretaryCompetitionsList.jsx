@@ -133,108 +133,116 @@ function SecretaryCompetitionsList() {
                 <>
                     <NavigationRoute activeClubId={club?.id} onClubChange={() => navigate("/secretary/competitions")} />
                     <HeaderRoute title="Competition" />
-                    <div className="secretary-content" style={{ paddingTop: 25 }}>
-                        <div className="dashboard-card" style={{ width: "100%" }}>
-                            <div className="profile-card" style={{ width: "70%" }}>
-                                <div className="profile-left">
-                                    <div className="profile-info">
-                                        <small className="greeting">List of competitions in the club</small>
-                                        <h2 className="name">All Competitions</h2>
-                                        <p className="secretary-breadcrumb">{club?.name}</p>
-                                    </div>
-                                </div>
-                                <div className="search-bar d-flex" style={{ alignItems: "center", gap: 10 }}>
-                                    <input type="search" className="search-input" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
-                                    <i className="fas fa-search"></i>
-                                </div>
-                            </div>
-                            <div className="card-section">
-                                <div className="stat-card">
-                                    <small className="ca-details">Competitions</small>
-                                    <h3 className="number">{String(competitions.length).padStart(2, "0")}</h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row" style={{ marginTop: 22 }}>
-                            <div className="col-md-8">
-                                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 16, position: "relative" }} className="secretary-export-dropdown">
-                                    <button type="button" className="btn" style={{ background: "#4c4036", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px" }} onClick={() => setExportOpen((v) => !v)}>
-                                        Export Competitions <i className="fa-solid fa-chevron-down" style={{ marginLeft: 8 }}></i>
-                                    </button>
-                                    {exportOpen && (
-                                        <div className="secretary-export-menu">
-                                            <div style={{ display: "flex", gap: 10, marginBottom: 18 }}>
-                                                {["all", "upcoming", "completed"].map((f) => (
-                                                    <button
-                                                        key={f}
-                                                        type="button"
-                                                        className="btn"
-                                                        style={{ textTransform: "capitalize", background: exportFilter === f ? "#4c4036" : "#fff", color: exportFilter === f ? "#fff" : "#4c4036", border: "1px solid #99816b", borderRadius: 7, padding: "7px 16px" }}
-                                                        onClick={() => setExportFilter(f)}
-                                                    >
-                                                        {f}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                            <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
-                                                <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: 7, padding: "9px 18px" }} onClick={() => setExportOpen(false)}>Cancel</button>
-                                                <button type="button" className="btn" style={{ background: "#cc445e", color: "#fff", border: "none", borderRadius: 7, padding: "9px 18px" }} onClick={handleExport}>Export Now</button>
+                    <div className="content">
+                        <section>
+                            <div className="container" style={{ maxWidth: "1820px" }}>
+                                <div className="dashboard-card">
+                                    <div className="profile-card">
+                                        <div className="profile-left">
+                                            <div className="profile-info">
+                                                <small className="greeting">List of competitions in the club</small>
+                                                <h2 className="name">All Competitions</h2>
+                                                <p className="role">{club?.name}</p>
                                             </div>
                                         </div>
-                                    )}
+                                        <div className="search-bar d-flex" style={{ alignItems: "center", gap: '10px' }}>
+                                            <input type="search" className="search-input" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                            <i className="fas fa-search"></i>
+                                        </div>
+                                    </div>
+                                    <div className="card-section">
+                                        <div className="stat-card" style={{ width: '100%' }}>
+                                            <small className="ca-details">Competitions</small>
+                                            <h3 className="number">{String(competitions.length).padStart(2, "0")}</h3>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </section>
 
-                                {paginated.length === 0 ? (
-                                    <p className="secretary-empty-note">No competitions found.</p>
-                                ) : (
-                                    <div className="secretary-comp-grid">
-                                        {paginated.map((comp) => {
-                                            const action = actionFor(comp);
-                                            return (
-                                                <div className="secretary-comp-card" key={comp.id}>
-                                                    <img className="comp-cover" src={comp.featured_medium_url || comp.featured_image_url || "/placeholder.jpg"} alt={comp.name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                    <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                                                        <h4>{comp.name}</h4>
-                                                        <div className="comp-date">{formatDate(comp.start_date)}</div>
-                                                        <p style={{ color: "#777", fontSize: 13, margin: "0 0 10px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }} dangerouslySetInnerHTML={{ __html: comp.description || "" }}></p>
-                                                        <div className="comp-actions">
-                                                            <button className="btn-outline" onClick={() => navigate(`/secretary/competitions/${comp.id}`)}>View</button>
-                                                            <button className="btn-solid" onClick={() => navigate(action.path(comp.id))}>{action.label}</button>
-                                                        </div>
+                        <section>
+                            <div className="container" style={{ maxWidth: "1820px" }}>
+                                <div className="row" style={{ marginTop: '22px' }}>
+                                    <div className="col-md-8">
+                                        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: '16px', position: "relative" }} className="secretary-export-dropdown">
+                                            <button type="button" className="btn" style={{ background: "#4c4036", color: "#fff", border: "none", borderRadius: '8px', padding: "10px 20px" }} onClick={() => setExportOpen((v) => !v)}>
+                                                Export Competitions <i className="fa-solid fa-chevron-down" style={{ marginLeft: '8px' }}></i>
+                                            </button>
+                                            {exportOpen && (
+                                                <div className="secretary-export-menu">
+                                                    <div style={{ display: "flex", gap: '10px', marginBottom: '18px' }}>
+                                                        {["all", "upcoming", "completed"].map((f) => (
+                                                            <button key={f} type="button" className="btn" style={{ textTransform: "capitalize", background: exportFilter === f ? "#4c4036" : "#fff", color: exportFilter === f ? "#fff" : "#4c4036", border: "1px solid #99816b", borderRadius: '7px', padding: "7px 16px" }} onClick={() => setExportFilter(f)} >
+                                                                {f}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                    <div style={{ display: "flex", justifyContent: "flex-end", gap: '10px' }}>
+                                                        <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: '7px', padding: "9px 18px" }} onClick={() => setExportOpen(false)}>Cancel</button>
+                                                        <button type="button" className="btn" style={{ background: "#cc445e", color: "#fff", border: "none", borderRadius: '7px', padding: "9px 18px" }} onClick={handleExport}>Export Now</button>
                                                     </div>
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-
-                                {totalPages > 1 && (
-                                    <div className="dt-paging" style={{ marginTop: 20, display: "flex", justifyContent: "flex-end" }}>
-                                        <nav aria-label="pagination">
-                                            <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>‹</button>
-                                            {Array.from({ length: totalPages }, (_, i) => (
-                                                <button key={i + 1} className={`dt-paging-button ${currentPage === i + 1 ? "current" : ""}`} onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
-                                            ))}
-                                            <button className="dt-paging-button next" disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}>›</button>
-                                        </nav>
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="col-md-4">
-                                <div style={{ background: "#fff", borderRadius: 12, boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: 20 }}>
-                                    <h5 style={{ color: "#4c4036", marginBottom: 14 }}>Recent Submissions</h5>
-                                    {recentSubmissions.length === 0 && <p style={{ color: "#999" }}>No recent submissions.</p>}
-                                    {recentSubmissions.map((entry) => (
-                                        <div key={entry.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid #f2eee9" }}>
-                                            <img src={entry.entry_image_url || "/placeholder.jpg"} alt="" style={{ width: 36, height: 36, borderRadius: 6, objectFit: "cover" }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                            <div style={{ fontWeight: 600, color: "#4c4036", fontSize: 13.5 }}>{entry.entry_image_title}</div>
+                                            )}
                                         </div>
-                                    ))}
+
+                                        {paginated.length === 0 ? (
+                                            <p className="secretary-empty-note">No competitions found.</p>
+                                        ) : (
+                                            <div className="secretary-comp-grid">
+                                                {paginated.map((comp) => {
+                                                    const action = actionFor(comp);
+                                                    return (
+                                                        <div className="secretary-comp-card" key={comp.id}>
+                                                            <img className="comp-cover" src={comp.featured_medium_url || comp.featured_image_url || "/placeholder.jpg"} alt={comp.name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
+                                                            <div style={{ flex: '1', display: "flex", flexDirection: "column" }}>
+                                                                <h4>{comp.name}</h4>
+                                                                <div className="comp-date">{formatDate(comp.start_date)}</div>
+                                                                <p style={{ color: "#777", fontSize: '13px', margin: "0 0 10px", display: "-webkit-box", WebkitLineClamp: '2', WebkitBoxOrient: "vertical", overflow: "hidden" }} dangerouslySetInnerHTML={{ __html: comp.description || "" }}></p>
+                                                                <div className="comp-actions">
+                                                                    <button className="btn-outline" onClick={() => navigate(`/secretary/competitions/${comp.id}`)}>View</button>
+                                                                    <button className="btn-solid" onClick={() => navigate(action.path(comp.id))}>{action.label}</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+
+                                        {totalPages > 1 && (
+                                            <div className="dt-paging" style={{ marginTop: '20px', display: "flex", justifyContent: "flex-end" }}>
+                                                <nav aria-label="pagination">
+                                                    <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>‹</button>
+                                                    {Array.from({ length: totalPages }, (_, i) => (
+                                                        <button key={i + 1} className={`dt-paging-button ${currentPage === i + 1 ? "current" : ""}`} onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
+                                                    ))}
+                                                    <button className="dt-paging-button next" disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}>›</button>
+                                                </nav>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-4">
+                                        <div style={{ background: "#fff", borderRadius: '12px', boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: '20px' }}>
+                                            <h5 style={{ color: "#4c4036", marginBottom: '14px' }}>Recent Submissions</h5>
+                                            {recentSubmissions.length === 0 && <p style={{ color: "#999" }}>No recent submissions.</p>}
+                                            {recentSubmissions.map((entry) => (
+                                                <div key={entry.id} style={{ display: "flex", alignItems: "center", gap: '10px', padding: "8px 0", borderBottom: "1px solid #f2eee9" }}>
+                                                    <img src={entry.entry_image_url || "/placeholder.jpg"} alt="" style={{ width: '36px', height: '36px', borderRadius: '6px', objectFit: "cover" }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
+                                                    <div style={{ fontWeight: '600', color: "#4c4036", fontSize: '14x' }}>{entry.entry_image_title}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

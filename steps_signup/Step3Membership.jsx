@@ -14,22 +14,18 @@ const ENABLED_OPTIONS = [
     { label: 'Disable', value: 'disabled' },
 ];
 
-function RadioGroup({ name, options, value, onChange, columns = 4 }) {
+function RadioGroup({ name, options, value, onChange }) {
     return (
-        <div className="row mb-3">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
             {options.map((option) => (
-                <div className={`col-md-${columns} mb-2`} key={option.value}>
-                    <div className="premium-radio">
-                        <input type="radio" id={`${name}-${option.value}`} name={name} value={option.value} checked={value === option.value} onChange={(e) => onChange(e.target.value)} />
-                        <label htmlFor={`${name}-${option.value}`}>
-                            <div className="premium-radio-circle"></div>
-                            <div className="premium-radio-content">
-                                <div className="premium-radio-title">
-                                    {option.label}
-                                </div>
-                            </div>
-                        </label>
-                    </div>
+                <div className="premium-radio" key={option.value} style={{ flex: '1 1 110px' }}>
+                    <input type="radio" id={`${name}-${option.value}`} name={name} value={option.value} checked={value === option.value} onChange={(e) => onChange(e.target.value)} />
+                    <label htmlFor={`${name}-${option.value}`}>
+                        <div className="premium-radio-circle"></div>
+                        <div className="premium-radio-content">
+                            <div className="premium-radio-title">{option.label}</div>
+                        </div>
+                    </label>
                 </div>
             ))}
         </div>
@@ -38,31 +34,31 @@ function RadioGroup({ name, options, value, onChange, columns = 4 }) {
 
 function Step3MembershipSignup({ formData, updateFormData, onPrevious, onNext, onSkip }) {
     return (
-        <div className="form" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <div className="row">
-                <div className="col-md-6">
-                    <label htmlFor="registration">Registration & Access Control</label>
-                    <RadioGroup name="access" options={REGISTRATION_OPTIONS} value={formData.registration} onChange={(value) => updateFormData({ registration: value })} columns={4} />
+        <div className="sp-form">
+            <div className="sp-row">
+                <div className="sp-field">
+                    <label>Registration &amp; Access Control</label>
+                    <RadioGroup name="access" options={REGISTRATION_OPTIONS} value={formData.registration} onChange={(value) => updateFormData({ registration: value })} />
                 </div>
-                <div className="col-md-6">
-                    <label htmlFor="members">Members Directory Public Visibility</label>
-                    <RadioGroup name="visible" options={VISIBILITY_OPTIONS} value={formData.directory_visibility} onChange={(value) => updateFormData({ directory_visibility: value })} columns={6} />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-6">
-                    <label htmlFor="comments">Comments</label>
-                    <RadioGroup name="comments" options={ENABLED_OPTIONS} value={formData.comments} onChange={(value) => updateFormData({ comments: value })} columns={6} />
-                </div>
-                <div className="col-md-6">
-                    <label htmlFor="likes">Likes</label>
-                    <RadioGroup name="likes" options={ENABLED_OPTIONS} value={formData.likes} onChange={(value) => updateFormData({ likes: value })} columns={6} />
+                <div className="sp-field">
+                    <label>Members Directory Public Visibility</label>
+                    <RadioGroup name="visible" options={VISIBILITY_OPTIONS} value={formData.directory_visibility} onChange={(value) => updateFormData({ directory_visibility: value })} />
                 </div>
             </div>
-            <div className="button-group" style={{ display: 'flex', justifyContent: 'flex-start', gap: '12px', alignItems: 'center' }}>
+            <div className="sp-row">
+                <div className="sp-field">
+                    <label>Comments</label>
+                    <RadioGroup name="comments" options={ENABLED_OPTIONS} value={formData.comments} onChange={(value) => updateFormData({ comments: value })} />
+                </div>
+                <div className="sp-field">
+                    <label>Likes</label>
+                    <RadioGroup name="likes" options={ENABLED_OPTIONS} value={formData.likes} onChange={(value) => updateFormData({ likes: value })} />
+                </div>
+            </div>
+            <div className="sp-actions">
                 <button className="btn" id="e-view" type="button" onClick={onPrevious}>Previous</button>
-                <button className="btn" id="e-edit" type="button" onClick={onNext}>Next</button>
-                <a href="#" style={{ color: '#cc445e' }} onClick={(event) => { event.preventDefault(); onSkip?.(); }}>Skip</a>
+                <button className="btn" id="edit" type="button" onClick={onNext}>Next</button>
+                <a className="sp-skip-link" onClick={(event) => { event.preventDefault(); onSkip?.(); }}>Skip this step</a>
             </div>
         </div>
     );

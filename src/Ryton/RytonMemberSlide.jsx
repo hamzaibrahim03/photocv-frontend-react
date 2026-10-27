@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { useParams, useSearchParams, useNavigate } from "react-router";
+import { useSearchParams, useNavigate } from "react-router";
 import Loader from './extra/LoaderAll';
 import CommentsDrawMember from "./CommentsDrawMember";
 import Lightbox from "yet-another-react-lightbox";

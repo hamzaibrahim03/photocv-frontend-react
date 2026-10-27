@@ -33,7 +33,6 @@ function SpeakerDashboard() {
     const [homeData, setHomeData] = useState(null);
     const [rowsPerPage] = useState(4);
     const [currentPage, setCurrentPage] = useState(1);
-    const today = useMemo(() => new Date(), []);
 
     useEffect(() => {
         async function getClubHome() {
@@ -102,8 +101,8 @@ function SpeakerDashboard() {
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="dashboard-card" style={{ width: "100%" }}>
                                     <div className="profile-card" style={{ width: "100%" }}>
-                                        <div className="profile-left" style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                                            <img src={speaker.profile_image || "/placeholder.jpg"} alt={speaker.first_name} style={{ width: 64, height: 64, borderRadius: "50%", objectFit: "cover" }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
+                                        <div className="profile-left" style={{ display: "flex", alignItems: "center", gap: '16px' }}>
+                                            <img src={speaker.profile_image || "/placeholder.jpg"} alt={speaker.first_name} style={{ width: '64px', height: '64px', borderRadius: "50%", objectFit: "cover" }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
                                             <div className="profile-info">
                                                 <small className="greeting">{greetingMessage()}</small>
                                                 <h2 className="name">{speaker.first_name} {speaker.last_name}</h2>
@@ -141,11 +140,11 @@ function SpeakerDashboard() {
                                         <section>
                                             <div className="container" style={{ maxWidth: '1820px' }}>
                                                 <div className="mt-4">
-                                                    <div className="custom-card mb-3 p-3" style={{ marginTop: 20 }}>
+                                                    <div className="custom-card mb-3 p-3" style={{ marginTop: '20px' }}>
                                                         {paginatedClubs.map((c) => {
                                                             const count = totalEvents;
                                                             return (
-                                                                <div className="d-flex gap-3" style={{ flex: 1 }} key={c.id}>
+                                                                <div className="d-flex gap-3" style={{ flex: '1' }} key={c.id}>
                                                                     <img src={c.cover_image || "/placeholder.jpg"} alt={c.name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
                                                                     <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                                                         <div className="d-flex justify-content-between align-items-center">
@@ -165,7 +164,7 @@ function SpeakerDashboard() {
                                                     </div>
 
                                                     {totalPages > 1 && (
-                                                        <div className="dt-paging" style={{ marginTop: 20, display: "flex", justifyContent: "flex-end" }}>
+                                                        <div className="dt-paging" style={{ marginTop: '20px', display: "flex", justifyContent: "flex-end" }}>
                                                             <nav aria-label="pagination">
                                                                 <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} >
                                                                     ‹
@@ -201,17 +200,17 @@ function SpeakerDashboard() {
                                                         {upcomingEvents.map((ev) => (
                                                             <div key={ev.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid #f2eee9", cursor: "pointer" }} onClick={() => navigate(`/speaker/events/${ev.id}`)} >
                                                                 <div>
-                                                                    <div style={{ fontWeight: 600, color: "#4c4036" }}>{ev.name}</div>
+                                                                    <div style={{ fontWeight: '600', color: "#4c4036" }}>{ev.name}</div>
                                                                     <small style={{ color: "#99816b" }}>{club?.name}</small>
                                                                 </div>
-                                                                <div style={{ textAlign: "right", fontSize: 12, color: "#cc445e" }}>
+                                                                <div style={{ textAlign: "right", fontSize: '12px', color: "#cc445e" }}>
                                                                     {formatEventDate(ev.event_date)}
                                                                     <br />
                                                                     <span style={{ color: "#99816b" }}>{formatEventTime(ev.event_date)}</span>
                                                                 </div>
                                                             </div>
                                                         ))}
-                                                        <button type="button" style={{ marginTop: 14, width: "100%", background: "#99816b", color: "#fff", border: "none", borderRadius: 7, padding: 10, cursor: "pointer" }} onClick={() => navigate("/speaker/events")} >
+                                                        <button type="button" style={{ marginTop: '14px', width: "100%", background: "#99816b", color: "#fff", border: "none", borderRadius: '7px', padding: '10px', cursor: "pointer" }} onClick={() => navigate("/speaker/events")} >
                                                             View All
                                                         </button>
                                                     </div>
@@ -219,9 +218,15 @@ function SpeakerDashboard() {
                                             </div>
                                         </section>
                                     </div>
-                                </div >
-                            </div >
+                                </div>
+                            </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )

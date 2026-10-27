@@ -226,7 +226,7 @@ function RytonMemberGallerySingle() {
                                                         <div className="suggestion-section" style={{ maxWidth: '1820px', padding: '0 25px', margin: '0 auto', backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.secondary_color }}>
                                                             <div className="suggestions-header d-flex justify-content-between align-items-center mb-4" style={{ padding: '0px' }}>
                                                                 <h3 className="heading" style={{ fontWeight: '500' }}>You may also like</h3>
-                                                                <button id="view" style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
+                                                                <button id="view" onClick={() => navigate('/rytongal/member')} style={{ color: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.accent_color, border: 'none' }}>View All</button>
                                                             </div>
                                                             <div className="suggestions-gallery" style={{ padding: '0px' }}>
                                                                 {suggestions.slice(0, 4).map((item) => (

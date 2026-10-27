@@ -9,7 +9,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Segoe UI, sans-serif;
   width: 100%;
   height: 70vh;
   background-size: cover;
@@ -27,7 +27,7 @@
 }
 
 .date {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 14px;
@@ -59,7 +59,7 @@
   font-size: 72px;
   margin-bottom: 20px;
   margin-top: 50px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   line-height: 1.2;
@@ -76,11 +76,11 @@
   height: 60px;
   padding: 8px 16px;
   border-radius: 7px;
-  background-color: #99816b;
+  background-color: var(--club-primary, #99816b);
   font-weight: 400;
   font-size: 22px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   color: white;
   border: none;
   margin-top: 12px;
@@ -128,7 +128,7 @@
   border-radius: 8px;
   text-align: center;
   width: 219px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-size: 1.2rem;
   height: 148px;
 }
@@ -140,7 +140,7 @@
   height: 148px;
   border-radius: 8px;
   text-align: center;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-size: 1.2rem;
   width: 219px;
 }
@@ -148,7 +148,7 @@
 .number {
   font-weight: 500;
   font-size: 48px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   line-height: 100%;
   color: white;
   margin-top: 30px;
@@ -157,7 +157,7 @@
 .ca-details {
   font-weight: 400;
   font-size: 20px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   line-height: 100%;
 }
 
@@ -166,18 +166,18 @@
   max-width: 187px;
   height: 60px;
   border-radius: 7px;
-  background-color: #99816b;
+  background-color: var(--club-primary, #99816b);
   font-weight: 600;
   font-size: 20px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   color: white;
 }
 
 .days {
   margin-top: 35px;
   font-weight: 400;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-size: 16px;
   line-height: 100%;
 }
@@ -198,11 +198,11 @@
   height: 60px;
   padding: 8px 16px;
   border-radius: 7px;
-  background-color: #99816b;
+  background-color: var(--club-primary, #99816b);
   font-weight: 600;
   font-size: 20px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   color: white;
   margin-top: 40px;
 }
@@ -247,11 +247,11 @@
   height: 60px;
   padding: 8px 16px;
   border-radius: 7px;
-  background-color: #99816b;
+  background-color: var(--club-primary, #99816b);
   font-weight: 600;
   font-size: 20px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   color: white;
   margin-bottom: 25px;
 }
@@ -285,7 +285,7 @@
   padding: 5px;
   font-size: 20px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -399,14 +399,14 @@
   font-style: Regular;
   line-height: 20px;
   letter-spacing: 0%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-style: Regular;
   font-size: 14px;
   margin-bottom: 5px;
 }
 
 #espeaker {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 10px;
@@ -418,7 +418,7 @@
   width: 130px;
   height: 40px;
   padding: 8px 16px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 600;
   font-style: Semi Bold;
   font-size: 16px;
@@ -445,11 +445,11 @@
   height: 60px;
   padding: 8px 16px;
   border-radius: 7px;
-  background-color: #99816b;
+  background-color: var(--club-primary, #99816b);
   font-weight: 600;
   font-size: 20px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   color: white;
   margin-bottom: 25px;
 }
@@ -504,7 +504,7 @@
   padding: 5px;
   font-size: 12px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -617,7 +617,7 @@
 }
 
 #comtext {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 16px;
@@ -627,7 +627,7 @@
 }
 
 #comreply {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 12px;
@@ -637,7 +637,7 @@
 }
 
 #comdate {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 12px;
@@ -711,7 +711,7 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   margin-bottom: 26px;
 }
 
@@ -754,7 +754,7 @@
   padding: 5px;
   font-size: 20px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -805,11 +805,11 @@
   height: 60px;
   padding: 8px 16px;
   border-radius: 7px;
-  background-color: #99816b;
+  background-color: var(--club-primary, #99816b);
   font-weight: 600;
   font-size: 20px;
   line-height: 100%;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   color: white;
   margin-bottom: 20px;
   border: none;
@@ -842,7 +842,7 @@
 }
 
 .ultrahead {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 72px;
@@ -851,7 +851,7 @@
 }
 
 .heading {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 36px;
@@ -860,7 +860,7 @@
 }
 
 .head {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 24px;
@@ -869,7 +869,7 @@
 }
 
 .clubhead {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 600;
   font-style: Semi Bold;
   font-size: 20px;
@@ -878,7 +878,7 @@
 }
 
 .subhead {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 18px;
@@ -887,7 +887,7 @@
 }
 
 .memtext {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 16px;
@@ -897,7 +897,7 @@
 }
 
 .prehead {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 14px;
@@ -906,7 +906,7 @@
 }
 
 .galtext {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-size: 12px;
   line-height: 100%;
@@ -936,7 +936,7 @@
 }
 
 .events-card h5 {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 48px;
@@ -956,7 +956,7 @@
 }
 
 #clubheading {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Regular;
   font-size: 36px;
@@ -965,7 +965,7 @@
 }
 
 #clubsub {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 18px;
@@ -1042,7 +1042,7 @@
 }
 
 .cabout {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 36px;
@@ -1080,7 +1080,7 @@
 .ficon-circles {
   width: 40px;
   height: 40px;
-  background-color: #99816b;
+  background-color: var(--club-primary, #99816b);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -1089,7 +1089,7 @@
 }
 
 #joincontainer #clubheading {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 36px;
@@ -1099,7 +1099,7 @@
 }
 
 #joincontainer #clubsub {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 24px;
@@ -1134,7 +1134,7 @@
 #footer-description {
   font-weight: 400;
   text-align: center;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-size: 24px;
   line-height: 36px;
   letter-spacing: 0%;
@@ -1162,7 +1162,7 @@
 }
 
 .events-title {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 36px;
@@ -1226,7 +1226,7 @@
   height: 40px;
   cursor: pointer;
   transition: all 0.25s ease;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-style: Regular;
   letter-spacing: 0%;
   display: flex;
@@ -1260,7 +1260,7 @@
 }
 
 .filter-btn .label {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 14px;
@@ -1308,7 +1308,7 @@
 }
 
 .events-cards #ename {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 14px;
@@ -1318,7 +1318,7 @@
 }
 
 .events-cards #edate {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 12px;
@@ -1334,7 +1334,7 @@
 }
 
 .events-cards .text-secondary {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 14px;
@@ -1350,7 +1350,7 @@
 }
 
 .events-cards #espeaker {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 12px;
@@ -1365,12 +1365,12 @@
 }
 
 .button-groups #view {
-  max-width: 130px;
+  max-width: 13px 0px;
   height: 40px;
   opacity: 1;
   padding: 10px 17px;
   gap: 10px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 16px;
@@ -1407,7 +1407,7 @@
 .dt-paging-button.disabled {
   background: #ffffff;
   color: black;
-  border: 1px solid #99816b;
+  border: 1px solid var(--club-primary, #99816b);
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -1442,7 +1442,7 @@
 .more-card {
   height: auto;
   background: white;
-  width: 455px;
+  width: 100%;
   padding: 30px;
   border-radius: 10px;
   margin-bottom: 24px;
@@ -1498,10 +1498,10 @@
   align-items: center;
   border-radius: 20px;
   padding: 3px 10px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
-  font-size: 11.85px;
+  font-size: 11px .85px;
   line-height: 100%;
   letter-spacing: 0%;
 }
@@ -1555,7 +1555,7 @@
 }
 
 .session-footer {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 12px;
@@ -1591,7 +1591,7 @@
 }
 
 .card .text-secondary {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 20px;
@@ -1599,11 +1599,11 @@
   letter-spacing: 0%;
   color: #333;
   margin-left: -10px;
-  width: 1100px;
+  width: 11px 00px;
 }
 
 .divider4 {
-  width: 1100px;
+  width: 11px 00px;
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
   margin-top: 25px;
@@ -1620,7 +1620,7 @@
 }
 
 .divider5 {
-  width: 1100px;
+  width: 11px 00px;
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
   margin-top: 149px;
@@ -1681,7 +1681,7 @@
   padding: 5px;
   font-size: 20px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   align-items: left;
   justify-content: left;
@@ -1740,7 +1740,7 @@
   padding: 5px;
   font-size: 20px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1757,7 +1757,7 @@
 }
 
 .suggestions-header h3 {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 36px;
@@ -1801,7 +1801,7 @@
   padding: 5px;
   font-size: 20px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   height: 70px;
   gap: 15px;
@@ -1810,7 +1810,7 @@
 }
 
 .img-overlay .names {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 18px;
@@ -1819,7 +1819,7 @@
 }
 
 .img-overlay .role {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 300;
   font-style: Light;
   font-size: 14px;
@@ -1896,7 +1896,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 110px;
+  height: 11px 0px;
   color: white;
 }
 
@@ -1909,7 +1909,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 110px;
+  height: 11px 0px;
   color: white;
 }
 
@@ -1922,7 +1922,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 110px;
+  height: 11px 0px;
   color: white;
 }
 
@@ -1939,7 +1939,7 @@
 .title {
   font-weight: 500;
   font-size: 32px;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-style: Medium;
   line-height: 100%;
   letter-spacing: 0%;
@@ -1949,7 +1949,7 @@
 .name {
   font-weight: 400;
   opacity: 0.9;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-style: Regular;
   font-size: 20px;
   line-height: 100%;
@@ -2093,7 +2093,7 @@
 .text .title {
   margin: 0;
   padding: 0;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 600;
   font-style: Semi Bold;
   font-size: 40px;
@@ -2103,7 +2103,7 @@
 }
 
 .meta {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 20px;
@@ -2224,7 +2224,7 @@
   justify-content: space-between;
   color: #ddd;
   cursor: pointer;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 16px;
@@ -2240,7 +2240,7 @@
 }
 
 .exif-item label {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 12px;
@@ -2250,7 +2250,7 @@
 }
 
 .exif-item span {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 16px;
@@ -2400,14 +2400,14 @@
   color: white;
   font-size: 20px;
   font-weight: 600;
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .filter-label {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 24px;
@@ -2453,7 +2453,7 @@
 }
 
 .title {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 27.69px;
@@ -2468,7 +2468,7 @@ p {
 }
 
 .entry-date {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 10px;
@@ -2508,7 +2508,7 @@ p {
 }
 
 .entry-title {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 600;
   font-style: Semi Bold;
   font-size: 14px;
@@ -2517,7 +2517,7 @@ p {
 }
 
 .author {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 10px;
@@ -2526,16 +2526,16 @@ p {
 }
 
 .entry-titles {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 600;
   font-style: Semi Bold;
-  font-size: 13.84px;
+  font-size: 13px .84px;
   line-height: 16.15px;
   letter-spacing: 0%;
 }
 
 .authors {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 9.23px;
@@ -2595,7 +2595,7 @@ p {
 }
 
 .list {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 20px;
@@ -2604,7 +2604,7 @@ p {
 }
 
 .main {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
   font-size: 28px;
@@ -2613,7 +2613,7 @@ p {
 }
 
 .emails {
-  font-family: Inter;
+  font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
   font-size: 16px;
@@ -2621,7 +2621,6 @@ p {
   letter-spacing: 0%
 }
 
-/* 1399px and below */
 @media only screen and (max-width: 1399px) {
   .custom-nav {
     margin-left: 35px;
@@ -2662,12 +2661,12 @@ p {
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
   }
 
   .right-header {
     font-size: 1rem;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     display: flex;
     justify-content: flex-end;
     position: relative;
@@ -2713,7 +2712,7 @@ p {
   }
 
   #clubheading {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Regular;
     font-size: 34px;
@@ -2722,7 +2721,7 @@ p {
   }
 
   #clubsub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -2751,7 +2750,7 @@ p {
     border-radius: 15px;
     padding: 25px 50px;
     height: auto;
-    width: 1355px;
+    width: 13px 55px;
   }
 
   #join-club {
@@ -2803,7 +2802,7 @@ p {
   }
 
   #ehead {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 32px;
@@ -2813,7 +2812,7 @@ p {
   }
 
   #esub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Medium;
     font-size: 20px;
@@ -2826,11 +2825,11 @@ p {
     height: 60px;
     padding: 6px 12px;
     border-radius: 7px;
-    background-color: #99816b;
+    background-color: var(--club-primary, #99816b);
     font-weight: 500;
     font-size: 18px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     color: white;
     margin-bottom: 20px;
   }
@@ -2859,7 +2858,7 @@ p {
   }
 
   #comtext {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 14px;
@@ -2868,7 +2867,7 @@ p {
   }
 
   #comdate {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 12px;
@@ -2896,11 +2895,11 @@ p {
     height: 50px;
     padding: 7px 14px;
     border-radius: 7px;
-    background-color: #99816b;
+    background-color: var(--club-primary, #99816b);
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     color: white;
     margin-top: 30px;
   }
@@ -2953,14 +2952,13 @@ p {
   }
 }
 
-/* 1199px and below */
 @media only screen and (max-width: 1199px) {
   .hero-content #clubheading {
     margin-top: 0px;
   }
 
   .join {
-    width: 1155px;
+    width: 11px 55px;
   }
 
   .admin-dropdown {
@@ -2975,7 +2973,7 @@ p {
     font-weight: 400;
     font-size: 14px;
     padding: 8px 13px;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-style: Regular;
     line-height: 100%;
     letter-spacing: 0%;
@@ -2986,12 +2984,12 @@ p {
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
   }
 
   .right-header {
     font-size: 1rem;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     display: flex;
     justify-content: flex-end;
     position: relative;
@@ -3052,7 +3050,7 @@ p {
   }
 
   #clubheading {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Regular;
     font-size: 32px;
@@ -3061,7 +3059,7 @@ p {
   }
 
   #clubsub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -3140,7 +3138,7 @@ p {
   }
 
   #ehead {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 28px;
@@ -3151,7 +3149,7 @@ p {
   }
 
   #esub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Medium;
     font-size: 18px;
@@ -3164,11 +3162,11 @@ p {
     height: 60px;
     padding: 6px 12px;
     border-radius: 7px;
-    background-color: #99816b;
+    background-color: var(--club-primary, #99816b);
     font-weight: 500;
     font-size: 18px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     color: white;
     margin-bottom: 5px;
   }
@@ -3178,11 +3176,11 @@ p {
     height: 50px;
     padding: 6px 12px;
     border-radius: 7px;
-    background-color: #99816b;
+    background-color: var(--club-primary, #99816b);
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     color: white;
     margin-top: 20px;
   }
@@ -3192,11 +3190,11 @@ p {
     height: 60px;
     padding: 6px 12px;
     border-radius: 7px;
-    background-color: #99816b;
+    background-color: var(--club-primary, #99816b);
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     color: white;
     margin-bottom: 20px;
   }
@@ -3206,11 +3204,11 @@ p {
     height: 60px;
     padding: 6px 12px;
     border-radius: 7px;
-    background-color: #99816b;
+    background-color: var(--club-primary, #99816b);
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     color: white;
     margin-bottom: 5px;
   }
@@ -3324,7 +3322,7 @@ p {
   }
 
   #comtext {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 12px;
@@ -3333,7 +3331,7 @@ p {
   }
 
   #comdate {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 10px;
@@ -3346,7 +3344,6 @@ p {
   }
 }
 
-/* 991px and below */
 @media only screen and (max-width: 991px) {
 
   .right-header .profile-mobile,
@@ -3365,7 +3362,7 @@ p {
     padding: 0px 15px 20px 45px;
     display: flex;
     font-size: 18px;
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
   }
 
@@ -3514,7 +3511,7 @@ p {
   }
 
   #clubheading {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Regular;
     font-size: 32px;
@@ -3523,7 +3520,7 @@ p {
   }
 
   #clubsub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -3684,7 +3681,7 @@ p {
   }
 
   #ehead {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 24px;
@@ -3695,7 +3692,7 @@ p {
   }
 
   #esub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Medium;
     font-size: 15px;
@@ -3741,7 +3738,7 @@ p {
   }
 
   #comtext {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 14px;
@@ -3750,7 +3747,7 @@ p {
   }
 
   #comdate {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 12px;
@@ -3786,7 +3783,6 @@ p {
   }
 }
 
-/* 767px and below (tablet to mobile) */
 @media only screen and (max-width: 767px) {
   .comments-cards {
     width: 100%;
@@ -3963,7 +3959,7 @@ p {
   }
 
   #clubheading {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Regular;
     font-size: 30px;
@@ -3972,7 +3968,7 @@ p {
   }
 
   #clubsub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 18px;
@@ -4006,7 +4002,7 @@ p {
   }
 
   #ehead {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 22px;
@@ -4017,7 +4013,7 @@ p {
   }
 
   #esub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Medium;
     font-size: 14px;
@@ -4149,7 +4145,7 @@ p {
   }
 
   #comtext {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -4158,7 +4154,7 @@ p {
   }
 
   #comdate {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 11px;
@@ -4200,7 +4196,6 @@ p {
   }
 }
 
-/* 575px and below (mobile) */
 @media only screen and (max-width: 575px) {
   .hero-section {
     min-height: 60vh;
@@ -4278,7 +4273,7 @@ p {
   }
 
   #clubheading {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Regular;
     font-size: 26px;
@@ -4287,7 +4282,7 @@ p {
   }
 
   #clubsub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -4452,7 +4447,7 @@ p {
   }
 
   #ehead {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
@@ -4463,7 +4458,7 @@ p {
   }
 
   #esub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Medium;
     font-size: 12px;
@@ -4524,7 +4519,7 @@ p {
 
   #footer-description {
     font-size: 16px;
-    max-width: 1150px;
+    max-width: 11px 50px;
     line-height: 22px;
   }
 
@@ -4598,7 +4593,7 @@ p {
   }
 
   #comtext {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 13px;
@@ -4615,7 +4610,6 @@ p {
   }
 }
 
-/* For very small screens (like 359px width devices) */
 @media only screen and (max-width: 359px) {
   .hero-overlay h1 {
     font-size: 24px !important;
@@ -4636,7 +4630,7 @@ p {
   }
 
   #clubheading {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 500;
     font-style: Regular;
     font-size: 24px;
@@ -4645,7 +4639,7 @@ p {
   }
 
   #clubsub {
-    font-family: Inter;
+    font-family: var(--club-body-font, Inter);
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -4754,7 +4748,6 @@ p {
   }
 }
 
-/* Fully responsive layout breakpoints */
 @media only screen and (max-width: 1399px) {
   .container {
     width: 100%;
@@ -4960,7 +4953,7 @@ p {
 
   .thumb {
     width: 180px;
-    height: 135px;
+    height: 13px 5px;
   }
 }
 
@@ -5165,7 +5158,7 @@ p {
   }
 
   .thumb {
-    width: 132px;
+    width: 13px 2px;
     height: 100px;
   }
 }

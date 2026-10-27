@@ -92,7 +92,7 @@ function JudgeCompetitionDetail() {
                         <>
                             <NavigationRoute activeClubId={club?.id} />
                             <HeaderRoute title="Competition" />
-                            <div className="judge-content" style={{ paddingTop: 25 }}>
+                            <div className="judge-content" style={{ paddingTop: '25px' }}>
                                 <p>Competition not found.</p>
                                 <button className="btn" onClick={() => navigate("/judge/competitions")}>Back</button>
                             </div>
@@ -135,92 +135,85 @@ function JudgeCompetitionDetail() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="judge-detail-section-title">Basic Information</div>
-                                    <div className="judge-detail-grid">
-                                        <Field label="Competition Name" value={competition.name} />
-                                        <Field label="Competition Type" value={competition.competition_type_id} />
-                                    </div>
-                                    <div className="judge-detail-field" style={{ marginTop: 26 }}>
-                                        <label>Competition Description</label>
-                                        <div className="value" dangerouslySetInnerHTML={{ __html: competition.description || "N/A" }}></div>
-                                    </div>
-                                    <div className="judge-detail-grid" style={{ marginTop: 26 }}>
-                                        <Field label="Judging Type" value={competition.judging_type_id} />
-                                        <Field label="Status" value={competition.status ? competition.status.charAt(0).toUpperCase() + competition.status.slice(1) : ""} />
-                                    </div>
+                                    <div className="card" style={{ padding: '40px 80px' }}>
+                                        <div className="judge-detail-section-title">Basic Information</div>
+                                        <div className="judge-detail-grid">
+                                            <Field label="Competition Name" value={competition.name} />
+                                            <Field label="Competition Type" value={competition.competition_type?.name} />
+                                        </div>
+                                        <div className="judge-detail-field" style={{ marginTop: '26px' }}>
+                                            <label>Competition Description</label>
+                                            <div className="value" dangerouslySetInnerHTML={{ __html: competition.description || "N/A" }}></div>
+                                        </div>
+                                        <div className="judge-detail-grid" style={{ marginTop: '26px' }}>
+                                            <Field label="Judging Type" value={competition.judging_type?.name} />
+                                            <Field label="Status" value={competition.status ? competition.status.charAt(0).toUpperCase() + competition.status.slice(1) : ""} />
+                                        </div>
 
-                                    <div className="judge-detail-section-title">Submission Rules</div>
-                                    <div className="judge-detail-grid">
-                                        <Field label="Max Number of Entries per Participant" value={competition.max_entries_print ?? competition.max_entries_digital} />
-                                        <Field label="Allowed Image Formats" value={competition.allowed_image_formats} />
-                                    </div>
-                                    <div className="judge-detail-grid" style={{ marginTop: 26 }}>
-                                        <Field label="Max File Size" value={competition.max_file_size ? `${competition.max_file_size} MB/Image` : "N/A"} />
-                                    </div>
+                                        <div className="judge-detail-section-title">Submission Rules</div>
+                                        <div className="judge-detail-grid">
+                                            <Field label="Max Number of Entries per Participant" value={competition.max_entries_print ?? competition.max_entries_digital} />
+                                            <Field label="Allowed Image Formats" value={competition.allowed_image_formats} />
+                                        </div>
+                                        <div className="judge-detail-grid" style={{ marginTop: '26px' }}>
+                                            <Field label="Max File Size" value={competition.max_file_size ? `${competition.max_file_size} MB/Image` : "N/A"} />
+                                        </div>
 
-                                    <div className="judge-detail-section-title">Categories &amp; Themes</div>
-                                    <div className="judge-detail-grid">
-                                        <Field label="Theme (if applicable)" value={competition.theme_id} />
-                                        <Field label="Competition Categories" value={competition.category_id} />
-                                    </div>
-                                    <div className="judge-detail-grid" style={{ marginTop: 26 }}>
-                                        <Field label="Print vs. Digital Submission" value={competition.print_vs_digital} />
-                                        <Field label="Colour vs. Monochrome" value={competition.color_vs_mono} />
-                                    </div>
+                                        <div className="judge-detail-section-title">Categories &amp; Themes</div>
+                                        <div className="judge-detail-grid">
+                                            <Field label="Theme (if applicable)" value={competition.competition_theme?.name} />
+                                            <Field label="Competition Categories" value={competition.competition_category?.name} />
+                                        </div>
+                                        <div className="judge-detail-grid" style={{ marginTop: '26px' }}>
+                                            <Field label="Print vs. Digital Submission" value={competition.print_vs_digital} />
+                                            <Field label="Colour vs. Monochrome" value={competition.color_vs_mono} />
+                                        </div>
 
-                                    <div className="judge-detail-section-title">Judging &amp; Scoring</div>
-                                    <div className="judge-detail-grid">
-                                        <Field label="Judging Panel" value={competition.judging_panel} />
-                                        <Field label="Voting Method" value={competition.voting_method_id} />
-                                    </div>
-                                    <div className="judge-detail-grid" style={{ marginTop: 26 }}>
-                                        <Field label="Judging Start Date & Time" value={formatDateTime(competition.judging_start_date)} />
-                                        <Field label="Judging End Date & Time" value={formatDateTime(competition.judging_end_date)} />
-                                    </div>
+                                        <div className="judge-detail-section-title">Judging &amp; Scoring</div>
+                                        <div className="judge-detail-grid">
+                                            <Field label="Judging Panel" value={competition.judges?.length ? competition.judges.map((j) => j.name).join(", ") : null} />
+                                            <Field label="Voting Method" value={competition.voting_method?.name} />
+                                        </div>
+                                        <div className="judge-detail-grid" style={{ marginTop: '26px' }}>
+                                            <Field label="Judging Start Date & Time" value={formatDateTime(competition.judging_start_date)} />
+                                            <Field label="Judging End Date & Time" value={formatDateTime(competition.judging_end_date)} />
+                                        </div>
 
-                                    <div className="judge-detail-section-title">Results &amp; Awards</div>
-                                    <div className="judge-detail-grid">
-                                        <Field label="Announcement Date" value={formatDateTime(competition.result_announcement_date)} />
-                                        <Field label="Awards - Top Places Available" value={competition.top_places ? `Top ${competition.top_places}` : "N/A"} />
-                                    </div>
-                                    <div className="judge-detail-grid" style={{ marginTop: 26 }}>
-                                        <Field label="Award - Number of High Commendations Available" value={competition.high_commendation_number} />
-                                        <Field label="Awards - Number of Commendations Available" value={competition.commendation_number} />
-                                    </div>
-                                    <div className="judge-detail-grid" style={{ marginTop: 26 }}>
-                                        <Field label="Prizes (if any)" value={competition.prizes} />
-                                    </div>
+                                        <div className="judge-detail-section-title">Results &amp; Awards</div>
+                                        <div className="judge-detail-grid">
+                                            <Field label="Announcement Date" value={formatDateTime(competition.result_announcement_date)} />
+                                            <Field label="Awards - Top Places Available" value={competition.top_places ? `Top ${competition.top_places}` : "N/A"} />
+                                        </div>
+                                        <div className="judge-detail-grid" style={{ marginTop: '26px' }}>
+                                            <Field label="Award - Number of High Commendations Available" value={competition.high_commendation_number} />
+                                            <Field label="Awards - Number of Commendations Available" value={competition.commendation_number} />
+                                        </div>
+                                        <div className="judge-detail-grid" style={{ marginTop: '26px' }}>
+                                            <Field label="Prizes (if any)" value={competition.prizes} />
+                                        </div>
 
-                                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 34 }}>
-                                        <button
-                                            type="button"
-                                            className="btn"
-                                            style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: 8, padding: "11px 28px" }}
-                                            onClick={() => navigate(-1)}
-                                        >
-                                            Back
-                                        </button>
-                                        <div style={{ display: "flex", gap: 12 }}>
-                                            <button
-                                                type="button"
-                                                className="btn"
-                                                style={{ background: "#4c4036", color: "#fff", border: "none", borderRadius: 8, padding: "11px 28px" }}
-                                                onClick={() => navigate(`/judge/competitions/${competition.id}/edit`)}
-                                            >
-                                                Edit
+                                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: '34px' }}>
+                                            <button type="button" className="btn" id="e-view" onClick={() => navigate(-1)} >
+                                                Back
                                             </button>
-                                            <button
-                                                type="button"
-                                                className="btn"
-                                                style={{ background: "#cc445e", color: "#fff", border: "none", borderRadius: 8, padding: "11px 28px" }}
-                                                onClick={() => navigate(`/judge/competitions/${competition.id}/submissions`)}
-                                            >
-                                                View Submissions
-                                            </button>
+                                            <div style={{ display: "flex", gap: '12px' }}>
+                                                <button type="button" className="btn" id="edit" onClick={() => navigate(`/judge/competitions/${competition.id}/edit`)} >
+                                                    Edit
+                                                </button>
+                                                <button type="button" className="btn" id="e-view" style={{ background: "#cc445e", color: "#fff", border: "none", width: '250px', maxWidth: '250px' }} onClick={() => navigate(`/judge/competitions/${competition.id}/submissions`)} >
+                                                    View Submissions
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

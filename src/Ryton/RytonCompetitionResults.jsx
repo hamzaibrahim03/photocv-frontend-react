@@ -5,18 +5,16 @@ import Calendar from './extra/CalendarRyton'
 import "./assets/css/rytonstyle.css"
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router"
-import he from "he";
 function RytonCompetitionResults() {
     const navigate = useNavigate();
     const [compData, setcompData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [activeFilter, setActiveFilter] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [compsList, setCompsList] = useState([]);
+    const [, setCurrentPage] = useState(1);
+    const [, setCompsList] = useState([]);
     const [filters, setFilters] = useState([]);
     const [search, setSearch] = useState("");
     const [searchSeason, setSearchSeason] = useState("");
-    const [options, setOptions] = useState([]);
     useEffect(() => {
         getcompData();
         const carouselEl = document.querySelector('#carouselExampleIndicators')
@@ -381,7 +379,7 @@ function RytonCompetitionResults() {
                                                             </div>
                                                         ))}
                                                         <div className="button-group mt-auto">
-                                                            <button className="btn btn-sm" id="view-all" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }}>
+                                                            <button className="btn" id="view-all" onClick={() => navigate('/rytonevent')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color }}>
                                                                 View All
                                                             </button>
                                                         </div>
@@ -437,7 +435,7 @@ function RytonCompetitionResults() {
                                                             </div>
                                                         ))}
                                                         <div className="button-group mt-auto">
-                                                            <button className="btn btn-sm" id="view-all" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }}>
+                                                            <button className="btn" id="view-all" onClick={() => navigate('/rytoncomp')} style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.primary_color, }}>
                                                                 View All
                                                             </button>
                                                         </div>
@@ -493,7 +491,7 @@ function RytonCompetitionResults() {
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">
-                                                <h5 className="head mb-4" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                                <h5 className="head mt-5 mb-5" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}> {compData?.clubSettings?.original?.data?.club.address} </p>
                                                     <div className="icon-circles ms-3" style={{ color: compData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: compData?.clubSettings?.original?.data?.settings?.accent_color }}>
@@ -525,7 +523,7 @@ function RytonCompetitionResults() {
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <p className="footer-text head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
                                                         <a href="fb_link" target="_blank" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
@@ -536,7 +534,7 @@ function RytonCompetitionResults() {
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <p className="footer-text head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
                                                         <a href="insta_link" target="_blank" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
@@ -547,7 +545,7 @@ function RytonCompetitionResults() {
                                                         <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <p className="footer-text head" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
                                                         <a href="flickr_link" className="footer-link" style={{ color: compData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {compData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>

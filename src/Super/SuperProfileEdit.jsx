@@ -17,7 +17,6 @@ function SuperProfileEdit() {
 
     useEffect(() => {
         fetchProfile();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileId]);
 
     const fetchProfile = async () => {
@@ -126,24 +125,30 @@ function SuperProfileEdit() {
                                             </div>
                                         </div>
                                         <div className="super-form-row">
-                                            <div className="super-form-group" style={{ flex: 1 }}>
+                                            <div className="super-form-group" style={{ flex: '1' }}>
                                                 <label>Bio</label>
                                                 <textarea name="bio" rows={3} placeholder="Text here..." value={form.bio} onChange={handleChange}></textarea>
                                             </div>
                                         </div>
                                         <div className="super-form-row">
-                                            <div className="super-form-group" style={{ flex: 1 }}>
+                                            <div className="super-form-group" style={{ flex: '1' }}>
                                                 <label>About</label>
                                                 <textarea name="about" rows={3} placeholder="Text here..." value={form.about} onChange={handleChange}></textarea>
                                             </div>
                                         </div>
-                                        <div style={{ display: "flex", gap: 12, marginTop: 10 }}>
+                                        <div style={{ display: "flex", gap: '12px', marginTop: '10px' }}>
                                             <button type="submit" className="btn" id="e-view" disabled={isSaving}>{isSaving ? "Saving..." : "Save"}</button>
                                             <button type="button" className="btn" id="edit" onClick={() => navigate(`/super/profiles/${profileId}`)} disabled={isSaving}>Cancel</button>
                                         </div>
                                     </form>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

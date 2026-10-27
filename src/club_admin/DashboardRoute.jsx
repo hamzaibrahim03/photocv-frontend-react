@@ -7,6 +7,7 @@ import Point from "./assets/icons/dashboard/point.svg";
 import HeaderRoute from "./HeaderRoute.jsx";
 import Calendar from "../Ryton/extra/CalendarRyton.jsx"
 import Loader from "../Ryton/extra/LoaderAll.jsx";
+import "./assets/css/adminstyle.css"
 function DashboardRoute() {
     const navigate = useNavigate();
     const [dashboardData, setDashboardData] = useState({})
@@ -258,10 +259,10 @@ function DashboardRoute() {
                                                 </div>
                                             )}
                                             <div className="button-group">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/event')}>
+                                                <button className="btn" id="aview" onClick={() => navigate('/event')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/event/create')}>
+                                                <button className="btn" id="new" onClick={() => navigate('/event/create')}>
                                                     Add New
                                                 </button>
                                             </div>
@@ -346,10 +347,10 @@ function DashboardRoute() {
                                                 ))}
                                             </div>
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="e-view" onClick={() => navigate('/members')}>
+                                                <button className="btn" id="e-view" onClick={() => navigate('/members')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/members/create')}>
+                                                <button className="btn" id="new" onClick={() => navigate('/members/create')}>
                                                     Add New
                                                 </button>
                                             </div>
@@ -357,7 +358,7 @@ function DashboardRoute() {
                                         <div className="card">
                                             <div className="d-flex justify-content-between align-items-center" style={{ padding: '10px' }}>
                                                 <h5 className="head">Member Galleries</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/gallery/member')}>
+                                                <button className="btn" id="aview" onClick={() => navigate('/gallery/member')}>
                                                     View All
                                                 </button>
                                             </div>
@@ -385,7 +386,7 @@ function DashboardRoute() {
                                         <div className="result-card d-flex flex-column">
                                             <div className="d-flex justify-content-between mb-2">
                                                 <h5 className="head">Recent Results</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/competitions/seasons')}>View All</button>
+                                                <button className="btn" id="aview" onClick={() => navigate('/competitions/seasons')}>View All</button>
                                             </div>
                                             <div className="pic">
                                                 {dashboardData?.recent_results?.original?.data.slice(0, 6).map((item, index) => (
@@ -401,7 +402,7 @@ function DashboardRoute() {
                                                                         ? `${title.slice(0, 18)}...`
                                                                         : title;
                                                                 })()}
-                                                            </div>                                                            
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -411,7 +412,7 @@ function DashboardRoute() {
                                             <h5 className="head">Recent Notices</h5>
                                             {recentNotices.length > 0 ? (
                                                 <div className="event-list">
-                                                    {recentNotices.map((notice, index) => (
+                                                    {recentNotices.map((notice) => (
                                                         <div className="event-item" key={notice.id}>
                                                             {notice.featured_image_url && (
                                                                 <img className="img-fluid event-img" src={notice.featured_image_url} alt="News" />
@@ -447,10 +448,10 @@ function DashboardRoute() {
                                                 </div>
                                             )}
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/notices')}>
+                                                <button className="btn" id="aview" onClick={() => navigate('/notices')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/notices/create')}>
+                                                <button className="btn" id="new" onClick={() => navigate('/notices/create')}>
                                                     Add New
                                                 </button>
                                             </div>
@@ -494,10 +495,10 @@ function DashboardRoute() {
                                                 </div>
                                             )}
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/news')}>
+                                                <button className="btn" id="aview" onClick={() => navigate('/news')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="new" onClick={() => navigate('/news/create')}>
+                                                <button className="btn" id="new" onClick={() => navigate('/news/create')}>
                                                     Add New
                                                 </button>
                                             </div>
@@ -528,10 +529,10 @@ function DashboardRoute() {
                                                 ))}
                                             </div>
                                             <div className="button-group mt-auto">
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/pages')}>
+                                                <button className="btn" id="aview" onClick={() => navigate('/pages')}>
                                                     View All
                                                 </button>
-                                                <button className="btn btn-sm" id="edit" onClick={() => navigate('/pages/create')}>
+                                                <button className="btn" id="edit" onClick={() => navigate('/pages/create')}>
                                                     Add New
                                                 </button>
                                             </div>
@@ -539,7 +540,7 @@ function DashboardRoute() {
                                         <div className="card">
                                             <div className="d-flex justify-content-between align-items-center" style={{ padding: '10px' }}>
                                                 <h5 className="head">Club Galleries</h5>
-                                                <button className="btn btn-sm" id="aview" onClick={() => navigate('/club-galleries')}>
+                                                <button className="btn" id="aview" onClick={() => navigate('/gallery/club')}>
                                                     View All
                                                 </button>
                                             </div>

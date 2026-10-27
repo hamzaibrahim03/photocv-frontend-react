@@ -170,16 +170,18 @@ const MembersRequest = () => {
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="dashboard-card">
                                     <div className="profile-card">
-                                        <div className="profile-left d-flex flex-column justify-content-center">
-                                            <small className="greeting text-muted" style={{ fontSize: '18px' }}>
-                                                List of requested members
-                                            </small>
-                                            <h2 className="name" style={{ fontSize: '30px', fontWeight: '500' }}>
-                                                Member Requests
-                                            </h2>
-                                            <small className="role text-danger" style={{ fontSize: '18px' }}>
-                                                {memberRequestData?.original?.data.length} Member Requests
-                                            </small>
+                                        <div className="profile-left">
+                                            <div className="profile-info">
+                                                <small className="greeting">
+                                                    List of requested members
+                                                </small>
+                                                <h2 className="name">
+                                                    Member Requests
+                                                </h2>
+                                                <small className="role">
+                                                    {memberRequestData?.original?.data.length} Member Requests
+                                                </small>
+                                            </div>
                                         </div>
                                         <div className="d-flex justify-content-end">
                                             <div className="search-bar d-flex justify-content-space-between">
@@ -188,12 +190,12 @@ const MembersRequest = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-section d-flex gap-4" style={{ width: '32%' }}>
-                                        <div className="stat-card text-white text-center rounded p-4" style={{ backgroundColor: '#cc445e', width: '463px', height: '148px' }}>
-                                            <small className="ca-details" style={{ fontSize: '20px' }}>
+                                    <div className="card-section">
+                                        <div className="stat-card">
+                                            <small className="ca-details">
                                                 Total Members Requests
                                             </small>
-                                            <h3 className="number mt-4" style={{ fontSize: '48px', fontWeight: '500' }}>
+                                            <h3 className="number">
                                                 {memberRequestData?.original?.data.length}
                                             </h3>
                                         </div>
@@ -275,7 +277,7 @@ const MembersRequest = () => {
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="button-group ms-3">
-                                        <button className="btn text-white" style={{ backgroundColor: '#4c4036', width: '120px' }} onClick={() => navigate('/members/create')}>
+                                        <button className="btn" id="edit" onClick={() => navigate('/members/create')}>
                                             Add New
                                         </button>
                                     </div>
@@ -295,6 +297,11 @@ const MembersRequest = () => {
                                 </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

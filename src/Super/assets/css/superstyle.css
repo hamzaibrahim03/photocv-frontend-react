@@ -1,15 +1,3 @@
-/* Super Admin panel styles - a platform-level admin section, visually
-   distinct from club_admin/adminstyle.css (white sidebar with a slim
-   red-accented active state, pink "Total Clubs"/brown "Total Members" stat
-   pills reused on every sub-page, table-first data views with toggle
-   switches and accordions). No real backend exists yet for platform-wide
-   clubs/roles/global settings (verified - every real endpoint in this app
-   is scoped to a single club's subdomain), so every Super screen persists
-   its own mock data to localStorage directly rather than through a shared
-   store module, matching this app's per-file convention.
-   Palette matches the rest of the app: #4C4036 dark, #99816B tan, #CC445E
-   pink accent, #ebe6e1 light bg, #7FA483 sage green. */
-
 .super-shell {
     display: flex;
     min-height: 100vh;
@@ -157,8 +145,13 @@
     justify-content: center;
 }
 
-.super-stat-pill.pink { background: #cc445e; }
-.super-stat-pill.brown { background: #4c4036; }
+.super-stat-pill.pink {
+    background: #cc445e;
+}
+
+.super-stat-pill.brown {
+    background: #4c4036;
+}
 
 .super-stat-pill small {
     opacity: 0.85;
@@ -178,12 +171,6 @@
     margin-bottom: 24px;
 }
 
-.super-panel h3 {
-    margin: 0 0 20px;
-    color: #4c4036;
-    font-size: 19px;
-}
-
 .super-form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -192,7 +179,9 @@
 }
 
 @media (max-width: 800px) {
-    .super-form-row { grid-template-columns: 1fr; }
+    .super-form-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 .super-form-group label {
@@ -247,9 +236,20 @@
     font-family: inherit;
 }
 
-.super-btn.dark { background: #4c4036; color: #fff; }
-.super-btn.outline { background: #99816b; color: #fff; }
-.super-btn.pink { background: #cc445e; color: #fff; }
+.super-btn.dark {
+    background: #4c4036;
+    color: #fff;
+}
+
+.super-btn.outline {
+    background: #99816b;
+    color: #fff;
+}
+
+.super-btn.pink {
+    background: #cc445e;
+    color: #fff;
+}
 
 .super-table {
     width: 100%;
@@ -335,9 +335,21 @@
     margin-right: 6px;
 }
 
-.super-action-icon.edit { background: #4c4036; }
-.super-action-icon.delete { background: #cc445e; }
-.super-action-icon.view { background: #99816b; color: #fff; padding: 0 14px; width: auto; border-radius: 8px; }
+.super-action-icon.edit {
+    background: #4c4036;
+}
+
+.super-action-icon.delete {
+    background: #cc445e;
+}
+
+.super-action-icon.view {
+    background: #99816b;
+    color: #fff;
+    padding: 0 14px;
+    width: auto;
+    border-radius: 8px;
+}
 
 .super-view-toggle {
     display: flex;
@@ -362,7 +374,6 @@
     border-color: #4c4036;
 }
 
-/* Clubs grid */
 .super-club-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -370,7 +381,9 @@
 }
 
 @media (max-width: 1300px) {
-    .super-club-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .super-club-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .super-club-card {
@@ -453,7 +466,6 @@
     cursor: pointer;
 }
 
-/* Profiles grid */
 .super-profile-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -461,7 +473,9 @@
 }
 
 @media (max-width: 1300px) {
-    .super-profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .super-profile-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .super-profile-card {
@@ -548,7 +562,6 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-/* Accordion (Global Settings) */
 .super-accordion-item {
     background: #fff;
     border-radius: 14px;
@@ -603,7 +616,6 @@
     font-size: 13px;
 }
 
-/* Modal */
 .super-modal-overlay {
     position: fixed;
     inset: 0;

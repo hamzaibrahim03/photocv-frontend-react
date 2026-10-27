@@ -82,7 +82,7 @@ function SecretaryImageLightbox() {
                         <i className="fa-solid fa-chevron-left"></i> Back
                     </button>
                 </div>
-                <div style={{ color: "#fff", textAlign: "center", marginTop: 100 }}>Image not found.</div>
+                <div style={{ color: "#fff", textAlign: "center", marginTop: '100px' }}>Image not found.</div>
             </div>
         );
     }
@@ -99,7 +99,7 @@ function SecretaryImageLightbox() {
                 <div className="secretary-lightbox-main">
                     <button type="button" className="secretary-lightbox-nav-btn prev" onClick={goPrev} disabled={currentIndex <= 0}>‹</button>
                     <img src={entry.entry_image} alt={entry.entry_image_title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                    <div className="secretary-lightbox-title">{entry.entry_image_title} <span style={{ opacity: 0.7, fontSize: 15 }}>by {entry.member_name}</span></div>
+                    <div className="secretary-lightbox-title">{entry.entry_image_title} <span style={{ opacity: '0.7', fontSize: '15px' }}>by {entry.member_name}</span></div>
                     <button type="button" className="secretary-lightbox-nav-btn next" onClick={goNext} disabled={currentIndex < 0 || currentIndex >= entries.length - 1}>›</button>
 
                     {entries.length > 1 && (
@@ -124,14 +124,14 @@ function SecretaryImageLightbox() {
                         <small style={{ color: "#888" }}>out of {totalMax}</small>
                     </div>
                     {judges.length === 0 ? (
-                        <p style={{ color: "#888", fontSize: 14, textAlign: "center", padding: "20px 0" }}>No judge evaluations available for this entry yet.</p>
+                        <p style={{ color: "#888", fontSize: '14px', textAlign: "center", padding: "20px 0" }}>No judge evaluations available for this entry yet.</p>
                     ) : (
                         judges.map((judge) => (
                             <div className="secretary-judge-row" key={judge.id}>
                                 <div className="row-top">
                                     <div className="judge-info">
                                         <img className="avatar" src={judge.avatar || "/placeholder.jpg"} alt={judge.name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                        <span style={{ fontWeight: 600 }}>{judge.name}</span>
+                                        <span style={{ fontWeight: '600' }}>{judge.name}</span>
                                     </div>
                                     <span className="score">{judge.score}<span>/{judge.maxScore}</span></span>
                                 </div>

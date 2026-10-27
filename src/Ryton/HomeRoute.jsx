@@ -1,5 +1,4 @@
 import './assets/css/rytonstyle.css'
-import logo from './images/clubs/logo/logo.svg'
 import heart from './images/Heart.svg'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -377,7 +376,7 @@ function HomeRoute() {
                                                     <>
                                                         {homeData.upcomingEvents.map((event) => (
                                                             <div className="ryton-event-list">
-                                                                <div className="event-item" style={{ marginBottom: '10px' }}>
+                                                                <div className="event-item">
                                                                     <img className="img-fluid event-img" src={event.featured_thumb_url} alt="Event" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color }} />
                                                                     <div className="event-details">
                                                                         <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -392,7 +391,7 @@ function HomeRoute() {
                                                             </div>
                                                         ))}
                                                         <div className="button-group mt-auto">
-                                                            <button className="btn btn-sm" id="view-all" onClick={() => navigate('/rytonevent')} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color }}>
+                                                            <button className="btn" id="view-all" onClick={() => navigate('/rytonevent')} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color }}>
                                                                 View All
                                                             </button>
                                                         </div>
@@ -448,7 +447,7 @@ function HomeRoute() {
                                                             </div>
                                                         ))}
                                                         <div className="button-group mt-auto">
-                                                            <button id="view-all" className="btn btn-sm" onClick={() => navigate('/rytoncomp')} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color, }}>
+                                                            <button id="view-all" className="btn" onClick={() => navigate('/rytoncomp')} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color, }}>
                                                                 View All
                                                             </button>
                                                         </div>
@@ -622,7 +621,7 @@ function HomeRoute() {
                                                             </div>
                                                         ))}
                                                         <div className="button-group mt-auto">
-                                                            <button id="view-all" className="btn btn-sm" onClick={() => navigate('/rytonnews')} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color, }}>
+                                                            <button id="view-all" className="btn" onClick={() => navigate('/rytonnews')} style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color, }}>
                                                                 View All
                                                             </button>
                                                         </div>
@@ -647,10 +646,10 @@ function HomeRoute() {
                                         </div>
                                         <div className="card" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px', marginTop: '13px' }}>
                                             <div className="resultpics" style={{ marginTop: '-12px' }}>
-                                                {resultData.slice(0, 10).map((result, index) => (
-                                                    <div key={result.id || index} className={`resultpics-items ${getPositionClass(index, resultData.length)}`}>
+                                                {resultData.slice(0, 10).map((result, index, visible) => (
+                                                    <div key={result.id || index} className={`resultpics-items ${getPositionClass(index, visible.length)}`}>
                                                         <img src={result?.competition_members?.[0]?.entries?.[0]?.entry_image_url} alt={result.name} style={{ width: '100%', height: '195px', objectFit: "cover", objectPosition: "top", }} />
-                                                        <div className={`resultpics-infos ${getPositionClass(index, resultData.length)}`} style={{ backgroundColor: hexToRgba(homeData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), }}>
+                                                        <div className={`resultpics-infos ${getPositionClass(index, visible.length)}`} style={{ backgroundColor: hexToRgba(homeData?.clubSettings?.original?.data?.settings?.primary_color, 0.7), }}>
                                                             <div style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, }}>
                                                                 {(() => {
                                                                     const title = result?.competition_members?.[0]?.entries?.[0]?.entry_image_title || "";
@@ -697,7 +696,7 @@ function HomeRoute() {
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">
-                                                <h5 className="head mb-4" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                                <h5 className="head mt-5 mb-5" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}> {homeData?.clubSettings?.original?.data?.club.address} </p>
                                                     <div className="icon-circles ms-3" style={{ color: homeData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: homeData?.clubSettings?.original?.data?.settings?.accent_color }}>
@@ -729,7 +728,7 @@ function HomeRoute() {
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <p className="footer-text head" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
                                                         <a href="fb_link" target="_blank" className="footer-link" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {homeData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
@@ -740,7 +739,7 @@ function HomeRoute() {
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <p className="footer-text head" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
                                                         <a href="insta_link" target="_blank" className="footer-link" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {homeData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
@@ -751,7 +750,7 @@ function HomeRoute() {
                                                         <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <p className="footer-text head" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
                                                         <a href="flickr_link" className="footer-link" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {homeData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>

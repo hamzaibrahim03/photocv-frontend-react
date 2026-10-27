@@ -8,11 +8,6 @@ import apiClient from "../api/axios";
 
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 
-const authHeaders = () => ({
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-});
-
 function SpeakerEventEdit() {
     const navigate = useNavigate();
     const { eventId } = useParams();
@@ -266,7 +261,7 @@ function SpeakerEventEdit() {
                         <section>
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="dashboard-card" id="cl">
-                                    <div className="profile-card" style={{ width: '170%' }}>
+                                    <div className="profile-card">
                                         <div className="profile-left">
                                             <div className="profile-info">
                                                 <small className="greeting">List of events in the club</small>
@@ -295,7 +290,7 @@ function SpeakerEventEdit() {
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="row">
                                     <div className="col-md-8">
-                                        <form onSubmit={handleSave} style={{ background: "#fff", borderRadius: 12, boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: 30, marginTop: 22 }}>
+                                        <form onSubmit={handleSave} style={{ background: "#fff", borderRadius: '12px', boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: '30px', marginTop: '22px' }}>
                                             <div className="row mb-3">
                                                 <div className="col-md-4">
                                                     <img src={featuredThumbUrl || "/placeholder.jpg"} alt="Event" className="img-fluid rounded" onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
@@ -322,7 +317,7 @@ function SpeakerEventEdit() {
                                                         return (
                                                             <label key={type.id} className={`speaker-checkbox-option${checked ? " checked" : ""}`}>
                                                                 <input type="checkbox" checked={checked} onChange={() => toggleEventType(typeId)} />
-                                                                {type.icon_url && <img src={type.icon_url} alt="" style={{ width: 18, height: 18 }} />}
+                                                                {type.icon_url && <img src={type.icon_url} alt="" style={{ width: '18px', height: '18px' }} />}
                                                                 {type.name}
                                                             </label>
                                                         );
@@ -415,15 +410,15 @@ function SpeakerEventEdit() {
                                                 <label className="form-label">Tags / Keywords</label>
                                                 <div className="d-flex flex-wrap border rounded p-2 form-control align-items-center gap-2" onClick={() => setShowKeywordDropdown(true)}>
                                                     {selectedTags.map((tag, index) => (
-                                                        <div key={index} className="badge bg-secondary d-flex align-items-center" style={{ gap: 5 }}>
+                                                        <div key={index} className="badge bg-secondary d-flex align-items-center" style={{ gap: '5px' }}>
                                                             {tag}
                                                             <button type="button" className="btn-close btn-close-white ms-2" style={{ fontSize: "0.4rem" }} onClick={(e) => { e.stopPropagation(); removeTag(index); }}></button>
                                                         </div>
                                                     ))}
-                                                    <input type="text" className="border-0 shadow-none flex-grow-1" style={{ minWidth: 100, outline: "none" }} placeholder="Add keyword..." value={keywordInput} onChange={(e) => setKeywordInput(e.target.value)} onFocus={() => setShowKeywordDropdown(true)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); const value = keywordInput.trim(); if (value && !selectedTags.includes(value)) { setSelectedTags((prev) => [...prev, value]); setKeywordInput(""); } } }} />
+                                                    <input type="text" className="border-0 shadow-none flex-grow-1" style={{ minWidth: '100px', outline: "none" }} placeholder="Add keyword..." value={keywordInput} onChange={(e) => setKeywordInput(e.target.value)} onFocus={() => setShowKeywordDropdown(true)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); const value = keywordInput.trim(); if (value && !selectedTags.includes(value)) { setSelectedTags((prev) => [...prev, value]); setKeywordInput(""); } } }} />
                                                 </div>
                                                 {showKeywordDropdown && (
-                                                    <ul className="dropdown-menu show w-100 position-absolute" style={{ top: "100%", zIndex: 1000 }}>
+                                                    <ul className="dropdown-menu show w-100 position-absolute" style={{ top: "100%", zIndex: '1000' }}>
                                                         {keywordOptions.length === 0 ? (
                                                             <li className="dropdown-item text-muted">No results found</li>
                                                         ) : (
@@ -452,16 +447,10 @@ function SpeakerEventEdit() {
                                             {images.length > 0 && (
                                                 <div className="d-flex flex-wrap gap-3 mb-4">
                                                     {images.map((img, index) => (
-                                                        <div key={index} className="position-relative border p-1 rounded" style={{ width: 150 }}>
+                                                        <div key={index} className="position-relative border p-1 rounded" style={{ width: '150px' }}>
                                                             <button type="button" className="btn-close position-absolute top-0 end-0 m-1 bg-white" onClick={() => removeImage(index)} />
-                                                            <img src={img.preview} className="img-fluid w-100" style={{ height: 100, objectFit: "cover" }} alt="upload" />
-                                                            <textarea
-                                                                className="form-control form-control-sm mt-1"
-                                                                rows="2"
-                                                                placeholder="Caption..."
-                                                                value={img.caption}
-                                                                onChange={(e) => setImages((prev) => prev.map((item, i) => (i === index ? { ...item, caption: e.target.value } : item)))}
-                                                            />
+                                                            <img src={img.preview} className="img-fluid w-100" style={{ height: '100px', objectFit: "cover" }} alt="upload" />
+                                                            <textarea className="form-control form-control-sm mt-1" rows="2" placeholder="Caption..." value={img.caption} onChange={(e) => setImages((prev) => prev.map((item, i) => (i === index ? { ...item, caption: e.target.value } : item)))} />
                                                         </div>
                                                     ))}
                                                 </div>
@@ -476,7 +465,7 @@ function SpeakerEventEdit() {
                                                     {attachments.map((file, index) => (
                                                         <div key={index} className="d-flex align-items-center border rounded p-2 bg-light">
                                                             <span className="me-2 fs-4">📄</span>
-                                                            <span className="text-truncate" style={{ maxWidth: 100, fontSize: 12 }}>{file.name}</span>
+                                                            <span className="text-truncate" style={{ maxWidth: '100px', fontSize: '12px' }}>{file.name}</span>
                                                             <button type="button" className="btn-close ms-2" style={{ fontSize: "0.5rem" }} onClick={() => removeAttachment(index)}></button>
                                                         </div>
                                                     ))}
@@ -501,6 +490,12 @@ function SpeakerEventEdit() {
                                 </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

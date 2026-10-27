@@ -74,7 +74,6 @@ body {
     border-radius: 5px;
     flex: 1;
     position: relative;
-    min-height: 52px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -324,7 +323,7 @@ h3 {
     width: calc(100% - 340px);
     background-color: #ebe6e1;
     padding: 15px;
-    
+
     height: 80px;
     z-index: 999;
     border-radius: 0px;
@@ -690,7 +689,7 @@ a.icon {
 .comp-card,
 .notice-card {
     background: white;
-    width: 32%;
+    width: 31.8%;
     padding: 30px;
     height: 368px;
     border-radius: 10px;
@@ -700,7 +699,7 @@ a.icon {
 
 .news-card {
     background: white;
-    width: 31.9%;
+    width: 31.8%;
     padding: 30px;
     height: 368px;
     border-radius: 10px;
@@ -1189,7 +1188,6 @@ a.icon {
     font-family: Inter;
 }
 
-/* My Social Links / My Contact cards (photographer dashboard) */
 .profile-links-card h5 {
     color: #4c4036;
     font-weight: 600;
@@ -1203,7 +1201,7 @@ a.icon {
     padding: 12px 0;
 }
 
-.social-contact-row + .social-contact-row {
+.social-contact-row+.social-contact-row {
     border-top: 1px solid #f2eee9;
 }
 
@@ -1287,7 +1285,6 @@ a.icon {
     margin-top: 10px;
 }
 
-/* My Sales / Photo Requests / My QR Code (photographer dashboard) */
 .btn-sales-add {
     border: 1px solid #99816b;
     background: #fff;
@@ -1317,7 +1314,6 @@ a.icon {
 }
 
 .sales-list {
-    max-height: 560px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -1325,8 +1321,6 @@ a.icon {
     padding-right: 4px;
 }
 
-/* Full "My Sales" page grid (as opposed to the narrow dashboard-widget
-   list above, which stays a single column). */
 .my-sales-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -1378,9 +1372,7 @@ a.icon {
     line-height: 1.5;
     margin-bottom: 10px;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .btn-sales-view {
@@ -1415,7 +1407,7 @@ a.icon {
     padding: 12px 0;
 }
 
-.request-row + .request-row {
+.request-row+.request-row {
     border-top: 1px solid #f2eee9;
 }
 
@@ -1445,11 +1437,12 @@ a.icon {
 
 .btn-accept,
 .btn-reject {
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 6px 16px;
     font-size: 12.5px;
     font-weight: 500;
     border: 1px solid transparent;
+    width: 120px;
 }
 
 .btn-accept {
@@ -1494,9 +1487,6 @@ a.icon {
     width: 110px;
 }
 
-/* My Portfolio tiles (photographer dashboard) - large 3-up tiles with a
-   plain text label, distinct from the small 5-up .pics grid used
-   elsewhere so they don't fight over the same class names. */
 .portfolio-tiles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1718,7 +1708,7 @@ a.icon {
     justify-content: center;
     text-align: center;
     border-radius: 10px;
-    width: 23.2%;
+    width: 22.9%;
     height: 500px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid #99816b;

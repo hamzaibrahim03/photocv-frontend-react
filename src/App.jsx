@@ -44,12 +44,22 @@ import ClubRoute from './club_admin/ClubRoute';
 import Library from './club_admin/Library';
 import ProfileDashboard from './photographer/ProfileDashboard';
 import PhotographerPortfolio from './photographer/PhotographerPortfolio';
+import MySales from './photographer/MySales';
+import PhotographerSaleAdd from './photographer/PhotographerSaleAdd';
+import PhotographerSaleSingle from './photographer/PhotographerSaleSingle';
 import PhotographerGear from './photographer/PhotographerGear';
 import PhotographerGearAdd from './photographer/PhotographerGearAdd';
 import PhotographerGearSingle from './photographer/PhotographerGearSingle';
+import PhotographerGearList from './photographer/PhotographerGearList';
 import PhotographerGearLibrary from './photographer/PhotographerGearLibrary';
 import PhotographerLearning from './photographer/PhotographerLearning';
-import PhotographerLearningAdd from './photographer/PhotographerLearningAdd';
+import PhotographerWishlistAdd from './photographer/PhotographerWishlistAdd';
+import PhotographerCheatsheet from './photographer/PhotographerCheatsheet';
+import PhotographerCheatSheetView from './photographer/PhotographerCheatSheetView';
+import PhotographerCompetitions from './photographer/PhotographerCompetitions';
+import PhotographerCompSingle from './photographer/PhotographerCompSingle';
+import PhotographerCompEntries from './photographer/PhotographerCompEntries';
+import PhotographerCheatsheetAdd from './photographer/PhotographerCheatsheetAdd';
 import PhotographerInsights from './photographer/PhotographerInsights';
 import LearningNotes from './photographer/LearningNotes';
 import PostView from './photographer/PostView';
@@ -57,12 +67,16 @@ import PhotographerPlans from './photographer/PhotographerPlans';
 import PhotographerPlanAdd from './photographer/PhotographerPlanAdd';
 import PhotographerGallery from './photographer/PhotographerGallery';
 import PhotographerGallerySingle from './photographer/PhotographerGallerySingle';
+import PhotographerGalleryEdit from './photographer/PhotographerGalleryEdit';
 import PhotographerEvent from './photographer/PhotographerEvent';
 import PhotographerEventSingle from './photographer/PhotographerEventSingle';
 import PostNotice from './photographer/PostNotice';
+import PhotographerNoticeSingle from './photographer/NoticeSingle';
+import PhotographerNoticeEdit from './photographer/NoticeEdit';
 import PhotographerCalendar from './photographer/PhotographerCalendar';
 import PhotographerCalendarAdd from './photographer/PhotographerCalendarAdd';
 import PhotographerCalendarSingle from './photographer/PhotographerCalendarSingle';
+import PhotoLibrary from './photographer/PhotoLibrary';
 import NoticeSingle from './club_admin/NoticeSingle';
 import NoticeEdit from './club_admin/NoticeEdit';
 import NewsSingle from './club_admin/NewsSingle';
@@ -81,10 +95,16 @@ import JudgeCompetitionDetail from './Judge/JudgeCompetitionDetail';
 import JudgeCompetitionEdit from './Judge/JudgeCompetitionEdit';
 import JudgeCompetitionSubmissions from './Judge/JudgeCompetitionSubmissions';
 import JudgeImageScoring from './Judge/JudgeImageScoring';
+import JudgeProfile from './Judge/JudgeProfile';
+import JudgeSettings from './Judge/JudgeSettings';
+import ChangePassword from './ChangePassword';
+import SettingsRedirect from './SettingsRedirect';
 import SpeakerDashboard from './Speaker/SpeakerDashboard';
 import SpeakerClubEvents from './Speaker/SpeakerClubEvents';
 import SpeakerEventDetail from './Speaker/SpeakerEventDetail';
 import SpeakerEventEdit from './Speaker/SpeakerEventEdit';
+import SpeakerProfile from './Speaker/SpeakerProfile';
+import SpeakerSettings from './Speaker/SpeakerSettings';
 import ClubPublicHome from './ClubPublic/ClubPublicHome';
 import SuperDashboard from './Super/SuperDashboard';
 import SuperClubsList from './Super/SuperClubsList';
@@ -99,6 +119,8 @@ import SecretaryDashboard from './Secretary/SecretaryDashboard';
 import SecretaryCompetitionsList from './Secretary/SecretaryCompetitionsList';
 import SecretaryCompetitionDetail from './Secretary/SecretaryCompetitionDetail';
 import SecretaryCompetitionEdit from './Secretary/SecretaryCompetitionEdit';
+import SecretaryProfile from './Secretary/SecretaryProfile';
+import SecretarySettings from './Secretary/SecretarySettings';
 import SecretarySeasonResults from './Secretary/SecretarySeasonResults';
 import SecretaryCompetitionResults from './Secretary/SecretaryCompetitionResults';
 import SecretaryImageLightbox from './Secretary/SecretaryImageLightbox';
@@ -106,6 +128,13 @@ import AdminWelcome from './Admin/AdminWelcome';
 import AdminLogin from './Admin/AdminLogin';
 import AdminSignup from './Admin/AdminSignup';
 import AdminClubOnboarding from './Admin/AdminClubOnboarding';
+import PhotographerSettings from './photographer/PhotographerSettings';
+import PhotographerSignup from './photographer/PhotographerSignup';
+import PhotographerLogin from './photographer/PhotographerLogin';
+import MarketingHome from './marketing/Home';
+import MarketingWhoAreYou from './marketing/WhoAreYou';
+import MarketingPhotographerTeaser from './marketing/PhotographerTeaser';
+import MarketingClubTeaser from './marketing/ClubTeaser';
 function App() {
     return (
         <>
@@ -177,26 +206,51 @@ function App() {
                 <Route path="/portfolio" element={<PhotographerPortfolio />} />
                 <Route path="/gear" element={<PhotographerGear />} />
                 <Route path="/gear/add" element={<PhotographerGearAdd />} />
+                <Route path="/gear/list" element={<PhotographerGearList />} />
                 <Route path="/gear/library" element={<PhotographerGearLibrary />} />
+                <Route path="/gear/wishlist/add" element={<PhotographerWishlistAdd />} />
+                <Route path="/gear/wishlist/:id/edit" element={<PhotographerWishlistAdd />} />
                 <Route path="/gear/:id" element={<PhotographerGearSingle />} />
                 <Route path="/gear/:id/edit" element={<PhotographerGearAdd />} />
+                <Route path="/my-sales" element={<MySales />} />
+                <Route path="/my-sales/add" element={<PhotographerSaleAdd />} />
+                <Route path="/my-sales/:id" element={<PhotographerSaleSingle />} />
+                <Route path="/my-sales/:id/edit" element={<PhotographerSaleAdd />} />
+                <Route path="/cheatsheet" element={<PhotographerCheatsheet />} />
+                <Route path="/cheatsheet/add" element={<PhotographerCheatsheetAdd />} />
+                <Route path="/cheatsheet/:id" element={<PhotographerCheatSheetView />} />
+                <Route path="/cheatsheet/:id/edit" element={<PhotographerCheatsheetAdd />} />
                 <Route path="/learn" element={<PhotographerLearning />} />
-                <Route path="/learn/add" element={<PhotographerLearningAdd />} />
-                <Route path="/learn/:id/edit" element={<PhotographerLearningAdd />} />
                 <Route path="/notebook" element={<LearningNotes />} />
                 <Route path="/insights" element={<PhotographerInsights />} />
                 <Route path="/post" element={<PostView />} />
+                <Route path="/notice" element={<PostNotice />} />
+                <Route path="/notice/:id" element={<PhotographerNoticeSingle />} />
+                <Route path="/notice/:id/edit" element={<PhotographerNoticeEdit />} />
+                <Route path="/notice/add" element={<PhotographerNoticeEdit />} />
                 <Route path="/plans" element={<PhotographerPlans />} />
                 <Route path="/plans/add" element={<PhotographerPlanAdd />} />
                 <Route path="/my-gallery" element={<PhotographerGallery />} />
                 <Route path="/my-gallery/:id" element={<PhotographerGallerySingle />} />
+                <Route path="/my-gallery/:id/edit" element={<PhotographerGalleryEdit />} />
                 <Route path="/my-events" element={<PhotographerEvent />} />
                 <Route path="/my-events/:id" element={<PhotographerEventSingle />} />
-                <Route path="/post-notice" element={<PostNotice />} />
+                <Route path="/my-competitions" element={<PhotographerCompetitions />} />
+                <Route path="/my-competitions/:id" element={<PhotographerCompSingle />} />
+                <Route path="/my-competitions/:id/entries" element={<PhotographerCompEntries />} />
                 <Route path="/calendar" element={<PhotographerCalendar />} />
                 <Route path="/calendar/create" element={<PhotographerCalendarAdd />} />
                 <Route path="/calendar/:id" element={<PhotographerCalendarSingle />} />
                 <Route path="/calendar/:id/edit" element={<PhotographerCalendarAdd />} />
+                <Route path="/settings/photo" element={<PhotographerSettings/>} />
+                <Route path="/signup/photo" element={<PhotographerSignup/>} />
+                <Route path="/photographer/login" element={<PhotographerLogin/>} />
+                <Route path="/photo-library" element={<PhotoLibrary />} />
+                {/* Welcome */}
+                <Route path="/welcome" element={<MarketingHome/>} />
+                <Route path="/welcome/choose" element={<MarketingWhoAreYou/>} />
+                <Route path="/welcome/photographer" element={<MarketingPhotographerTeaser/>} />
+                <Route path="/welcome/club" element={<MarketingClubTeaser/>} />
                 {/* Judge */}
                 <Route path="/judge" element={<JudgeDashboard />} />
                 <Route path="/judge/dashboard" element={<JudgeDashboard />} />
@@ -206,6 +260,10 @@ function App() {
                 <Route path="/judge/competitions/:competitionId/edit" element={<JudgeCompetitionEdit />} />
                 <Route path="/judge/competitions/:competitionId/submissions" element={<JudgeCompetitionSubmissions />} />
                 <Route path="/judge/competitions/:competitionId/submissions/:entryId" element={<JudgeImageScoring />} />
+                <Route path="/judge/profile" element={<JudgeProfile />} />
+                <Route path="/judge/settings" element={<JudgeSettings />} />
+                <Route path="/change-password" element={<ChangePassword />} />
+                <Route path="/settings" element={<SettingsRedirect />} />
                 {/* Speaker */}
                 <Route path="/speaker" element={<SpeakerDashboard />} />
                 <Route path="/speaker/dashboard" element={<SpeakerDashboard />} />
@@ -213,6 +271,8 @@ function App() {
                 <Route path="/speaker/clubs/:clubId/events" element={<SpeakerClubEvents />} />
                 <Route path="/speaker/events/create" element={<SpeakerEventEdit />} />
                 <Route path="/speaker/events/:eventId" element={<SpeakerEventDetail />} />
+                <Route path="/speaker/profile" element={<SpeakerProfile />} />
+                <Route path="/speaker/settings" element={<SpeakerSettings />} />
                 <Route path="/speaker/events/:eventId/edit" element={<SpeakerEventEdit />} />
                 {/* Club Public */}
                 <Route path="/club-public" element={<ClubPublicHome />} />
@@ -238,6 +298,8 @@ function App() {
                 <Route path="/secretary/competitions/:competitionId/results" element={<SecretarySeasonResults />} />
                 <Route path="/secretary/competitions/:competitionId/scores" element={<SecretaryCompetitionResults />} />
                 <Route path="/secretary/competitions/:competitionId/results/:entryId" element={<SecretaryImageLightbox />} />
+                <Route path="/secretary/profile" element={<SecretaryProfile />} />
+                <Route path="/secretary/settings" element={<SecretarySettings />} />
                 {/* Admin (auth + club onboarding) */}
                 <Route path="/admin" element={<AdminWelcome />} />
                 <Route path="/admin/welcome" element={<AdminWelcome />} />

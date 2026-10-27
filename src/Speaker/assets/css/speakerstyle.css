@@ -1,5 +1,3 @@
-
-
 .speaker-sidebar {
     position: fixed;
     top: 0;
@@ -139,8 +137,6 @@
     cursor: pointer;
 }
 
-/* Content offset to sit beside the fixed 340px sidebar - matches .content's
-   own convention in adminstyle.css exactly. */
 .speaker-content {
     padding: 0 15px 40px 340px;
 }
@@ -155,7 +151,6 @@
     width: fit-content;
 }
 
-/* Club grid (Speaker dashboard) */
 .speaker-club-grid {
     display: flex;
     flex-direction: column;
@@ -209,7 +204,6 @@
     overflow: hidden;
 }
 
-/* Events list (club-level) */
 .speaker-event-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -217,7 +211,9 @@
 }
 
 @media (max-width: 1400px) {
-    .speaker-event-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .speaker-event-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .speaker-event-card {
@@ -295,7 +291,6 @@
     color: #fff;
 }
 
-/* Detail view */
 .speaker-detail-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -338,7 +333,6 @@
     margin: 0 6px 6px 0;
 }
 
-/* Event Gallery grid (detail view) */
 .speaker-gallery-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -353,7 +347,6 @@
     border-radius: 8px;
 }
 
-/* Event Type / Tag checkbox grids (edit form) */
 .speaker-checkbox-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -361,7 +354,9 @@
 }
 
 @media (max-width: 1200px) {
-    .speaker-checkbox-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .speaker-checkbox-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .speaker-checkbox-option {

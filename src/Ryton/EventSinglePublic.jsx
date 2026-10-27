@@ -12,7 +12,7 @@ function EventSinglePublic() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [sineventData, setsineventData] = useState([]);
-    const [sineventsList, setsinEventsList] = useState([]);
+    const [, setsinEventsList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState("");
     useEffect(() => {
@@ -138,11 +138,11 @@ function EventSinglePublic() {
                                                     <div className="card" style={{ border: 'none' }}>
                                                         <img src={sineventData?.event?.original?.data?.featured_image_url} alt={sineventData?.event?.original?.data?.name} style={{ maxWidth: '850px', marginBottom: '50px', width: '850px', height: '350px', borderRadius: '8px' }} />
                                                         <div className="d-flex justify-content-between" style={{ width: '850px' }}>
-                                                            <h5 className="head" style={{ fontFamily: 'Inter', fontWeight: 500, fontStyle: "Medium", fontSize: "28px", lineHeight: "100%", letterSpacing: "0%", color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>{sineventData?.event?.original?.data?.name}</h5>
+                                                            <h5 className="head" style={{ fontFamily: 'Inter', fontWeight: '500', fontStyle: "Medium", fontSize: "28px", lineHeight: "100%", letterSpacing: "0%", color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>{sineventData?.event?.original?.data?.name}</h5>
                                                             {sineventData?.event?.original?.data?.types?.map((t, i) => (
                                                                 <div key={t.id || i} className="d-flex align-items-center justify-content-center gap-3" style={{ width: '180px' }}>
                                                                     <img className="head" src={t.icon_url} alt={t.name} style={{ width: "20px", height: "20px" }} />
-                                                                    <h5 className="head" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: 400, fontSize: "18px", lineHeight: "100%", letterSpacing: "0%", }}>
+                                                                    <h5 className="head" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: '400', fontSize: "18px", lineHeight: "100%", letterSpacing: "0%", }}>
                                                                         {t.name}
                                                                     </h5>
                                                                 </div>
@@ -435,7 +435,7 @@ function EventSinglePublic() {
                                     <div className="row align-items-center text-center text-md-start">
                                         <div className="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                                             <div className="contact-col">
-                                                <h5 className="head mb-4" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
+                                                <h5 className="head mt-5 mb-5" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color, paddingBottom: '10px' }}>Contact</h5>
                                                 <div className="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" style={{ paddingBottom: '10px' }}>
                                                     <p className="footer-text mb-0" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}> {sineventData?.clubSettings?.original?.data?.club.address} </p>
                                                     <div className="icon-circles ms-3" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.background_color, backgroundColor: sineventData?.clubSettings?.original?.data?.settings?.accent_color }}>
@@ -467,7 +467,7 @@ function EventSinglePublic() {
                                                         <i className="fab fa-facebook-f"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
+                                                        <p className="footer-text head" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>Facebook</p>
                                                         <a href="fb_link" target="_blank" className="footer-link" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {sineventData?.clubSettings?.original?.data?.settings?.fb_link}
                                                         </a>
@@ -478,7 +478,7 @@ function EventSinglePublic() {
                                                         <i className="fab fa-instagram"></i>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
+                                                        <p className="footer-text head" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>Instagram</p>
                                                         <a href="insta_link" target="_blank" className="footer-link" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {sineventData?.clubSettings?.original?.data?.settings?.insta_link}
                                                         </a>
@@ -489,7 +489,7 @@ function EventSinglePublic() {
                                                         <span className="flickr-dots"><i className="fa fa-circle"></i><i className="fa fa-circle"></i></span>
                                                     </div>
                                                     <div id="facebook">
-                                                        <p className="footer-text head mb-1" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
+                                                        <p className="footer-text head" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>Flickr</p>
                                                         <a href="flickr_link" className="footer-link" style={{ color: sineventData?.clubSettings?.original?.data?.settings?.text_color }}>
                                                             {sineventData?.clubSettings?.original?.data?.settings?.flickr_link}
                                                         </a>

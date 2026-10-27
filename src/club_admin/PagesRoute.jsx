@@ -8,14 +8,10 @@ import Pro from "./assets/icons/event_list/pro.svg"
 import Cal from "./assets/icons/event_list/cal.svg"
 import Cam from "./assets/icons/event_list/cam.svg"
 import Mess from "./assets/icons/event_list/mess.svg"
-import Book from "./assets/icons/quick_notice/book.svg"
-import Cale from "./assets/icons/quick_notice/calender.svg"
-import Com from "./assets/icons/quick_notice/com.svg"
-import Cup from "./assets/icons/quick_notice/cup.svg"
-import Hand from "./assets/icons/quick_notice/hand.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Books from "./assets/icons/event_list/bookmark.svg"
-import Note from "./assets/icons/quick_notice/note.svg"
+
+const CATALOG_API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 function PagesRoute() {
     const navigate = useNavigate();
     const [pagesData, setPagesData] = useState({})
@@ -24,6 +20,26 @@ function PagesRoute() {
     const [rowsPerPage] = useState(4);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
+    const [pageTypes, setPageTypes] = useState([]);
+    const [quickFilterType, setQuickFilterType] = useState(null);
+    useEffect(() => {
+        async function loadPageTypes() {
+            try {
+                const response = await fetch(`${CATALOG_API_BASE}/club/public/catalog/all-grouped`, {
+                    headers: { Accept: 'application/json' },
+                });
+                const json = await response.json();
+                setPageTypes(json?.data?.page_type || []);
+            } catch (error) {
+                console.error('Error loading page types:', error);
+            }
+        }
+        loadPageTypes();
+    }, []);
+    const toggleQuickFilter = (id) => {
+        setQuickFilterType((prev) => (prev === id ? null : id));
+        setCurrentPage(1);
+    };
     useEffect(() => {
         const loadData = async () => {
             setIsLoading(true);
@@ -168,7 +184,7 @@ function PagesRoute() {
                                                             <>
                                                                 {paginatedPages.map((page) => (
                                                                     <div key={page.id} className="custom-card mb-3 p-3">
-                                                                        <div className="d-flex gap-3" style={{ flex: 1 }}>
+                                                                        <div className="d-flex gap-3" style={{ flex: '1' }}>
                                                                             <img src={page.featured_image} alt="Page Image" />
                                                                             <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                                                                 <div className="d-flex justify-content-between align-items-center">
@@ -270,10 +286,10 @@ function PagesRoute() {
                                                             </div>
                                                         ))}
                                                         <div className="button-group mt-auto">
-                                                            <button className="btn btn-sm" id="e-view" onClick={() => navigate('/pages_single')}>
+                                                            <button className="btn" id="e-view" onClick={() => navigate('/pages')}>
                                                                 View All
                                                             </button>
-                                                            <button className="btn btn-sm" id="new" onClick={() => navigate('/pages_add')}>
+                                                            <button className="btn" id="new" onClick={() => navigate('/pages/create')}>
                                                                 Add New
                                                             </button>
                                                         </div>
@@ -286,7 +302,8 @@ function PagesRoute() {
                             </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
-                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div>

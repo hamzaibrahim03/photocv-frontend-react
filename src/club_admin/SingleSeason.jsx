@@ -136,7 +136,7 @@ function SingleSeason() {
                         <section>
                             <div className="container" style={{ maxWidth: "1820px", }} >
                                 <div className="dashboard-card" id="cl">
-                                    <div className="profile-card" style={{ width: "170%", }} >
+                                    <div className="profile-card" >
                                         <div className="profile-left">
                                             <div className="profile-info">
                                                 <small className="greeting">
@@ -203,9 +203,9 @@ function SingleSeason() {
                                                         <div className="details" style={{ padding: "18px", }} >
                                                             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "15px", justifyContent: 'space-between' }} >
                                                                 <img src={group.member_profile_image} alt={group.member_name || "Member"} style={{ width: "67px", height: "67px", borderRadius: "50%", objectFit: "cover", border: "1px solid #ddd", }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                                <div style={{ flex: 1 }}>
+                                                                <div style={{ flex: '1' }}>
                                                                     <div style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: 'space-between', flexWrap: "wrap", }} >
-                                                                        <h4 style={{ margin: 0, fontSize: "18px", }} >
+                                                                        <h4 style={{ margin: '0', fontSize: "18px", }} >
                                                                             {group.member_name}
                                                                         </h4>
                                                                         <span style={{ display: "inline-flex", alignItems: "center", width: '87px', height: '26px', borderRadius: '14.37px', border: '1.2px solid #000000', color: 'white', backgroundColor: '#4C4036', padding: '2.39px 11.49px', gap: '4.79px', fontWeight: '400', fontSize: '14.36px', lineHeight: '19.14px', letterSpacing: '0px' }} >
@@ -271,6 +271,11 @@ function SingleSeason() {
                                 </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

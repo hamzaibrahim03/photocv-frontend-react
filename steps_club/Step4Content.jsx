@@ -73,8 +73,8 @@ function Step4Content() {
         <>
             <div className="form-container">
                 <form style={{ marginLeft: "2%", marginRight: "2%" }} onSubmit={submitForm}>
-                    <h5 className="role" style={{ fontFamily: "Inter", fontWeight: 400, fontSize: "32px", lineHeight: "100%", letterSpacing: "0%" }}>Content Management</h5>
-                    <p style={{ fontFamily: "Inter", fontWeight: 400, fontSize: "22.88px", lineHeight: "100%", letterSpacing: "0%", color: "#4C4036" }}>How do you want your club website to shape up.</p>
+                    <h5 className="role" style={{ fontFamily: "Inter", fontWeight: '400', fontSize: "32px", lineHeight: "100%", letterSpacing: "0%" }}>Content Management</h5>
+                    <p style={{ fontFamily: "Inter", fontWeight: '400', fontSize: "22.88px", lineHeight: "100%", letterSpacing: "0%", color: "#4C4036" }}>How do you want your club website to shape up.</p>
                     <br /><br />
                     <label htmlFor="website"> Website Sections </label>
                     <div className="row">
@@ -186,8 +186,8 @@ function Step4Content() {
                         </div>
                     </div>
                     <div className="button-group" style={{ justifyContent: 'left' }}>
-                        <button type="button" className="btn btn-sm" id="e-view" onClick={loadSettings}> Cancel</button>
-                        <button type="submit" className="btn btn-sm" id="e-edit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
+                        <button type="button" className="btn" id="e-view" onClick={loadSettings}> Cancel</button>
+                        <button type="submit" className="btn" id="e-edit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save'}</button>
                     </div>
                 </form>
             </div>

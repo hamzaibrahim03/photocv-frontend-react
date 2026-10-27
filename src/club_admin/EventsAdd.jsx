@@ -13,7 +13,7 @@ function EventsAdd() {
     const [description, setDescription] = useState('');
     const [eventTypes, setEventTypes] = useState([]);
     const [selectedEventTypes, setSelectedEventTypes] = useState([]);
-    const [eventTags, setEventTags] = useState([]);
+    const [, setEventTags] = useState([]);
     const [selectedEventTags, setSelectedEventTags] = useState([]);
     const [duration, setDuration] = useState('');
     const [speaker, setSpeaker] = useState('');
@@ -585,7 +585,7 @@ function EventsAdd() {
                                                                 <input type="text" className="border-0 shadow-none flex-grow-1 outline-none" style={{ minWidth: '100px', outline: 'none' }} placeholder="Add keyword..." value={searchInput} onChange={e => setSearchInput(e.target.value)} onFocus={() => setShowDropdown(true)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); const value = searchInput.trim(); if (value && !selectedTags.includes(value)) { setSelectedTags(prev => [...prev, value]); setSearchInput(''); } } }} />
                                                             </div>
                                                             {showDropdown && (
-                                                                <ul className="dropdown-menu show w-100 position-absolute" style={{ top: '100%', zIndex: 1000 }}>
+                                                                <ul className="dropdown-menu show w-100 position-absolute" style={{ top: '100%', zIndex: '1000' }}>
                                                                     {keywordOptions.length === 0 ? (
                                                                         <li className="dropdown-item text-muted">No results found</li>
                                                                     ) : (
@@ -717,6 +717,12 @@ function EventsAdd() {
                                     </div>
                                 </div>
                             </section>
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
                         </div>
                     </>
                 )}

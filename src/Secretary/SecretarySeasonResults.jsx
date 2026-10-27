@@ -113,114 +113,118 @@ function SecretarySeasonResults() {
         <>
             <NavigationRoute activeClubId={club?.id} />
             <HeaderRoute title="Season Results" />
-            <div className="secretary-content" style={{ paddingTop: 25 }}>
-                <div className="dashboard-card" style={{ width: "100%" }}>
-                    <div className="profile-card" style={{ width: "70%" }}>
-                        <div className="profile-left">
-                            <div className="profile-info">
-                                <small className="greeting">Galleries uploaded by Club Members</small>
-                                <h2 className="name">{competition?.name || "Season Results"}</h2>
-                                <p className="secretary-breadcrumb">{club?.name}</p>
+            <div className="content">
+                <section>
+                    <div className="container" style={{ maxWidth: '1820px' }}>
+                        <div className="dashboard-card">
+                            <div className="profile-card">
+                                <div className="profile-left">
+                                    <div className="profile-info">
+                                        <small className="greeting">Galleries uploaded by Club Members</small>
+                                        <h2 className="name">{competition?.name || "Season Results"}</h2>
+                                        <p className="secretary-breadcrumb">{club?.name}</p>
+                                    </div>
+                                </div>
+                                <div className="search-bar d-flex" style={{ alignItems: "center", gap: '10px' }}>
+                                    <input type="search" className="search-input" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                    <i className="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <div className="card-section">
+                                <div className="stat-card">
+                                    <small className="ca-details">Images</small>
+                                    <h3 className="number">{entries.length}</h3>
+                                </div>
                             </div>
                         </div>
-                        <div className="search-bar d-flex" style={{ alignItems: "center", gap: 10 }}>
-                            <input type="search" className="search-input" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
-                            <i className="fas fa-search"></i>
-                        </div>
                     </div>
-                    <div className="card-section">
-                        <div className="stat-card">
-                            <small className="ca-details">Images</small>
-                            <h3 className="number">{entries.length}</h3>
+                </section>
+
+                <section>
+                    <div className="container" style={{ maxWidth: '1820px' }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", margin: "20px 0" }}>
+                            <button type="button" className="btn" style={{ background: showGalleries ? "#99816b" : "#4c4036", color: "#fff", border: "none", borderRadius: '8px', padding: "11px 24px" }} onClick={() => setShowGalleries((v) => !v)} >
+                                {showGalleries ? "View Submissions by Member" : "View Member Galleries"}
+                            </button>
+                            <button type="button" className="btn" style={{ background: "#4c4036", color: "#fff", border: "none", borderRadius: '8px', padding: "11px 30px" }} onClick={() => navigate(`/secretary/competitions/${competitionId}/scores`)} >
+                                Open for Judging
+                            </button>
                         </div>
-                    </div>
-                </div>
 
-                <div style={{ display: "flex", justifyContent: "space-between", margin: "20px 0" }}>
-                    <button
-                        type="button"
-                        className="btn"
-                        style={{ background: showGalleries ? "#99816b" : "#4c4036", color: "#fff", border: "none", borderRadius: 8, padding: "11px 24px" }}
-                        onClick={() => setShowGalleries((v) => !v)}
-                    >
-                        {showGalleries ? "View Submissions by Member" : "View Member Galleries"}
-                    </button>
-                    <button
-                        type="button"
-                        className="btn"
-                        style={{ background: "#4c4036", color: "#fff", border: "none", borderRadius: 8, padding: "11px 30px" }}
-                        onClick={() => navigate(`/secretary/competitions/${competitionId}/scores`)}
-                    >
-                        Open for Judging
-                    </button>
-                </div>
-
-                {showGalleries ? (
-                    <>
-                        <div style={{ background: "#fff", borderRadius: 12, boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: 26 }}>
-                            <h5 style={{ color: "#4c4036", marginBottom: 18 }}>Member Galleries</h5>
-                            {filteredEntries.length === 0 ? (
-                                <p className="secretary-empty-note">No submissions found.</p>
-                            ) : (
-                                <div className="secretary-gallery-grid">
-                                    {filteredEntries.slice((galleryPage - 1) * galleriesPerPage, galleryPage * galleriesPerPage).map((entry) => (
-                                        <div className="secretary-gallery-tile" key={entry.entry_id} style={{ background: "#4c4036" }}>
-                                            <img src={entry.entry_image} alt={entry.entry_image_title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                            <div className="info-bar">
-                                                <div style={{ display: "flex", alignItems: "center" }}>
-                                                    <img className="avatar" src={entry.member_profile_image || "/placeholder.jpg"} alt={entry.member_name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                    <span>{entry.member_name}</span>
+                        {showGalleries ? (
+                            <>
+                                <div style={{ background: "#fff", borderRadius: '12px', boxShadow: "0 0 10px rgba(0,0,0,0.08)", padding: '26px' }}>
+                                    <h5 style={{ color: "#4c4036", marginBottom: '18px' }}>Member Galleries</h5>
+                                    {filteredEntries.length === 0 ? (
+                                        <p className="secretary-empty-note">No submissions found.</p>
+                                    ) : (
+                                        <div className="secretary-gallery-grid">
+                                            {filteredEntries.slice((galleryPage - 1) * galleriesPerPage, galleryPage * galleriesPerPage).map((entry) => (
+                                                <div className="secretary-gallery-tile" key={entry.entry_id} style={{ background: "#4c4036" }}>
+                                                    <img src={entry.entry_image} alt={entry.entry_image_title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
+                                                    <div className="info-bar">
+                                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                                            <img className="avatar" src={entry.member_profile_image || "/placeholder.jpg"} alt={entry.member_name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
+                                                            <span>{entry.member_name}</span>
+                                                        </div>
+                                                        {entry.position && <span style={{ fontSize: '18px' }}>{medalIcon(entry.position)}</span>}
+                                                    </div>
                                                 </div>
-                                                {entry.position && <span style={{ fontSize: 18 }}>{medalIcon(entry.position)}</span>}
-                                            </div>
+                                            ))}
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
-                            )}
-                        </div>
-                        {Math.ceil(filteredEntries.length / galleriesPerPage) > 1 && (
-                            <div className="dt-paging" style={{ marginTop: 18, display: "flex", justifyContent: "flex-end" }}>
-                                <nav aria-label="pagination">
-                                    {Array.from({ length: Math.ceil(filteredEntries.length / galleriesPerPage) }, (_, i) => (
-                                        <button key={i + 1} className={`dt-paging-button ${galleryPage === i + 1 ? "current" : ""}`} onClick={() => setGalleryPage(i + 1)}>{i + 1}</button>
-                                    ))}
-                                </nav>
+                                {Math.ceil(filteredEntries.length / galleriesPerPage) > 1 && (
+                                    <div className="dt-paging" style={{ marginTop: '18px', display: "flex", justifyContent: "flex-end" }}>
+                                        <nav aria-label="pagination">
+                                            {Array.from({ length: Math.ceil(filteredEntries.length / galleriesPerPage) }, (_, i) => (
+                                                <button key={i + 1} className={`dt-paging-button ${galleryPage === i + 1 ? "current" : ""}`} onClick={() => setGalleryPage(i + 1)}>{i + 1}</button>
+                                            ))}
+                                        </nav>
+                                    </div>
+                                )}
+                            </>
+                        ) : groupedResults.length === 0 ? (
+                            <p className="secretary-empty-note">No submissions found.</p>
+                        ) : (
+                            <div className="secretary-entry-grid">
+                                {groupedResults.map((group) => {
+                                    const visibleEntries = group.entries.slice(0, 3);
+                                    return (
+                                        <div className="secretary-entry-card" key={group.member_comp_id}>
+                                            <div className="head-row">
+                                                <img className="avatar" src={group.member_profile_image || "/placeholder.jpg"} alt={group.member_name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
+                                                <div style={{ flex: '1' }}>
+                                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                        <h4 style={{ margin: '0px' }}>{group.member_name}</h4>
+                                                        <span className="entries-badge">{group.entries.length} {group.entries.length === 1 ? "Entry" : "Entries"}</span>
+                                                    </div>
+                                                    <small style={{ color: "#99816b" }}>{group.member_title}</small>
+                                                </div>
+                                            </div>
+                                            <div className="thumb-row">
+                                                {visibleEntries.map((entry) => (
+                                                    <img key={entry.entry_id} src={entry.entry_image} alt={entry.entry_image_title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
+                                                ))}
+                                            </div>
+                                            <button type="button" className="view-all" onClick={() => setActiveMember(group)}>View All Entries</button>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         )}
-                    </>
-                ) : groupedResults.length === 0 ? (
-                    <p className="secretary-empty-note">No submissions found.</p>
-                ) : (
-                    <div className="secretary-entry-grid">
-                        {groupedResults.map((group) => {
-                            const visibleEntries = group.entries.slice(0, 3);
-                            return (
-                                <div className="secretary-entry-card" key={group.member_comp_id}>
-                                    <div className="head-row">
-                                        <img className="avatar" src={group.member_profile_image || "/placeholder.jpg"} alt={group.member_name} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                        <div style={{ flex: 1 }}>
-                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                                <h4 style={{ margin: 0 }}>{group.member_name}</h4>
-                                                <span className="entries-badge">{group.entries.length} {group.entries.length === 1 ? "Entry" : "Entries"}</span>
-                                            </div>
-                                            <small style={{ color: "#99816b" }}>{group.member_title}</small>
-                                        </div>
-                                    </div>
-                                    <div className="thumb-row">
-                                        {visibleEntries.map((entry) => (
-                                            <img key={entry.entry_id} src={entry.entry_image} alt={entry.entry_image_title} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                        ))}
-                                    </div>
-                                    <button type="button" className="view-all" onClick={() => setActiveMember(group)}>View All Entries</button>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
 
-                <div style={{ display: "flex", justifyContent: "flex-start", marginTop: 24 }}>
-                    <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: 8, padding: "11px 28px" }} onClick={() => navigate(`/secretary/competitions/${competitionId}`)}>Back</button>
-                </div>
+                        <div style={{ display: "flex", justifyContent: "flex-start", marginTop: '24px' }}>
+                            <button type="button" className="btn" style={{ background: "#99816b", color: "#fff", border: "none", borderRadius: '8px', padding: "11px 28px" }} onClick={() => navigate(`/secretary/competitions/${competitionId}`)}>Back</button>
+                        </div>
+                    </div>
+                </section>
+                <footer className="site-footer">
+                    <div className="footer-content">
+                        <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                        <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                    </div>
+                </footer>
             </div>
 
             {activeMember && (
@@ -238,7 +242,7 @@ function SecretarySeasonResults() {
 
                         <hr style={{ border: "none", borderTop: "1px solid #eee", margin: "20px 0" }} />
 
-                        <h5 style={{ color: "#4c4036", marginBottom: 16 }}>All Submissions</h5>
+                        <h5 style={{ color: "#4c4036", marginBottom: '16px' }}>All Submissions</h5>
                         {activeMember.entries.map((entry, index) => (
                             <div className="secretary-submission-row" key={entry.entry_id}>
                                 <div className="rank">{index + 1}</div>

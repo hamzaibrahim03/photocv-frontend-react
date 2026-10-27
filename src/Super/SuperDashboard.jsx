@@ -40,50 +40,30 @@ const getPositionClass = (index, total) => {
 
 const WEEK_DAYS = ["M", "T", "W", "T", "F", "S", "S"];
 
-function buildCalendarMatrix(year, month) {
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const cells = [];
-    for (let i = 0; i < firstDay; i += 1) cells.push(null);
-    for (let d = 1; d <= daysInMonth; d += 1) cells.push(d);
-    while (cells.length % 7 !== 0) cells.push(null);
-    return cells;
-}
-
 function BarChart({ title, data, color, total, totalLabel }) {
     const max = Math.max(...data, 1);
     return (
-        <div className="super-panel" style={{ flex: 1, height: '400px', display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+        <div className="super-panel" style={{ flex: '1', height: '400px', display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: '24px' }}>
                 <h3 className="head">{title}</h3>
                 <button type="button" className="btn" id="e-view">View All</button>
             </div>
-            <div style={{ display: "flex", alignItems: "flex-end", gap: 16, flex: 1, paddingBottom: 12, borderBottom: "1px solid #f0ece7" }}>
+            <div style={{ display: "flex", alignItems: "flex-end", gap: '16px', flex: '1', paddingBottom: '12px', borderBottom: "1px solid #f0ece7" }}>
                 {data.map((v, i) => (
-                    <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
-                        <span style={{ fontSize: 13, fontWeight: 600, color: v > 0 ? color : "#c9c0b6", marginBottom: 8 }}>{v}</span>
-                        <div
-                            style={{
-                                width: "60%",
-                                maxWidth: 32,
-                                height: `${Math.max((v / max) * 100, 3)}%`,
-                                background: v > 0 ? `linear-gradient(180deg, ${color} 0%, ${color}cc 100%)` : "#eee5dd",
-                                borderRadius: 8,
-                                boxShadow: v > 0 ? `0 6px 14px -6px ${color}88` : "none",
-                                transition: "height 0.3s ease",
-                            }}
-                        ></div>
+                    <div key={i} style={{ flex: '1', display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                        <span style={{ fontSize: '13px', fontWeight: '600', color: v > 0 ? color : "#c9c0b6", marginBottom: '8px' }}>{v}</span>
+                        <div style={{ width: "60%", maxWidth: '32px', height: `${Math.max((v / max) * 100, 3)}%`, background: v > 0 ? `linear-gradient(180deg, ${color} 0%, ${color}cc 100%)` : "#eee5dd", borderRadius: '8px', boxShadow: v > 0 ? `0 6px 14px -6px ${color}88` : "none", transition: "height 0.3s ease", }} ></div>
                     </div>
                 ))}
             </div>
-            <div style={{ display: "flex", gap: 16, marginTop: 10 }}>
+            <div style={{ display: "flex", gap: '16px', marginTop: '10px' }}>
                 {WEEK_DAYS.map((d, i) => (
-                    <span key={i} style={{ flex: 1, textAlign: "center", fontSize: 12.5, fontWeight: 600, color: "#99816b" }}>{d}</span>
+                    <span key={i} style={{ flex: '1', textAlign: "center", fontSize: '12px', fontWeight: '600', color: "#99816b" }}>{d}</span>
                 ))}
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 18, fontSize: 13, color: "#4c4036" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: '18px', fontSize: '13px', color: "#4c4036" }}>
                 <span style={{ color: "#999" }}>{totalLabel}</span>
-                <strong style={{ fontSize: 15, color }}>{total}</strong>
+                <strong style={{ fontSize: '15px', color }}>{total}</strong>
             </div>
         </div>
     );
@@ -154,7 +134,6 @@ function SuperDashboard() {
         Promise.all([fetchClubs(), fetchDashboardStats(), fetchDashboardCalendar()]).finally(() => {
             setIsLoading(false);
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <>
@@ -168,12 +147,12 @@ function SuperDashboard() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="dashboard-card" id="cl">
-                                        <div className="profile-card" style={{ width: "152%" }}>
+                                        <div className="profile-card" style={{ width: '168%' }}>
                                             <div className="profile-left">
                                                 {storedUser.profile_image_url || storedUser.profile_image ? (
                                                     <img className="avatar" src={storedUser.profile_image_url || storedUser.profile_image} alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} />
                                                 ) : (
-                                                    <i className="fa-regular fa-circle-user" style={{ fontSize: 54, color: "#e5ded7" }}></i>
+                                                    <i className="fa-regular fa-circle-user" style={{ fontSize: '54px', color: "#e5ded7" }}></i>
                                                 )}
                                                 <div className="profile-info">
                                                     <span className="greeting">
@@ -208,21 +187,21 @@ function SuperDashboard() {
 
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
-                                    <div className="row" style={{ gap: '30px', marginBottom: '30px', marginLeft: '5px' }}>
-                                        <div className="col-md-2" style={{ width: '350px', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#CC445E', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <div className="row" style={{ gap: '30px', marginBottom: '30px', marginLeft: '5px', marginTop: '20px' }}>
+                                        <div className="col-md-2" style={{ width: '23%', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#CC445E', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                             <small style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '28px', color: '#FFFFFF' }}>Clubs</small>
                                             <span style={{ fontFamily: 'Inter', fontWeight: '500', fontStyle: 'Regular', fontSize: '66px', color: '#FFFFFF' }}>{clubs.length}</span>
                                         </div>
 
-                                        <div className="col-md-2" style={{ width: '350px', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#4C4036', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                        <div className="col-md-2" style={{ width: '23%', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#4C4036', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                             <small style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '28px', color: '#FFFFFF' }}>Members</small>
                                             <span style={{ fontFamily: 'Inter', fontWeight: '500', fontStyle: 'Regular', fontSize: '66px', color: '#FFFFFF' }}>{totalMembers}</span>
                                         </div>
-                                        <div className="col-md-2" style={{ width: '350px', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#CC445E', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                        <div className="col-md-2" style={{ width: '23%', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#CC445E', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                             <small style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '28px', color: '#FFFFFF' }}>Photographers</small>
                                             <span style={{ fontFamily: 'Inter', fontWeight: '500', fontStyle: 'Regular', fontSize: '66px', color: '#FFFFFF' }}>{dashboardStats.photographersCount}</span>
                                         </div>
-                                        <div className="col-md-2" style={{ width: '350px', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#4C4036', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                        <div className="col-md-2" style={{ width: '23%', height: '204px', borderRadius: '14px', padding: '32.26px 42.04px', gap: '16.62px', background: '#4C4036', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                             <small style={{ fontFamily: 'Inter', fontWeight: '400', fontStyle: 'Regular', fontSize: '28px', color: '#FFFFFF' }}>Images</small>
                                             <span style={{ fontFamily: 'Inter', fontWeight: '500', fontStyle: 'Regular', fontSize: '66px', color: '#FFFFFF' }}>{dashboardStats.imagesCount}</span>
                                         </div>
@@ -276,9 +255,9 @@ function SuperDashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="card" style={{borderRadius: '14px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.04)', marginBottom: '24px'}}>
+                                        <div className="card" style={{ borderRadius: '14px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.04)', marginBottom: '24px' }}>
                                             <div style={{ display: "flex", justifyContent: "space-between", padding: '30px 30px 5px 30px' }}>
-                                                <h3 style={{ margin: 0 }} className="head">Latest Club Galleries</h3>
+                                                <h3 style={{ margin: '0' }} className="head">Latest Club Galleries</h3>
                                                 <button type="button" className="btn" id="e-view">View All</button>
                                             </div>
                                             <div className="pics">
@@ -299,18 +278,27 @@ function SuperDashboard() {
                             <section>
                                 <div className="container" style={{ maxWidth: '1820px' }}>
                                     <div className="super-panel">
-                                        <h3 className="head">Recent Photos</h3>
+                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: '8px' }}>
+                                            <h3 className="head" style={{ margin: '0' }}>Recent Photos</h3>
+                                            <span style={{ fontSize: '13px', color: "#4c4036" }}>
+                                                <strong>{dashboardStats.imagesCount}</strong> total images
+                                            </span>
+                                        </div>
                                         <div className="row">
                                             {dashboardStats.recentPhotos.map((g, index) => (
                                                 <div key={g.id} className="col-3 p-0">
                                                     <div className="galleriy">
                                                         <div className="galleriy-item">
                                                             <img src={g.image || "/placeholder.jpg"} alt={g.label} style={{ maxHeight: '370px', objectFit: 'cover' }} onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                            <div className="galleriy-infos" style={{ backgroundColor: index % 2 === 0 ? '#99816b' : '#4c4036' }}>
-                                                                <div className="gal-item">
+                                                            <div className="galleriy-infos" style={{ backgroundColor: index % 2 === 0 ? '#99816b' : '#4c4036', height: '60px', borderRadius: '0px' }}>
+                                                                <div className="gal-item d-flex justify-content-between align-items-center w-100">
                                                                     <div className="gal-details">
                                                                         <span>{g.label}</span>
                                                                     </div>
+                                                                    <span className="d-flex gap-2 text-white small">
+                                                                        <span><i className="fas fa-heart me-1"></i>{g.likes_count || 0}</span>
+                                                                        <span><i className="fas fa-comment me-1"></i>{g.comments_count || 0}</span>
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -321,11 +309,16 @@ function SuperDashboard() {
                                     </div>
                                 </div>
                             </section>
-                        </div >
+                            <footer className="site-footer">
+                                <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                                </div>
+                            </footer>
+                        </div>
                     </>
-                )
-                }
-            </div >
+                )}
+            </div>
         </>
     );
 }

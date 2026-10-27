@@ -17,6 +17,7 @@ import Mess from "./assets/icons/event_list/mess.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Book from "./assets/icons/event_list/bookmark.svg"
 import apiClient from "../api/axios";
+import "./assets/css/adminstyle.css"
 function CompetitionsRoute() {
     const navigate = useNavigate();
     const [competitionData, setCompetitionData] = useState({})
@@ -29,9 +30,22 @@ function CompetitionsRoute() {
     const [exportFilter, setExportFilter] = useState("selected");
     const [selectedCompetitions, setSelectedCompetitions] = useState([]);
     const [bookmarkOpenId, setBookmarkOpenId] = useState(null);
-    const [shareOpenId, setShareOpenId] = useState(null);
+    const [, setShareOpenId] = useState(null);
     const popupRef = useRef(null);
     const [savedLibrary, setSavedLibrary] = useState([]);
+    const [quickFilterCategory, setQuickFilterCategory] = useState(null);
+    const quickFilters = [
+        { key: 'print', icon: Pri, label: 'Print' },
+        { key: 'digital', icon: Fax, label: 'Digital/PDI' },
+        { key: 'mono', icon: Pai, label: 'Monochrome' },
+        { key: 'nature', icon: Flo, label: 'Nature' },
+        { key: 'portrait', icon: Prof, label: 'Portrait' },
+        { key: 'colour', icon: Ima, label: 'Colour' },
+    ];
+    const toggleQuickFilter = (key) => {
+        setQuickFilterCategory((prev) => (prev === key ? null : key));
+        setCurrentPage(1);
+    };
     useEffect(() => {
         function handleClickOutside(e) {
             if (popupRef.current && !popupRef.current.contains(e.target)) {
@@ -160,14 +174,19 @@ function CompetitionsRoute() {
         });
     };
     const filteredCompetitions = useMemo(() => {
-        const competitions = competitionData.competitions?.original?.data || [];
+        let competitions = competitionData.competitions?.original?.data || [];
+        if (quickFilterCategory === 'print') competitions = competitions.filter(c => c.print_vs_digital === 'print');
+        if (quickFilterCategory === 'digital') competitions = competitions.filter(c => c.print_vs_digital === 'digital');
+        if (quickFilterCategory === 'mono') competitions = competitions.filter(c => c.color_vs_mono?.toLowerCase().includes('mono'));
+        if (quickFilterCategory === 'colour') competitions = competitions.filter(c => c.color_vs_mono?.toLowerCase().includes('colour') || c.color_vs_mono?.toLowerCase().includes('color'));
+        if (quickFilterCategory === 'nature') competitions = competitions.filter(c => c.competition_category?.name?.toLowerCase().includes('nature'));
+        if (quickFilterCategory === 'portrait') competitions = competitions.filter(c => c.competition_category?.name?.toLowerCase().includes('portrait'));
         return competitions.filter((competition) =>
             competition.name?.toLowerCase().includes(search.toLowerCase()) ||
             competition.start_date?.toLowerCase().includes(search.toLowerCase()) ||
             competition.end_date?.toLowerCase().includes(search.toLowerCase())
         );
-    }, [competitionData, search]);
-    console.log(filteredCompetitions)
+    }, [competitionData, search, quickFilterCategory]);
     const totalPages = useMemo(() => {
         return Math.max(
             Math.ceil(filteredCompetitions.length / rowsPerPage),
@@ -284,14 +303,14 @@ function CompetitionsRoute() {
                                                 <strong>Quick Filter</strong>
                                                 <small className="d-block">(Click icons to filter)</small>
                                                 <div className="d-flex gap-2 justify-content-end">
-                                                    <img src={Pri} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Fax} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Pai} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                    {quickFilters.slice(0, 3).map((f) => (
+                                                        <img key={f.key} src={f.icon} alt={f.label} title={f.label} role="button" onClick={() => toggleQuickFilter(f.key)} style={{ width: '20px', height: '20px', cursor: 'pointer', opacity: quickFilterCategory && quickFilterCategory !== f.key ? 0.4 : 1, outline: quickFilterCategory === f.key ? '2px solid #cc445e' : 'none', borderRadius: '4px' }} />
+                                                    ))}
                                                 </div>
                                                 <div className="d-flex gap-2 justify-content-end mt-2">
-                                                    <img src={Flo} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Prof} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Ima} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                    {quickFilters.slice(3, 6).map((f) => (
+                                                        <img key={f.key} src={f.icon} alt={f.label} title={f.label} role="button" onClick={() => toggleQuickFilter(f.key)} style={{ width: '20px', height: '20px', cursor: 'pointer', opacity: quickFilterCategory && quickFilterCategory !== f.key ? 0.4 : 1, outline: quickFilterCategory === f.key ? '2px solid #cc445e' : 'none', borderRadius: '4px' }} />
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
@@ -414,7 +433,7 @@ function CompetitionsRoute() {
                                                             <>
                                                                 {paginatedCompetitions?.map((competition) => (
                                                                     <div key={competition.id} className="custom-card mb-3 p-3">
-                                                                        <div className="d-flex gap-3" style={{ flex: 1 }}>
+                                                                        <div className="d-flex gap-3" style={{ flex: '1' }}>
                                                                             <img src={competition.featured_image_url} alt="Competition Image" />
                                                                             <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                                                                 <div className="d-flex justify-content-between align-items-center">
@@ -426,7 +445,7 @@ function CompetitionsRoute() {
                                                                                         <img src={Cal} alt="icon" style={{ width: '20px', height: '20px' }} />
                                                                                     </div>
                                                                                 </div>
-                                                                                <p style={{ margin: '5px 0', fontSize: '14px', columns: 2, color: 'black' }}>
+                                                                                <p style={{ margin: '5px 0', fontSize: '14px', columns: '2', color: 'black' }}>
                                                                                     <strong style={{ color: 'red' }}>Open:</strong>{formatDate(competition.start_date)}
                                                                                     <br />
                                                                                     <strong style={{ color: 'brown' }}>Result:</strong> {formatDate(competition.result_announcement_date)}
@@ -450,12 +469,12 @@ function CompetitionsRoute() {
                                                                                         </div>
                                                                                         <div style={{ position: "relative", display: "inline-block" }}>
                                                                                             {bookmarkOpenId === competition.id && (
-                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: 100, minWidth: "170px" }}>
+                                                                                                <div style={{ position: "absolute", bottom: "30px", right: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "8px", padding: "10px 14px", boxShadow: "0 4px 12px rgba(0,0,0,0.15)", zIndex: '100', minWidth: "170px" }}>
                                                                                                     <p style={{ margin: "0 0 8px", fontWeight: "bold", fontSize: "13px", color: "#333" }}>
                                                                                                         Save to Library
                                                                                                     </p>
                                                                                                     {["Events", "Competitions", "Notices", "Galleries", "News"].map((cat) => (
-                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { saveToLibrary(competition, cat); }}>
+                                                                                                        <div key={cat} style={{ padding: "7px 10px", cursor: "pointer", borderRadius: "4px", fontSize: "13px", color: "#555" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f0eb"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }} onClick={() => { toggleBookmark(competition, cat); }}>
                                                                                                             📁 {cat}
                                                                                                         </div>
                                                                                                     ))}
@@ -542,6 +561,8 @@ function CompetitionsRoute() {
                             </section>
                             <footer className="site-footer">
                                 <div className="footer-content">
+                                    <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                    <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
                                 </div>
                             </footer>
                         </div>

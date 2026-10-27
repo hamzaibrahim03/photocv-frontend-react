@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
@@ -8,24 +8,18 @@ import Calendar from "../Ryton/extra/CalendarRyton.jsx"
 
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 
-
-function getJudge() {
-    const stored = JSON.parse(localStorage.getItem("user") || "{}");
-    return {
-        first_name: stored.first_name || "Judge",
-        last_name: stored.last_name || "",
-        role: stored.roles?.[0]?.name || "Judge",
-        profile_image: stored.profile_image_url || stored.profile_image || "",
-    };
-}
+const authHeaders = () => ({
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+});
 
 function JudgeDashboard() {
     const navigate = useNavigate();
-    const judge = getJudge();
     const [isLoading, setIsLoading] = useState(true);
-    const [homeData, setHomeData] = useState(null);
-    const [rowsPerPage] = useState(4);
+    const [dashboardData, setDashboardData] = useState(null);
+    const [clubs, setClubs] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     const hour = new Date().getHours();
     const greetingMessage = () => {
@@ -36,22 +30,35 @@ function JudgeDashboard() {
         return "Good night!";
     };
     useEffect(() => {
-        async function getClubHome() {
+        async function getDashboard() {
             setIsLoading(true);
             try {
-                const response = await fetch(`${API_BASE}/club/public/home`, {
-                    headers: { "Content-Type": "application/json" },
+                const response = await fetch(`${API_BASE}/judge/dashboard?page=${currentPage}&per_page=4`, {
+                    headers: authHeaders(),
                 });
                 const json = await response.json();
-                setHomeData(json?.data || {});
+                const data = json?.data || {};
+                setDashboardData(data);
+                setClubs(Array.isArray(data.clubs?.data) ? data.clubs.data : []);
+                setTotalPages(data.clubs?.last_page || 1);
             } catch (error) {
                 console.error("Judge dashboard load error:", error);
+                setDashboardData(null);
+                setClubs([]);
             } finally {
                 setIsLoading(false);
             }
         }
-        getClubHome();
-    }, []);
+        getDashboard();
+    }, [currentPage]);
+
+    const judge = {
+        first_name: dashboardData?.judge?.first_name || "Judge",
+        last_name: dashboardData?.judge?.last_name || "",
+        role: dashboardData?.judge?.role_label || "Judge",
+        profile_image: dashboardData?.judge?.profile_image_url || "",
+    };
+
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -67,41 +74,9 @@ function JudgeDashboard() {
         });
     };
 
-    const club = useMemo(() => {
-        if (!homeData) return null;
-        const clubInfo = homeData?.clubSettings?.original?.data?.club || homeData?.user?.club || {};
-        const settings = homeData?.clubSettings?.original?.data?.settings || {};
-        return {
-            id: homeData?.user?.id ?? 1,
-            name: clubInfo.club_name || "My Club",
-            description: clubInfo.about || clubInfo.tag_line || "",
-            cover_image: settings.cover_images?.[0]?.image_medium_url || settings.logo_url || "",
-        };
-    }, [homeData]);
-
-    const upcomingCompetitions = useMemo(() => {
-        return Array.isArray(homeData?.upcomingCompetitions) ? homeData.upcomingCompetitions : [];
-    }, [homeData]);
-
-    const totalCompetitions = useMemo(() => {
-        return homeData?.clubSettings?.original?.data?.total_competitions ?? upcomingCompetitions.length;
-    }, [homeData, upcomingCompetitions]);
-
-    const remainingDays = useMemo(() => {
-        return homeData?.clubSettings?.original?.data?.upcoming_event_days_count?.remaining_days ?? null;
-    }, [homeData]);
-
-    const totalPages = Math.max(Math.ceil((club ? 1 : 0) / rowsPerPage), 1);
-    const paginatedClubs = club ? [club] : [];
-
-    const formatEventDate = (iso) => {
-        const d = new Date(iso);
-        return d.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-    };
-    const formatEventTime = (iso) => {
-        const d = new Date(iso);
-        return `${d.toLocaleDateString("en-US", { weekday: "short" })}. ${d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })} p.m.`;
-    };
+    const upcomingCompetitions = dashboardData?.upcoming_competitions || [];
+    const totalCompetitions = dashboardData?.stats?.competitions_count ?? 0;
+    const remainingDays = dashboardData?.stats?.next_competition_days ?? null;
 
     return (
         <>
@@ -158,27 +133,33 @@ function JudgeDashboard() {
                                         <section>
                                             <div className="container" style={{ maxWidth: '1820px' }}>
                                                 <div className="mt-4">
-                                                    {paginatedClubs.map((c) => {
-                                                        const count = totalCompetitions;
-                                                        return (
-                                                            <div className="judge-club-card" key={c.id}>
-                                                                <img src={c.cover_image || "/placeholder.jpg"} alt={c.name} className="club-cover" onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }} />
-                                                                <div className="judge-club-card-body">
-                                                                    <h3>{c.name}</h3>
-                                                                    <div className="comp-count">{count} Competitions</div>
-                                                                    <p>{c.description}</p>
+                                                    {clubs.map((c) => (
+                                                        <div key={c.id} className="custom-card mb-3">
+                                                            <div className="d-flex gap-3" style={{ flex: '1' }}>
+                                                                <img src={c.image_url || c.logo_url || "/placeholder.jpg"} alt={c.club_name} />
+                                                                <div className="flex-grow-1 d-flex flex-column justify-content-between">
                                                                     <div>
-                                                                        <button type="button" className="btn" id="e-view" onClick={() => navigate(`/judge/clubs/${c.id}/competitions`)} >
-                                                                            View
-                                                                        </button>
+                                                                        <div className="d-flex justify-content-between align-items-start">
+                                                                            <h3>{c.club_name}</h3>
+                                                                        </div>
+                                                                        <p className="role">
+                                                                            {c.competitions_count} Competitions
+                                                                        </p>
+                                                                        <p className="text-secondary" dangerouslySetInnerHTML={{ __html: c.about || 'No description provided.' }}>
+                                                                        </p>
+                                                                        <div className="d-flex justify-content-between align-items-center mt-3 w-100">
+                                                                            <div className="button-group d-flex align-items-center">
+                                                                                <button className="btn" id="e-view" onClick={() => navigate(`/judge/clubs/${c.id}/competitions`)}>View</button>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        );
-                                                    })}
+                                                        </div>
+                                                    ))}
 
                                                     {totalPages > 1 && (
-                                                        <div className="dt-paging" style={{ marginTop: 20, display: "flex", justifyContent: "flex-end" }}>
+                                                        <div className="dt-paging" style={{ marginTop: '20px', display: "flex", justifyContent: "flex-end" }}>
                                                             <nav aria-label="pagination">
                                                                 <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} >
                                                                     ‹
@@ -211,10 +192,10 @@ function JudgeDashboard() {
                                                             <p style={{ color: "#999" }}>No upcoming competitions.</p>
                                                         )}
                                                         {upcomingCompetitions.map((ev) => (
-                                                            <div className="event-list">
+                                                            <div className="event-list" key={ev.id}>
                                                                 <div className="event-item" style={{ marginBottom: '10px' }}>
-                                                                    {ev.featured_thumb_url ? (
-                                                                        <img className="img-fluid event-img" src={ev.featured_thumb_url} alt="Comp" />
+                                                                    {ev.featured_image_url ? (
+                                                                        <img className="img-fluid event-img" src={ev.featured_image_url} alt="Comp" />
                                                                     ) : (
                                                                         <div className="event-img fallback-box d-flex justify-content-center align-items-center">
                                                                         </div>
@@ -222,7 +203,7 @@ function JudgeDashboard() {
                                                                     <div className="event-details">
                                                                         <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
                                                                             <span id="ename">{ev.name}</span>
-                                                                            <small style={{ color: "#99816b" }}>{club?.name}</small>
+                                                                            <small style={{ color: "#99816b" }}>{ev.club?.club_name}</small>
                                                                         </div>
                                                                         <div className="event-time" id="edate">
                                                                             <small className="event-date galtext">{formatDate(ev.start_date)}</small><br />
@@ -241,10 +222,16 @@ function JudgeDashboard() {
                                                 </div>
                                             </div>
                                         </section>
-                                    </div >
-                                </div >
+                                    </div>
+                                </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )

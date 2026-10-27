@@ -117,7 +117,7 @@ function SpeakerClubEvents() {
                         <section>
                             <div className="container" style={{ maxWidth: '1820px' }}>
                                 <div className="dashboard-card" id="cl">
-                                    <div className="profile-card" style={{ width: '170%' }}>
+                                    <div className="profile-card">
                                         <div className="profile-left">
                                             <div className="profile-info">
                                                 <small className="greeting">List of events in the club</small>
@@ -192,7 +192,7 @@ function SpeakerClubEvents() {
                                                     {ev.duration && <div className="event-meta-row"><span>Duration</span><strong>{ev.duration}</strong></div>}
                                                     {ev.types?.[0]?.name && <div className="event-meta-row"><span>Event Type</span><strong>{ev.types[0].name}</strong></div>}
                                                     <div className="speaker-event-actions" style={{ marginBottom: '10px' }}>
-                                                        <button type="button" className="btn" style={{ marginTop: 10, width: "100%", background: "#99816b", color: "#fff", border: "none", borderRadius: 7, padding: 10, cursor: "pointer" }} onClick={() => navigate(`/speaker/events/${ev.id}`)} >
+                                                        <button type="button" className="btn" style={{ marginTop: '10px', width: "100%", background: "#99816b", color: "#fff", border: "none", borderRadius: '7px', padding: '10px', cursor: "pointer" }} onClick={() => navigate(`/speaker/events/${ev.id}`)} >
                                                             View Details
                                                         </button>
                                                     </div>
@@ -202,7 +202,7 @@ function SpeakerClubEvents() {
                                     </div>
 
                                     {totalPages > 1 && (
-                                        <div className="dt-paging" style={{ marginTop: 18, display: "flex", justifyContent: "flex-end" }}>
+                                        <div className="dt-paging" style={{ marginTop: '18px', display: "flex", justifyContent: "flex-end" }}>
                                             <nav aria-label="pagination">
                                                 <button className="dt-paging-button previous" disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>‹</button>
                                                 {Array.from({ length: totalPages }, (_, i) => (
@@ -217,6 +217,12 @@ function SpeakerClubEvents() {
                                 </div>
                             </div>
                         </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal </p>
+                                <p className="memtext">Powered by <a href="https://cameraclub.website" target="_blank">cameraclub.website</a></p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

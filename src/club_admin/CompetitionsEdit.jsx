@@ -5,6 +5,7 @@ import NavigationRoute from "./NavigationRoute";
 import Loader from "../Ryton/extra/LoaderAll";
 import Calendar from "../Ryton/extra/CalendarRyton";
 import apiClient from '../api/axios';
+import "./assets/css/adminstyle.css"
 const initialFormData = {
     name: '',
     competition_type_id: '',
@@ -42,17 +43,6 @@ function CompetitionsEdit() {
     const [isSaving, setIsSaving] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
     const [competitionExtra, setCompetitionExtra] = useState({});
-    const formatDateForInput = (date) => {
-        if (!date) return '';
-        const d = new Date(date);
-        if (Number.isNaN(d.getTime())) {
-            return '';
-        }
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
     const formatDateTimeForInput = (date) => {
         if (!date) return '';
         const d = new Date(date);
@@ -203,7 +193,7 @@ function CompetitionsEdit() {
                     <HeaderRoute title="Competitions" />
                     <div className="content">
                         <section>
-                            <div className="container px-0 mx-auto" style={{ maxWidth: '1820px' }}>
+                            <div className='container' style={{ maxWidth: '1820px' }}>
                                 <div className="dashboard-card">
                                     <div className="profile-card">
                                         <div className="profile-left">
@@ -261,369 +251,379 @@ function CompetitionsEdit() {
                                 </div>
                             </div>
                         </section>
-                        <div className="row container mx-auto px-0" style={{ maxWidth: '1820px' }}>
-                            <div className="col-md-8 px-0">
-                                <div className="bg-white p-4 rounded shadow-sm">
-                                    <form onSubmit={submitForm}>
-                                        <h5 className="head mb-4">
-                                            Basic Information
-                                        </h5>
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Competition Name
-                                                </label>
-                                                <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" required />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Competition Type
-                                                </label>
-                                                <input type="number" name="competition_type_id" value={formData.competition_type_id} onChange={handleChange} className="form-control" />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <label className="form-label text-muted">
-                                            Competition Description
-                                        </label>
-                                        <textarea name="description" value={formData.description} onChange={handleChange} className="form-control mb-3" style={{ height: '250px', resize: 'none' }} />
-                                        <hr className="text-light my-4" />
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Judging Type
-                                                </label>
-                                                <select name="judging_type_id" value={formData.judging_type_id} onChange={handleChange} className="form-control form-select">
-                                                    <option value="">Select Judging Type</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                </select>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Assign Judge
-                                                </label>
-                                                <select name="judge_id" value={formData.judge_id} onChange={handleChange} className="form-control form-select">
-                                                    <option value="">Select Judge</option>
-                                                    <option value="Ammar">Ammar</option>
-                                                    <option value="Sohaib">Sohaib</option>
-                                                    <option value="Kamran">Kamran</option>
-                                                    <option value="Sarfraz">Sarfraz</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <label className="form-label text-muted mb-3 d-block">
-                                            Status
-                                        </label>
-                                        <div className="row">
-                                            <div className="col-md-6">
+
+                        <section>
+                            <div className='container' style={{ maxWidth: '1820px' }}>
+                                <div className="row container mx-auto px-0" style={{ maxWidth: '1820px' }}>
+                                    <div className="col-md-8 px-0">
+                                        <div className="bg-white p-4 rounded shadow-sm" style={{ marginLeft: '13px' }}>
+                                            <form onSubmit={submitForm}>
+                                                <h5 className="head mt-5 mb-5">
+                                                    Basic Information
+                                                </h5>
                                                 <div className="row mb-3">
-                                                    {['scheduled', 'draft', 'postponed'].map(status => (
-                                                        <div className="col-md-4 mb-2" key={status}>
-                                                            <div className="premium-radio">
-                                                                <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
-                                                                <label htmlFor={`status-${status}`}>
-                                                                    <div className="premium-radio-circle"></div>
-                                                                    <div className="premium-radio-content">
-                                                                        <div className="premium-radio-title">
-                                                                            {status}
-                                                                        </div>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    ))}
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Competition Name
+                                                        </label>
+                                                        <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" required />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Competition Type
+                                                        </label>
+                                                        <input type="number" name="competition_type_id" value={formData.competition_type_id} onChange={handleChange} className="form-control" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-md-6">
+                                                <hr className="text-light my-4" />
+                                                <label className="form-label text-muted">
+                                                    Competition Description
+                                                </label>
+                                                <textarea name="description" value={formData.description} onChange={handleChange} className="form-control mb-3" style={{ height: '250px', resize: 'none' }} />
+                                                <hr className="text-light my-4" />
                                                 <div className="row mb-3">
-                                                    {['cancelled', 'completed'].map(status => (
-                                                        <div className="col-md-6 mb-2" key={status}>
-                                                            <div className="premium-radio">
-                                                                <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
-                                                                <label htmlFor={`status-${status}`}>
-                                                                    <div className="premium-radio-circle"></div>
-                                                                    <div className="premium-radio-content">
-                                                                        <div className="premium-radio-title">
-                                                                            {status}
-                                                                        </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Judging Type
+                                                        </label>
+                                                        <select name="judging_type_id" value={formData.judging_type_id} onChange={handleChange} className="form-control form-select">
+                                                            <option value="">Select Judging Type</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Assign Judge
+                                                        </label>
+                                                        <select name="judge_id" value={formData.judge_id} onChange={handleChange} className="form-control form-select">
+                                                            <option value="">Select Judge</option>
+                                                            <option value="Ammar">Ammar</option>
+                                                            <option value="Sohaib">Sohaib</option>
+                                                            <option value="Kamran">Kamran</option>
+                                                            <option value="Sarfraz">Sarfraz</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <label className="form-label text-muted mb-3 d-block">
+                                                    Status
+                                                </label>
+                                                <div className="row">
+                                                    <div className="col-md-6">
+                                                        <div className="row mb-3">
+                                                            {['scheduled', 'draft', 'postponed'].map(status => (
+                                                                <div className="col-md-4 mb-2" key={status}>
+                                                                    <div className="premium-radio">
+                                                                        <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
+                                                                        <label htmlFor={`status-${status}`}>
+                                                                            <div className="premium-radio-circle"></div>
+                                                                            <div className="premium-radio-content">
+                                                                                <div className="premium-radio-title">
+                                                                                    {status}
+                                                                                </div>
+                                                                            </div>
+                                                                        </label>
                                                                     </div>
-                                                                </label>
-                                                            </div>
+                                                                </div>
+                                                            ))}
                                                         </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <h5 className="head mb-4">
-                                            Submission Rules
-                                        </h5>
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Start Date & Time
-                                                </label>
-                                                <input type="datetime-local" name="start_date" value={formData.start_date} onChange={handleChange} className="form-control" required />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Deadlines for Submissions
-                                                </label>
-                                                <input type="datetime-local" name="submission_deadline" value={formData.submission_deadline} onChange={handleChange} className="form-control" required />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Max Number of PDI Entries Per Participant
-                                                </label>
-                                                <input type="number" min="0" name="max_entries_digital" value={formData.max_entries_digital} onChange={handleChange} className="form-control" />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Max Number of PRINT Per Participant
-                                                </label>
-                                                <input type="number" min="0" name="max_entries_print" value={formData.max_entries_print} onChange={handleChange} className="form-control" />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Max File Size
-                                                </label>
-                                                <input type="number" min="0" name="max_file_size" value={formData.max_file_size} onChange={handleChange} className="form-control" />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Allowed Image Formats
-                                                </label>
-                                                <select name="allowed_image_formats" value={formData.allowed_image_formats} onChange={handleChange} className="form-control form-select">
-                                                    <option value="">Select Format</option>
-                                                    <option value="JPEG">JPEG</option>
-                                                    <option value="PNG">PNG</option>
-                                                    <option value="JPEG, PNG">JPEG, PNG</option>
-                                                    <option value="WEBP">WEBP</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <h5 className="head mb-4">
-                                            Categories and Themes
-                                        </h5>
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Theme
-                                                </label>
-                                                <input type="number" name="theme_id" value={formData.theme_id} onChange={handleChange} className="form-control" />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Competition Categories
-                                                </label>
-                                                <input type="number" name="category_id" value={formData.category_id} onChange={handleChange} className="form-control" />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Print vs Digital Submission
-                                                </label>
-                                                <select name="print_vs_digital" value={formData.print_vs_digital} onChange={handleChange} className="form-control form-select">
-                                                    <option value="">Select</option>
-                                                    <option value="print">Print</option>
-                                                    <option value="digital">Digital</option>
-                                                </select>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Colour vs. Monochrome
-                                                </label>
-                                                <select name="color_vs_mono" value={formData.color_vs_mono} onChange={handleChange} className="form-control form-select">
-                                                    <option value="">Select</option>
-                                                    <option value="color">Color</option>
-                                                    <option value="monochrome">Monochrome</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <h5 className="head mb-4">
-                                            Judging and Scoring
-                                        </h5>
-                                        <label className="form-label text-muted">
-                                            Judging Panels
-                                        </label>
-                                        <textarea name="judging_panel" value={formData.judging_panel} onChange={handleChange} className="form-control mb-3" />
-                                        <hr className="text-light my-4" />
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Voting Method
-                                                </label>
-                                                <input type="number" name="voting_method_id" value={formData.voting_method_id} onChange={handleChange} className="form-control" />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <h5 className="head mb-4">
-                                            Results & Awards
-                                        </h5>
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Announcement Date
-                                                </label>
-                                                <input type="datetime-local" name="result_announcement_date" value={formData.result_announcement_date} onChange={handleChange} className="form-control" />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Awards - Top Places Available
-                                                </label>
-                                                <input type="number" name="top_places" value={formData.top_places} onChange={handleChange} className="form-control" />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    High Commendations
-                                                </label>
-                                                <input type="number" name="high_commendation_number" value={formData.high_commendation_number} onChange={handleChange} className="form-control" />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Commendations
-                                                </label>
-                                                <input type="number" name="commendation_number" value={formData.commendation_number} onChange={handleChange} className="form-control" />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <div className="row mb-3">
-                                            <div className="col-md-6">
-                                                <label className="form-label text-muted">
-                                                    Prizes
-                                                </label>
-                                                <textarea name="prizes" value={formData.prizes} onChange={handleChange} className="form-control" />
-                                            </div>
-                                        </div>
-                                        <hr className="text-light my-4" />
-                                        <h5 className="head mb-4">
-                                            Additional Features
-                                        </h5>
-                                        <div className="d-flex flex-column gap-3 mb-4">
-                                            <div className="form-check">
-                                                <input type="checkbox" className="form-check-input shadow-none" id="feature1" name="comments_and_critique" checked={formData.comments_and_critique} onChange={handleChange} />
-                                                <label className="form-check-label" htmlFor="feature1">
-                                                    Comments & Critique Section
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input type="checkbox" className="form-check-input shadow-none" id="feature2" name="auto_generate_certificates" checked={formData.auto_generate_certificates} onChange={handleChange} />
-                                                <label className="form-check-label" htmlFor="feature2">
-                                                    Auto generated Certificates
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input type="checkbox" className="form-check-input shadow-none" id="feature3" name="visible_judges_feedback" checked={formData.visible_judges_feedback} onChange={handleChange} />
-                                                <label className="form-check-label" htmlFor="feature3">
-                                                    Allow Feedback from judges to be visible to participants
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="button-group d-flex gap-2">
-                                            <button type="button" className="btn text-white px-4" style={{ backgroundColor: '#99816b' }} onClick={() => navigate(-1)}>
-                                                Back
-                                            </button>
-                                            <button type="submit" className="btn text-white px-4" style={{ backgroundColor: '#4c4036' }} disabled={isSaving}>
-                                                {isSaving ? 'Saving...' : isEditMode ? 'Update' : 'Save'}
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <section>
-                                    <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
-                                        <div className="calendar-card d-flex flex-column" style={{ width: '100%' }}>
-                                            <Calendar />
-                                        </div>
-                                        <div id="news">
-                                            <div className="more-card d-flex flex-column" style={{ padding: '35px', height: 'auto' }}>
-                                                <h5 className="head">Recent Submissions</h5>
-                                                <div className="event-list">
-                                                    {competitionExtra?.recent_submissions?.map((submission) => (
-                                                        <div className="event-item" key={submission.id} style={{ marginBottom: '10px' }}>
-                                                            {submission.entry_image ? (
-                                                                <img className="img-fluid event-img" src={submission.entry_image} alt="Event" />
-                                                            ) : (
-                                                                <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="row mb-3">
+                                                            {['cancelled', 'completed'].map(status => (
+                                                                <div className="col-md-6 mb-2" key={status}>
+                                                                    <div className="premium-radio">
+                                                                        <input type="radio" id={`status-${status}`} name="status" value={status} checked={formData.status === status} onChange={handleChange} />
+                                                                        <label htmlFor={`status-${status}`}>
+                                                                            <div className="premium-radio-circle"></div>
+                                                                            <div className="premium-radio-content">
+                                                                                <div className="premium-radio-title">
+                                                                                    {status}
+                                                                                </div>
+                                                                            </div>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
-                                                            )}
-                                                            <div className="event-details" style={{ display: 'flex' }}>
-                                                                <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                    <span id="ename">{submission.member_username}</span>
-                                                                    <span id="espeaker">{submission.competition_name}</span>
-                                                                </div>
-                                                                <div className="event-time" id="edate">
-                                                                    <small className="event-date galtext">{formatDate(submission.submitted_at)}</small><br />
-                                                                    <small className="event-time-details galtext">{formatTime(submission.submitted_at)}</small>
-                                                                </div>
-                                                            </div>
+                                                            ))}
                                                         </div>
-                                                    ))}
+                                                    </div>
                                                 </div>
-                                                <div className="button-group mt-auto">
-                                                    <button className="btn btn-sm" id="e-view">
-                                                        View All
+                                                <hr className="text-light my-4" />
+                                                <h5 className="head mt-5 mb-5">
+                                                    Submission Rules
+                                                </h5>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Start Date & Time
+                                                        </label>
+                                                        <input type="datetime-local" name="start_date" value={formData.start_date} onChange={handleChange} className="form-control" required />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Deadlines for Submissions
+                                                        </label>
+                                                        <input type="datetime-local" name="submission_deadline" value={formData.submission_deadline} onChange={handleChange} className="form-control" required />
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Max Number of PDI Entries Per Participant
+                                                        </label>
+                                                        <input type="number" min="0" name="max_entries_digital" value={formData.max_entries_digital} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Max Number of PRINT Per Participant
+                                                        </label>
+                                                        <input type="number" min="0" name="max_entries_print" value={formData.max_entries_print} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Max File Size
+                                                        </label>
+                                                        <input type="number" min="0" name="max_file_size" value={formData.max_file_size} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Allowed Image Formats
+                                                        </label>
+                                                        <select name="allowed_image_formats" value={formData.allowed_image_formats} onChange={handleChange} className="form-control form-select">
+                                                            <option value="">Select Format</option>
+                                                            <option value="JPEG">JPEG</option>
+                                                            <option value="PNG">PNG</option>
+                                                            <option value="JPEG, PNG">JPEG, PNG</option>
+                                                            <option value="WEBP">WEBP</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <h5 className="head mt-5 mb-5">
+                                                    Categories and Themes
+                                                </h5>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Theme
+                                                        </label>
+                                                        <input type="number" name="theme_id" value={formData.theme_id} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Competition Categories
+                                                        </label>
+                                                        <input type="number" name="category_id" value={formData.category_id} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Print vs Digital Submission
+                                                        </label>
+                                                        <select name="print_vs_digital" value={formData.print_vs_digital} onChange={handleChange} className="form-control form-select">
+                                                            <option value="">Select</option>
+                                                            <option value="print">Print</option>
+                                                            <option value="digital">Digital</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Colour vs. Monochrome
+                                                        </label>
+                                                        <select name="color_vs_mono" value={formData.color_vs_mono} onChange={handleChange} className="form-control form-select">
+                                                            <option value="">Select</option>
+                                                            <option value="color">Color</option>
+                                                            <option value="monochrome">Monochrome</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <h5 className="head mt-5 mb-5">
+                                                    Judging and Scoring
+                                                </h5>
+                                                <label className="form-label text-muted">
+                                                    Judging Panels
+                                                </label>
+                                                <textarea name="judging_panel" value={formData.judging_panel} onChange={handleChange} className="form-control mb-3" />
+                                                <hr className="text-light my-4" />
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Voting Method
+                                                        </label>
+                                                        <input type="number" name="voting_method_id" value={formData.voting_method_id} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <h5 className="head mt-5 mb-5">
+                                                    Results & Awards
+                                                </h5>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Announcement Date
+                                                        </label>
+                                                        <input type="datetime-local" name="result_announcement_date" value={formData.result_announcement_date} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Awards - Top Places Available
+                                                        </label>
+                                                        <input type="number" name="top_places" value={formData.top_places} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            High Commendations
+                                                        </label>
+                                                        <input type="number" name="high_commendation_number" value={formData.high_commendation_number} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Commendations
+                                                        </label>
+                                                        <input type="number" name="commendation_number" value={formData.commendation_number} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label className="form-label text-muted">
+                                                            Prizes
+                                                        </label>
+                                                        <textarea name="prizes" value={formData.prizes} onChange={handleChange} className="form-control" />
+                                                    </div>
+                                                </div>
+                                                <hr className="text-light my-4" />
+                                                <h5 className="head mt-5 mb-5">
+                                                    Additional Features
+                                                </h5>
+                                                <div className="d-flex flex-column gap-3 mb-4">
+                                                    <div className="form-check">
+                                                        <input type="checkbox" className="form-check-input shadow-none" id="feature1" name="comments_and_critique" checked={formData.comments_and_critique} onChange={handleChange} />
+                                                        <label className="form-check-label" htmlFor="feature1">
+                                                            Comments & Critique Section
+                                                        </label>
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <input type="checkbox" className="form-check-input shadow-none" id="feature2" name="auto_generate_certificates" checked={formData.auto_generate_certificates} onChange={handleChange} />
+                                                        <label className="form-check-label" htmlFor="feature2">
+                                                            Auto generated Certificates
+                                                        </label>
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <input type="checkbox" className="form-check-input shadow-none" id="feature3" name="visible_judges_feedback" checked={formData.visible_judges_feedback} onChange={handleChange} />
+                                                        <label className="form-check-label" htmlFor="feature3">
+                                                            Allow Feedback from judges to be visible to participants
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div className="button-group d-flex gap-2">
+                                                    <button type="button" className="btn" id="edit" onClick={() => navigate(-1)}>
+                                                        Back
                                                     </button>
-                                                    <button className="btn btn-sm" id="new">
-                                                        Add New
+                                                    <button type="submit" className="btn" id="e-view" disabled={isSaving}>
+                                                        {isSaving ? 'Saving...' : isEditMode ? 'Update' : 'Save'}
                                                     </button>
                                                 </div>
-                                            </div>
-                                            <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
-                                                <h5 className="head">More Competitions</h5>
-                                                <div className="event-list">
-                                                    {competitionExtra?.random_competitions?.map((competition) => (
-                                                        <div className="event-item" style={{ marginBottom: '10px' }}>
-                                                            {competition.featured_thumb_url ? (
-                                                                <img className="img-fluid event-img" src={competition.featured_thumb_url} alt="Comp" />
-                                                            ) : (
-                                                                <div className="event-img fallback-box d-flex justify-content-center align-items-center">
-                                                                </div>
-                                                            )}
-                                                            <div className="event-details">
-                                                                <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                                    <span id="ename">{competition.name}</span>
-                                                                </div>
-                                                                <div className="event-time" id="edate">
-                                                                    <small className="event-date galtext">{formatDate(competition.start_date)}</small><br />
-                                                                    <small className="event-time-details galtext">{formatTime(competition.start_date)}</small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                                <div className="button-group mt-auto">
-                                                    <button className="btn btn-sm" id="e-view">
-                                                        View All
-                                                    </button>
-                                                    <button className="btn btn-sm" id="new">
-                                                        Add New
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </section>
+                                    <div className="col-md-4">
+                                        <section>
+                                            <div className="container" style={{ maxWidth: '1820px' }} id="e-right">
+                                                <div className="calendar-card d-flex flex-column" style={{ width: '100%' }}>
+                                                    <Calendar />
+                                                </div>
+                                                <div id="news">
+                                                    <div className="more-card d-flex flex-column" style={{ padding: '35px', height: 'auto' }}>
+                                                        <h5 className="head">Recent Submissions</h5>
+                                                        <div className="event-list">
+                                                            {competitionExtra?.recent_submissions?.map((submission) => (
+                                                                <div className="event-item" key={submission.id} style={{ marginBottom: '10px' }}>
+                                                                    {submission.entry_image ? (
+                                                                        <img className="img-fluid event-img" src={submission.entry_image} alt="Event" />
+                                                                    ) : (
+                                                                        <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                        </div>
+                                                                    )}
+                                                                    <div className="event-details" style={{ display: 'flex' }}>
+                                                                        <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                            <span id="ename">{submission.member_username}</span>
+                                                                            <span id="espeaker">{submission.competition_name}</span>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(submission.submitted_at)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(submission.submitted_at)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className="button-group mt-auto">
+                                                            <button className="btn" id="e-view" onClick={() => navigate('/competitions')}>
+                                                                View All
+                                                            </button>
+                                                            <button className="btn" id="new" onClick={() => navigate('/competitions/create')}>
+                                                                Add New
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="more-card d-flex flex-column" style={{ padding: '35px' }}>
+                                                        <h5 className="head">More Competitions</h5>
+                                                        <div className="event-list">
+                                                            {competitionExtra?.random_competitions?.map((competition) => (
+                                                                <div className="event-item" style={{ marginBottom: '10px' }}>
+                                                                    {competition.featured_thumb_url ? (
+                                                                        <img className="img-fluid event-img" src={competition.featured_thumb_url} alt="Comp" />
+                                                                    ) : (
+                                                                        <div className="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                                        </div>
+                                                                    )}
+                                                                    <div className="event-details">
+                                                                        <div className="event-info" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                                            <span id="ename">{competition.name}</span>
+                                                                        </div>
+                                                                        <div className="event-time" id="edate">
+                                                                            <small className="event-date galtext">{formatDate(competition.start_date)}</small><br />
+                                                                            <small className="event-time-details galtext">{formatTime(competition.start_date)}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className="button-group mt-auto">
+                                                            <button className="btn" id="e-view" onClick={() => navigate('/competitions')}>
+                                                                View All
+                                                            </button>
+                                                            <button className="btn" id="new" onClick={() => navigate('/competitions/create')}>
+                                                                Add New
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </section>
+                        <footer className="site-footer">
+                            <div className="footer-content">
+                                <p className="memtext" id="fcopy">Copyright &copy; 2025 – rytonlocal</p>
+                            </div>
+                        </footer>
                     </div>
                 </>
             )}

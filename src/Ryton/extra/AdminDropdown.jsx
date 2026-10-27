@@ -28,32 +28,34 @@ function AdminDropdown({ dashboardData }) {
         };
     }, []);
     return (
-        <div className="admin-dropdown position-relative" style={{ display: "flex", alignItems: "center", gap: "12px", }}>
-            {isLoggedIn && profileImage ? (
-                <img src={profileImage} alt="Profile" style={{ cursor: "pointer" }} />
-            ) : (
-                <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
-            )}
-            <span>
-                {isLoggedIn ? firstName : "Login"}
-                <i className="fa-solid fa-chevron-down ms-2"></i>
-            </span>
-            <div className="dropdown-menu">
+        <div className="admin-dropdown position-relative" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }} onClick={toggleDropdown} role="button" aria-haspopup="true" aria-expanded={isDropdownOpen} >
+                {isLoggedIn && profileImage ? (
+                    <img src={profileImage} alt="Profile" style={{ cursor: "pointer", width: '38px', height: '38px', borderRadius: '50%' }} />
+                ) : (
+                    <i className="fa-regular fa-user-circle" style={{ fontSize: "44px" }} />
+                )}
+                <span>
+                    {isLoggedIn ? firstName : "Login"}
+                    <i className="fa-solid fa-chevron-down ms-2"></i>
+                </span>
+            </div>
+            <div className={`dropdown-menu${isDropdownOpen ? " show" : ""}`}>
                 {isLoggedIn ? (
                     <>
-                        <a onClick={() => navigate("/dashboard/profile")}>
+                        <a className="dropdown-item" style={{ cursor: "pointer" }} onClick={() => { setIsDropdownOpen(false); navigate("/dashboard/profile"); }}>
                             Profile
                         </a>
-                        <a onClick={handleLogout}>
+                        <a className="dropdown-item" style={{ cursor: "pointer" }} onClick={() => { setIsDropdownOpen(false); handleLogout(); }}>
                             Log Out
                         </a>
                     </>
                 ) : (
                     <>
-                        <a onClick={() => navigate("/login")}>
+                        <a className="dropdown-item" style={{ cursor: "pointer" }} onClick={() => { setIsDropdownOpen(false); navigate("/login"); }}>
                             Login
                         </a>
-                        <a onClick={() => navigate("/signup")}>
+                        <a className="dropdown-item" style={{ cursor: "pointer" }} onClick={() => { setIsDropdownOpen(false); navigate("/signup"); }}>
                             Register
                         </a>
                     </>
