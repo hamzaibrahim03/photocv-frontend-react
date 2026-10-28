@@ -60,10 +60,8 @@ function PagesRoute() {
             },
         });
         const data = await response.json();
-        console.log(data);
         setPagesData(data.data || {});
     };
-    console.log(pagesData.original?.data)
     async function getPagesExtra() {
         const url = 'http://rytonlocal-staging.cameraclub.website:8000/api/v1/pages-extras'
         const response = await fetch(url, {
@@ -73,10 +71,8 @@ function PagesRoute() {
             },
         });
         const data = await response.json();
-        console.log(data);
         setPagesExtra(data.data || {});
     };
-    console.log(pagesExtra)
     const formatDate = (date) =>
         new Date(date).toLocaleDateString("en-US", {
             month: "long",
@@ -92,13 +88,14 @@ function PagesRoute() {
         });
     };
     const filteredPages = useMemo(() => {
-        const pages = pagesData.original?.data || [];
-        return pages.filter((pages) =>
-            pages.name?.toLowerCase().includes(search.toLowerCase()) ||
-            pages.event_date?.toLowerCase().includes(search.toLowerCase()) ||
-            pages.description?.toLowerCase().includes(search.toLowerCase())
+        let pages = pagesData.original?.data || [];
+        if (quickFilterType) pages = pages.filter((p) => p.page_type?.id === quickFilterType);
+        return pages.filter((p) =>
+            p.title?.toLowerCase().includes(search.toLowerCase()) ||
+            p.publish_date?.toLowerCase().includes(search.toLowerCase()) ||
+            p.description?.toLowerCase().includes(search.toLowerCase())
         );
-    }, [pagesData, search]);
+    }, [pagesData, search, quickFilterType]);
     const totalPages = useMemo(() => {
         return Math.max(
             Math.ceil(filteredPages.length / rowsPerPage),
@@ -141,15 +138,10 @@ function PagesRoute() {
                                             <div className="e-quick-filter text-end">
                                                 <strong>Quick Filter</strong>
                                                 <small className="d-block">(Click icons to filter)</small>
-                                                <div className="d-flex gap-2 justify-content-end">
-                                                    <img src={Com} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Cale} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Book} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                </div>
-                                                <div className="d-flex gap-2 justify-content-end mt-2">
-                                                    <img src={Cup} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Hand} alt="icon" style={{ width: '20px', height: '20px' }} />
-                                                    <img src={Note} alt="icon" style={{ width: '20px', height: '20px' }} />
+                                                <div className="d-flex gap-2 justify-content-end flex-wrap" style={{ maxWidth: '140px', marginLeft: 'auto' }}>
+                                                    {pageTypes.map((type) => (
+                                                        <img key={type.id} src={type.icon_url} alt={type.name} title={type.name} role="button" onClick={() => toggleQuickFilter(type.id)} style={{ width: '20px', height: '20px', cursor: 'pointer', opacity: quickFilterType && quickFilterType !== type.id ? 0.4 : 1, outline: quickFilterType === type.id ? '2px solid #cc445e' : 'none', borderRadius: '4px' }} />
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
