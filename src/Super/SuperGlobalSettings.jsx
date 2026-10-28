@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import NavigationRoute from "../club_admin/NavigationRoute";
-import "./assets/css/superstyle.css";
 import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
 import apiClient from "../api/axios";

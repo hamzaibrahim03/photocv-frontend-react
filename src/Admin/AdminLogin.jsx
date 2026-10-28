@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import apiClient from "../api/axios";
 import photoLogo from "../club_admin/assets/images/photo.png";
-import "./assets/css/adminastyle.css";
-
 function AdminLogin() {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");

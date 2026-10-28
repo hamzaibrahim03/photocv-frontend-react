@@ -1,7 +1,6 @@
 import { useParams } from "react-router";
 import Navbar from "./extra/Navbar";
 import Loader from './extra/LoaderAll';
-import "./assets/css/rytonstyle.css"
 import { useState, useEffect } from "react";
 import he from "he";
 import { NavLink, useNavigate } from "react-router";
@@ -53,7 +52,7 @@ function NewsSinglePublic() {
     console.log(sinnewsData.news)
     return (
         <>
-            <div style={{ backgroundColor: sinnewsData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: sinnewsData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: sinnewsData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: sinnewsData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

@@ -7,7 +7,6 @@ import Point from "./assets/icons/dashboard/point.svg";
 import HeaderRoute from "./HeaderRoute.jsx";
 import Calendar from "../Ryton/extra/CalendarRyton.jsx"
 import Loader from "../Ryton/extra/LoaderAll.jsx";
-import "./assets/css/adminstyle.css"
 function DashboardRoute() {
     const navigate = useNavigate();
     const [dashboardData, setDashboardData] = useState({})

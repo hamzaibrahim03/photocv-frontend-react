@@ -127,86 +127,81 @@ h3 {
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #a0846c;
-    border-radius: 10px;
+  background: #a0846c;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #8a6f58;
+  background: #8a6f58;
 }
 
-/* Bootstrap's .form-range hardcodes the thumb/track colors on the
-   ::-webkit-slider-thumb / ::-moz-range-thumb pseudo-elements, so the
-   standard `accent-color` property has no effect once that class is
-   applied - this class overrides those pseudo-elements directly. */
 .pink-thumb::-webkit-slider-thumb {
-    background-color: #cc445e !important;
+  background-color: #cc445e !important;
 }
+
 .pink-thumb::-webkit-slider-thumb:active {
-    background-color: #a8324a !important;
+  background-color: #a8324a !important;
 }
+
 .pink-thumb:focus::-webkit-slider-thumb {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(204, 68, 94, 0.25) !important;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(204, 68, 94, 0.25) !important;
 }
+
 .pink-thumb::-moz-range-thumb {
-    background-color: #cc445e !important;
+  background-color: #cc445e !important;
 }
+
 .pink-thumb::-moz-range-thumb:active {
-    background-color: #a8324a !important;
+  background-color: #a8324a !important;
 }
+
 .pink-thumb:focus::-moz-range-thumb {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(204, 68, 94, 0.25) !important;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(204, 68, 94, 0.25) !important;
 }
 
-/* Single-handle sliders: fill the track pink from the left up to the
-   current value. WebKit has no native "already filled" track segment,
-   so the fill is faked with a gradient whose stop position is driven by
-   a per-instance --range-progress custom property (set inline). Firefox
-   does expose a real filled-track pseudo-element (::-moz-range-progress). */
 .pink-range-fill::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #cc445e var(--range-progress, 0%), #dee2e6 var(--range-progress, 0%)) !important;
-}
-.pink-range-fill::-moz-range-track {
-    background-color: #dee2e6 !important;
-}
-.pink-range-fill::-moz-range-progress {
-    background-color: #cc445e !important;
+  background: linear-gradient(to right, #cc445e var(--range-progress, 0%), #dee2e6 var(--range-progress, 0%)) !important;
 }
 
-/* Dual-handle range (one "from" + one "to" value): two native range
-   inputs are stacked on the same spot, each with a fully transparent
-   track so only their thumbs are visible; the pink fill between the two
-   thumbs is drawn separately as a plain div underneath (see
-   DualRangeTrack). pointer-events is disabled on the input itself and
-   re-enabled only on its thumb, so clicking anywhere on the shared track
-   always reaches whichever thumb is actually under the cursor. */
+.pink-range-fill::-moz-range-track {
+  background-color: #dee2e6 !important;
+}
+
+.pink-range-fill::-moz-range-progress {
+  background-color: #cc445e !important;
+}
+
 .dual-range-input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    background: transparent;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
 }
+
 .dual-range-input::-webkit-slider-runnable-track {
-    background: transparent !important;
+  background: transparent !important;
 }
+
 .dual-range-input::-moz-range-track {
-    background: transparent !important;
+  background: transparent !important;
 }
+
 .dual-range-input::-webkit-slider-thumb {
-    pointer-events: auto;
+  pointer-events: auto;
 }
+
 .dual-range-input::-moz-range-thumb {
-    pointer-events: auto;
+  pointer-events: auto;
 }

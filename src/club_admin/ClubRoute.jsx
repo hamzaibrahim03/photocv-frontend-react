@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import NavigationRoute from './NavigationRoute';
 import HeaderRoute from './HeaderRoute';
 import Loader from "../Ryton/extra/LoaderAll.jsx";
-import "../Super/assets/css/superstyle.css";
 import Image from "./assets/icons/dashboard/profile_image.svg";
 import Comment from "./assets/icons/dashboard/comment.svg";
 import Point from "./assets/icons/dashboard/point.svg";
@@ -18,7 +17,6 @@ import Step3Events from '../../steps_club_configuration/Step3Events.jsx';
 import Step4Galleries from '../../steps_club_configuration/Step4Galleries.jsx';
 import Step5Competitions from '../../steps_club_configuration/Step5Competitions.jsx';
 import Step1Competition from '../../steps_club_defaults/Step1Competition.jsx';
-import "./assets/css/adminstyle.css"
 function ClubRoute() {
     const [dashboardData, setDashboardData] = useState({})
     const [isLoading, setIsLoading] = useState(true);

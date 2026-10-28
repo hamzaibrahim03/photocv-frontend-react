@@ -2,7 +2,6 @@ import Navbar from "./extra/Navbar";
 import apiClient from "../api/axios";
 import Loader from './extra/LoaderAll';
 import Calendar from './extra/CalendarRyton'
-import "./assets/css/rytonstyle.css"
 import Event from "./assets/icons/navigation/events.svg"
 import Competition from "./assets/icons/navigation/competition.svg"
 import { useState, useEffect, useMemo, useCallback } from "react";
@@ -164,7 +163,7 @@ function EventPublic() {
     };
     return (
         <>
-            <div style={{ backgroundColor: eventData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: eventData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: eventData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: eventData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

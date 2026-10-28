@@ -3,8 +3,6 @@ import { useNavigate } from "react-router";
 import NavigationRoute from "../club_admin/NavigationRoute";
 import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
-import "./assets/css/speakerstyle.css";
-
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 
 const authHeaders = () => ({

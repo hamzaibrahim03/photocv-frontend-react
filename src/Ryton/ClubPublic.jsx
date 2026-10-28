@@ -1,5 +1,4 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/rytonstyle.css"
 import { useEffect, useState } from "react";
 import Loader from './extra/LoaderAll';
 import { useNavigate } from "react-router";
@@ -33,7 +32,7 @@ function ClubPublic() {
     };
     return (
         <>
-            <div style={{ backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: clubData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: clubData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: clubData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

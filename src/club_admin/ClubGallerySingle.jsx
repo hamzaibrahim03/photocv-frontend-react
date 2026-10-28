@@ -7,7 +7,6 @@ import { readApiResponse } from "../api/axios";
 import Share from "./assets/icons/event_list/share.svg";
 import Info from "./assets/icons/event_list/information-circle.svg";
 import CommentsDrawMember from "./CommentsDrawMember";
-import "./assets/css/adminstyle.css"
 function ClubGallerySingle() {
     const { id } = useParams();
     const [clubGallery, setClubGallery] = useState(null);

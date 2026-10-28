@@ -4,7 +4,6 @@ import NavigationRoute from "./NavigationRoute"
 import Loader from "../Ryton/extra/LoaderAll";
 import Calendar from "../Ryton/extra/CalendarRyton"
 import { useNavigate, useParams } from 'react-router';
-import "./assets/css/adminstyle.css"
 function CompetitionSingle() {
     const { id } = useParams();
     const navigate = useNavigate();

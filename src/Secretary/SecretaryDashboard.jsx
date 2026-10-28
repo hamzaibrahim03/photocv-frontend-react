@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import NavigationRoute from "../club_admin/NavigationRoute";
 import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
-import "./assets/css/secretarystyle.css";
 import Calendar from "../Ryton/extra/CalendarRyton";
 
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";

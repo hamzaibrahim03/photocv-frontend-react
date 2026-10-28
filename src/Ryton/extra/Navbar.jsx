@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminDropdown from './AdminDropdown'
 import { NavLink, Outlet } from "react-router"
-import "../assets/css/navbar.css"
 function Navbar() {
     const [homeData, sethomeData] = useState([]);
     const [navOpen, setNavOpen] = useState(false);

@@ -1,4 +1,4 @@
-.container {
+:where(.ryton-public) .container {
   width: 100%;
   padding: 0 15px;
   margin: 0 auto;
@@ -115,13 +115,13 @@
   margin-top: 20px;
 }
 
-.card-section {
+:where(.ryton-public) .card-section {
   display: flex;
   gap: 15px;
   width: 100%;
 }
 
-.stat-card {
+:where(.ryton-public) .stat-card {
   background: #cc445e;
   color: white;
   padding: 20px;
@@ -145,7 +145,7 @@
   width: 219px;
 }
 
-.number {
+:where(.ryton-public) .number {
   font-weight: 500;
   font-size: 48px;
   font-family: var(--club-body-font, Inter);
@@ -154,7 +154,7 @@
   margin-top: 30px;
 }
 
-.ca-details {
+:where(.ryton-public) .ca-details {
   font-weight: 400;
   font-size: 20px;
   font-family: var(--club-body-font, Inter);
@@ -174,7 +174,7 @@
   color: white;
 }
 
-.days {
+:where(.ryton-public) .days {
   margin-top: 35px;
   font-weight: 400;
   font-family: var(--club-body-font, Inter);
@@ -336,7 +336,7 @@
   gap: 40px;
 }
 
-.event-card {
+:where(.ryton-public) .event-card {
   background: white;
   width: 31%;
   padding: 20px;
@@ -371,13 +371,13 @@
   padding-top: 10px;
 }
 
-.event-item {
+:where(.ryton-public) .event-item {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.event-item img {
+:where(.ryton-public) .event-item img {
   width: 100%;
   max-width: 50px;
   height: 50px;
@@ -454,7 +454,7 @@
   margin-bottom: 25px;
 }
 
-.upcoming-section {
+:where(.ryton-public) .upcoming-section {
   display: flex;
   border-radius: 10px;
   align-items: start;
@@ -548,7 +548,7 @@
   border-radius: 10px;
 }
 
-.event-items {
+:where(.ryton-public) .event-items {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -822,7 +822,7 @@
   padding-bottom: 36px;
 }
 
-.site-footer {
+:where(.ryton-public) .site-footer {
   padding-top: 25px;
   padding-bottom: 10px;
   text-align: center;
@@ -841,7 +841,7 @@
   text-decoration: underline;
 }
 
-.ultrahead {
+:where(.ryton-public) .ultrahead {
   font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
@@ -850,7 +850,7 @@
   letter-spacing: 0%;
 }
 
-.heading {
+:where(.ryton-public) .heading {
   font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
@@ -859,7 +859,7 @@
   letter-spacing: 0%;
 }
 
-.head {
+:where(.ryton-public) .head {
   font-family: var(--club-body-font, Inter);
   font-weight: 500;
   font-style: Medium;
@@ -868,7 +868,7 @@
   letter-spacing: 0%;
 }
 
-.clubhead {
+:where(.ryton-public) .clubhead {
   font-family: var(--club-body-font, Inter);
   font-weight: 600;
   font-style: Semi Bold;
@@ -877,7 +877,7 @@
   letter-spacing: 0%;
 }
 
-.subhead {
+:where(.ryton-public) .subhead {
   font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
@@ -886,7 +886,7 @@
   letter-spacing: 0%;
 }
 
-.memtext {
+:where(.ryton-public) .memtext {
   font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
@@ -896,7 +896,7 @@
   color: #000;
 }
 
-.prehead {
+:where(.ryton-public) .prehead {
   font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-style: Regular;
@@ -905,7 +905,7 @@
   letter-spacing: 0%;
 }
 
-.galtext {
+:where(.ryton-public) .galtext {
   font-family: var(--club-body-font, Inter);
   font-weight: 400;
   font-size: 12px;
@@ -913,8 +913,8 @@
   letter-spacing: 0%;
 }
 
-.event-img,
-.fallback-box {
+:where(.ryton-public) .event-img,
+:where(.ryton-public) .fallback-box {
   width: 100%;
   max-width: 50px;
   height: 50px;
@@ -924,13 +924,13 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.fallback-box {
+:where(.ryton-public) .fallback-box {
   font-size: 14px;
   color: #D6DFD2;
 }
 
-.icon-circles .flickr-dots i,
-.flickr-dots i {
+:where(.ryton-public) .icon-circles .flickr-dots i,
+:where(.ryton-public) .flickr-dots i {
   font-size: 8px;
   margin: 1px;
 }
@@ -1068,7 +1068,7 @@
   cursor: pointer;
 }
 
-.card {
+:where(.ryton-public) .card {
   background: white;
   border-radius: 10px;
   flex: 1;
@@ -1107,7 +1107,7 @@
   letter-spacing: 0%;
 }
 
-.button-group {
+:where(.ryton-public) .button-group {
   display: flex;
   gap: 10px;
   bottom: 10px;
@@ -1550,7 +1550,7 @@
   height: 16px;
 }
 
-.icon {
+:where(.ryton-public) .icon {
   font-size: 16px;
 }
 
@@ -1926,8 +1926,8 @@
   color: white;
 }
 
-.event-img,
-.fallback-box {
+:where(.ryton-public) .event-img,
+:where(.ryton-public) .fallback-box {
   max-width: 50px;
   max-height: 50px;
   border-radius: 7px;
@@ -1946,7 +1946,7 @@
   margin: 0;
 }
 
-.name {
+:where(.ryton-public) .name {
   font-weight: 400;
   opacity: 0.9;
   font-family: var(--club-body-font, Inter);
@@ -2773,12 +2773,12 @@ p {
     height: auto;
   }
 
-  .event-item img {
+  :where(.ryton-public) .event-item img {
     max-width: 48px;
     height: 48px;
   }
 
-  .button-group {
+  :where(.ryton-public) .button-group {
     margin-top: 20px;
   }
 
@@ -3111,7 +3111,7 @@ p {
     font-size: 14px;
   }
 
-  .upcoming-section {
+  :where(.ryton-public) .upcoming-section {
     gap: 20px;
   }
 
@@ -3126,7 +3126,7 @@ p {
     width: 48%;
   }
 
-  .event-item img {
+  :where(.ryton-public) .event-item img {
     max-width: 45px;
     height: 45px;
   }
@@ -3528,7 +3528,7 @@ p {
     letter-spacing: 0%;
   }
 
-  .card {
+  :where(.ryton-public) .card {
     height: auto;
     width: 95%;
     margin-left: auto;
@@ -3585,12 +3585,12 @@ p {
     margin-left: 0 !important;
   }
 
-  .event-item img {
+  :where(.ryton-public) .event-item img {
     max-width: 45px;
     height: 45px;
   }
 
-  .button-group {
+  :where(.ryton-public) .button-group {
     justify-content: left;
     margin-top: 20px;
   }
@@ -3663,7 +3663,7 @@ p {
     height: 179px;
   }
 
-  .card {
+  :where(.ryton-public) .card {
     width: 100% !important;
   }
 
@@ -4079,7 +4079,7 @@ p {
     width: 100%;
   }
 
-  .event-item img {
+  :where(.ryton-public) .event-item img {
     max-width: 40px;
     height: 40px;
   }
@@ -4097,7 +4097,7 @@ p {
     font-size: 0.85rem;
   }
 
-  .button-group {
+  :where(.ryton-public) .button-group {
     justify-content: flex-start;
   }
 
@@ -4187,7 +4187,7 @@ p {
     width: 210px;
   }
 
-  .event-item {
+  :where(.ryton-public) .event-item {
     gap: 15px;
   }
 
@@ -4302,7 +4302,7 @@ p {
     display: flex-column
   }
 
-  .card {
+  :where(.ryton-public) .card {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
@@ -4358,7 +4358,7 @@ p {
     padding: 15px;
   }
 
-  .event-item img {
+  :where(.ryton-public) .event-item img {
     max-width: 38px;
     height: 38px;
   }
@@ -4375,7 +4375,7 @@ p {
     width: 275px;
   }
 
-  .event-item {
+  :where(.ryton-public) .event-item {
     gap: 10px;
   }
 
@@ -4647,7 +4647,7 @@ p {
     letter-spacing: 0%;
   }
 
-  .card {
+  :where(.ryton-public) .card {
     width: 95%;
     padding: 8px;
   }
@@ -4680,7 +4680,7 @@ p {
     font-size: 12px;
   }
 
-  .event-item img {
+  :where(.ryton-public) .event-item img {
     max-width: 32px;
     height: 32px;
   }
@@ -4749,7 +4749,7 @@ p {
 }
 
 @media only screen and (max-width: 1399px) {
-  .container {
+  :where(.ryton-public) .container {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -4850,13 +4850,13 @@ p {
   }
 
   .upcoming-sections,
-  .upcoming-section,
+  :where(.ryton-public) .upcoming-section,
   .news-section {
     width: 100%;
     gap: 24px;
   }
 
-  .event-card,
+  :where(.ryton-public) .event-card,
   .calendar-card,
   .competition-card,
   .member-card,
@@ -4967,20 +4967,20 @@ p {
     line-height: 1.15;
   }
 
-  .card-section,
-  .button-group,
+  :where(.ryton-public) .card-section,
+  :where(.ryton-public) .button-group,
   .events-cards,
   .gallery-row,
   .gallery-row-bottom {
     flex-direction: column;
   }
 
-  .card-section,
+  :where(.ryton-public) .card-section,
   .events-cards {
     align-items: stretch;
   }
 
-  .stat-card,
+  :where(.ryton-public) .stat-card,
   .up-event-card {
     width: 100%;
     box-sizing: border-box;
@@ -5067,7 +5067,7 @@ p {
 }
 
 @media only screen and (max-width: 575px) {
-  .container {
+  :where(.ryton-public) .container {
     padding-left: 12px;
     padding-right: 12px;
   }
@@ -5123,7 +5123,7 @@ p {
     line-height: 1.2;
   }
 
-  .name {
+  :where(.ryton-public) .name {
     font-size: 16px;
     margin-top: 8px;
   }

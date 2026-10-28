@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import apiClient from "../api/axios";
-import "./assets/css/loginstyle.css";
 import logo from "./assets/images/club.png";
 
 const REMEMBERED_EMAIL_KEY = "rememberedEmail";

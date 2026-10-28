@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import "./assets/css/adminstyle.css"
-
 function HeaderRoute({ title = "Dashboard", dashboardData }) {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");

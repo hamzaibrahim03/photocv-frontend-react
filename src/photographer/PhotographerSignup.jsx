@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import apiClient from '../api/axios';
-import '../club_admin/assets/css/signupstyle.css';
 import sample from '../club_admin/assets/images/sample.png';
 import photo from '../club_admin/assets/images/photo.png';
 import Step1SettingsSignup from '../../steps_photo_signup/Step1Settings';
@@ -9,7 +8,6 @@ import Step2BrandingSignup from '../../steps_photo_signup/Step2Branding';
 import Step3ProfileSignup from '../../steps_photo_signup/Step3Profile';
 import Step4ContactSignup from '../../steps_photo_signup/Step4Contact';
 import Step5SetupSignup from '../../steps_photo_signup/Step5Setup';
-import "../club_admin/assets/css/adminstyle.css"
 const components = [
     Step1SettingsSignup,
     Step2BrandingSignup,

@@ -3,7 +3,6 @@ import { useSearchParams, useNavigate } from "react-router";
 import Loader from './extra/LoaderAll';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import './assets/css/rytonstyle.css'
 function RytonResultSlide() {
     const navigate = useNavigate();
     const [resultData, setResultData] = useState({});
@@ -120,6 +119,7 @@ function RytonResultSlide() {
     return (
         <>
             <div
+                className="ryton-public"
                 style={{ backgroundColor: resultData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: resultData?.clubSettings?.original?.data?.settings?.fonts, }}>
                 <Loader show={isLoading} />
                 {!isLoading && (

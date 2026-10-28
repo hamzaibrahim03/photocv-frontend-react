@@ -9,7 +9,6 @@ import Com from "./assets/icons/gallery/comment.svg";
 import Share from "./assets/icons/event_list/share.svg";
 import Book from "./assets/icons/event_list/bookmark.svg";
 import apiClient, { API_URL, readApiResponse } from "../api/axios";
-import "./assets/css/adminstyle.css"
 function ClubGalleryRoute() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);

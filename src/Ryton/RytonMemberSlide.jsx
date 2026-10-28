@@ -4,7 +4,6 @@ import Loader from './extra/LoaderAll';
 import CommentsDrawMember from "./CommentsDrawMember";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import './assets/css/rytonstyle.css'
 function RytonMemberSlide() {
     const navigate = useNavigate();
     const [memberData, setMemberData] = useState({});
@@ -116,6 +115,7 @@ function RytonMemberSlide() {
     return (
         <>
             <div
+                className="ryton-public"
                 style={{ backgroundColor: memberData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: memberData?.clubSettings?.original?.data?.settings?.fonts, }}>
                 <Loader show={isLoading} />
                 {!isLoading && (

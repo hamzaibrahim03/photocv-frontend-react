@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import apiClient from '../api/axios';
-import './assets/css/signupstyle.css';
 import sample from './assets/images/sample.png';
 import club from './assets/images/club.png';
 import Step1GeneralSignup from '../../steps_signup/Step1General';
@@ -9,7 +8,6 @@ import Step2AppearanceSignup from '../../steps_signup/Step2Appearance';
 import Step3MembershipSignup from '../../steps_signup/Step3Membership';
 import Step4ContentSignup from '../../steps_signup/Step4Content';
 import Step5AccountSignup from '../../steps_signup/Step5Account';
-import "./assets/css/adminstyle.css"
 const components = [
     Step1GeneralSignup,
     Step2AppearanceSignup,

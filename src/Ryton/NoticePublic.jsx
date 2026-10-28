@@ -1,7 +1,6 @@
 import Navbar from "./extra/Navbar";
 import apiClient from "../api/axios";
 import Loader from './extra/LoaderAll';
-import "./assets/css/rytonstyle.css"
 import { useState, useEffect, useMemo, useCallback } from "react";
 import he from "he";
 import { useNavigate } from "react-router";
@@ -155,7 +154,7 @@ function NoticePublic() {
     console.log(noticeData.clubNotices)
     return (
         <>
-            <div style={{ backgroundColor: noticeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: noticeData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: noticeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: noticeData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

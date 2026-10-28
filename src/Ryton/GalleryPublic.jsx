@@ -1,5 +1,4 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/rytonstyle.css"
 import { useEffect, useState } from "react";
 import Loader from './extra/LoaderAll';
 import { useNavigate } from "react-router";
@@ -44,7 +43,7 @@ function GalleryPublic() {
     };
     return (
         <>
-            <div style={{ backgroundColor: galleryData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: galleryData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: galleryData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: galleryData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

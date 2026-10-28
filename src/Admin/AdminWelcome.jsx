@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router";
-import "./assets/css/adminastyle.css";
-
 function AdminWelcome() {
     const navigate = useNavigate();
 

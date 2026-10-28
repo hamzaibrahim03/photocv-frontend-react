@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import "./assets/css/rytonstyle.css";
 import apiClient from "../api/axios";
 function CommentsDrawClub({ photo, onClose }) {
     const [newComment, setNewComment] = useState("");

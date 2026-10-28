@@ -17,7 +17,6 @@ import Mess from "./assets/icons/event_list/mess.svg"
 import Share from "./assets/icons/event_list/share.svg"
 import Book from "./assets/icons/event_list/bookmark.svg"
 import apiClient from "../api/axios";
-import "./assets/css/adminstyle.css"
 function CompetitionsRoute() {
     const navigate = useNavigate();
     const [competitionData, setCompetitionData] = useState({})

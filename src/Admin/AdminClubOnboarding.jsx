@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import apiClient from "../api/axios";
-import "./assets/css/adminastyle.css";
-
 const STEP_TITLES = ["Let's Start!", "Let's Design!", "Let's manage membership!", "Let's manage club website!", "You're almost there!"];
 const STEP_SUBTITLES = [
     "We just need a few basic details of the club",

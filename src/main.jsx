@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router'
+import './assets/css/styleapp.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 <script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>

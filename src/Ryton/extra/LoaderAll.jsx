@@ -1,4 +1,3 @@
-import "../assets/css/Loader.css";
 function Loader({ show }) {
   if (!show) return null;
   return (

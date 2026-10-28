@@ -3,7 +3,6 @@ import Calendar from "../Ryton/extra/CalendarRyton"
 import HeaderRoute from "./HeaderRoute"
 import NavigationRoute from "./NavigationRoute"
 import Loader from "../Ryton/extra/LoaderAll";
-import "./assets/css/adminstyle.css"
 function ClubMemberGallery() {
     const [isLoading] = useState(false);
     return (

@@ -1,7 +1,6 @@
 import { useParams } from "react-router";
 import Navbar from "./extra/Navbar";
 import Loader from './extra/LoaderAll';
-import "./assets/css/rytonstyle.css"
 import he from "he";
 import { NavLink, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
@@ -53,7 +52,7 @@ function NoticeSinglePublic() {
     console.log(sinnoticeData.clubNotice)
     return (
         <>
-            <div style={{ backgroundColor: sinnoticeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: sinnoticeData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: sinnoticeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: sinnoticeData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

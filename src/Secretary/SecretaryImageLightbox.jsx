@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import "./assets/css/secretarystyle.css";
 import Loader from "../Ryton/extra/LoaderAll";
 
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";

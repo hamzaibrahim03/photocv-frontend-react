@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from "react-router";
-import "./assets/css/navbarstyle.css";
 import photoLogo from "./assets/images/photo.png";
 import eyeLogo from "./assets/images/eye.png";
 import eyepLogo from "./assets/images/eyep.png";

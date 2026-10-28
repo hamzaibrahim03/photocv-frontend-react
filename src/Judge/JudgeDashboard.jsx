@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
-import "./assets/css/judgestyle.css";
 import NavigationRoute from "../club_admin/NavigationRoute";
 import Calendar from "../Ryton/extra/CalendarRyton.jsx"
 

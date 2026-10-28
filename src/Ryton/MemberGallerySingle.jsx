@@ -1,5 +1,4 @@
 import Navbar from "./extra/Navbar";
-import "./assets/css/rytonstyle.css"
 import { useEffect, useMemo, useState } from "react";
 import Loader from './extra/LoaderAll';
 import { NavLink, useNavigate, useParams } from "react-router";
@@ -135,7 +134,7 @@ function RytonMemberGallerySingle() {
     };
     return (
         <>
-            <div style={{ backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, fontFamily: membergallerydata?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: membergallerydata?.clubSettings?.original?.data?.settings?.background_color, fontFamily: membergallerydata?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

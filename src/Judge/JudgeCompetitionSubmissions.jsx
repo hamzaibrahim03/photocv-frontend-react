@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
-import "./assets/css/judgestyle.css";
 import NavigationRoute from "../club_admin/NavigationRoute";
 
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";

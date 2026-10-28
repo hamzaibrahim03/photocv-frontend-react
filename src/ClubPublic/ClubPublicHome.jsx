@@ -1,4 +1,3 @@
-import '../Ryton/assets/css/rytonstyle.css'
 import heart from '../Ryton/images/Heart.svg'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -92,7 +91,7 @@ function ClubPublicHome() {
     }
     return (
         <>
-            <div style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: homeData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: homeData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>

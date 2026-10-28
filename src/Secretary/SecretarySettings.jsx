@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import HeaderRoute from "../club_admin/HeaderRoute";
-import "./assets/css/secretarystyle.css";
 import NavigationRoute from "../club_admin/NavigationRoute";
 
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";

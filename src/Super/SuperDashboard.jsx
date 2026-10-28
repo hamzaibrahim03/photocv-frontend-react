@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import NavigationRoute from "../club_admin/NavigationRoute";
-import "./assets/css/superstyle.css";
 import HeaderRoute from "../club_admin/HeaderRoute";
 import Loader from "../Ryton/extra/LoaderAll";
 import Calendar from "../Ryton/extra/CalendarRyton";

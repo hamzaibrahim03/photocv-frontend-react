@@ -1,4 +1,3 @@
-import './assets/css/rytonstyle.css'
 import heart from './images/Heart.svg'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -92,7 +91,7 @@ function HomeRoute() {
     }
     return (
         <>
-            <div style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: homeData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: homeData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
@@ -420,7 +419,7 @@ function HomeRoute() {
                                                     <>
                                                         {homeData.upcomingCompetitions.map((competition) => (
                                                             <div key={competition.id} className="ryton-event-list">
-                                                                <div className="event-item" style={{ marginBottom: "10px" }}>
+                                                                <div className="event-item">
                                                                     <img className="img-fluid event-img" src={competition.featured_thumb_url} alt="Comp" style={{ backgroundColor: homeData?.clubSettings?.original?.data?.settings?.primary_color, }} />
                                                                     <div className="event-details">
                                                                         <div className="event-info" style={{ display: "flex", flexDirection: "column" }}>
@@ -605,7 +604,7 @@ function HomeRoute() {
                                                     <>
                                                         {homeData.clubNews.slice(0, 3).map((news) => (
                                                             <div key={news.id} className="ryton-event-list">
-                                                                <div className="event-item" style={{ marginBottom: "10px" }}>
+                                                                <div className="event-item">
                                                                     <img className="img-fluid event-img" src={news.featured_image_thumb} alt="News" />
                                                                     <div className="event-details">
                                                                         <span className="prehead" id="pname" style={{ color: homeData?.clubSettings?.original?.data?.settings?.text_color, fontWeight: "600", }}>

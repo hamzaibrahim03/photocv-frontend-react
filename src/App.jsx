@@ -1,4 +1,3 @@
-import './App.css'
 import HomeRoute from './Ryton/HomeRoute'
 import EventPublic from './Ryton/EventPublic'
 import { Route, Routes } from "react-router";

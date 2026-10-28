@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Loader from "../Ryton/extra/LoaderAll";
-import "./assets/css/judgestyle.css";
-
 const API_BASE = "http://rytonlocal-staging.cameraclub.website:8000/api/v1";
 const OVERLAY_KEY = "judgeScoreOverlay_v1";
 

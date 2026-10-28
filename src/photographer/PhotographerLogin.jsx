@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import apiClient from "../api/axios";
-import "../club_admin/assets/css/loginstyle.css";
 import logo from "../club_admin/assets/images/photo.png";
 import banner from "../club_admin/assets/images/topics/night.jpg";
 

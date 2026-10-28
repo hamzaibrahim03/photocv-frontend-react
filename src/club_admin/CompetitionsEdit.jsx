@@ -5,7 +5,6 @@ import NavigationRoute from "./NavigationRoute";
 import Loader from "../Ryton/extra/LoaderAll";
 import Calendar from "../Ryton/extra/CalendarRyton";
 import apiClient from '../api/axios';
-import "./assets/css/adminstyle.css"
 const initialFormData = {
     name: '',
     competition_type_id: '',

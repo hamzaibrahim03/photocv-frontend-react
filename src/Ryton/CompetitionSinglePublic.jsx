@@ -2,7 +2,6 @@ import { useParams } from "react-router";
 import Navbar from "./extra/Navbar";
 import Loader from './extra/LoaderAll';
 import Calendar from './extra/CalendarRyton'
-import "./assets/css/rytonstyle.css"
 import Event from "./assets/icons/navigation/events.svg"
 import Competition from "./assets/icons/navigation/competition.svg"
 import { useState, useEffect } from "react";
@@ -129,7 +128,7 @@ function CompetitionSinglePublic() {
     console.log(sincompData.competition)
     return (
         <>
-            <div style={{ backgroundColor: sincompData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: sincompData?.clubSettings?.original?.data?.settings?.fonts }}>
+            <div className="ryton-public" style={{ backgroundColor: sincompData?.clubSettings?.original?.data?.settings?.background_color, fontFamily: sincompData?.clubSettings?.original?.data?.settings?.fonts }}>
                 <Loader show={isLoading} />
                 {!isLoading && (
                     <div>
