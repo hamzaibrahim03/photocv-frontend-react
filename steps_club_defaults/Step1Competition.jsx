@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import '../src/App.css'
 import Loader from '../src/Ryton/extra/LoaderAll';
 import Calendar from '../src/Ryton/extra/CalendarRyton';
 import apiClient from '../src/api/axios';
